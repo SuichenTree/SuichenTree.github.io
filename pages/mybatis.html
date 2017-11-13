@@ -235,6 +235,13 @@ code.language-yaml {
 <li><a href="#3%E6%B5%8B%E8%AF%95%E7%B1%BB-mainjava">③测试类 ，main.java</a></li>
 </ul>
 </li>
+<li><a href="#font-colorredresultmapfont">ResultMap:</a>
+<ul>
+<li><a href="#1resultmap%E7%9A%84%E4%BD%9C%E7%94%A8%E6%A6%82%E8%BF%B0">1.ResultMap的作用概述：</a></li>
+<li><a href="#2%E8%8B%A5%E8%A1%A8%E7%9A%84%E5%88%97%E5%90%8D%E4%B8%8E%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8D%E7%9B%B8%E5%90%8C%E5%8F%AF%E7%94%A8resultmap%E8%A7%A3%E5%86%B3">2.若表的列名与持久化类的属性名不相同，可用ResultMap解决：</a></li>
+<li><a href="#3%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">3.一对一关联查询：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -608,6 +615,34 @@ update student
 <span class="token punctuation">}</span>
 
 </pre>
+<h2 class="mume-header" id="font-colorredresultmapfont"><font color="red">ResultMap</font>:</h2>
+
+<h3 class="mume-header" id="1resultmap&#x7684;&#x4F5C;&#x7528;&#x6982;&#x8FF0;">1.ResultMap的作用概述：</h3>
+
+<p>  MyBatis中在查询进行select映射的时候，返回类型可以用resultType，也可以用resultMap，resultType是直接表示返回类型的，而resultMap则是对外部ResultMap的引用（<font color="red">相当于自定义结果集映射规则</font>），但是<strong>resultType跟resultMap不能同时存在</strong>。</p>
+<p>  在MyBatis进行查询映射时,<font color="blue">由于Mybatis的底层是JDBC，其实查询出来的每一个属性都是放在一个对应的Map里面的，其中键是属性名，值则是其对应的值。</font></p>
+<p>  ①当提供的返回类型属性是resultType时，<font color="red">MyBatis会将Map里面的键值对取出赋给resultType所指定的对象对应的属性。所以其实MyBatis的每一个查询映射的返回类型都是ResultMap，只是当提供的返回类型属性是resultType的时候，MyBatis对自动的给把对应的值赋给resultType所指定对象的属性。</font><br>
+  ②当提供的返回类型是resultMap时，因为Map不能很好表示领域模型，就需要自己再进一步的把它转化为对应的对象，这常常在复杂查询中很有作用<font color="green">(需要程序员自定义结果集映射规则，手动的把查询的结果一个一个转化为想要对应的对象)</font>。</p>
+<h3 class="mume-header" id="2&#x82E5;&#x8868;&#x7684;&#x5217;&#x540D;&#x4E0E;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x7684;&#x5C5E;&#x6027;&#x540D;&#x4E0D;&#x76F8;&#x540C;&#x53EF;&#x7528;resultmap&#x89E3;&#x51B3;">2.若表的列名与持久化类的属性名不相同，可用ResultMap解决：</h3>
+
+<p><font color="red">这段代码中，student表的列名为 sid,sname,sage,而持久化类(实体类)的属性为 id, name,age</font></p>
+<p>studentMapper.xml</p>
+<pre class="language-xml">
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>selectStudentByid<span class="token punctuation">"</span></span> <span class="token attr-name">resultMap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>rem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		select * where id=#{id}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--resultMap 的 id值与 select标签的resultMap的值相同,表明这两个标签互相联系--></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>resultMap</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Student<span class="token punctuation">"</span></span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>rem<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sid<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  <span class="token comment" spellcheck="true">&lt;!-- id 标签指的是该列为主键列，result标签代表普通列--></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sname<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>result</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sage<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resultMap</span><span class="token punctuation">></span></span>
+
+</pre>
+<h3 class="mume-header" id="3&#x4E00;&#x5BF9;&#x4E00;&#x5173;&#x8054;&#x67E5;&#x8BE2;">3.一对一关联查询：</h3>
+
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -635,6 +670,13 @@ update student
 <li><a href="#1%E5%A2%9E%E5%8A%A0%E4%BB%A3%E7%90%86%E6%8E%A5%E5%8F%A3-studentdaojava">①：增加代理接口： studentdao.java</a></li>
 <li><a href="#2%E4%BF%AE%E6%94%B9%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E5%80%BC-studentmapperxml-%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">②：修改映射文件的命名空间的值---studentMapper.xml 的命名空间：</a></li>
 <li><a href="#3%E6%B5%8B%E8%AF%95%E7%B1%BB-mainjava">③测试类 ，main.java</a></li>
+</ul>
+</li>
+<li><a href="#font-colorredresultmapfont">ResultMap:</a>
+<ul>
+<li><a href="#1resultmap%E7%9A%84%E4%BD%9C%E7%94%A8%E6%A6%82%E8%BF%B0">1.ResultMap的作用概述：</a></li>
+<li><a href="#2%E8%8B%A5%E8%A1%A8%E7%9A%84%E5%88%97%E5%90%8D%E4%B8%8E%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8D%E7%9B%B8%E5%90%8C%E5%8F%AF%E7%94%A8resultmap%E8%A7%A3%E5%86%B3">2.若表的列名与持久化类的属性名不相同，可用ResultMap解决：</a></li>
+<li><a href="#3%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">3.一对一关联查询：</a></li>
 </ul>
 </li>
 </ul>
