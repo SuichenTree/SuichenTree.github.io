@@ -386,3 +386,243 @@ public class main {
 }
 
 ```
+
+## <font color="red">ResultMap</font>:
+
+### 1.ResultMap的作用概述：
+&emsp;&emsp;MyBatis中在查询进行select映射的时候，返回类型可以用resultType，也可以用resultMap，resultType是直接表示返回类型的，而resultMap则是对外部ResultMap的引用（<font color="red">相当于自定义结果集映射规则</font>），但是<strong>resultType跟resultMap不能同时存在</strong>。
+
+&emsp;&emsp;在MyBatis进行查询映射时,<font color="blue">由于Mybatis的底层是JDBC，其实查询出来的每一个属性都是放在一个对应的Map里面的，其中键是属性名，值则是其对应的值。</font>
+
+&emsp;&emsp;①当提供的返回类型属性是resultType时，<font color="red">MyBatis会将Map里面的键值对取出赋给resultType所指定的对象对应的属性。所以其实MyBatis的每一个查询映射的返回类型都是ResultMap，只是当提供的返回类型属性是resultType的时候，MyBatis对自动的给把对应的值赋给resultType所指定对象的属性。</font>
+&emsp;&emsp;②当提供的返回类型是resultMap时，因为Map不能很好表示领域模型，就需要自己再进一步的把它转化为对应的对象，这常常在复杂查询中很有作用<font color="green">(需要程序员自定义结果集映射规则，手动的把查询的结果一个一个转化为想要对应的对象)</font>。
+
+### 2.若表的列名与持久化类的属性名不相同，可用ResultMap解决：
+
+<font color="red">这段代码中，student表的列名为 sid,sname,sage,而持久化类(实体类)的属性为 id, name,age</font>
+
+studentMapper.xml
+```xml
+
+<select id="selectStudentByid" resultMap="rem">
+		select * where id=#{id}
+</select>
+
+<!--resultMap 的 id值与 select标签的resultMap的值相同,表明这两个标签互相联系-->
+
+<resultMap type="com.entity.Student" id="rem">
+	<id property="id" column="sid"/>  <!-- id 标签指的是该列为主键列，result标签代表普通列-->
+	<result property="name" column="sname"/>
+	<result property="age" column="sage"/>
+</resultMap>
+
+```
+
+### 3.一对一关联查询（association标签）：
+
+参考链接：
+[MyBatis两张表字段名相同产生的问题](http://blog.csdn.net/lee4037/article/details/16798941)
+
+&emsp;&emsp;生活中有许多涉及到一对一关联查询的例子，例如，<font color="red">把学生作为中心，一个学生只能有一个班级。查询某个学生时，把他所在的班级也查出来。</font>
+
+1. 增加school_class表：
+![School_class表](../img/mybatis_img/5.png)
+
+2. 修改student表（<font color="red">增加class_id 列,class_id 列与school_class的id列 对应。没有设置外键<font>）:
+![School_class表](../img/mybatis_img/6.png)
+2.5，修改Student的javaBean：
+```java
+private School_class sclass;       //这个字段用来表示学生的班级,其对应的列名为class_id
+
+public School_class getSclass() {
+		return sclass;
+}
+
+public void setSclass(School_class sclass) {
+		this.sclass = sclass;
+}
+
+@Override
+public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", age=" + age
+				+ ", sclass=" + sclass + "]";
+}
+
+```
+
+3. 编写School_class的javaBean对象，这个对应school_class表的持久化类，
+
+
+
+4. 在StudentMapper的映射文件中使用ResultMap：
+&emsp;&emsp;<font color="red">执行select标签时，会根据与其相联系的resultMap 标签来进行结果集映射</font>
+<strong>有两种方法：</strong>
+
+数据库中执行sql语句：
+![运行截图](../img/mybatis_img/10.png)
+![运行截图](../img/mybatis_img/11.png)
+①：使用别名
+```xml
+
+<select id="selectStudent" resultMap="one_one_select" parameterType="com.entity.Student">
+	SELECT s.*,sc.id scid,sc.name scname from student s LEFT JOIN 
+	
+<!--这里的sql语句使用了 left join...on..关联查询，，scid 是sid的别名，scname是sc.name的别名，s 是student表的别名，sc 是school——class的别名-->
+
+	school_class sc on s.class_id=sc.id where 1=1 
+	
+	<if test="id !=null">and s.id=#{id}</if>
+	 <if test="name !=null">and s.name=#{name}</if>
+</select>
+
+<!--resultMap 的 id值与 select标签的resultMap的值相同,表明这两个标签互相联系-->
+
+
+<resultMap type="com.entity.Student" id="one_one_select">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<result property="age" column="age"/>
+ 
+   <association property="sclass" column="class_id" javaType="com.entity.School_class">
+	 <id property="id" column="scid"/>
+     <result property="name" column="scname"/>
+
+	 <!--scid 是sid的别名，scname是sc.name的别名-->
+
+   </association> 
+	
+</resultMap>
+
+
+
+```
+
+②：在sql语句执行时，在执行另一个sql语句
+```xml
+<select id="selectStudent2" resultMap="one_one_select2" parameterType="com.entity.Student">
+	SELECT s.*,sc.id scid,sc.name scname from student s LEFT JOIN 
+	school_class sc on s.class_id=sc.id where 1=1 
+	
+	<if test="id !=null">and s.id=#{id}</if>
+	<if test="name !=null">and s.name=#{name}</if>
+</select>
+
+<resultMap type="com.entity.Student" id="one_one_select2">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<result property="age" column="age"/>
+ 
+   <association property="sclass" column="class_id" javaType="com.entity.School_class" select="selectClass"/>
+ <!--select的值，表示执行一条sql语句，select的值指向id为select属性值的select标签。并把执行sql语句的结果，封装到property 代表的对象中。-->
+  	
+</resultMap>
+
+<select id="selectClass" resultType="com.entity.School_class" parameterType="com.entity.School_class">
+	select * from school_class where id=#{id}
+</select>
+
+
+```
+
+
+5. 测试：
+
+main.java:
+```java
+		//通过这句来读取xml 配置文件的信息
+		InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
+		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+		SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		//实例化session 对象，通过SqlSessionFactory
+		SqlSession session=ssf.openSession();
+		
+		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+		studentdao studao=session.getMapper(studentdao.class);
+		
+		Student stu=new Student();
+		stu.setName("xiao");
+		
+		Student s = studao.selectStudent(stu); //selectStudent为代理接口（studentdao）的动态查询数据的方法。
+		System.out.println(s);
+		System.out.println(s.getSclass());
+
+```
+6. 结果截图：
+![结果截图](../img/mybatis_img/7.png)
+
+### 4.一对多关联查询（collection标签）：
+参考链接：
+[一对多表关系详解](http://blog.csdn.net/xzm_rainbow/article/details/15336933)
+
+&emsp;&emsp;生活中，如果以班级为中心的话,<font color="red">一个班级可以有多个学生，这相当与一对多的关系。查询某个班级时，把班级所在的多个学生也查询出来。</font>
+
+1. 添加代码，School_class 的javaBean
+```java
+private List<Student> stulist;    //一个班可以有多个学生，使用list集合
+
+public List<Student> getStulist() {
+		return stulist;
+}	
+public void setStulist(List<Student> stulist) {
+		this.stulist = stulist;
+}
+@Override
+public String toString() {
+		return "School_class [id=" + id + ", name=" + name + ", stulist="+ stulist + "]";
+}
+```
+2. 添加代码到mybatis的配置文件：
+```xml
+<mappers>
+	<mapper resource="com/dao/studentMapper.xml"/> 
+	<mapper resource="com/dao/School_classMapper.xml"/> 
+</mappers>
+```
+3. 添加代码，到School_classMapper.xml
+<strong>测试sql语句：</strong>
+![sql语句](../img/mybatis_img/8.png)
+![查询结果](../img/mybatis_img/9.png)
+```xml
+<mapper namespace="com.dao.School_classdao">
+
+<!--#{id}:从传递过来的参数取出id值-->
+<select id="selectclass_stu" resultMap="one_to_more">
+select sc.* ,s.id sid,s.name sname, s.age sage, s.class_id scid from 
+school_class sc LEFT JOIN student s on sc.id=s.class_id where 1=1
+		<if test=" id!=null ">and sc.id=#{id}</if>
+		<!-- 这段表示，如果传来的参数中的id 不为null，则参数的id的值赋值给sql语句的sc.id -->
+		<if test=" name!=null ">and sc.name=#{name}</if>
+		
+</select>
+
+<resultMap type="com.entity.School_class" id="one_to_more">
+	<id property="id" column="id"/>
+	<!-- 这段表示，把查询出来的id列的值赋值给School_class的id属性 -->
+	<result property="name" column="name"/>
+	<collection property="stulist" ofType="com.entity.Student">  
+	<!-- ofType:表示集合当中的类型，本例子为Student类型，sid在sql语句中为s.id的别名 ，-->
+		<id property="id" column="sid"/>
+		<!-- 这段表示，把查询出来的sid列的值赋值给Student的id属性 -->
+		<result property="name" column="sname"/>
+		<result property="age" column="sage"/>
+		<result property="sclass.id" column="scid"/>
+		<!-- 这段表示，查询出来的scid列的值，赋值给Student的sclass属性的id字段 -->
+		<result property="sclass.name" column="sname"/>
+	</collection>
+
+</resultMap>
+```
+4. 测试：
+```java
+...
+School_classdao mapper =session.getMapper(School_classdao.class);
+School_class sc=new School_class();
+sc.setName("A");
+School_class selectclass_stu = mapper.selectclass_stu(sc);
+System.out.println(selectclass_stu);
+```
+<strong>运行结果：</strong>
+School_class [id=1, name=A, stulist=[Student [id=5,name=xiao, age=12, sclass=School_class [id=1, name=null,stulist=null]]]]
+
+
+### 5.多对多关联查询：
