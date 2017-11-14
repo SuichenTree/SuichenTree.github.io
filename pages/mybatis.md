@@ -626,3 +626,179 @@ School_class [id=1, name=A, stulist=[Student [id=5,name=xiao, age=12, sclass=Sch
 
 
 ### 5.多对多关联查询：
+参考链接：
+[Mybatis多对多关联查询](https://www.cnblogs.com/hnlictmso/p/6363277.html)
+
+&emsp;&emsp;生活中，如果以班级与老师的关系的话,<font color="red">一个班级可以有多个老师，一个老师可以教多个班级，这就是多对多的关系。①查询某个班级时，把班级所在的多个老师也查询出来。②查询某个老师时，把老师所在的多个班级也查询出来。③把老师全查询出来时，把所以老师的所教的班级都查询出来。</font>
+&emsp;&emsp;<strong>一般进行多对多的关联查询，要用到中间表（存放两表达的公共信息，如id，通过公共信息，使得两表产生连接）</strong>
+
+1. 创建老师表：teacher
+![老师表](../img/mybatis_img/13.png)
+
+2. 编写老师表的持久化类（javaBean）,代理接口（方法名与映射文件的id值相同）
+![](../img/mybatis_img/14.png)
+
+3. 添加TeacherMapper.xml到mybatis的配置文件中:
+```xml
+<!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 -->
+		 <mappers>
+		 		<mapper resource="com/dao/studentMapper.xml"/> 
+		 		<mapper resource="com/dao/School_classMapper.xml"/> 
+		 		<mapper resource="com/dao/TeacherMapper.xml"/> 
+		 </mappers>
+```
+
+4. 修改School_class表的持久化类，代理接口：
+![](../img/mybatis_img/15.png)
+
+5. 创建中间表：class_teacher（不用编写其javaBean与代理接口）
+![中间表](../img/mybatis_img/12.png)
+
+#### ①查询某个班级时，把班级所在的多个老师也查询出来：
+![](../img/mybatis_img/16.png)
+
+
+School_classMapper.xml
+```xml
+<select id="select_class_tescher" resultMap="more_to_more">
+SELECT sc.id,sc.name,t.id tid,t.name tname 
+from school_class sc,teacher t,class_teacher ct 
+where ct.c_id=sc.id and ct.t_id=t.id and sc.id=#{id};
+
+</select>
+<!-- tid 是t.id的别名，tname是t.name的别名，ct 是中间表class_teacher的别名， -->
+<resultMap type="com.entity.School_class" id="more_to_more">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<!-- 把结果的name列的值赋值给School_class的name属性 -->
+		<collection property="tealist" ofType="com.entity.Teacher">
+			<id property="id" column="tid"/>
+			<result property="name" column="tname"/>
+			<!-- 把结果的tname列的值赋值给School_class的tealist属性的name字段 -->
+		</collection>
+</resultMap>
+
+```
+测试 main.java:
+```java
+@Test
+	public void test() throws Exception{
+		//通过这句来读取xml 配置文件的信息
+		InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
+		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		//实例化session 对象，通过SqlSessionFactory
+		SqlSession session=ssf.openSession();
+		
+		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+		School_classdao scdao =session.getMapper(School_classdao.class);
+		School_class sc=new School_class();
+		sc.setId(1);
+		School_class selectclass_stu = scdao.select_class_tescher(sc); //代理接口的方法与对应的xml映射文件的CRUD标签的id值相同。
+		System.out.println(selectclass_stu);
+		
+	}
+```
+测试结果：
+School_class [id=1, name=A, stulist=null, tealist=[Teacher [id=1, name=tom, stulist=null, sclass=null], Teacher [id=2, name=jim, stulist=null, sclass=null]]]
+
+
+#### ②查询某个老师时，把老师所在的多个班级也查询出来：
+![](../img/mybatis_img/17.png)
+
+TeacherMapper.xml
+```xml
+<!-- 为mapper指定唯一的命名空间，在不用接口式编程的情况下，随便取名 -->
+<mapper namespace="com.dao.Teacherdao">
+
+<!--#{id}:从传递过来的参数取出id值-->
+<select id="select_teacher_class" resultMap="more_to_more">
+SELECT t.id,t.name,sc.id scid ,sc.name scname from 
+teacher t,school_class sc ,class_teacher ct 
+where t.id=ct.t_id and ct.c_id=sc.id and t.id=#{id};
+
+</select>
+
+<resultMap type="com.entity.Teacher" id="more_to_more">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<collection property="sclass" ofType="com.entity.School_class">
+		<id property="id" column="scid"/>
+		<result property="name" column="scname"/>
+	</collection>
+</resultMap>
+```
+
+测试代码 main.java:
+```java
+@Test
+	public void test2() throws Exception{
+		//通过这句来读取xml 配置文件的信息
+		InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
+		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		//实例化session 对象，通过SqlSessionFactory
+		SqlSession session=ssf.openSession();
+		
+		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+		Teacherdao mapper =session.getMapper(Teacherdao.class);
+		Teacher t=new Teacher();
+		t.setId(1);
+		
+		Teacher select_teacher_class = mapper.select_teacher_class(t); //代理接口的方法与对应的xml映射文件的CRUD标签的id值相同。
+		System.out.println(select_teacher_class);
+		
+	}
+```
+
+测试结果：
+Teacher [id=1, name=tom, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=2, name=B, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]]
+
+
+#### ③把查询全部老师的同时，把所有老师的所教的班级都查询出来：
+![](../img/mybatis_img/18.png)
+
+TeacherMapper.xml:
+```xml
+<select id="select_teacher_class2" resultMap="more_to_more2">
+SELECT t.id,t.name,sc.id scid ,sc.name scname from 
+teacher t,school_class sc ,class_teacher ct 
+where t.id=ct.t_id and ct.c_id=sc.id ;
+
+</select>
+<resultMap type="com.entity.Teacher" id="more_to_more2">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<!-- 把查询出来的的name列的值赋值给Teacher类的name属性 -->
+	<collection property="sclass" ofType="com.entity.School_class">
+		<id property="id" column="scid"/>
+		<result property="name" column="scname"/>
+		<!-- 把查询出来的的scname列的值赋值给Teacher类sclass属性的name字段 -->
+	</collection>
+</resultMap>
+
+```
+
+测试代码：
+```java
+@Test
+	public void test3() throws Exception{
+		//通过这句来读取xml 配置文件的信息
+		InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
+		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		//实例化session 对象，通过SqlSessionFactory
+		SqlSession session=ssf.openSession();
+		
+		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+		Teacherdao mapper =session.getMapper(Teacherdao.class);
+		Teacher t=new Teacher();
+		t.setId(1);
+		
+		List<Teacher> select_teacher_class = mapper.select_teacher_class2(t);
+		System.out.println(select_teacher_class);
+		
+	}
+```
+测试结果：
+[Teacher [id=1, name=tom, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=2, name=B, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]], Teacher [id=2, name=jim, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]], Teacher [id=3, name=jack, stulist=null, sclass=[School_class [id=4, name=D, stulist=null, tealist=null]]]]
