@@ -387,7 +387,7 @@ public class main {
 
 ```
 
-## <font color="red">ResultMap</font>:
+## <font color="red">ResultMap（注释很重要）</font>:
 
 ### 1.ResultMap的作用概述：
 &emsp;&emsp;MyBatis中在查询进行select映射的时候，返回类型可以用resultType，也可以用resultMap，resultType是直接表示返回类型的，而resultMap则是对外部ResultMap的引用（<font color="red">相当于自定义结果集映射规则</font>），但是<strong>resultType跟resultMap不能同时存在</strong>。
@@ -456,12 +456,36 @@ public String toString() {
 
 4. 在StudentMapper的映射文件中使用ResultMap：
 &emsp;&emsp;<font color="red">执行select标签时，会根据与其相联系的resultMap 标签来进行结果集映射</font>
-<strong>有两种方法：</strong>
+<strong>有三种方法：</strong>
 
 数据库中执行sql语句：
 ![运行截图](../img/mybatis_img/10.png)
 ![运行截图](../img/mybatis_img/11.png)
-①：使用别名
+
+<font color="red">①不使用association标签，使用级联属性封装结果集</font>
+StudentMapper.xml
+```xml
+<select id="selectStudent" resultMap="one_one_select_gai" parameterType="com.entity.Student">
+	SELECT s.*,sc.id scid,sc.name scname from student s LEFT JOIN 
+	
+	school_class sc on s.class_id=sc.id where 1=1 
+	
+	<if test="id !=null">and s.id=#{id}</if>
+	 <if test="name !=null">and s.name=#{name}</if>
+</select>
+
+<resultMap type="com.entity.Student" id="one_one_select_gai">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<result property="age" column="age"/>
+	<!--property="sclass.id"表示Student的sclass属性的id属性，把查询出来的scid的列的值，赋值给它  -->
+ 	<result property="sclass.id" column="scid"/>
+ 	<result property="sclass.name" column="scname"/>
+ 	
+</resultMap>
+```
+
+<font color="red">②：association 使用别名（嵌套查询）</font>
 ```xml
 
 <select id="selectStudent" resultMap="one_one_select" parameterType="com.entity.Student">
@@ -482,22 +506,28 @@ public String toString() {
 	<id property="id" column="id"/>
 	<result property="name" column="name"/>
 	<result property="age" column="age"/>
+ 	
+ <!-- association 用来指定联合的javaBean对象，
+ property="sclass"告诉标签那个属性是联合的对象
+ javaType 表示联合的对象的类型，不能省略。
  
-   <association property="sclass" column="class_id" javaType="com.entity.School_class">
+ association标签内的id,result标签，表示查询出来的列名的值，放到联合对象的那个属性中
+  -->	
+ 	
+   <association property="sclass" javaType="com.entity.School_class">
 	 <id property="id" column="scid"/>
-     <result property="name" column="scname"/>
-
+	 <!--查询出来的列名scid 的值，放到联合对象的id属性中  -->
 	 <!--scid 是sid的别名，scname是sc.name的别名-->
-
+     <result property="name" column="scname"/>
    </association> 
 	
 </resultMap>
 
-
-
 ```
 
-②：在sql语句执行时，在执行另一个sql语句
+
+
+<font color="red">③：association 分步查询（在sql语句执行时，在执行另一个sql语句）</font>
 ```xml
 <select id="selectStudent2" resultMap="one_one_select2" parameterType="com.entity.Student">
 	SELECT s.*,sc.id scid,sc.name scname from student s LEFT JOIN 
@@ -511,12 +541,18 @@ public String toString() {
 	<id property="id" column="id"/>
 	<result property="name" column="name"/>
 	<result property="age" column="age"/>
- 
+	<!--association标签中
+		使用select指定的方法（传入column指定的列的参数的值），查询出来的结果，封装给property 指定的对象中
+	
+	-->
    <association property="sclass" column="class_id" javaType="com.entity.School_class" select="selectClass"/>
  <!--select的值，表示执行一条sql语句，select的值指向id为select属性值的select标签。并把执行sql语句的结果，封装到property 代表的对象中。-->
   	
 </resultMap>
+```
 
+School_classMapper.xml
+```xml
 <select id="selectClass" resultType="com.entity.School_class" parameterType="com.entity.School_class">
 	select * from school_class where id=#{id}
 </select>
@@ -578,7 +614,9 @@ public String toString() {
 	<mapper resource="com/dao/School_classMapper.xml"/> 
 </mappers>
 ```
-3. 添加代码，到School_classMapper.xml
+3. 添加代码，到School_classMapper.xml(**这里有两种写法，①使用嵌套查询，②使用分部查询**)
+ 
+**①：嵌套查询**
 <strong>测试sql语句：</strong>
 ![sql语句](../img/mybatis_img/8.png)
 ![查询结果](../img/mybatis_img/9.png)
@@ -612,7 +650,37 @@ school_class sc LEFT JOIN student s on sc.id=s.class_id where 1=1
 
 </resultMap>
 ```
-4. 测试：
+
+**②分布查询：**
+
+```xml
+<!-- 一对多关联查询的分布查询 -->
+<select id="selectclass_stu2" resultMap="one_more_aprat">
+	select * from school_class where id=#{id}
+
+</select>
+
+<resultMap type="com.entity.School_class" id="one_more_aprat">
+	<id property="id" column="id"/>
+	<result property="name" column="name"/>
+	<collection property="stulist" column="id" select="selectstudent"/>
+	<!-- 
+		执行select="selectstudent"的sql语句，(把column的值当做参数)，
+		查询的结果封装到property="stulist"的属性中。
+	 -->
+
+</resultMap>
+
+
+<!--id="selectstudent" 的select查询，应该写在StudentMapper.xml中,这里是为了方便  -->
+<select id="selectstudent" resultType="com.entity.School_class" parameterType="com.entity.School_class">
+	select * from student where class_id=#{id}
+</select>
+
+```
+
+
+4. 测试(以嵌套查询为例)：
 ```java
 ...
 School_classdao mapper =session.getMapper(School_classdao.class);
@@ -802,3 +870,295 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 ```
 测试结果：
 [Teacher [id=1, name=tom, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=2, name=B, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]], Teacher [id=2, name=jim, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]], Teacher [id=3, name=jack, stulist=null, sclass=[School_class [id=4, name=D, stulist=null, tealist=null]]]]
+
+### 6.关联查询补充：
+
+#### 1.懒加载（延迟加载）：
+&emsp;&emsp;resultMap可实现高级映射（使用association、collection实现一对一及一对多映射），association、collection具备延迟加载功能。
+&emsp;&emsp;如果查询订单并且关联查询用户信息。如果先查询订单信息即可满足要求，当我们需要查询用户信息时再查询用户信息。把对用户信息的按需去查询就是延迟加载。<strong>白话文：不会立即发送sql语句去查询用户信息，而是等到要用用户信息时，才会发送sql语句查询订单对应的用户信息。</strong>
+<font color="red">延迟加载：先从单表查询，需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速度要快。</font>
+
+&emsp;&emsp;<strong>在实际开发中，一对多关系通常映射为集合对象，而由于多的一方的数据量可能很大，所以通常使用懒加载；而多对一只是关联到一个对象，所以通常使用多表连接，直接把数据提取出来即可。</strong>
+
+School_classMapper.xml
+```xml
+
+<resultMap type="com.entity.School_class" id="one_to_more">
+	<id property="id" column="id"/>
+
+	<result property="name" column="name"/>
+	<collection property="stulist" ofType="com.entity.Student" fetchType="lazy">  
+	<!--fetchType="lazy" ,fetchType的取值有eager，lazy，
+	eager：表示立即加载。
+	lazy：表示懒加载。
+
+	注意：当使用fetchType="lazy" 时，使用懒加载时，要在mybatis的配置文件中增加配置：
+
+	
+	-->
+		<id property="id" column="sid"/>
+		
+		<result property="name" column="sname"/>
+		<result property="age" column="sage"/>
+		<result property="sclass.id" column="scid"/>
+		<!-- 这段表示，查询出来的scid列的值，赋值给Student的sclass属性的id字段 -->
+		<result property="sclass.name" column="sname"/>
+	</collection>
+
+</resultMap>
+```
+
+mybatis_config.xml:
+```xml
+<settings>
+		<!-- 使用懒加载生效，必须配置的属性
+		lazyLoadingEnabled：表示懒加载的的全局开关，所有的关联对象，都会懒加载，默认为false。
+		lazyLoadingEnabled：开启时，会使带有懒加载属性的对象立即加载；反之，每种属性都会按需加载，默认为true
+		
+		 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+</settings>	 
+```
+
+#### 2.使用association，collection 标签进行分布查询时，可以传多列的值：
+注意：<font color="red">需要把多列的值封装为map，传过去</font>：
+&emsp;&emsp;column="{key1=column1,key2=column2,...}"
+```xml
+
+ <association property="sclass" column="{id=class_id}" javaType="com.entity.School_class" select="selectClass"/>
+
+```
+
+#### 3.MyBatis的鉴别器（discriminator）:
+&emsp;&emsp;使用鉴别器，进行分段查询时，根据表中某个字段区别数据，根据查询的结果，选择不同的封装结果集的规则，将查询出的数据自动封装成不同类型的对象（选择不同的分段查询，类似switch）。
+参考链接：
+[MyBatis鉴别器](http://blog.csdn.net/ykzhen2015/article/details/51249963)
+
+
+## 动态SQL:
+&emsp;&emsp;Mybatis的动态sql是基于OGNL的表达式来完成的，OGNL表达式可以被用在任意的sql映射语句中。
+常用的动态SQL元素：
+1. if 语句 (简单的条件判断)
+2. choose (when,otherwize) ,相当于java 语言中的 switch ,与 jstl 中的choose 很类似.
+3. trim (对包含的内容加上 prefix,或者 suffix 等，前缀，后缀)
+4. where (主要是用来简化sql语句中where条件判断的，能智能的处理 and , or ,不必担心多余导致语法错误)
+5. set (主要用于更新时)
+6. foreach (在实现 mybatis in 语句查询时特别有用)
+7. bind
+
+参考链接：
+[OGNL](https://baike.baidu.com/item/OGNL/10365326?fr=aladdin)
+
+### 1.if 语句 (简单的条件判断)：
+```xml
+
+<select id="select1" resultType="Student">  
+  select * from User Where 1=1  
+  <if test="name != null and phone != null">  
+    and name like #{name} and phone = #{phone} 
+  </if>  
+  <if test="gender != null">  
+    and gender = #{gender}  
+  </if>  
+....
+</select>  
+```
+### 2.choose (when,otherwize)语句：
+<font color="red">如果传入了id,就根据id查询，没有传入id，就根据name查询，否则就根据 gender="男" 查询。**例如传入了id，name，还是按id查询。**</font>
+```xml
+<select id="select2"  resultType="Student">  
+  select * from student Where 1=1   
+
+  <choose>  
+    <when test="id != null">  
+      AND id =#{id}  
+    </when>
+
+	<when test="name != null">  
+      AND name =#{name}  
+    </when>    
+
+    <otherwise>  
+      	AND gender="男"  
+    </otherwise>  
+  </choose>  
+
+</select>   
+```
+
+### 3.trim标签（常用，三种用法）
+1. 第一种用法：
+```xml
+<select id="select2" resultType="com.entity.user">
+select * from user 
+	<trim prefix="where" prefixoverride="AND | OR">
+
+　　	<if test="name != null"> 	
+		AND name=#{name}
+		</if>
+
+　　	<if test="gender != null">
+ 		AND gender=#{gender}
+    	</if>
+
+	</trim>
+
+</select>
+```
+<font color="red">假如说name和gender的值都不为null的话.打印的SQL为：
+&emsp;&emsp;select * from user where name = 'xx' and gender = 'xx'
+在where 与name 之间是不存在第一个and的，上面两个属性的意思如下：
+&emsp;&emsp;prefix：前缀　　　　　　
+&emsp;&emsp;prefixoverride：去掉第一个and或者是or
+</font>
+
+
+2. 第二种用法：
+```xml
+<update id="update2" parameterType="com.entity.user">
+	update user
+
+<trim prefix="set" suffixoverride="," suffix=" where id = #{id} ">
+
+	<if test="name != null">
+ 	name=#{name} ,
+ 	 </if>
+
+	<if test="gender != null"> 
+	gender=#{gender} ,  
+	</if>
+
+</trim>
+
+</update>
+```
+<font color="red">假如说name和gender的值都不为null的话打印的SQL为：
+update user set name='xx' , gender='xx'    where id='x'
+在gender='xx' 与where 的地方不存在逗号，而且自动加了一个set前缀和where后缀，上面三个属性的意义如下，
+&emsp;&emsp;prefix：前缀。
+&emsp;&emsp;suffixoverride：去掉最后一个逗号（也可以是其他的标记，就像是上面前缀中的and一样）
+&emsp;&emsp;suffix：后缀.可直接写在sql语句末尾。
+</font>
+
+3. 第三种方法：
+```xml
+<insert id="insertGoods" parameterType="com.entity.Goods">         
+insert into goods
+	<trim prefix="(" suffix=")" suffixOverrides="," >	
+	<if test='name != null and name != "" '>
+             name,
+    </if>
+    <if test='price != null and price != "" '>
+             price,
+    </if>
+    <if test='introduce != null and introduce != "" '>
+             introduce,
+    </if>
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		
+		    <if test='name != null and name != "" '>
+            		 #{name},
+		    </if>
+		    <if test='price != null and price != "" '>
+		              #{price},
+		    </if>
+		    <if test='introduce != null and introduce != "" '>
+		              #{introduce},
+		    </if>
+		
+	</trim>
+
+</insert>
+```
+<strong>如果if的条件都符合的话,sql语句：
+insert into goods（ name, price, introduce）values （ 'xx' , 'xx', 'xx' ）
+</strong>
+
+### 4.where 
+&emsp;&emsp;where 元素知道在有一个及一个以上的if语句成立的情况下，才去插入where子句，而且若最后的内容为 and 或 or 开头，则where元素会将其去除。
+
+```xml
+<select id="select3"  resultType="user">  
+  SELECT * FROM User  
+<where>  
+  
+  <if test="age != null">  
+    age = #{age}  
+  </if>  
+  <if test="name != null">  
+    and name like #{name}  
+  </if>  
+  
+<where> 
+
+</select>  
+```
+若没有传入 age ,它会自动清除最近内容的and或者or，SQL语句为：<font color="red">
+SELECT * FROM User  where  name like #{name}  </font>
+
+### 5.set语句（适用与动态更新）：
+```xml
+<update id="update1" parameterType="user"> 
+  update User  
+    <set>  
+      <if test="username !=null">
+	  username=#{username},
+	  </if>  
+      <if test="password !=null">
+	  password=#{password},
+	  </if>  
+      <if test="Age != null">
+	  Age =#{Age}
+	  </if>  
+    </set>  
+  where id=#{id}  
+</update>  
+```
+set 元素会前置set 关键字，同时会消除无关的逗号。sql语句：<font color="red">
+ update user  set  username=#{username},password=#{password}, Age =#{Age}  where id=#{id}  </font>
+
+### 6.foreach语句：
+&emsp;&emsp;关于动态sql的另一个常用的操作就是对集合进行遍历，通常发生在构建 in 条件语句时。
+&emsp;&emsp;<font color="red">foreach 的元素功能非常强大。它允许指定一个集合，声明可以用在元素体内的集合项和索引变量。它也允许指定开闭匹配的字符串以及在迭代中间放置分隔符。</font>
+
+```xml
+
+<select id="select5" resultType="user">  
+    select * from User where id in  
+<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+        #{item}  
+</foreach>  
+    
+</select>  
+    
+```
+
+```java
+public List<User> select5(List<Integer> ids);  //给这个sql语句传入一个集合，集合的每个元素都为id 
+```
+SQL语句(一个？表示一个id)：
+<font color="red">select * from User where id in （?,?,....）</font>
+
+### 7.bind语句(我也不太会)：
+&emsp;&emsp;bind元素可以从OGNL表达式中创建一个变量并将其绑定到上下文中。
+
+bind元素允许你在自定义变量（不用符合OGNL规范），并且应用到上下文中。例如：
+```xml
+<select id="select_bind" resultType="com.entity.user">
+  <bind name="pattern" value="'%' + _parameter.getName() + '%'" />
+  SELECT * FROM user
+  WHERE name LIKE #{pattern}
+</select>
+```
+```java
+ user us=new user();
+ us.setName("o");
+ ...
+ userdao.select_bind(us);
+ ...
+```
+SQL语句：
+<font color="red"> SELECT * FROM user WHERE name LIKE '%o%' </font>
