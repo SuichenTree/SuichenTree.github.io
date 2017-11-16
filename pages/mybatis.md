@@ -946,6 +946,7 @@ mybatis_config.xml:
 5. set (主要用于更新时)
 6. foreach (在实现 mybatis in 语句查询时特别有用)
 7. bind
+8. sql标签；
 
 参考链接：
 [OGNL](https://baike.baidu.com/item/OGNL/10365326?fr=aladdin)
@@ -965,7 +966,7 @@ mybatis_config.xml:
 </select>  
 ```
 ### 2.choose (when,otherwize)语句：
-<font color="red">如果传入了id,就根据id查询，没有传入id，就根据name查询，否则就根据 gender="男" 查询。**例如传入了id，name，还是按id查询。**</font>
+<font color="red">如果传入了id,就根据id查询，没有传入id，就根据name查询，否则就根据 gender="男" 查询。<font color="red">只会进入其中一个分支（条件）去查询</font>。**例如传入了id，name，还是按id查询。**</font>
 ```xml
 <select id="select2"  resultType="Student">  
   select * from student Where 1=1   
@@ -1117,19 +1118,37 @@ SELECT * FROM User  where  name like #{name}  </font>
   where id=#{id}  
 </update>  
 ```
-set 元素会前置set 关键字，同时会消除无关的逗号。sql语句：<font color="red">
+set 元素会前置set 关键字，同时会消除多出来的无关的逗号。sql语句：<font color="red">
  update user  set  username=#{username},password=#{password}, Age =#{Age}  where id=#{id}  </font>
 
 ### 6.foreach语句：
 &emsp;&emsp;关于动态sql的另一个常用的操作就是对集合进行遍历，通常发生在构建 in 条件语句时。
 &emsp;&emsp;<font color="red">foreach 的元素功能非常强大。它允许指定一个集合，声明可以用在元素体内的集合项和索引变量。它也允许指定开闭匹配的字符串以及在迭代中间放置分隔符。</font>
 
+<strong>foreach 标签中：</strong>
+
+<font color="red">collection</font> ：指定要遍历的集合，list类型的会特殊处理封装在map中，map的key就叫list。
+
+<font color="red">item</font> ：把当前遍历的元素赋值给指定的变量
+
+<font color="red">separator </font>：每个元素之间的分隔符。
+
+<font color="red">open</font>：遍历条件中，以什么符号开始的。
+
+<font color="red">close</font>：遍历条件中，以什么符号结束的。
+
+<font color="red">index</font>：遍历list时，index表示为索引，item是当前值。遍历map时，index表示为map的key，item为map的value。
+
+<font color="red">"#{item_ids}"</font>: item_ids是变量名，表示取出变量的值，也就是当前遍历出的元素。 
+
+<strong>1. 批量查询：</strong>
+
 ```xml
 
 <select id="select5" resultType="user">  
     select * from User where id in  
-<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
-        #{item}  
+<foreach collection="list" index="index" item="item_ids" open="(" separator="," close=")">  
+        #{item_ids}  
 </foreach>  
     
 </select>  
@@ -1142,17 +1161,54 @@ public List<User> select5(List<Integer> ids);  //给这个sql语句传入一个�
 SQL语句(一个？表示一个id)：
 <font color="red">select * from User where id in （?,?,....）</font>
 
+
+<strong>2. 批量插入数据：</strong>
+mysql支持<font color="red"> insert into tbale_name() values (),(),(),...这种语法</font>
+
+Studentdao.java
+```java
+	public void addstulist(List<Student> stulist);
+
+```
+
+StudentMapper.xml
+```xml
+	<insert id="addstulist">
+		insert into student (id,name,gender) values
+		<foreach collection="list" item="stulist" separator="," >
+	    	(#{stulist.id},#{stulist.name},#{stulist.gender})
+		</foreach>
+	</insert>
+```
+
+SQL语句(一个？表示一个id)：
+
+<font color="red">insert into student(id,name,gender) values (?,?,?) ,(?,?,?)...</font>
+
+
 ### 7.bind语句(我也不太会)：
 &emsp;&emsp;bind元素可以从OGNL表达式中创建一个变量并将其绑定到上下文中。
 
-bind元素允许你在自定义变量（不用符合OGNL规范），并且应用到上下文中。例如：
+bind元素允许你在自定义变量（不用符合OGNL规范），并且应用到上下文中。把OGNL表达式的值绑定到一个变量中，方便后来引用这个变量。
+例如：
 ```xml
 <select id="select_bind" resultType="com.entity.user">
-  <bind name="pattern" value="'%' + _parameter.getName() + '%'" />
+  <bind name="name" value="'%' + name + '%'" />
   SELECT * FROM user
-  WHERE name LIKE #{pattern}
+  WHERE name LIKE #{name}
 </select>
 ```
+
+bind标签：
+name="name" :被绑定的属性，变量。
+value="'%' + _parameter.getName() + '%'" ：对被绑定的属性，变量，左右增加'%'。
+
+<font color="red">以后传入的参数的name属性在sql语句中都会左右加上'%',这样就变成了根据 name 进行模糊查询。</font>
+
+
+
+
+
 ```java
  user us=new user();
  us.setName("o");
@@ -1162,3 +1218,103 @@ bind元素允许你在自定义变量（不用符合OGNL规范），并且应用
 ```
 SQL语句：
 <font color="red"> SELECT * FROM user WHERE name LIKE '%o%' </font>
+
+
+### 8.sql，include 标签（抽取可重复使用的sql片段，方便引用）：
+
+sql标签  :抽取sql片段。
+inculde标签  :引用被抽取的sql片段。
+
+```xml
+<insert id="addstulist">
+ insert into student (id,name,gender) values (#{id},#{name},#{gender});
+</insert>
+
+
+<sql id="sql_1">
+  id,name,gender
+</sql>
+
+
+<insert id="addstulist">
+ insert into student (  <include refid="sql_1"></include>  ) values (#{id},#{name},#{gender});
+</insert>
+
+```
+
+## Mybatis的缓存机制：
+&emsp;&emsp;在大型项目开发，由于涉及到的表多，数据量大，通常对数据库查询的性能要求很高。Mybatis提供了<font color="red">查询缓存机制，用于缓存查询出来的数据，减轻数据库的压力。从而提高数据库的查询性能。</font>
+&emsp;&emsp;Mybatis的查询缓存分为：<font color="blue">一级缓存（SqlSession 级别的缓存），二级缓存（mapper 级别的缓存）</font>。其中，二级缓存是多个SqlSession 共享的。
+
+### 一级缓存（SqlSession 级别）：
+&emsp;&emsp;<font color="blue">Mybatis默认开启一级缓存，不需要进行任何配置。</font>
+在之前的例子中可以知道，操作数据库之前，需要以下几步：
+
+> 1.通过输入流来读取mybatis的配置文件信息。告诉程序连接的数据库，用户名，密码。以及到哪里去寻找 持久化类与数据表的映射文件
+> 2.通过xml配置文件信息，初始化mybatis ， 创建SqlSessionFactory
+> 3.通过SqlSessionFactory，实例化session 对象
+> 4.创建你要操作的数据对象
+> 5.找到Mapper映射文件的对应的sql语句，通过映射文件袋命名空间+对应SQL语句的id ，例如："com.dao.StudentMapper.insertStudent"
+> 6.对操作对象实行CRUD 方法
+
+其中第三步，通过<font color="red">SqlSessionFactory，实例化session 对象</font>。<font color="blue">当我们构造session 对象时，在对象中会产生一个 HashMap 用于存储缓存数据</font>。<strong>不同的 SqlSession 之间的缓存数据区域（HashMap）是互相不影响的。</strong>
+
+一级缓存原理及实现过程：
+&emsp;&emsp;由于以及一级缓存的作用域是 SqlSession级别的，==当同一个SqlSession中执行两次相同的sql语句时，第一次执行sql完毕，会把查询的数据写到缓存（内存）中。当第二次执行相同的sql 查询语句时，会直接从缓存中获取查询数据。不会去底层数据库中进行查询==。从而减轻了数据库的压力，提高了查询效率。
+
+<font color="red">注意：</font>
+①：如果SqlSession 执行了对数据库的数据进行了修改（如：update，insert，delete）等sql语句，并提交到数据库时。该SqlSession的一级缓存会被清空，保证缓存中的数据是最新的。
+②：Mybatis的缓存机制是基于 id 进行缓存的，当HashMap缓存数据时，是使用对象的id，作为key，而对象作为 value 保存的。
+
+==当一个SqlSession关闭后，其缓存消失。==
+
+
+### 二级缓存（mapper 级别）：
+&emsp;&emsp;<font color="blue">Mybatis默认没有开启二级缓存，需要在Mybatis的配置文件中setting 全局参数中配置开启二级缓存。</font>
+
+二级缓存原理及实现过程：
+&emsp;&emsp;在上面的操纵数据库的过程中的第五步中，我们需要通过操作Mapper映射文件的sql语句，实现CRUD操作。由于二级缓存是mapper级别的缓存，==当多个不同 SqlSession 使用同一个Mapper的sql 语句去操作数据库时，查询的数据会存在二级缓存区域，该区域同样是由HashMap 进行数据存储。多个不同 SqlSession 可以共享二级缓存，二级缓存是跨SqlSession==。
+
+&emsp;&emsp;多个不同 SqlSession 共享二级缓存，其作用域是mapper的同一个namespace。<font color="red">当不同的SqlSession，执行同一个 namespace 下相同的sql语句，并且向 sql语句 传递的参数也相同（即最终执行相同的sql语句）。第一次执行sql完毕，会把查询的数据写到缓存（内存）中。当第二次执行相同的sql 查询语句时，会直接从缓存中获取查询数据。不会去底层数据库中进行查询。</font> 
+
+Mybatis-config.xml
+```xml
+<settings>
+	<!--开启二级缓存 ，该属性默认为 false-->
+	<setting name="cacheEnabled" value="true"/>
+</settings>
+```
+UserMapper.xml
+```xml
+
+<cache eviction="LRU" flushInterval="60000" size="512" readOnly="true"/>
+<!--
+以上创建了以后 LRU 缓存，并每隔60 s 刷新，最大存储对象为 512 个，并且返回的对象为只读。
+
+cache元素用于开启当前 mapper 的 namespace 下的二级缓存：
+
+eviction：收回策略（当缓存爆满时），默认为LRU，
+	LRU:最近最少使用的策略，移除最长时间不使用的对象缓存。
+	FIFO：先进先出策略，按对象进入缓存的顺序来移除它们。
+	SOFT：软引用策略，移除基于垃圾回收器状态和软引用规则的对象。
+	WEAK：弱引用策略，跟快的移除基于垃圾回收器状态和弱引用规则的对象。
+
+fulshInterval：刷新间隔，缓存多长时间清空一次。
+size: 缓存数目，默认值为1024.
+readOnly:只读，属性值为 true，false，默认为false。 
+	
+	当为true 时，mybatis会认为所有从缓存中获取数据的操作，都是只读的操作。给使用者返回缓存对象的数据引用，该引用无法被修改。
+	
+	当为false 时，mybatis会认为所有从缓存中获取数据的操作都是非只读的操作。会返回缓存对象的拷贝（通过序列化与反序列化），该对象的拷贝可以修改数据，速度慢，会比只读安全些。
+
+-->
+```
+
+禁用当前Mapper映射文件中的sql语句是否开启二级缓存。
+UserMapper.xml
+```xml
+<select id="..." resultMap="..." useCache='false'>
+```
+
+<strong>注意：</strong>
+<font color="red">查询出来的数据默认会放在一级缓存中，只有当SqlSession 提交，关闭时，一级缓存的数据转移到二级缓存中，并清空一级缓存。</font>

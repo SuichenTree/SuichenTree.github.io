@@ -266,6 +266,13 @@ code.language-yaml {
 <li><a href="#5set%E8%AF%AD%E5%8F%A5%E9%80%82%E7%94%A8%E4%B8%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0">5.set语句（适用与动态更新）：</a></li>
 <li><a href="#6foreach%E8%AF%AD%E5%8F%A5">6.foreach语句：</a></li>
 <li><a href="#7bind%E8%AF%AD%E5%8F%A5%E6%88%91%E4%B9%9F%E4%B8%8D%E5%A4%AA%E4%BC%9A">7.bind语句(我也不太会)：</a></li>
+<li><a href="#8sqlinclude-%E6%A0%87%E7%AD%BE%E6%8A%BD%E5%8F%96%E5%8F%AF%E9%87%8D%E5%A4%8D%E4%BD%BF%E7%94%A8%E7%9A%84sql%E7%89%87%E6%AE%B5%E6%96%B9%E4%BE%BF%E5%BC%95%E7%94%A8">8.sql，include 标签（抽取可重复使用的sql片段，方便引用）：</a></li>
+</ul>
+</li>
+<li><a href="#mybatis%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6">Mybatis的缓存机制：</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98sqlsession-%E7%BA%A7%E5%88%AB">一级缓存（SqlSession 级别）：</a></li>
+<li><a href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98mapper-%E7%BA%A7%E5%88%AB">二级缓存（mapper 级别）：</a></li>
 </ul>
 </li>
 </ul>
@@ -1169,6 +1176,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 <li>set (主要用于更新时)</li>
 <li>foreach (在实现 mybatis in 语句查询时特别有用)</li>
 <li>bind</li>
+<li>sql标签；</li>
 </ol>
 <p>参考链接：<br>
 <a href="https://baike.baidu.com/item/OGNL/10365326?fr=aladdin">OGNL</a></p>
@@ -1188,7 +1196,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 </pre>
 <h3 class="mume-header" id="2choose-whenotherwize&#x8BED;&#x53E5;">2.choose (when,otherwize)语句：</h3>
 
-<p><font color="red">如果传入了id,就根据id查询，没有传入id，就根据name查询，否则就根据 gender=&quot;男&quot; 查询。<strong>例如传入了id，name，还是按id查询。</strong></font></p>
+<p><font color="red">如果传入了id,就根据id查询，没有传入id，就根据name查询，否则就根据 gender=&quot;男&quot; 查询。<font color="red">只会进入其中一个分支（条件）去查询</font>。<strong>例如传入了id，name，还是按id查询。</strong></font></p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>select2<span class="token punctuation">"</span></span>  <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Student<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
   select * from student Where 1=1   
 
@@ -1336,17 +1344,26 @@ SELECT * FROM User  where  name like #{name}  </font></p>
   where id=#{id}  
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span>  
 </pre>
-<p>set 元素会前置set 关键字，同时会消除无关的逗号。sql语句：<font color="red"><br>
+<p>set 元素会前置set 关键字，同时会消除多出来的无关的逗号。sql语句：<font color="red"><br>
 update user  set  username=#{username},password=#{password}, Age =#{Age}  where id=#{id}  </font></p>
 <h3 class="mume-header" id="6foreach&#x8BED;&#x53E5;">6.foreach语句：</h3>
 
 <p>  关于动态sql的另一个常用的操作就是对集合进行遍历，通常发生在构建 in 条件语句时。<br>
   <font color="red">foreach 的元素功能非常强大。它允许指定一个集合，声明可以用在元素体内的集合项和索引变量。它也允许指定开闭匹配的字符串以及在迭代中间放置分隔符。</font></p>
+<p><strong>foreach 标签中：</strong></p>
+<p><font color="red">collection</font> ：指定要遍历的集合，list类型的会特殊处理封装在map中，map的key就叫list。</p>
+<p><font color="red">item</font> ：把当前遍历的元素赋值给指定的变量</p>
+<p><font color="red">separator </font>：每个元素之间的分隔符。</p>
+<p><font color="red">open</font>：遍历条件中，以什么符号开始的。</p>
+<p><font color="red">close</font>：遍历条件中，以什么符号结束的。</p>
+<p><font color="red">index</font>：遍历list时，index表示为索引，item是当前值。遍历map时，index表示为map的key，item为map的value。</p>
+<p><font color="red">&quot;#{item_ids}&quot;</font>: item_ids是变量名，表示取出变量的值，也就是当前遍历出的元素。</p>
+<p><strong>1. 批量查询：</strong></p>
 <pre class="language-xml">
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>select5<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
     select * from User where id in  
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>foreach</span> <span class="token attr-name">collection</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span> <span class="token attr-name">index</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>index<span class="token punctuation">"</span></span> <span class="token attr-name">item</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>item<span class="token punctuation">"</span></span> <span class="token attr-name">open</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(<span class="token punctuation">"</span></span> <span class="token attr-name">separator</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token attr-name">close</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
-        #{item}  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>foreach</span> <span class="token attr-name">collection</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span> <span class="token attr-name">index</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>index<span class="token punctuation">"</span></span> <span class="token attr-name">item</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>item_ids<span class="token punctuation">"</span></span> <span class="token attr-name">open</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(<span class="token punctuation">"</span></span> <span class="token attr-name">separator</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token attr-name">close</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+        #{item_ids}  
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>foreach</span><span class="token punctuation">></span></span>  
     
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>  
@@ -1356,16 +1373,37 @@ update user  set  username=#{username},password=#{password}, Age =#{Age}  where 
 </pre>
 <p>SQL语句(一个？表示一个id)：<br>
 <font color="red">select * from User where id in （?,?,....）</font></p>
+<p><strong>2. 批量插入数据：</strong><br>
+mysql支持<font color="red"> insert into tbale_name() values (),(),(),...这种语法</font></p>
+<p>Studentdao.java</p>
+<pre class="language-java">	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addstulist</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>Student<span class="token operator">></span> stulist<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</pre>
+<p>StudentMapper.xml</p>
+<pre class="language-xml">	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>addstulist<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		insert into student (id,name,gender) values
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>foreach</span> <span class="token attr-name">collection</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span> <span class="token attr-name">item</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stulist<span class="token punctuation">"</span></span> <span class="token attr-name">separator</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+	    	(#{stulist.id},#{stulist.name},#{stulist.gender})
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>foreach</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
+</pre>
+<p>SQL语句(一个？表示一个id)：</p>
+<p><font color="red">insert into student(id,name,gender) values (?,?,?) ,(?,?,?)...</font></p>
 <h3 class="mume-header" id="7bind&#x8BED;&#x53E5;&#x6211;&#x4E5F;&#x4E0D;&#x592A;&#x4F1A;">7.bind语句(我也不太会)：</h3>
 
 <p>  bind元素可以从OGNL表达式中创建一个变量并将其绑定到上下文中。</p>
-<p>bind元素允许你在自定义变量（不用符合OGNL规范），并且应用到上下文中。例如：</p>
+<p>bind元素允许你在自定义变量（不用符合OGNL规范），并且应用到上下文中。把OGNL表达式的值绑定到一个变量中，方便后来引用这个变量。<br>
+例如：</p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>select_bind<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.user<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bind</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pattern<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>%<span class="token punctuation">'</span> + _parameter.getName() + <span class="token punctuation">'</span>%<span class="token punctuation">'</span><span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bind</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">'</span>%<span class="token punctuation">'</span> + name + <span class="token punctuation">'</span>%<span class="token punctuation">'</span><span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
   SELECT * FROM user
-  WHERE name LIKE #{pattern}
+  WHERE name LIKE #{name}
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
 </pre>
+<p>bind标签：<br>
+name=&quot;name&quot; :被绑定的属性，变量。<br>
+value=&quot;'%' + _parameter.getName() + '%'&quot; ：对被绑定的属性，变量，左右增加'%'。</p>
+<p><font color="red">以后传入的参数的name属性在sql语句中都会左右加上'%',这样就变成了根据 name 进行模糊查询。</font></p>
 <pre class="language-java"> user us<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">user</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
  us<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"o"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
@@ -1374,6 +1412,90 @@ update user  set  username=#{username},password=#{password}, Age =#{Age}  where 
 </pre>
 <p>SQL语句：<br>
 <font color="red"> SELECT * FROM user WHERE name LIKE '%o%' </font></p>
+<h3 class="mume-header" id="8sqlinclude-&#x6807;&#x7B7E;&#x62BD;&#x53D6;&#x53EF;&#x91CD;&#x590D;&#x4F7F;&#x7528;&#x7684;sql&#x7247;&#x6BB5;&#x65B9;&#x4FBF;&#x5F15;&#x7528;">8.sql，include 标签（抽取可重复使用的sql片段，方便引用）：</h3>
+
+<p>sql标签  :抽取sql片段。<br>
+inculde标签  :引用被抽取的sql片段。</p>
+<pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>addstulist<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ insert into student (id,name,gender) values (#{id},#{name},#{gender});
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sql</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sql_1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  id,name,gender
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sql</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>addstulist<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ insert into student (  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>include</span> <span class="token attr-name">refid</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sql_1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>include</span><span class="token punctuation">></span></span>  ) values (#{id},#{name},#{gender});
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
+
+</pre>
+<h2 class="mume-header" id="mybatis&#x7684;&#x7F13;&#x5B58;&#x673A;&#x5236;">Mybatis的缓存机制：</h2>
+
+<p>  在大型项目开发，由于涉及到的表多，数据量大，通常对数据库查询的性能要求很高。Mybatis提供了<font color="red">查询缓存机制，用于缓存查询出来的数据，减轻数据库的压力。从而提高数据库的查询性能。</font><br>
+  Mybatis的查询缓存分为：<font color="blue">一级缓存（SqlSession 级别的缓存），二级缓存（mapper 级别的缓存）</font>。其中，二级缓存是多个SqlSession 共享的。</p>
+<h3 class="mume-header" id="&#x4E00;&#x7EA7;&#x7F13;&#x5B58;sqlsession-&#x7EA7;&#x522B;">一级缓存（SqlSession 级别）：</h3>
+
+<p>  <font color="blue">Mybatis默认开启一级缓存，不需要进行任何配置。</font><br>
+在之前的例子中可以知道，操作数据库之前，需要以下几步：</p>
+<blockquote>
+<p>1.通过输入流来读取mybatis的配置文件信息。告诉程序连接的数据库，用户名，密码。以及到哪里去寻找 持久化类与数据表的映射文件<br>
+2.通过xml配置文件信息，初始化mybatis ， 创建SqlSessionFactory<br>
+3.通过SqlSessionFactory，实例化session 对象<br>
+4.创建你要操作的数据对象<br>
+5.找到Mapper映射文件的对应的sql语句，通过映射文件袋命名空间+对应SQL语句的id ，例如：&quot;com.dao.StudentMapper.insertStudent&quot;<br>
+6.对操作对象实行CRUD 方法</p>
+</blockquote>
+<p>其中第三步，通过<font color="red">SqlSessionFactory，实例化session 对象</font>。<font color="blue">当我们构造session 对象时，在对象中会产生一个 HashMap 用于存储缓存数据</font>。<strong>不同的 SqlSession 之间的缓存数据区域（HashMap）是互相不影响的。</strong></p>
+<p>一级缓存原理及实现过程：<br>
+  由于以及一级缓存的作用域是 SqlSession级别的，<mark>当同一个SqlSession中执行两次相同的sql语句时，第一次执行sql完毕，会把查询的数据写到缓存（内存）中。当第二次执行相同的sql 查询语句时，会直接从缓存中获取查询数据。不会去底层数据库中进行查询</mark>。从而减轻了数据库的压力，提高了查询效率。</p>
+<p><font color="red">注意：</font><br>
+①：如果SqlSession 执行了对数据库的数据进行了修改（如：update，insert，delete）等sql语句，并提交到数据库时。该SqlSession的一级缓存会被清空，保证缓存中的数据是最新的。<br>
+②：Mybatis的缓存机制是基于 id 进行缓存的，当HashMap缓存数据时，是使用对象的id，作为key，而对象作为 value 保存的。</p>
+<p><mark>当一个SqlSession关闭后，其缓存消失。</mark></p>
+<h3 class="mume-header" id="&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;mapper-&#x7EA7;&#x522B;">二级缓存（mapper 级别）：</h3>
+
+<p>  <font color="blue">Mybatis默认没有开启二级缓存，需要在Mybatis的配置文件中setting 全局参数中配置开启二级缓存。</font></p>
+<p>二级缓存原理及实现过程：<br>
+  在上面的操纵数据库的过程中的第五步中，我们需要通过操作Mapper映射文件的sql语句，实现CRUD操作。由于二级缓存是mapper级别的缓存，<mark>当多个不同 SqlSession 使用同一个Mapper的sql 语句去操作数据库时，查询的数据会存在二级缓存区域，该区域同样是由HashMap 进行数据存储。多个不同 SqlSession 可以共享二级缓存，二级缓存是跨SqlSession</mark>。</p>
+<p>  多个不同 SqlSession 共享二级缓存，其作用域是mapper的同一个namespace。<font color="red">当不同的SqlSession，执行同一个 namespace 下相同的sql语句，并且向 sql语句 传递的参数也相同（即最终执行相同的sql语句）。第一次执行sql完毕，会把查询的数据写到缓存（内存）中。当第二次执行相同的sql 查询语句时，会直接从缓存中获取查询数据。不会去底层数据库中进行查询。</font></p>
+<p>Mybatis-config.xml</p>
+<pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>settings</span><span class="token punctuation">></span></span>
+	<span class="token comment" spellcheck="true">&lt;!--开启二级缓存 ，该属性默认为 false--></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cacheEnabled<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span>
+</pre>
+<p>UserMapper.xml</p>
+<pre class="language-xml">
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cache</span> <span class="token attr-name">eviction</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>LRU<span class="token punctuation">"</span></span> <span class="token attr-name">flushInterval</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>60000<span class="token punctuation">"</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>512<span class="token punctuation">"</span></span> <span class="token attr-name">readOnly</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token comment" spellcheck="true">&lt;!--
+以上创建了以后 LRU 缓存，并每隔60 s 刷新，最大存储对象为 512 个，并且返回的对象为只读。
+
+cache元素用于开启当前 mapper 的 namespace 下的二级缓存：
+
+eviction：收回策略（当缓存爆满时），默认为LRU，
+	LRU:最近最少使用的策略，移除最长时间不使用的对象缓存。
+	FIFO：先进先出策略，按对象进入缓存的顺序来移除它们。
+	SOFT：软引用策略，移除基于垃圾回收器状态和软引用规则的对象。
+	WEAK：弱引用策略，跟快的移除基于垃圾回收器状态和弱引用规则的对象。
+
+fulshInterval：刷新间隔，缓存多长时间清空一次。
+size: 缓存数目，默认值为1024.
+readOnly:只读，属性值为 true，false，默认为false。 
+	
+	当为true 时，mybatis会认为所有从缓存中获取数据的操作，都是只读的操作。给使用者返回缓存对象的数据引用，该引用无法被修改。
+	
+	当为false 时，mybatis会认为所有从缓存中获取数据的操作都是非只读的操作。会返回缓存对象的拷贝（通过序列化与反序列化），该对象的拷贝可以修改数据，速度慢，会比只读安全些。
+
+--></span>
+</pre>
+<p>禁用当前Mapper映射文件中的sql语句是否开启二级缓存。<br>
+UserMapper.xml</p>
+<pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>...<span class="token punctuation">"</span></span> <span class="token attr-name">resultMap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>...<span class="token punctuation">"</span></span> <span class="token attr-name">useCache</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>false<span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+</pre>
+<p><strong>注意：</strong><br>
+<font color="red">查询出来的数据默认会放在一级缓存中，只有当SqlSession 提交，关闭时，一级缓存的数据转移到二级缓存中，并清空一级缓存。</font></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1434,6 +1556,13 @@ update user  set  username=#{username},password=#{password}, Age =#{Age}  where 
 <li><a href="#5set%E8%AF%AD%E5%8F%A5%E9%80%82%E7%94%A8%E4%B8%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0">5.set语句（适用与动态更新）：</a></li>
 <li><a href="#6foreach%E8%AF%AD%E5%8F%A5">6.foreach语句：</a></li>
 <li><a href="#7bind%E8%AF%AD%E5%8F%A5%E6%88%91%E4%B9%9F%E4%B8%8D%E5%A4%AA%E4%BC%9A">7.bind语句(我也不太会)：</a></li>
+<li><a href="#8sqlinclude-%E6%A0%87%E7%AD%BE%E6%8A%BD%E5%8F%96%E5%8F%AF%E9%87%8D%E5%A4%8D%E4%BD%BF%E7%94%A8%E7%9A%84sql%E7%89%87%E6%AE%B5%E6%96%B9%E4%BE%BF%E5%BC%95%E7%94%A8">8.sql，include 标签（抽取可重复使用的sql片段，方便引用）：</a></li>
+</ul>
+</li>
+<li><a href="#mybatis%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6">Mybatis的缓存机制：</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98sqlsession-%E7%BA%A7%E5%88%AB">一级缓存（SqlSession 级别）：</a></li>
+<li><a href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98mapper-%E7%BA%A7%E5%88%AB">二级缓存（mapper 级别）：</a></li>
 </ul>
 </li>
 </ul>
