@@ -1318,3 +1318,163 @@ UserMapper.xml
 
 <strong>注意：</strong>
 <font color="red">查询出来的数据默认会放在一级缓存中，只有当SqlSession 提交，关闭时，一级缓存的数据转移到二级缓存中，并清空一级缓存。</font>
+
+
+## Mybatis的基于注解的方式的使用：
+
+### 1.配置与使用：
+
+&emsp;&emsp;Mybatis提供了比使用XML更加简便的基于注解（Annotation）的方式使用Mybatis。
+<font color="red">当使用注解的方式使用Mybatis时，相比XML方式：</font>
+
+
+>1. 不需要编写持久化类与数据表之间的~Mapper.xml映射文件，
+>2. 只需要编写dao接口（代理接口）文件，sql语句写在注解中，放到dao接口（代理接口）文件中，
+>3. 只需要在Mybatis-config配置文件中修改配置，告诉Mybatis去哪寻找dao接口文件（代理接口）即可。而不是寻找Mapper.xml映射文件（基于XML方式）。
+
+
+
+在基于XMl使用Mybatis的项目中加入了 com.entity.dao2 包，专门存放使用注解的dao接口（代理接口）。
+
+com.entity.dao2.Studentdao_Annotation.java
+```java
+package com.dao2;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.entity.Student;
+
+public interface Studentdao_Annotation {
+	
+	@Insert("insert into student(name,age) values(#{name},#{age})")
+	public int insertstudent(Student stu);
+	
+	@Insert("insert into student(name,age) values(#{name},#{age})")
+	@Options(useGeneratedKeys=true,keyProperty="id")
+	public int insertstudent_2(Student stu);
+	
+	
+	@Delete(" delete from student where id=#{id}")
+	public int deletestudentByid(Student stu);
+	
+	@Delete(" delete from student where id=#{id}")
+	public int deletestudentByid_2(@Param("id") Integer id);
+	
+	@Update("update student set name=#{name},age=#{age} where id=#{id}")
+	public int updatestudentByid(Student stu);
+	
+	@Select("select * from student where id=#{id}")
+	public Student selectByid(Student stu);
+	
+	@Select("select * from student where id=#{id}")
+	@Results({
+		
+		@Result(id=true,column="id",property="id"),
+		@Result(column="name",property="name"),
+		@Result(column="age",property="age")
+
+	})
+	public Student selectByid_2(Student stu);
+	
+}
+
+```
+Mybatis-config.xml
+```xml
+<!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件,哪里找代理接口文件 -->
+		 <mappers>
+		 		<mapper resource="com/dao/studentMapper.xml"/> 
+		 		<mapper resource="com/dao/School_classMapper.xml"/> 
+		 		<mapper resource="com/dao/TeacherMapper.xml"/> 
+		 		
+		 		<!-- 这是当mybatis使用注解的方式的配置，上面是mybatis使用xml方式配置 -->
+		 		<mapper class="com.dao2.Studentdao_Annotation"/>
+		</mappers>
+
+```
+
+main2.java(用于测试基于注解的Mybatis的使用方式)
+```java
+@Test
+	public void test1() throws Exception{
+		
+		//通过这句来读取xml 配置文件的信息
+		InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
+		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		//实例化session 对象，通过SqlSessionFactory
+		SqlSession session=ssf.openSession();
+		
+		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+		Studentdao_Annotation mapper =session.getMapper(Studentdao_Annotation.class);
+		Student stu=new Student();
+		stu.setId(5);
+		Student a=mapper.selectByid(stu);
+		session.commit();
+		System.out.println(a);
+	
+		
+	}
+```
+***
+
+### 2.Mybatis常用注解：
+
+在上面代码中：
+
+```java
+	@Insert("insert into student(name,age) values(#{name},#{age})")
+	public int insertstudent(Student stu);
+	
+	@Insert("insert into student(name,age) values(#{name},#{age})")
+	@Options(useGeneratedKeys=true,keyProperty="id")
+	public int insertstudent_2(Student stu);
+```
+
+@Insert：用于映射插入的sql语句。
+@Options：在映射语句上作为附加功能的配置出现。
+&emsp;&emsp;useGeneratedKeys：该属性为true 表示使用数据库自动增长的主键。该操作需要数据库的支持。
+&emsp;&emsp;keyProperty="id" ：表示将插入数据生成的主键设置到 stu对象的id中。
+
+***
+
+```java
+	@Delete(" delete from student where id=#{id}")
+	public int deletestudentByid(Student stu);
+	
+	@Delete(" delete from student where id=#{id}")
+	public int deletestudentByid_2(@Param("id") Integer id);
+```
+@Delete ：用于映射删除的sql语句。
+@Param ：<font color="red">当方法需要多个参数时，该注解用于给每个参数取一个名字。否则，默认多参数将会以它们的顺序位置和方法对应注解中的sql语句的表达式（#{xxx},#{xxx},...），进行映射。</font>
+&emsp;&emsp;@Param("id") Integer id  ： @Param("id") 表示给该注解后面的变量取一个参数名称，对应注解中的#{id}。
+
+***
+```java
+	@Select("select * from student where id=#{id}")
+	public Student selectByid(Student stu);
+	
+	@Select("select * from student where id=#{id}")
+	@Results({
+		
+		@Result(id=true,column="id",property="id"),
+		@Result(column="name",property="name"),
+		@Result(column="age",property="age")
+
+	})
+
+	public Student selectByid_2(Student stu);
+```
+@Select: 用于映射查询的sql语句。
+@Results :多个结果映射（@Result）的列表。
+@Result：<font color="red">用于列与结果的单独映射关系。如果查询结果的列与属性名称相同，可以省略，Mybatis会进行自动映射。</font>
+&emsp;&emsp;id 属性：true/false，表示是否用于主键映射。
+&emsp;&emsp;one 属性：是单独的联系，类似与XML配置的 ==&lt;association&gt;标签。==
+&emsp;&emsp;many属性：对集合而言，，类似与XML配置的 ==&lt;collection&gt; 标签。==

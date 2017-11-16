@@ -5,6 +5,12 @@
 **注意：**
 ①<font color="red">兼容 HTML</font>，不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。
 
+## 在markdown中打出标签：
+常用转义字符表为：
+
+![转义字符表](../img/markdown_1.png)
+
+
 ## 标题:
 ```markdown
 # 这是 <h1> 一级标题
