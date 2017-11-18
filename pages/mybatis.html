@@ -223,16 +223,19 @@ code.language-yaml {
 <ul>
 <li><a href="#1mybatis-%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-mybatisconfigxml">1.Mybatis 全局配置文件 Mybatis—config.xml:</a>
 <ul>
-<li><a href="#1%E8%A7%84%E5%AE%9Amybatis%E7%9A%84xml%E6%A0%87%E7%AD%BE%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99%E7%9A%84dtd%E6%96%87%E4%BB%B6%E4%B8%BB%E8%A6%81%E7%94%A8%E4%BA%8E%E4%BB%A3%E7%A0%81%E6%8F%90%E7%A4%BA">①.规定Mybatis的xml标签语法规则的dtd文件（主要用于代码提示）：</a></li>
 <li><a href="#2%E5%BC%95%E5%85%A5%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">②.引入外部配置文件：</a></li>
 <li><a href="#3settings%E6%A0%87%E7%AD%BE%E8%AE%BE%E7%BD%AEmybatis%E7%9A%84%E4%B8%BB%E8%A6%81%E9%85%8D%E7%BD%AE%E6%A0%87%E7%AD%BE">③.settings标签，设置Mybatis的主要配置标签：</a></li>
 <li><a href="#4typealiases%E6%A0%87%E7%AD%BE%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8">④.typeAliases标签（不推荐使用）：</a></li>
 <li><a href="#5environments%E6%A0%87%E7%AD%BE%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">⑤.environments标签，运行环境配置：</a></li>
 <li><a href="#6databaseidprovider%E6%A0%87%E7%AD%BE%E6%94%AF%E6%8C%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%90%E8%A1%8C">⑥.databaseIdProvider标签,支持多数据库运行：</a></li>
 <li><a href="#7mappers%E6%A0%87%E7%AD%BE">⑦.mappers标签：</a></li>
-<li><a href="#8%E8%A1%A5%E5%85%85">⑧.补充：</a></li>
+</ul>
+</li>
+<li><a href="#2mapper%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6-~mapperxml">2.Mapper映射文件 ~Mapper.xml:</a>
+<ul>
+<li><a href="#1select">①.select</a></li>
 <li><a href="#2insert-update-%E5%92%8C-delete">②.insert, update 和 delete</a></li>
-<li><a href="#3%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86%E5%8D%95%E4%B8%AA%E5%8F%82%E6%95%B0%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1">③.参数处理(单个参数，多个参数,对象)：</a></li>
+<li><a href="#3%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86%E5%8D%95%E4%B8%AA%E5%8F%82%E6%95%B0%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88">③.参数处理(单个参数，多个参数,对象，集合)：</a></li>
 </ul>
 </li>
 <li><a href="#3-%E4%B8%8E-%E7%9A%84%E5%8C%BA%E5%88%AB">3.&quot;#{} 与 ${} 的区别&quot;：</a></li>
@@ -364,8 +367,11 @@ Mybatis jar包：mybatis-3.4.3.jar</p>
 <a href="http://www.mybatis.org/mybatis-3/zh/configuration.html">推荐使用官方settings的文档</a></p>
 <h3 class="mume-header" id="1mybatis-&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x6587;&#x4EF6;-mybatisconfigxml">1.Mybatis 全局配置文件 Mybatis—config.xml:</h3>
 
-<h4 class="mume-header" id="1&#x89C4;&#x5B9A;mybatis&#x7684;xml&#x6807;&#x7B7E;&#x8BED;&#x6CD5;&#x89C4;&#x5219;&#x7684;dtd&#x6587;&#x4EF6;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x4EE3;&#x7801;&#x63D0;&#x793A;">①.规定Mybatis的xml标签语法规则的dtd文件（主要用于代码提示）：</h4>
-
+<p><strong>注意:</strong><br>
+<font color="red">全局配置文件中的各个标签的先后位置，不能弄错，否则报错。</font><br>
+各个标签先后顺序：<br>
+properties, settings, typeAliases, typeHandlers, objectFactory, objectWrapperFactory, reflectorFactory, plugins, environments, databaseIdProvider, mappers</p>
+<h4>①.规定Mybatis的xml标签语法规则的dtd文件（主要用于代码提示）：</h4>
 <p><font color="red">dtd文件分为两种，全局配置dtd文件，sql映射配置dtd文件。</font></p>
 <p>Mybatis-config.xml</p>
 <pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
@@ -568,13 +574,8 @@ Mybatis2_config.xml</p>
 		 		
 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
 </pre>
-<h4 class="mume-header" id="8&#x8865;&#x5145;">⑧.补充：</h4>
+<h3 class="mume-header" id="2mapper&#x6620;&#x5C04;&#x6587;&#x4EF6;-~mapperxml">2.Mapper映射文件 ~Mapper.xml:</h3>
 
-<p><font color="red">全局配置文件中的各个标签的先后位置，不能弄错，否则报错。</font><br>
-各个标签先后顺序：<br>
-(properties?, settings?, typeAliases?, typeHandlers?, objectFactory?,<br>
-objectWrapperFactory?, reflectorFactory?, plugins?, environments?, databaseIdProvider?, mappers?)</p>
-<h3>2.Mapper映射文件 ~Mapper.xml:</h3>
 <p>  MyBatis 的真正强大在于它的映射语句,如果拿它跟具有相同功能的 JDBC 代码进行对比，你会立即发现省掉了将近 95% 的代码。</p>
 <p>SQL 映射文件有很少的几个顶级元素（按照它们应该被定义的顺序）：</p>
 <blockquote>
@@ -587,7 +588,8 @@ update – 映射更新语句<br>
 delete – 映射删除语句<br>
 select – 映射查询语句</p>
 </blockquote>
-<h4>①.select</h4>
+<h4 class="mume-header" id="1select">①.select</h4>
+
 <p>简单查询的 select 元素是非常简单的。比如：</p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>selectPerson<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>int<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hashmap<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   SELECT * FROM PERSON WHERE ID = #{id}
@@ -676,7 +678,7 @@ useGeneratedKeys="":获取自动生成的主键的值。
 <p>useGeneratedKeys :<font color="red">（仅对 insert 和 update 有用）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系数据库管理系统的自动递增字段），默认值：false。</font></p>
 <p>keyProperty	:（仅对 insert 和 update 有用）唯一标记一个属性，MyBatis 会通过 getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认：unset。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。</p>
 <p>keyColumn:（仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。</p>
-<h4 class="mume-header" id="3&#x53C2;&#x6570;&#x5904;&#x7406;&#x5355;&#x4E2A;&#x53C2;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x5BF9;&#x8C61;">③.参数处理(单个参数，多个参数,对象)：</h4>
+<h4 class="mume-header" id="3&#x53C2;&#x6570;&#x5904;&#x7406;&#x5355;&#x4E2A;&#x53C2;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x96C6;&#x5408;">③.参数处理(单个参数，多个参数,对象，集合)：</h4>
 
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insertUser<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   insert into users (id, username, password)
@@ -2311,16 +2313,19 @@ Mybatis中有一个SQL 工具类org.apache.ibatis.jdbc.SQL ,该类不适用字�
 <ul>
 <li><a href="#1mybatis-%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-mybatisconfigxml">1.Mybatis 全局配置文件 Mybatis—config.xml:</a>
 <ul>
-<li><a href="#1%E8%A7%84%E5%AE%9Amybatis%E7%9A%84xml%E6%A0%87%E7%AD%BE%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99%E7%9A%84dtd%E6%96%87%E4%BB%B6%E4%B8%BB%E8%A6%81%E7%94%A8%E4%BA%8E%E4%BB%A3%E7%A0%81%E6%8F%90%E7%A4%BA">①.规定Mybatis的xml标签语法规则的dtd文件（主要用于代码提示）：</a></li>
 <li><a href="#2%E5%BC%95%E5%85%A5%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">②.引入外部配置文件：</a></li>
 <li><a href="#3settings%E6%A0%87%E7%AD%BE%E8%AE%BE%E7%BD%AEmybatis%E7%9A%84%E4%B8%BB%E8%A6%81%E9%85%8D%E7%BD%AE%E6%A0%87%E7%AD%BE">③.settings标签，设置Mybatis的主要配置标签：</a></li>
 <li><a href="#4typealiases%E6%A0%87%E7%AD%BE%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8">④.typeAliases标签（不推荐使用）：</a></li>
 <li><a href="#5environments%E6%A0%87%E7%AD%BE%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">⑤.environments标签，运行环境配置：</a></li>
 <li><a href="#6databaseidprovider%E6%A0%87%E7%AD%BE%E6%94%AF%E6%8C%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%90%E8%A1%8C">⑥.databaseIdProvider标签,支持多数据库运行：</a></li>
 <li><a href="#7mappers%E6%A0%87%E7%AD%BE">⑦.mappers标签：</a></li>
-<li><a href="#8%E8%A1%A5%E5%85%85">⑧.补充：</a></li>
+</ul>
+</li>
+<li><a href="#2mapper%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6-~mapperxml">2.Mapper映射文件 ~Mapper.xml:</a>
+<ul>
+<li><a href="#1select">①.select</a></li>
 <li><a href="#2insert-update-%E5%92%8C-delete">②.insert, update 和 delete</a></li>
-<li><a href="#3%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86%E5%8D%95%E4%B8%AA%E5%8F%82%E6%95%B0%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1">③.参数处理(单个参数，多个参数,对象)：</a></li>
+<li><a href="#3%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86%E5%8D%95%E4%B8%AA%E5%8F%82%E6%95%B0%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88">③.参数处理(单个参数，多个参数,对象，集合)：</a></li>
 </ul>
 </li>
 <li><a href="#3-%E4%B8%8E-%E7%9A%84%E5%8C%BA%E5%88%AB">3.&quot;#{} 与 ${} 的区别&quot;：</a></li>

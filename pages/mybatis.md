@@ -53,6 +53,12 @@ Mybatis jar包：mybatis-3.4.3.jar
 
 ### 1.Mybatis 全局配置文件 Mybatis—config.xml:
 
+**注意:**
+<font color="red">全局配置文件中的各个标签的先后位置，不能弄错，否则报错。</font >
+各个标签先后顺序：
+properties, settings, typeAliases, typeHandlers, objectFactory, objectWrapperFactory, reflectorFactory, plugins, environments, databaseIdProvider, mappers
+
+
 #### ①.规定Mybatis的xml标签语法规则的dtd文件（主要用于代码提示）：
 <font color="red">dtd文件分为两种，全局配置dtd文件，sql映射配置dtd文件。</font>
 
@@ -293,12 +299,6 @@ studentMapper.xml:
 		</mappers>
 ```
 
-#### ⑧.补充：
-<font color="red">全局配置文件中的各个标签的先后位置，不能弄错，否则报错。</font >
-各个标签先后顺序：
-(properties?, settings?, typeAliases?, typeHandlers?, objectFactory?, 
- objectWrapperFactory?, reflectorFactory?, plugins?, environments?, databaseIdProvider?, mappers?)
-
 
 ### 2.Mapper映射文件 ~Mapper.xml: 
 
@@ -427,7 +427,7 @@ keyProperty	:（仅对 insert 和 update 有用）唯一标记一个属性，MyB
 
 keyColumn:（仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
 
-#### ③.参数处理(单个参数，多个参数,对象)：
+#### ③.参数处理(单个参数，多个参数,对象，集合)：
 ```xml
 <insert id="insertUser" parameterType="User">
   insert into users (id, username, password)
@@ -502,10 +502,12 @@ public List<School_class> selectAllSchool_class();
 <font color="bule">当代理接口的某个方法返回集合类型时，sql语句的 resultType="com.entity.School_class"，写为集合内每个元素的类型，则mybatis，会把多个查询出来的元素，自动封装为集合。</font>
 
 
+
 ### 3."#{} 与 ${} 的区别"：
 &emsp; #{} :以预编译的方式，把参数设置到sql语句中，类似JDBC的PreparedStatement;用于防止sql注入。
 &emsp; ${} :直接把参数的值，拼接在sql语句中，有安全问题。
 &emsp;其他方面，没有问题。
+
 
 ## Mybatis的XML方式使用：
 
