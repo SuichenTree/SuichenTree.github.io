@@ -47,6 +47,465 @@ Mybatis jar包：mybatis-3.4.3.jar
 </dependency>
 </dependencies>
 ```
+## Mybatis的配置文件（全局配置文件，SQL映射配置文件）讲解：
+参考链接：
+[推荐使用官方settings的文档](http://www.mybatis.org/mybatis-3/zh/configuration.html)
+
+### 1.Mybatis 全局配置文件 Mybatis—config.xml:
+
+#### ①.规定Mybatis的xml标签语法规则的dtd文件（主要用于代码提示）：
+<font color="red">dtd文件分为两种，全局配置dtd文件，sql映射配置dtd文件。</font>
+
+Mybatis-config.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+....
+</configuration>
+```
+上面代码中的`"http://mybatis.org/dtd/mybatis-3-config.dtd"`，用于代码提示。
+
+StudentMapper.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为mapper指定唯一的命名空间，在不用接口式编程的情况下，随便取名 -->
+<mapper namespace="com.dao.studentdao">
+~ ~ ~
+</mapper>
+
+```
+上面代码中的`"http://mybatis.org/dtd/mybatis-3-mapper.dtd"`，用于代码提示。
+
+
+#### ②.引入外部配置文件：
+**Mybatis通过 properties 标签来引入外部 properties配置文件。**
+
+![文档结构图](../img/mybatis_img/20.png)
+
+config.properties(外部 properties配置文件):
+```
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&amp;characterEncoding=utf8
+jdbc.username=root
+jdbc.password=123456
+```
+
+Mybatis2_config.xml(<font color="red">讲解Mybtis配置文件时使用，临时的</font>) :
+```xml
+<properties resource="config.properties"/>
+<!-- 
+	resource 属性： 引入类路径下的配置文件。
+	url 属性: 引入网上，磁盘上的配置文件。
+-->
+<!--环境配置： 指定要连接的数据库-->
+<environments default="mysql">
+ 	<environment id="mysql">
+ 		<transactionManager type="JDBC"/>   
+		 <dataSource type="POOLED">  
+		 		<!--${jdbc.driver} 从配置文件获取driver的信息  -->
+		 		<property name="driver" value="${jdbc.driver}"/>
+		 		<property name="url" value="${jdbc.url}"/>   
+		 		<property name="username" value="${jdbc.username}"/>
+		 		<property name="password" value="${jdbc.password}"/>
+		 </dataSource>
+	</environment>
+</environments>
+```
+
+#### ③.settings标签，设置Mybatis的主要配置标签：
+
+参考链接：
+[推荐使用官方settings的文档](http://www.mybatis.org/mybatis-3/zh/configuration.html)
+
+
+一个配置完整的 settings 元素的示例如下：
+Mybatis2_config.xml
+```xml
+
+<settings>
+  <setting name="cacheEnabled" value="true"/>
+  <setting name="lazyLoadingEnabled" value="true"/>
+  <setting name="multipleResultSetsEnabled" value="true"/>
+  <setting name="useColumnLabel" value="true"/>
+  <setting name="useGeneratedKeys" value="false"/>
+  <setting name="autoMappingBehavior" value="PARTIAL"/>
+  <setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
+  <setting name="defaultExecutorType" value="SIMPLE"/>
+  <setting name="defaultStatementTimeout" value="25"/>
+  <setting name="defaultFetchSize" value="100"/>
+  <setting name="safeRowBoundsEnabled" value="false"/>
+  <setting name="mapUnderscoreToCamelCase" value="false"/>
+  <setting name="localCacheScope" value="SESSION"/>
+  <setting name="jdbcTypeForNull" value="OTHER"/>
+  <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+</settings>
+```
+
+#### ④.typeAliases标签（不推荐使用）：
+typeAliases标签是为 Java 类型设置一个短的名字，<font color="blue">别名(不区分大小写)</font>。它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余。
+Mybatis2_config.xml
+
+```xml
+<typeAliases>
+  <typeAlias alias="stu" type="com.entity.Student"/>
+  <typeAlias alias="sclass" type="com.entity.School_class"/>
+  <typeAlias alias="tea" type="com.entity.Teacher"/>
+	<!--当没有设置 alies 属性(指定新的别名)时，默认别名为 类名的小写，如student，school_class,teacher-->
+</typeAliases>
+
+```
+**当这样配置时，stu可以用在任何使用com.entity.Student的地方。**
+
+
+如果要批量起别名，也可以指定一个包名，MyBatis 会在包名下面搜索需要的 Java Bean，比如:
+```xml
+<typeAliases>
+  <package name="com.entity"/>
+</typeAliases>
+```
+
+<font color="red">每一个在包 com.entity 中的 Java Bean，在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如com.entity.Student 的别名为 student；若有注解，则别名为其注解值。</font>
+看下面的例子：
+```java
+@Alias("stu")
+public class Student {
+    ...
+}
+```
+
+
+#### ⑤.environments标签，运行环境配置：
+参考链接：
+[推荐使用官方settings的文档](http://www.mybatis.org/mybatis-3/zh/configuration.html)
+
+MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中， 现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者共享相同 Schema 的多个生产数据库， 想使用相同的 SQL 映射。许多类似的用例。
+**不过要记住：尽管可以配置多个环境，每个 SqlSessionFactory 实例只能选择其一。**
+所以，如果你想连接两个数据库，就需要创建两个 SqlSessionFactory 实例，每个数据库对应一个。而如果是三个数据库，就需要三个实例，依此类推
+
+```xml
+<!--environments 运行环境配置，
+   mybatis可以配置多种不同的 environment标签，每个environment标签对于不同的运行环境（数据库，...）,
+   但一次只能选择一种运行环境。
+	default="mysql" ：指定的运行环境为 mysql，一次只能选一种。该属性的值为 environment的id属性值
+	<transactionManager type="JDBC"/> ： mybatis的事务管理的选择，详情请看事务文档 
+	 <dataSource type="POOLED">  ：数据源配置。
+	 		mybatis自带的数据源：该配置的type 有三个值可选： type=“[UNPOOLED|POOLED|JNDI]”。
+	 		若想使用自定义数据源（c3p0，dbcp）：实现DateSource接口，type 的值为自定义数据源的全类名。
+-->
+<environments default="mysql">
+
+	<!-- mybatis 运行oracle的环境配置 -->
+	<environment id="oracle">
+		<!-- environment 标签中必须有 transactionManager，dataSource 标签 -->
+		<transactionManager type="JDBC"/>  
+		 <dataSource type="POOLED">  
+		 		<!--${oracle.driver} 从配置文件获取driver的信息  
+				 	注意：不同的数据库，你的 驱动jar包要齐全。
+				 
+				 -->
+		 		<property name="driver" value="${oracle.driver}"/>
+		 		<property name="url" value="${oracle.url}"/>   
+		 		<property name="username" value="${oracle.username}"/>
+		 		<property name="password" value="${oracle.password}"/>
+		 </dataSource>
+	</environment>
+	
+	<!-- mybatis 运行mysql的环境配置 -->
+ 	<environment id="mysql">
+ 		<transactionManager type="JDBC"/>   
+		 <dataSource type="POOLED">  
+		 		<!--${jdbc.driver} 从配置文件获取driver的信息  -->
+		 		<property name="driver" value="${jdbc.driver}"/>
+		 		<property name="url" value="${jdbc.url}"/>   
+		 		<property name="username" value="${jdbc.username}"/>
+		 		<property name="password" value="${jdbc.password}"/>
+		 </dataSource>
+	</environment>
+</environments>
+```
+其中的一些标签：
+`<dataSource type="POOLED">` 
+该配置的type 有三个值可选： type=“[UNPOOLED|POOLED|JNDI]”。
+
+UNPOOLED : 这个数据源的实现只是每次被请求时打开和关闭连接。虽然一点慢，它对在及时可用连接方面没有性能要求的简单应用程序是一个很好的选择。 不同的数据库在这方面表现也是不一样的，所以对某些数据库来说使用连接池并不重要，这个配置也是理想的
+
+POOLED– 这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。 这是一种使得并发 Web 应用快速响应请求的流行处理方式.
+
+JNDI– 这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的引用。
+
+
+
+#### ⑥.databaseIdProvider标签,支持多数据库运行：
+MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于~Mapper.xml映射文件的sql标签语句中的 databaseId 属性。 
+<font color="red">MyBatis 会加载不带 databaseId 属性和带有匹配当前数据库 databaseId 属性的所有语句。如果同时找到带有 databaseId 和不带 databaseId 的相同语句，则后者会被舍弃。</font> 
+
+为支持多厂商特性只要像在 mybatis-config.xml 文件中加入 databaseIdProvider 即可：
+ 
+mybatis-config.xml 
+```xml
+<databaseIdProvider type="DB_VENDOR">
+  <property name="SQL Server" value="sqlserver"/>
+  <property name="MySQL" value="mysql"/>        
+  <property name="Oracle" value="oracle" />
+  <!--为不同的数据库厂商标识起别名-->
+</databaseIdProvider>
+```
+type="DB_VENDOR" ：<font color="blue">得到不同数据库厂商的标识，通过标识来执行不同数据库对应的Mapper映射文件的sql语句。</font> 
+
+studentMapper.xml:
+```xml
+<select id="selectClass" databaseId="mysql" resultType="com.entity.School_class" parameterType="com.entity.School_class">
+	select * from school_class where id=#{id}
+</select>
+<!--
+	注意若没有 databaseId 的属性，不管运行环境是那个调用此方法时，sql语句都会执行。
+
+	上面是当运行环境为 mysql 时，会调用该sql语句。
+	下面是当运行环境为 oracle 时，会调用该sql语句。
+-->
+
+<select id="selectClass" databaseId="oracle" resultType="com.entity.School_class" parameterType="com.entity.School_class">
+	select * from school_class where id=#{id}
+</select>
+
+```
+
+#### ⑦.mappers标签：
+告诉 MyBatis 到哪里去找映射文件。
+```xml
+	<!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 -->
+		 <mappers>
+		 		<!-- 引用类路径下的Mapper映射文件 -->
+		 		<mapper resource="com/dao/studentMapper.xml"/> 
+		 		
+		 		<!-- 引用Mapper映射文件对应的接口文件，在基于注解方式使用mybatis时 -->
+		 		<mapper  class="com.dao3.studentdao_dynamicSQL"/>
+		 		
+		 		<!--  引用磁盘路径下的Mapper映射文件  -->
+		 		<mapper url="file:///c/mappers/studentMapepr.xml"/>
+		 		
+		</mappers>
+```
+
+#### ⑧.补充：
+<font color="red">全局配置文件中的各个标签的先后位置，不能弄错，否则报错。</font >
+各个标签先后顺序：
+(properties?, settings?, typeAliases?, typeHandlers?, objectFactory?, 
+ objectWrapperFactory?, reflectorFactory?, plugins?, environments?, databaseIdProvider?, mappers?)
+
+
+### 2.Mapper映射文件 ~Mapper.xml: 
+
+&emsp;&emsp;MyBatis 的真正强大在于它的映射语句,如果拿它跟具有相同功能的 JDBC 代码进行对比，你会立即发现省掉了将近 95% 的代码。
+
+SQL 映射文件有很少的几个顶级元素（按照它们应该被定义的顺序）：
+>cache – 给定命名空间的缓存配置。
+>cache-ref – 其他命名空间缓存配置的引用。
+>resultMap – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象。
+>sql – 可被其他语句引用的可重用语句块。
+>insert – 映射插入语句
+>update – 映射更新语句
+>delete – 映射删除语句
+>select – 映射查询语句
+
+#### ①.select
+
+简单查询的 select 元素是非常简单的。比如：
+```xml
+<select id="selectPerson" parameterType="int" resultType="hashmap">
+  SELECT * FROM PERSON WHERE ID = #{id}
+</select>
+```
+这个语句被称作 selectPerson，接受一个 int（或 Integer）类型的参数，并返回一个 HashMap 类型的对象，其中的键是列名，值便是结果行中的对应值。
+
+
+**select 元素有很多属性允许你配置，来决定每条语句的作用细节。**
+```xml
+<select
+  id="selectPerson"   
+  parameterType="int"
+  parameterMap="deprecated"
+  resultType="hashmap"
+  resultMap="personResultMap"
+  flushCache="false"
+  useCache="true"
+  timeout="10000"
+  fetchSize="256"
+  statementType="PREPARED"
+  resultSetType="FORWARD_ONLY">
+
+```
+id:命名空间中唯一的标识符.
+parameterType： <font color="blue">将会传入这条语句的参数类的完全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过TypeHandler 推断出具体传入语句的参数，默认值为 unset。</font>
+
+resultType:	从这条语句中返回的期望类型的类的完全限定名或别名。注意如果是集合情形，那应该是集合可以包含的类型，而不能是集合本身。使用 resultType 或 resultMap，但不能同时使用。
+
+resultMap :	外部 resultMap 的命名引用。结果集的映射是 MyBatis 最强大的特性，对其有一个很好的理解的话，许多复杂映射的情形都能迎刃而解。使用 resultMap 或 resultType，但不能同时使用.
+
+flushCache :将其设置为 true，任何时候只要语句被调用，都会导致本地缓存和二级缓存都会被清空，默认值：false。
+
+useCache: 将其设置为 true，将会导致本条语句的结果被二级缓存，默认值：对 select 元素为 true。
+
+timeout	:这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为 unset（依赖驱动）。
+
+fetchSize:这是尝试影响驱动程序每次批量返回的结果行数和这个设置值相等。默认值为 unset（依赖驱动）。
+
+statementType: STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement,PreparedStatement 或 CallableStatement，默认值：PREPARED。
+
+resultSetType: FORWARD_ONLY，SCROLL_SENSITIVE 或 SCROLL_INSENSITIVE 中的一个，默认值为 unset （依赖驱动）。
+
+databaseId	:如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。
+
+resultOrdered :这个设置仅针对嵌套结果 select 语句适用：如果为 true，就是假设包含了嵌套结果集或是分组了，这样的话当返回一个主结果行的时候，就不会发生有对前面结果集的引用的情况。这就使得在获取嵌套的结果集的时候不至于导致内存不够用。默认值：false。
+
+resultSets :这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。
+
+
+#### ②.insert, update 和 delete
+简单的insert, update 和 delete例子：
+```xml
+<insert id="insertAuthor">
+  insert into Author (id,username,password,email,bio)
+  values (#{id},#{username},#{password},#{email},#{bio})
+</insert>
+
+<update id="updateAuthor">
+  update Author set
+    username = #{username},
+    password = #{password},
+    email = #{email},
+    bio = #{bio}
+  where id = #{id}
+</update>
+
+<delete id="deleteAuthor">
+  delete from Author where id = #{id}
+</delete>
+```
+
+
+insert, update 和 delete 元素有很多属性允许你配置，来决定每条语句的作用细节。
+```xml
+<insert
+  id="insertAuthor"
+  parameterType="domain.blog.Author"
+  flushCache="true"
+  statementType="PREPARED"
+  keyProperty="id"
+  keyColumn=""
+  useGeneratedKeys=""           
+  timeout="20">
+
+<!--
+useGeneratedKeys="":获取自动生成的主键的值。
+ keyProperty="id" ：把获取到的主键的值，交给javaBean的那个属性。
+-->
+
+<update
+  id="updateAuthor"
+  parameterType="domain.blog.Author"
+  flushCache="true"
+  statementType="PREPARED"
+  timeout="20">
+
+<delete
+  id="deleteAuthor"
+  parameterType="domain.blog.Author"
+  flushCache="true"
+  statementType="PREPARED"
+  timeout="20">
+```
+useGeneratedKeys :<font color="red">（仅对 insert 和 update 有用）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系数据库管理系统的自动递增字段），默认值：false。</font>
+
+keyProperty	:（仅对 insert 和 update 有用）唯一标记一个属性，MyBatis 会通过 getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认：unset。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
+
+keyColumn:（仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。
+
+#### ③.参数处理(单个参数，多个参数,对象)：
+```xml
+<insert id="insertUser" parameterType="User">
+  insert into users (id, username, password)
+  values (#{id}, #{username}, #{password})
+</insert>
+
+```
+**如果 User 类型的参数对象传递到了语句中，id、username 和 password 属性将会被查找，然后将它们的值传入预处理语句的参数中。**
+
+**①.单个单数：**
+当代理接口的参数为单个时，Mybatis不会做特殊处理。
+	#{参数名} ： 取出参数值。
+
+School_classMapper.xml:
+```xml
+<select id="selectClass_canshu" resultType="com.entity.School_class">
+	select * from school_class where name=#{name}
+</select>
+
+```
+School_classdao.java:
+```java
+public School_class selectClass_canshu(String name);
+```
+
+**②.多个单数：**
+当代理接口的参数为多个时。Mybatis就不太清楚，怎么把参数与sql语句的#{}，#{}，...一一对应：
+<font color="red">此时，需要使用@Param</font>
+@Param：明确绑定接口参数与sql语句的#{xxx}
+
+School_classMapper.xml:
+```xml
+<select id="selectClass_canshu" resultType="com.entity.School_class">
+	select * from school_class where id=#{id} and name=#{name}
+</select>
+
+```
+School_classdao.java:
+```java
+public School_class selectClass_canshu(@Param("id")Integer id,@Param("name")String name);
+```
+<font color="blue">上面这段代码中的@Param，明确的把sql的#{id},绑定为参数的id ，把sql的#{name},绑定为参数的name</font>
+
+**③.对象：**
+```java
+public int insertUser(User user);
+```
+
+```xml
+<insert id="insertUser" parameterType="User">
+  insert into users (id, username, password)
+  values (#{id}, #{username}, #{password})
+</insert>
+
+```
+<font color="red">如果 User 类型的代理接口的参数对象传递到了sql语句中，id、username 和 password 属性将会被查找，然后将它们的值传入预处理语句的参数中。</font>
+
+**④.集合（List）：**
+&emsp;&emsp;如果返回集合对象，
+
+```xml
+<select id="selectAllSchool_class" resultType="com.entity.School_class">
+	select * from student 
+</select>
+```
+
+
+```java
+public List<School_class> selectAllSchool_class();
+```
+
+<font color="bule">当代理接口的某个方法返回集合类型时，sql语句的 resultType="com.entity.School_class"，写为集合内每个元素的类型，则mybatis，会把多个查询出来的元素，自动封装为集合。</font>
+
+
+### 3."#{} 与 ${} 的区别"：
+&emsp; #{} :以预编译的方式，把参数设置到sql语句中，类似JDBC的PreparedStatement;用于防止sql注入。
+&emsp; ${} :直接把参数的值，拼接在sql语句中，有安全问题。
+&emsp;其他方面，没有问题。
 
 ## Mybatis的XML方式使用：
 
@@ -239,7 +698,9 @@ public class main {
 		InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
-		//实例化session 对象，通过SqlSessionFactory
+		//实例化session 对象，通过SqlSessionFactory,
+
+//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		Student stu=new Student();
@@ -353,6 +814,7 @@ public class main {
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
 		//实例化session 对象，通过SqlSessionFactory
+	//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
@@ -570,6 +1032,7 @@ main.java:
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
 		//实例化session 对象，通过SqlSessionFactory
+		//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
@@ -756,6 +1219,7 @@ where ct.c_id=sc.id and ct.t_id=t.id and sc.id=#{id};
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
 		//实例化session 对象，通过SqlSessionFactory
+		//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
@@ -806,6 +1270,7 @@ where t.id=ct.t_id and ct.c_id=sc.id and t.id=#{id};
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
 		//实例化session 对象，通过SqlSessionFactory
+		//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
@@ -856,6 +1321,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
 		//实例化session 对象，通过SqlSessionFactory
+		//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
@@ -1410,6 +1876,7 @@ main2.java(用于测试基于注解的Mybatis的使用方式)
 		//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
 		  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
 		//实例化session 对象，通过SqlSessionFactory
+		//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
 		SqlSession session=ssf.openSession();
 		
 		//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
@@ -1476,5 +1943,269 @@ main2.java(用于测试基于注解的Mybatis的使用方式)
 @Results :多个结果映射（@Result）的列表。
 @Result：<font color="red">用于列与结果的单独映射关系。如果查询结果的列与属性名称相同，可以省略，Mybatis会进行自动映射。</font>
 &emsp;&emsp;id 属性：true/false，表示是否用于主键映射。
+&emsp;&emsp;column属性：查询结果数据中对应的列名。
 &emsp;&emsp;one 属性：是单独的联系，类似与XML配置的 ==&lt;association&gt;标签。==
 &emsp;&emsp;many属性：对集合而言，，类似与XML配置的 ==&lt;collection&gt; 标签。==
+
+
+### 2.基于注解方式的关联查询：
+
+#### 1.一对一关联查询：
+参考链接：
+[注解关联查询](http://blog.csdn.net/gluawwa/article/details/53289162)
+
+Studentdao_Annotation.java
+```java
+//注解方式的一对一关联查询============================
+
+	@Select("SELECT s.*,sc.id scid,sc.name scname from student s LEFT JOIN school_class sc on s.class_id=sc.id where s.id=#{id}")
+	@Results({
+		@Result(id=true,column="id",property="id"),
+		@Result(property="name",column="name"),
+		@Result(property="age",column="age"),
+		@Result(property="sclass",
+				column="class_id",one=@One(
+				select="com.dao2.School_classdao_Annotation.selectByid"
+				)
+		)
+	})
+	public Student select_stu_class(Integer id);
+```
+
+<font color="red">其中：</font>
+```java
+@Result(property="sclass",
+	column="class_id",one=@One(
+	select="com.dao2.School_classdao_Annotation.selectByid"
+				)
+		)
+```
+one 属性：是单独的联系，类似与XML配置的 ==&lt;association&gt;标签。==
+
+这段代码表示为关联对象的结果集映射规则。含义为：==把 column属性的值作为参数，传给select 属性的值指向的方法中，方法返回的结果封装给property 属性值所代表的对象中。==
+
+com.dao2.School_classdao_Annotation.selectByid:
+```java
+@Select("select * from school_class where id=#{id}")
+	public School_class selectByid(Integer id);
+```
+
+
+main2.java
+```java
+//注解方式的一对一关联查询
+	@Test
+	public void test2() throws Exception{
+		....
+
+		Studentdao_Annotation mapper =session.getMapper(Studentdao_Annotation.class);
+		
+		Student a=mapper.select_stu_class(7);
+		session.commit();
+		System.out.println(a);
+	
+		
+	}
+```
+
+
+#### 2.一对多关联查询 ？：
+参考链接：
+[注解关联查询](http://blog.csdn.net/linhaiyun_ytdx/article/details/68947723)
+
+通过班级查询班级下的多个学生：
+
+School_classdao_Annotation.java
+```java
+//通过班级号查询单个班级，以及多个学生，一对多关联查询
+	@Select("select sc.* ,s.id sid,s.name sname, s.age sage, s.class_id scid from school_class sc LEFT JOIN student s on sc.id=s.class_id where sc.id=#{id}")
+	@Results({
+		@Result(id=true,property="id",column="id"),
+		@Result(property="name",column="name"),
+		@Result(property="stulist",column="id",many=@Many(
+				select="com.dao2.Studentdao_Annotation.selectByclass_id"
+				))
+	})
+	public List<School_class> select_class_student(Integer id);
+```
+
+@Result 的 many属性：对集合而言，，类似与XML配置的 ==&lt;collection&gt; 标签。==
+这段代码表示为关联对象的结果集映射规则。含义为：==把 column属性的值作为参数，传给select 属性的值指向的方法中，方法返回的结果封装给property 属性值所代表的对象中。==
+
+![在数据库查询的截图](../img/mybatis_img/19.png)
+
+```java
+ public List<School_class> select_class_student(Integer id);   
+```
+<font color="red">这段代码返回了两个School_class对象，两个对象一摸一样。暂时不知为什么。</font>
+
+com.dao2.Studentdao_Annotation.selectByclass_id :
+```java
+@Select("select id,name,age from student where class_id=#{id}")
+public Student selectByclass_id(Integer id);
+	
+```
+
+测试：
+```java
+//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+	School_classdao_Annotation mapper =session.getMapper(School_classdao_Annotation.class);
+	List<School_class> a=mapper.select_class_student(2);    //由于会查询多条数据
+	session.commit();
+	System.out.println(a);
+	session.close();
+```
+
+控制台打印的sql语句：
+>[School_class [id=2, name=B, stulist=[Student [id=7, name=xiaoming, age=12, sclass=null, tealist=null], Student [id=8, name=hui, age=22, sclass=null, tealist=null]], tealist=null], 
+>School_class [id=2, name=B, stulist=[Student [id=7, name=xiaoming, age=12, sclass=null, tealist=null], Student [id=8, name=hui, age=22, sclass=null, tealist=null]], tealist=null]]
+
+**这段代码返回了两个School_class对象，两个对象一摸一样。暂时不知为什么.**
+
+#### 3.多对多关联查询(懒得写，好麻烦):
+参考链接：
+[基于注解多对多关联查询](http://blog.csdn.net/linhaiyun_ytdx/article/details/68947739)
+
+
+### 3.基于注解方式的动态SQL：
+1. 新建一个代理接口：
+
+com.dao3.studentdao_dynamicSQL:
+```java
+public interface studentdao_dynamicSQL {
+	//其中的 type 属性指定一个类，method 属性指定该类的某个方法，方法根据参数返回不同的sql语句。
+
+	@SelectProvider(type=student_DynamicSQL.class,method="selectstudent_dynamic")
+	public List<Student> selectstudent(Student stu);
+	
+	@InsertProvider(type=student_DynamicSQL.class,method="insertstudent_dynamic")
+	public int insertstudent(Student stu);
+
+	@UpdateProvider(type=student_DynamicSQL.class,method="updatestudent_dynamic")
+	public int updatestudent(Student stu);
+	
+	@DeleteProvider(type=student_DynamicSQL.class,method="deletestudent_dynamic")
+	public int deletestudent(Student stu);
+	
+}
+```
+**@SelectProvider,@InsertProvider,@UpdateProvider,@DeleteProvider 这四个注解支持动态sql，<font color="red">其中的 type 属性指定一个类，method 属性指定该类的某个方法，方法根据参数返回不同的sql语句。</font>**
+
+2. 创建注解指向的类与方法：
+
+com.dao3.student_DynamicSQL:
+```java
+public class student_DynamicSQL {
+	//基于注解方式的动态查询，根据传入的参数，返回不同的sql语句
+	public String selectstudent_dynamic(Student stu){
+		return new SQL(){
+			{
+				SELECT("*");
+				FROM("student");
+				if(stu.getId()!=null){
+					WHERE(" id = #{id} ");
+				}
+				if(stu.getName()!=null){
+					WHERE(" name = #{name} ");
+				}
+				if(stu.getAge()!=null){
+					WHERE(" age = #{age} ");
+				}
+			
+			}
+			
+		}.toString();
+		
+	}
+	
+	//基于注解方式的动态insert，根据传入的参数，返回不同的sql语句
+	public String insertstudent_dynamic(Student stu){
+		return new SQL(){
+			{
+				INSERT_INTO("student");
+				if(stu.getId()!=null){
+					VALUES("id","#{id}");
+				}
+				if(stu.getName()!=null){
+					VALUES("name","#{name}");
+				}
+				if(stu.getAge()!=null){
+					VALUES("age","#{age}");
+				}
+			
+			}
+			
+		}.toString();
+		
+	}
+	
+	//基于注解方式的动态update,根据传入的参数，返回不同的sql语句
+	public String updatestudent_dynamic(Student stu){
+		return new SQL(){
+			{
+				UPDATE("student");
+				if(stu.getName()!=null){
+					SET("name = #{name}");
+				}
+				if(stu.getAge()!=null){
+					SET("age = #{age}");
+				}
+				WHERE("id = #{id} ");
+			}
+			
+		}.toString();
+	}
+
+	//基于注解方式的动态delete,根据传入的参数，返回不同的sql语句
+		public String deletestudent_dynamic(Student stu){
+			return new SQL(){
+				{
+					DELETE_FROM("student");
+					if(stu.getId()!=null){
+						WHERE("id = #{id}");
+					}
+					if(stu.getName()!=null){
+						WHERE("name = #{name}");
+					}
+					if(stu.getAge()!=null){
+						WHERE("age = #{age}");
+					}	
+				}	
+			}.toString();
+	}
+}
+
+```
+其中的<font color="red">WHERE,SET,INSERT,VALUES,INSERT_INTO</font>,...这些函数是由Mybatis提供。
+Mybatis中有一个SQL 工具类org.apache.ibatis.jdbc.SQL ,该类不适用字符串拼接的方式，并且会以合适的空格前缀，后缀来构造SQL语句。
+
+3. 测试：
+```java
+@Test	
+	public void test1() throws Exception{
+			//通过这句来读取xml 配置文件的信息
+			InputStream inputs=Resources.getResourceAsStream("mybatis_config.xml");
+			//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+			  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+			//实例化session 对象，通过SqlSessionFactory
+			//SqlSession session=ssf.openSession(true);  若实例化openSeeion的构造方法，就可以自动提交，不用手动提交。
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			Student stu=new Student();
+			stu.setId(14);
+		
+			List<Student> a=mapper.selectstudent(stu);
+			//session.commit();
+			System.out.println(a);
+			session.close();
+		}
+```
+
+
+## Mybatis的事务(看参考链接)：
+&emsp;&emsp;**多条sql语句访问数据库的过程叫事务，事务是一个最小的逻辑执行单元，整个事务不能分开执行，要么同时执行，要么同时不执行，绝不能执行一部分（当你从银行转账，如果你的账户钱少了，那别人的账户钱多了。一定不能出现你的钱少了，别人的钱不变。）。**
+
+参考链接：
+[MyBatis事务管理机制](http://blog.csdn.net/luanlouis/article/details/37992171)
+
