@@ -922,7 +922,7 @@ public int div(int i,int j){
 ### 1.Spring的AOP术语：
 
 1. 切面（Aspect）：
-&emsp;&emsp;一个关注点的模块化，这个关注点实现可能另外横切多个对象。事务管理是J2EE应用中一个很好的横切关注点例子。方面用Spring的 Advisor或拦截器实现。
+&emsp;&emsp;本质上为一段程序代码，这些代码将通过 切入点<font color="red">" 切入到 "</font> 程序流程中。
  
 2. 连接点（Joinpoint）:
 &emsp;&emsp;程序执行过程中的任意一点，都可以是连接点。如方法的调用或特定的异常被抛出。
@@ -931,16 +931,365 @@ public int div(int i,int j){
 &emsp;&emsp;连接点的集合。切面与程序流程的交叉点。
  
 4. 通知（Advice）: 
-&emsp;&emsp;某个切入点被横切后，所采取的措施。<font color="red">也就是在切入点处拦截程序。通过通知来执行切面。</font>各种类型的通知包括“around”、“before”和“throws”通知。
+&emsp;&emsp;某个切入点被横切后，所采取的措施。<font color="red">也就是在切入点处拦截程序。通过 “通知” 来执行切面。</font>各种类型的通知包括“after”、“before”和“throws”通知。
+
+> 前置通知：在目标方法执行前，执行。
+> 后置通知：在目标方法执行后（无论是否发生异常），再执行。
+> 异常通知： 在目标方法出现异常时，执行的代码，可以在出现特定异常时，执行的通知代码。
+> 返回通知，在方法正常结束执行的代码,可以访问到方法的返回值
+> ....
 
 5. 引入（Introduction）: 
 &emsp;&emsp;对一个已经写好的类，在运行期间，动态的向这个类添加属性与方法。
  
 6. 目标对象（Target Object）: 
-&emsp;&emsp;包含连接点的对象。也被称作被通知或被代理对象。POJO
+&emsp;&emsp;包含连接点的对象。也被称作被通知或被代理对象。AOP 会注意 “ 目标对象” 的变动（属性变化，方法调用），随时准备向目标 “ 注入切面”。 
  
 7. AOP代理（AOP Proxy）:
 &emsp;&emsp; 向目标对象应用通知后创建的对象。  在Spring中，AOP代理可以是JDK动态代理或者CGLIB代理。
  
 8. 织入（Weaving）: 
 &emsp;&emsp;把切面功能引用到目标对象的过程。
+
+
+### 2.基于XML方式 使用AOP：
+0. 注意：
+&emsp;&emsp;①：spring AOP是用aspectj来实现的，是依赖关系.AspectJ是动态代理的一种实现,而spring默认使用的就是AspectJ来实现的动态代理。
+<font color="red">
+因此，要导入AspectJ的jar包：com.springsource.net.sf.cglib-2.2.0.jar |com.springsource.org.aopalliance-1.0.0.jar |com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar |
+同时还要spring的 基础jar 包 与 spring-aop-4.3.8.RELEASE.jar | ， spring-aspects-4.3.8.RELEASE.jar 。
+</font>
+
+&emsp;&emsp;②：若在xml 配置文件中 打不出来&lt;aop:config&gt;标签，则在配置文件上加上。
+参考链接：
+[找不到&lt;aop:config&gt;标签](https://zhidao.baidu.com/question/129219319.html)
+
+```xml
+ xmlns:aop="http://www.springframework.org/schema/aop"
+
+  http://www.springframework.org/schema/aop
+  http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+
+```
+
+
+1. 创建目标类 mathCaculate （被要求做日志输出的类）：
+```java
+
+public class mathCaculate {
+	public mathCaculate(){
+		System.out.println("this is wucan mathCaculate");
+	}
+	
+	public void add(int i,int j){
+	
+		System.out.println(i+j);
+	}
+
+	public void sub(int i,int j){
+	
+		System.out.println(i-j);
+	}
+
+	public void mul(int i,int j){
+		
+		System.out.println(i*j);
+	}
+
+	public void div(int i,int j){
+		
+		System.out.println(i/j);
+	}
+}
+
+```
+
+2. 创建切面类（什么样的日志类）：
+```java
+//定义一个切面类
+public class Aspect {
+	
+	public Aspect(){
+		System.out.println("this is wucan Aspect");
+	}
+	
+	public void before(){
+		System.out.println("this is  前置通知");
+	}
+	
+	public void after(){
+		System.out.println("this is  后置通知");
+	}
+	
+}
+```
+
+3. 编写Aop的配置文件：
+applicationContext.xml
+```xml
+   
+    <!-- 注入目标类 -->   
+  	<bean id="math" class="com.aop.mathCaculate"></bean>
+
+    <!-- 注入切面类  -->
+    <bean id="Aspect" class="com.aop.Aspect"></bean>	
+
+ <!-- AOP 进行 配置 -->
+ 	<aop:config>
+ 		<!-- 详细 配置切面 -->
+ 		<aop:aspect id="ap" ref="Aspect">
+ 			<!-- 详细 配置切面上的切入点 -->
+ 			<aop:pointcut expression="execution(public * *(..))" id="ptt"/>
+ 			
+ 			<!-- 切面上的前置通知 -->
+ 			<aop:before method="before" pointcut-ref="ptt"/>
+ 			<aop:after method="after" pointcut-ref="ptt"/>
+ 		
+ 		</aop:aspect>
+ 		
+ 	</aop:config>
+```
+
+4. test.java:
+```java
+ApplicationContext app=new ClassPathXmlApplicationContext("applicationContext.xml");
+mathCaculate mc=(mathCaculate) app.getBean("math");
+    mc.add(4, 3);
+	mc.sub(4, 3);
+	mc.mul(4, 3);
+	mc.div(4, 3);
+```
+
+5. 运行结果：
+
+this is  前置通知
+7
+this is  后置通知
+
+this is  前置通知
+1
+this is  后置通知
+
+this is  前置通知
+12
+this is  后置通知
+
+this is  前置通知
+1
+this is  后置通知
+
+6. 分析：
+```xml
+<!-- AOP 进行 配置 -->
+ 	<aop:config>
+ 		<!-- 详细 配置切面，切面为 Aspect 类-->
+ 		<aop:aspect id="ap" ref="Aspect">
+ 			<!-- 详细 配置切面上的切入点 
+			 	切入点为切面上的特定的代码。
+				expression 属性表示 切面上的所有public 方法。
+
+				表示：切面上的所有public 方法，都为切入点。
+			 -->
+ 			<aop:pointcut expression="execution(public * *(..))" id="ptt"/>
+ 			
+ 			<!-- 切面上的前置通知 
+			 	前置通知引用的对象为ptt，即为切入点（切面上特定的代码）。
+				前置通知执行的方法为 所引用的对象上的 before 方法。
+			 
+			 -->
+ 			<aop:before method="before" pointcut-ref="ptt"/>
+ 			<aop:after method="after" pointcut-ref="ptt"/>
+ 		
+ 		</aop:aspect>
+ 		
+ 	</aop:config>
+```
+
+
+
+> 在使用spring框架配置AOP的时候，不管是通过XML配置文件还是注解的方式都需要定义pointcut”切入点”
+
+> 例如定义切入点表达式 execution (* com.sample.service.impl..*. *(..))
+
+> execution()是最常用的切点函数，其语法如下所示：
+
+> 整个表达式可以分为五个部分：
+
+> 1、execution(): 表达式主体。
+
+> 2、第一个*号：表示返回类型， *号表示所有的类型。
+
+> 3、包名：表示需要拦截的包名，后面的两个句点表示当前包和当前包的所有子包，com.sample.service.impl包、子孙包下所有类的方法。
+
+> 4、第二个*号：表示类名，*号表示所有的类。
+
+> 5、*(..):最后这个星号表示方法名，*号表示所有的方法，后面括弧里面表示方法的参数，两个句点表示任何参数
+
+
+**流程：**
+&emsp;&emsp;<font color="red">当程序流程运行到切入点时，会查看该切入点在那个切面上，并且该切面的前置或后置等通知是否与该切入点进行了绑定。若绑定，则根据通知的类型，若是前置通知，则先执行前置通知，再执行原本的程序流程。</font>
+
+
+### 3.基于注解方式 使用AOP：
+1. 修改目标类：
+```java
+@Component(value="mathCaculate")
+public class mathCaculate {
+	public mathCaculate(){
+		System.out.println("this is wucan mathCaculate");
+	}
+	
+	
+	public void add(int i,int j){
+	
+		System.out.println(i+j);
+	}
+
+	public void sub(int i,int j){
+	
+		System.out.println(i-j);
+	}
+
+	public void mul(int i,int j){
+		
+		System.out.println(i*j);
+	}
+
+	public void div(int i,int j){
+		
+		System.out.println(i/j);
+	}
+}
+
+```
+2. 修改切面类：
+```java
+//声明一个切面类，1.把该类注入到容器中，2.在声明为切面
+/*
+ 在切面类中，设置通知
+
+*/
+
+//声明一个切面类，1.把该类注入到容器中，2.在声明为切面
+// @Order(1) 制定切面的优先级，值越小，优先级越高。当有多个切面中使用
+@Order(1)
+@Component(value="Aspect")
+@org.aspectj.lang.annotation.Aspect
+public class Aspect {
+	
+	public Aspect(){
+		System.out.println("this is wucan Aspect");
+	}
+	
+	//声明该方法是一个前置通知，在目标处之前执行
+	@Before(value="execution(public void com.aop.mathCaculate.*(int,int))")
+	public void before(){
+		
+		System.out.println("this is  前置通知");
+	}
+	
+	//声明该方法是一个后置通知，在目标方法之后（无论是否发生异常）执行
+	@After(value="execution(public void com.aop.mathCaculate.*(int,int))")
+	public void after(){
+		System.out.println("this is  后置通知");
+	}
+	
+	/*
+	 * 返回通知，在方法正常结束执行的代码
+	 * 返回通知，可以访问到方法的返回值
+	 * returning="result"  表示返回值叫result
+	 * */
+	@AfterReturning(value="execution(* com.aop.mathCaculate.*(int,int))",
+			returning="result")
+	public void returning(Object result){
+		System.out.println(" this is 返回通知  ,  返回值是"+result);
+	}
+	
+	/*
+	 * 异常通知
+	 * 在目标方法出现异常时，执行的代码，可以在出现特定异常时，执行的通知代码
+	 * */
+	@AfterThrowing(value="execution(public void com.aop.mathCaculate.*(int,int))"
+			,throwing="exception")
+	public void throwException(NullPointerException exception){
+		System.out.println(" this is 异常通知  ,  返回值是"+exception);
+		
+	}
+	
+	/*
+	 * 环绕通知,
+	 * 其需要携带 ProceedingJoinPoint 的类型的参数
+	 * */
+	@Around(value="execution(public void com.aop.mathCaculate.*(int,int))")
+	public void around(ProceedingJoinPoint pjp){
+		System.out.println(" this is 环绕通知  ");
+	}
+}
+
+```
+
+3. 修改配置文件：
+```xml
+ 	<!-- 扫包，注入bean -->
+    <context:component-scan base-package="com.aop"/>
+ 	
+ 	<!-- 使Aspectj 注解 生效 -->
+ 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+ 
+```
+
+<font color="red">使Aspectj 注解 生效：</font>
+ `<aop:aspectj-autoproxy></aop:aspectj-autoproxy>`
+
+4. test:
+```java
+ApplicationContext app=new ClassPathXmlApplicationContext("applicationContext.xml");
+mathCaculate mc=(mathCaculate) app.getBean("mathCaculate");
+		mc.add(4, 3);
+		mc.sub(4, 3);
+		mc.mul(4, 3);
+		mc.div(4, 3);
+```
+
+5. 运行结果：
+this is  前置通知
+this is  后置通知
+ this is 返回通知  ,  返回值是7
+7
+this is  前置通知
+this is  后置通知
+ this is 返回通知  ,  返回值是1
+1
+this is  前置通知
+this is  后置通知
+ this is 返回通知  ,  返回值是12
+12
+this is  前置通知
+this is  后置通知
+ this is 返回通知  ,  返回值是1
+1
+
+
+### 4.补充：
+
+1. @Order注解：
+@Order(1) ：制定切面的优先级，值越小，优先级越高。当有多个切面中使用
+
+2. @Pointcut注解：
+Aspect.java
+```java
+/*
+	 * 定义一个方法，专门表示切点表达式，其他使用该切点表达式时，直接使用该方法即可。
+	 * */
+	@Pointcut("execution(* com.aop.mathCaculate.*(int,int))")
+	public void pointcut_execution(){}
+	
+	//声明该方法是一个前置通知，在目标处之前执行
+	@Before(value="pointcut_execution()")
+	public void before(){
+		
+		System.out.println("this is  前置通知");
+	}
+```
+
+
