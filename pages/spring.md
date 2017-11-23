@@ -847,7 +847,7 @@ User [name=null]
 com.Controller.UserController@3869f4
 
 
-### 2.通过注解的方式装配Bean到另一个bean中:
+### 2.通过注解的方式装配Bean到另一个bean中（使一个bean 使用另一个bean ，在省去get/set 方法时）:
 参考链接：
 [@Autowired注解、@Resource注解和@Service注解](https://www.cnblogs.com/szlbm/p/5512931.html)
 
@@ -1292,4 +1292,57 @@ Aspect.java
 	}
 ```
 
+## Spring的事务管理：
 
+&emsp;&emsp;**事务是一系列的动作，事务是一个最小的逻辑执行单元，整个事务不能分开执行，要么同时执行，要么同时不执行，绝不能执行一部分（比如：当你从银行转账，如果你的账户钱少了，那别人的账户钱多了。一定不能出现你的钱少了，别人的钱不变。）。**
+&emsp;&emsp;<font color="red">Spring 通过spring aop 来支持事务管理，它把事务代码从业务方法中分离出来。</font>
+
+
+**spring 事务的属性：传播行为，隔离级别，只读，超时属性。**
+
+参考链接：
+[spring事务属性—1](https://www.cnblogs.com/of-fanruice/p/7460441.html)
+[spring事务属性—2](http://blog.csdn.net/zmx729618/article/details/51084321)
+
+### 1.注解方式配置事务：
+1. 在配置文件中添加事务（配置事务管理器，添加注解驱动）：
+applicatinContext.xml
+```xml
+	<!-- 配置 jdbc的事务管理 -->
+ 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+ 		<property name="datasource" ref="dataSource"></property>
+ 	</bean>
+ 	
+ 	<!-- 启动事务注解 -->
+ 	<tx:annotation-driven transaction-manager="transactionManager"/>
+```
+
+2. 添加事务注解
+```java
+/*
+	 * 这段代码：把购物车的商品添加到订单中。
+	 * 1.添加购物车的商品到订单中
+	 * 2.删除购物车的商品。
+	 * */
+	@Transactional
+	public void addOrders(Goods goods){
+		//1.
+		int a=orderController.insertOrder(goods);
+		//2.
+		int b=goodsController.deletegoods(goods);
+		
+	}
+```
+
+<font color="red">当该方法内发生异常时，被事务注解标记的方法，会产生回滚。形成没有执行该方法的效果。</font>
+
+
+### 2.XML方式配置事务（参考）：
+
+参考链接：
+[xml方式](https://www.cnblogs.com/longronglang/p/6298200.html)
+
+
+
+## Spring 与 Mybatis 整合：
+<font color="red">整合过程写在 Mybatis 教程 中的Mybatis 与Spring 之间的整合中，请去哪里观看</font>
