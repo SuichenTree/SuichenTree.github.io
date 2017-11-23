@@ -1305,6 +1305,7 @@ Aspect.java
 [spring事务属性—2](http://blog.csdn.net/zmx729618/article/details/51084321)
 
 ### 1.注解方式配置事务：
+0. <font color="red">由于要使用spring的事务。因此要导入spring的事务jar包，spring-tx-4.3.8.RELEASE.jar</font>
 1. 在配置文件中添加事务（配置事务管理器，添加注解驱动）：
 applicatinContext.xml
 ```xml
@@ -1344,5 +1345,581 @@ applicatinContext.xml
 
 
 
-## Spring 与 Mybatis 整合：
-<font color="red">整合过程写在 Mybatis 教程 中的Mybatis 与Spring 之间的整合中，请去哪里观看</font>
+## Spring 与 Mybatis 整合（Mybatis使用接口式编程）：
+&emsp;&emsp;在实际的项目开发中，我们需要把Spring 和 Mybatis 整合在一起。使用Spring的依赖注入来减少代码的耦合，使得mybatis 更加便捷的完成数据库操作。
+
+### 1.jar包的准备：
+> Spring框架的jar 包。
+> Mybatis框架的 jar 包。
+> Mybatis 整合 Spring 中间件的 jar 包（版本最好要1.3.1 或更高版本，低版本有问题）。
+> aspectj 的jar 包（spring的aop 是基于aspectj）。
+> 数据库驱动 jar包，
+> 数据源c3p0 或 dbcp 的jar包。
+> jstl 标签库的jar 包（选要）。
+
+
+### 2.数据库的建立：
+![数据库截图](../img/spring_img_1.png)
+![数据库截图](../img/spring_img_2.png)
+
+
+### 3.编写持久化类（实体类）：
+Goods.java:
+```java
+package com.entity;
+public class Goods {
+	private Integer id;
+	private String name;
+	private String address;
+	private String createtime;
+	
+	public Goods(){}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(String string) {
+		this.createtime = string;
+	}
+
+	@Override
+	public String toString() {
+		return "Goods [id=" + id + ", name=" + name + ", address=" + address
+				+ ", createtime=" + createtime + "]";
+	}
+	
+}
+
+```
+
+User.java:
+```java
+package com.entity;
+
+public class User {
+		private Integer id;
+		private String name;
+		private Integer age;
+		
+		public User(){}
+
+		public Integer getId() {
+			return id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public Integer getAge() {
+			return age;
+		}
+
+		public void setAge(Integer age) {
+			this.age = age;
+		}
+
+		@Override
+		public String toString() {
+			return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
+		}
+		
+		
+		
+}
+
+```
+
+
+### 4.编写持久化类的代理接口与其对应的Mapper映射文件：
+```java
+
+// Goods 类的代理接口Goodsdao:
+public interface Goodsdao {
+	
+	public int insertGoods(Goods goods);
+	
+	public int deleteGoods(Goods goods);
+	
+	public int updateGoods(Goods goods);
+	
+	public Goods selectByidorname(Goods goods);
+	
+}
+
+//User类的代理接口 Userdao：
+public interface Userdao {
+	
+	public int insert(User user);
+	public int delete(User user);
+	public int update(User user);
+	public User select(User user);
+	public List<User> selectAll();
+	
+}
+
+
+```
+
+GoodsMapper.xml:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为mapper指定唯一的命名空间，在不用接口式编程的情况下，随便取名 -->
+<mapper namespace="com.dao.Goodsdao">
+
+<!--#{id}:从传递过来的参数取出id值-->
+
+<select id="selectByidorname" resultType="com.entity.Goods" parameterType="com.entity.Goods">
+	SELECT * from goods where 1=1
+	
+	<if test="id !=null">and id=#{id}</if>
+	 <if test="name !=null">and name=#{name}</if>
+</select>
+
+
+
+<insert id="insertGoods" parameterType="com.entity.Goods">         
+insert into goods
+	<trim prefix="(" suffix=")" suffixOverrides="," >	
+	<if test='name != null and name != "" '>
+             name,
+    </if>
+    <if test='address != null and address != "" '>
+             address,
+    </if>
+    <if test='createtime != null and createtime != "" '>
+             createtime,
+    </if>
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		
+		    <if test='name != null and name != "" '>
+            		 #{name},
+		    </if>
+		    <if test='address != null and address != "" '>
+		              #{address},
+		    </if>
+		    <if test='createtime != null and createtime != "" '>
+		              #{createtime},
+		    </if>
+		
+	</trim>
+
+</insert>
+
+
+<delete id="deleteGoods" parameterType="com.entity.Goods">
+	delete from goods where 1=1
+	<if test="id !=null">and id=#{id}</if>
+	<if test="name !=null">and name=#{name}</if>
+	
+</delete>
+
+<update id="updateGoods" parameterType="com.entity.Goods">
+update goods
+	<trim prefix="set" suffixOverrides=",">
+		<if test="name !=null">name=#{name},</if>
+		<if test="address !=null">address=#{address},</if>
+		<if test="createtime !=null">createtime=#{createtime},</if>
+	</trim>
+	where id=#{id}
+</update>
+
+
+</mapper>
+
+
+
+```
+
+UserMapper.xml:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为mapper指定唯一的命名空间，在不用接口式编程的情况下，随便取名 -->
+<mapper namespace="com.dao.Userdao">
+
+<!--#{id}:从传递过来的参数取出id值-->
+
+<select id="select" resultType="com.entity.User" parameterType="com.entity.User">
+	SELECT * from user where 1=1
+	
+	<if test="id !=null">and id=#{id}</if>
+	 <if test="name !=null">and name=#{name}</if>
+</select>
+
+
+<insert id="insert" parameterType="com.entity.User">         
+insert into user
+	<trim prefix="(" suffix=")" suffixOverrides="," >	
+	<if test='name != null and name != "" '>
+             name,
+    </if>
+    <if test='age != null and age != "" '>
+             age,
+    </if>
+  
+    </trim>
+	
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		
+		    <if test='name != null and name != "" '>
+            		 #{name},
+		    </if>
+		    <if test='age != null and age != "" '>
+		              #{age},
+		    </if>
+	
+	</trim>
+
+</insert>
+
+
+<delete id="delete" parameterType="com.entity.User">
+	delete from user where 1=1
+	<if test="id !=null">and id=#{id}</if>
+	<if test="name !=null">and name=#{name}</if>
+	
+</delete>
+
+<update id="update" parameterType="com.entity.User">
+update user
+	<trim prefix="set" suffixOverrides=",">
+		<if test="name !=null">name=#{name},</if>
+		<if test="age !=null">age=#{age},</if>
+	
+	</trim>
+	where id=#{id}
+</update>
+
+<select id="selectAll" parameterType="com.entity.User">
+	select * from user
+</select>
+
+</mapper>
+
+```
+
+
+### 5.编写spring与Mybatis 整合后的spring，myabtis的配置文件：
+Mybatis_config:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+		<!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 -->
+		 <mappers>	
+		 		<mapper resource="com/dao/GoodsMapper.xml"/>
+		 		<mapper resource="com/dao/UserMapper.xml"/>		 		 
+		 </mappers>
+		 
+</configuration>
+```
+
+applicationContext.xml:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://mybatis.org/schema/mybatis-spring
+        http://mybatis.org/schema/mybatis-spring.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    
+    
+
+       <!-- 配置dbcp数据库连接池,
+		从原本的mybatis的配置文件，移到spring中来，
+		当ioc 容器 启动，通过dbcp 数据源，连接数据库。
+  
+  		-->
+      <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+        <property name="url" value="jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&amp; characterEncoding=utf8"/>  
+        <property name="username" value="root" />  
+        <property name="password" value="123456" />  
+      </bean> 
+       
+ 	
+
+ <!-- ioc容器启动，通过加载mybatis的配置文件，数据源连接池，创建SqlSessionFactory ,
+	
+	 这段配置代码相当于整合之前mybatis的测试方法：
+ 			
+ 			//通过这句来读取xml 配置文件的信息
+			InputStream inputs=Resources.getResourceAsStream("mybatis_config2.xml");
+			//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+			  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		
+ 		
+ 	 -->
+ 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+ 		<!-- 加载mybatis的配置文件 -->
+ 		<property name="configLocation" value="classpath:Mybatis_config.xml"></property>
+ 		
+ 		<!-- 加载数据源连接池 -->
+    	<property name="dataSource" ref="dataSource" />
+ 	</bean>
+ 	
+ 	
+ 	
+ 	
+	<!-- 通过注入sqlSessionFactory ，代理接口 ，相当于创建代理接口的实例化对象，通过该对象对数据库进行CRUD操作。
+	 
+	 		相当于之前测试方法的：
+ 		
+ 			//实例化session 对象，通过SqlSessionFactory
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			
+ 	 -->
+	<bean id="goodsdao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<!-- 注入 sqlSessionFactory -->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />	
+    	
+    	<!-- 注入代理接口，从而实例化所有的代理接口对象-->
+    	<property name="mapperInterface" value="com.dao.Goodsdao" />
+	</bean>
+ 
+ 	<bean id="userdao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<!-- 注入 sqlSessionFactory -->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />	
+    	
+    	<!-- 注入代理接口，从而实例化所有的代理接口对象-->
+    	<property name="mapperInterface" value="com.dao.Userdao" />
+	</bean>
+               
+
+</beans>
+```
+
+### 6.test:
+```java
+@Test
+	public void test1(){
+	ApplicationContext app = new ClassPathXmlApplicationContext("applicationContext.xml");
+	
+	/*
+	 * 从容器中获取bean，可以通过id 获取，也可以通过 目标bean 的反射获取。
+	 * Goodsdao goodsdao = (Goodsdao) app.getBean("goodsdao");
+	 * Userdao udao=(Userdao) app.getBean("userdao");
+	 * */
+	Userdao udao=(Userdao) app.getBean(Userdao.class);
+	Goodsdao goodsdao=app.getBean(Goodsdao.class);
+	
+	
+	User u=new User();
+	u.setName("aa");
+
+	
+	User a=udao.select(u);
+	System.out.println(a);
+	
+	}
+```
+
+### 7.分析：
+
+1. Mybatis 没有与spring整合之前的配置文件：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--环境配置： 指定要连接的数据库-->
+ <environments default="mysql">
+ 	<environment id="mysql">
+ 		<transactionManager type="JDBC"/>    <!-- 事务管理 -->
+		 <dataSource type="POOLED">   <!-- datasource 数据源配置-->
+		 		<property name="driver" value="com.mysql.jdbc.Driver"/>
+		 		<property name="url" value="jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&amp;characterEncoding=utf8"/>   
+		 		<property name="username" value="root"/>
+		 		<property name="password" value="123456"/>
+		 </dataSource>
+	</environment>
+</environments>
+ 		
+ 		
+ 		
+ 		
+		<!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 -->
+		 <mappers>
+		 		<mapper resource="com/dao/UserMapper.xml"/> 
+		 		<mapper resource="com/dao/GoodsMapper.xml"/> 
+		 </mappers>
+		 
+</configuration>
+```
+
+整合之后：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+		<!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 -->
+		 <mappers>
+		 		<mapper resource="com/dao/GoodsMapper.xml"/>
+		 		<mapper resource="com/dao/UserMapper.xml"/>		 		 
+		 </mappers>
+		
+</configuration>
+```
+
+<font color="red">整合之前的数据源配置移到spring的配置文件 applicationContext.xml 中</font>
+
+
+2. spring的配置文件的变化（<font color="red">注释非常重要</font>）：
+**①：第一种变化**
+
+```xml
+  <!-- 配置dbcp数据库连接池,
+		从原本的mybatis的配置文件，移到spring中来，
+		当ioc 容器 启动，通过dbcp 数据源，连接数据库。
+  
+  -->
+      <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+        <property name="url" value="jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&amp; characterEncoding=utf8"/>  
+        <property name="username" value="root" />  
+        <property name="password" value="123456" />  
+      </bean> 
+       
+ 	
+ 	<!-- ioc容器启动，通过加载mybatis的配置文件，数据源连接池，创建SqlSessionFactory ,
+	
+	 这段配置代码相当于整合之前mybatis的测试方法：
+ 			
+ 			//通过这句来读取xml 配置文件的信息
+			InputStream inputs=Resources.getResourceAsStream("mybatis_config2.xml");
+			//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+			  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		
+ 		
+ 	 -->
+ 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+ 		<!-- 加载mybatis的配置文件 -->
+ 		<property name="configLocation" value="classpath:Mybatis_config.xml"></property>
+ 		
+ 		<!-- 加载数据源连接池 -->
+    	<property name="dataSource" ref="dataSource" />
+ 	</bean>
+ 	
+ 	
+
+ 	<!-- 通过注入sqlSessionFactory ，代理接口 ，相当于创建代理接口的实例化对象，通过该对象对数据库进行CRUD操作。
+	 
+	 		相当于之前测试方法的：
+ 		
+ 			//实例化session 对象，通过SqlSessionFactory
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			
+ 	 -->
+	<bean id="goodsdao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<!-- 注入 sqlSessionFactory -->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />	
+    	
+    	<!-- 注入代理接口，从而实例化所有的代理接口对象-->
+    	<property name="mapperInterface" value="com.dao.Goodsdao" />
+	</bean>
+ 
+ 	<bean id="userdao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<!-- 注入 sqlSessionFactory -->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />	
+    	
+    	<!-- 注入代理接口，从而实例化所有的代理接口对象-->
+    	<property name="mapperInterface" value="com.dao.Userdao" />
+	</bean>
+```
+
+<font color="red">注意：由于有多个代理接口，所以需要如上所示，注入多个代理接口</font>
+
+**②：第二种变化**
+<font color="blue">由于有多个代理接口，可以用扫描的方式，一次扫描代理接口的包，从而注入多个代理接口，但在获取bean时，需要通过代理接口类的反射的方式，从容器获取不同的代理接口bean。</font>
+```xml
+	~~~
+	~~~
+	~~~
+	<!-- 通过注入sqlSessionFactory ，代理接口 ，相当于创建代理接口的实例化对象，通过该对象对数据库进行CRUD操作。
+	 
+	 		相当于之前测试方法的：
+ 		
+ 			//实例化session 对象，通过SqlSessionFactory
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			
+ 	 -->
+
+ 	<!-- 用扫描的方式,扫描代理接口包及其子包，注入多个代理接口，没有id值 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dao"></property>
+	</bean>
+ 
+```
+
+**由于通过扫描的方式注入代理接口，没有id值，所以在获取bean时，需要通过代理接口类的反射的方式，从容器获取不同的代理接口bean。**
+
+```java
+Userdao udao=(Userdao) app.getBean(Userdao.class);
+Goodsdao goodsdao=app.getBean(Goodsdao.class);
+```

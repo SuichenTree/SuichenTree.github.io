@@ -277,7 +277,17 @@ code.language-yaml {
 <li><a href="#2xml%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1%E5%8F%82%E8%80%83">2.XML方式配置事务（参考）：</a></li>
 </ul>
 </li>
-<li><a href="#spring-%E4%B8%8E-mybatis-%E6%95%B4%E5%90%88">Spring 与 Mybatis 整合：</a></li>
+<li><a href="#spring-%E4%B8%8E-mybatis-%E6%95%B4%E5%90%88mybatis%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E5%BC%8F%E7%BC%96%E7%A8%8B">Spring 与 Mybatis 整合（Mybatis使用接口式编程）：</a>
+<ul>
+<li><a href="#1jar%E5%8C%85%E7%9A%84%E5%87%86%E5%A4%87">1.jar包的准备：</a></li>
+<li><a href="#2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%BB%BA%E7%AB%8B">2.数据库的建立：</a></li>
+<li><a href="#3%E7%BC%96%E5%86%99%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E5%AE%9E%E4%BD%93%E7%B1%BB">3.编写持久化类（实体类）：</a></li>
+<li><a href="#4%E7%BC%96%E5%86%99%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%9A%84%E4%BB%A3%E7%90%86%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%85%B6%E5%AF%B9%E5%BA%94%E7%9A%84mapper%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6">4.编写持久化类的代理接口与其对应的Mapper映射文件：</a></li>
+<li><a href="#5%E7%BC%96%E5%86%99spring%E4%B8%8Emybatis-%E6%95%B4%E5%90%88%E5%90%8E%E7%9A%84springmyabtis%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">5.编写spring与Mybatis 整合后的spring，myabtis的配置文件：</a></li>
+<li><a href="#6test">6.test:</a></li>
+<li><a href="#7%E5%88%86%E6%9E%90">7.分析：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1535,13 +1545,14 @@ Aspect.java</p>
 
 <p>  <strong>事务是一系列的动作，事务是一个最小的逻辑执行单元，整个事务不能分开执行，要么同时执行，要么同时不执行，绝不能执行一部分（比如：当你从银行转账，如果你的账户钱少了，那别人的账户钱多了。一定不能出现你的钱少了，别人的钱不变。）。</strong><br>
   <font color="red">Spring 通过spring aop 来支持事务管理，它把事务代码从业务方法中分离出来。</font></p>
-<p>  spring 事务的属性：传播行为，隔离级别，只读，超时属性。<br>
-参考链接：<br>
+<p><strong>spring 事务的属性：传播行为，隔离级别，只读，超时属性。</strong></p>
+<p>参考链接：<br>
 <a href="https://www.cnblogs.com/of-fanruice/p/7460441.html">spring事务属性—1</a><br>
 <a href="http://blog.csdn.net/zmx729618/article/details/51084321">spring事务属性—2</a></p>
 <h3 class="mume-header" id="1&#x6CE8;&#x89E3;&#x65B9;&#x5F0F;&#x914D;&#x7F6E;&#x4E8B;&#x52A1;">1.注解方式配置事务：</h3>
 
-<ol>
+<ol start="0">
+<li><font color="red">由于要使用spring的事务。因此要导入spring的事务jar包，spring-tx-4.3.8.RELEASE.jar</font></li>
 <li>在配置文件中添加事务（配置事务管理器，添加注解驱动）：<br>
 applicatinContext.xml</li>
 </ol>
@@ -1575,9 +1586,559 @@ applicatinContext.xml</li>
 
 <p>参考链接：<br>
 <a href="https://www.cnblogs.com/longronglang/p/6298200.html">xml方式</a></p>
-<h2 class="mume-header" id="spring-&#x4E0E;-mybatis-&#x6574;&#x5408;">Spring 与 Mybatis 整合：</h2>
+<h2 class="mume-header" id="spring-&#x4E0E;-mybatis-&#x6574;&#x5408;mybatis&#x4F7F;&#x7528;&#x63A5;&#x53E3;&#x5F0F;&#x7F16;&#x7A0B;">Spring 与 Mybatis 整合（Mybatis使用接口式编程）：</h2>
 
-<p><font color="red">整合过程写在 Mybatis 教程 中的Mybatis 与Spring 之间的整合中，请去哪里观看</font></p>
+<p>  在实际的项目开发中，我们需要把Spring 和 Mybatis 整合在一起。使用Spring的依赖注入来减少代码的耦合，使得mybatis 更加便捷的完成数据库操作。</p>
+<h3 class="mume-header" id="1jar&#x5305;&#x7684;&#x51C6;&#x5907;">1.jar包的准备：</h3>
+
+<blockquote>
+<p>Spring框架的jar 包。<br>
+Mybatis框架的 jar 包。<br>
+Mybatis 整合 Spring 中间件的 jar 包（版本最好要1.3.1 或更高版本，低版本有问题）。<br>
+aspectj 的jar 包（spring的aop 是基于aspectj）。<br>
+数据库驱动 jar包，<br>
+数据源c3p0 或 dbcp 的jar包。<br>
+jstl 标签库的jar 包（选要）。</p>
+</blockquote>
+<h3 class="mume-header" id="2&#x6570;&#x636E;&#x5E93;&#x7684;&#x5EFA;&#x7ACB;">2.数据库的建立：</h3>
+
+<p><img src="../img/spring_img_1.png" alt="&#x6570;&#x636E;&#x5E93;&#x622A;&#x56FE;"><br>
+<img src="../img/spring_img_2.png" alt="&#x6570;&#x636E;&#x5E93;&#x622A;&#x56FE;"></p>
+<h3 class="mume-header" id="3&#x7F16;&#x5199;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x5B9E;&#x4F53;&#x7C7B;">3.编写持久化类（实体类）：</h3>
+
+<p>Goods.java:</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Goods</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String address<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String createtime<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token function">Goods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> name<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> address<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAddress</span><span class="token punctuation">(</span>String address<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>address <span class="token operator">=</span> address<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getCreatetime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> createtime<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setCreatetime</span><span class="token punctuation">(</span>String string<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>createtime <span class="token operator">=</span> string<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"Goods [id="</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">", name="</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">", address="</span> <span class="token operator">+</span> address
+				<span class="token operator">+</span> <span class="token string">", createtime="</span> <span class="token operator">+</span> createtime <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
+
+</pre>
+<p>User.java:</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+		<span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+		<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+		<span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+		
+		<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> Integer <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> id<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> name<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> Integer <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> age<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span>Integer age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token annotation punctuation">@Override</span>
+		<span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"User [id="</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">", name="</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">", age="</span> <span class="token operator">+</span> age <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+		
+		
+<span class="token punctuation">}</span>
+
+</pre>
+<h3 class="mume-header" id="4&#x7F16;&#x5199;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x7684;&#x4EE3;&#x7406;&#x63A5;&#x53E3;&#x4E0E;&#x5176;&#x5BF9;&#x5E94;&#x7684;mapper&#x6620;&#x5C04;&#x6587;&#x4EF6;">4.编写持久化类的代理接口与其对应的Mapper映射文件：</h3>
+
+<pre class="language-java">
+<span class="token comment" spellcheck="true">// Goods 类的代理接口Goodsdao:</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Goodsdao</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insertGoods</span><span class="token punctuation">(</span>Goods goods<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">deleteGoods</span><span class="token punctuation">(</span>Goods goods<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">updateGoods</span><span class="token punctuation">(</span>Goods goods<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> Goods <span class="token function">selectByidorname</span><span class="token punctuation">(</span>Goods goods<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//User类的代理接口 Userdao：</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Userdao</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">update</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> User <span class="token function">select</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> List<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token function">selectAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token punctuation">}</span>
+
+
+</pre>
+<p>GoodsMapper.xml:</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- 为mapper指定唯一的命名空间，在不用接口式编程的情况下，随便取名 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao.Goodsdao<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--#{id}:从传递过来的参数取出id值--></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>selectByidorname<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Goods<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Goods<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+	SELECT * from goods where 1=1
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and id=#{id}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and name=#{name}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insertGoods<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Goods<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>         
+insert into goods
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(<span class="token punctuation">"</span></span> <span class="token attr-name">suffix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>name !<span class="token punctuation">=</span> null and name !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+             name,
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>address !<span class="token punctuation">=</span> null and address !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+             address,
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>createtime !<span class="token punctuation">=</span> null and createtime !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+             createtime,
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>values (<span class="token punctuation">"</span></span> <span class="token attr-name">suffix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+		
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>name !<span class="token punctuation">=</span> null and name !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+            		 #{name},
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>address !<span class="token punctuation">=</span> null and address !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+		              #{address},
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>createtime !<span class="token punctuation">=</span> null and createtime !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+		              #{createtime},
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>delete</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>deleteGoods<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Goods<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+	delete from goods where 1=1
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and id=#{id}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and name=#{name}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>delete</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateGoods<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Goods<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+update goods
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>set<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>name=#{name},<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>address !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>address=#{address},<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>createtime !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>createtime=#{createtime},<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+	where id=#{id}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span>
+
+
+
+</pre>
+<p>UserMapper.xml:</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- 为mapper指定唯一的命名空间，在不用接口式编程的情况下，随便取名 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">namespace</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao.Userdao<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--#{id}:从传递过来的参数取出id值--></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>select<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+	SELECT * from user where 1=1
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and id=#{id}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and name=#{name}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insert<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>         
+insert into user
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(<span class="token punctuation">"</span></span> <span class="token attr-name">suffix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>name !<span class="token punctuation">=</span> null and name !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+             name,
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>age !<span class="token punctuation">=</span> null and age !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+             age,
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>values (<span class="token punctuation">"</span></span> <span class="token attr-name">suffix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>)<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+		
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>name !<span class="token punctuation">=</span> null and name !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+            		 #{name},
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>age !<span class="token punctuation">=</span> null and age !<span class="token punctuation">=</span> <span class="token punctuation">"</span><span class="token punctuation">"</span> <span class="token punctuation">'</span></span><span class="token punctuation">></span></span>
+		              #{age},
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
+
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>delete</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>delete<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+	delete from user where 1=1
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and id=#{id}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>and name=#{name}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>delete</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>update<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+update user
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>trim</span> <span class="token attr-name">prefix</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>set<span class="token punctuation">"</span></span> <span class="token attr-name">suffixOverrides</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>name=#{name},<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>if</span> <span class="token attr-name">test</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age !<span class="token punctuation">=</span>null<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>age=#{age},<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>if</span><span class="token punctuation">></span></span>
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>trim</span><span class="token punctuation">></span></span>
+	where id=#{id}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>update</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>selectAll<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+	select * from user
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span>
+
+</pre>
+<h3 class="mume-header" id="5&#x7F16;&#x5199;spring&#x4E0E;mybatis-&#x6574;&#x5408;&#x540E;&#x7684;springmyabtis&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">5.编写spring与Mybatis 整合后的spring，myabtis的配置文件：</h3>
+
+<p>Mybatis_config:</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+		<span class="token comment" spellcheck="true">&lt;!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 --></span>
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mappers</span><span class="token punctuation">></span></span>	
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/dao/GoodsMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/dao/UserMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>		 		 
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
+		 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+</pre>
+<p>applicationContext.xml:</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
+	<span class="token attr-name"><span class="token namespace">xmlns:</span>p</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/p<span class="token punctuation">"</span></span>
+	<span class="token attr-name"><span class="token namespace">xmlns:</span>mybatis</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://mybatis.org/schema/mybatis-spring<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">xmlns:</span>mvc</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/mvc<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xmlns:</span>aop</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/aop<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xmlns:</span>context</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/context<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">xmlns:</span>tx</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/tx<span class="token punctuation">"</span></span>
+    <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://mybatis.org/schema/mybatis-spring
+        http://mybatis.org/schema/mybatis-spring.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    
+    
+
+       <span class="token comment" spellcheck="true">&lt;!-- 配置dbcp数据库连接池,
+		从原本的mybatis的配置文件，移到spring中来，
+		当ioc 容器 启动，通过dbcp 数据源，连接数据库。
+  
+  		--></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.commons.dbcp.BasicDataSource<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>driverClassName<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql.jdbc.Driver<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>jdbc:mysql://localhost:3306/blog_demo?useUnicode<span class="token punctuation">=</span>true&amp;amp; characterEncoding<span class="token punctuation">=</span>utf8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>123456<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span> 
+       
+ 	
+
+ <span class="token comment" spellcheck="true">&lt;!-- ioc容器启动，通过加载mybatis的配置文件，数据源连接池，创建SqlSessionFactory ,
+	
+	 这段配置代码相当于整合之前mybatis的测试方法：
+ 			
+ 			//通过这句来读取xml 配置文件的信息
+			InputStream inputs=Resources.getResourceAsStream("mybatis_config2.xml");
+			//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+			  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		
+ 		
+ 	 --></span>
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.SqlSessionFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ 		<span class="token comment" spellcheck="true">&lt;!-- 加载mybatis的配置文件 --></span>
+ 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>configLocation<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>classpath:Mybatis_config.xml<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+ 		
+ 		<span class="token comment" spellcheck="true">&lt;!-- 加载数据源连接池 --></span>
+    	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+ 	
+ 	
+ 	
+ 	
+	<span class="token comment" spellcheck="true">&lt;!-- 通过注入sqlSessionFactory ，代理接口 ，相当于创建代理接口的实例化对象，通过该对象对数据库进行CRUD操作。
+	 
+	 		相当于之前测试方法的：
+ 		
+ 			//实例化session 对象，通过SqlSessionFactory
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			
+ 	 --></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>goodsdao<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.mapper.MapperFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token comment" spellcheck="true">&lt;!-- 注入 sqlSessionFactory --></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>	
+    	
+    	<span class="token comment" spellcheck="true">&lt;!-- 注入代理接口，从而实例化所有的代理接口对象--></span>
+    	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mapperInterface<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao.Goodsdao<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+ 
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>userdao<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.mapper.MapperFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token comment" spellcheck="true">&lt;!-- 注入 sqlSessionFactory --></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>	
+    	
+    	<span class="token comment" spellcheck="true">&lt;!-- 注入代理接口，从而实例化所有的代理接口对象--></span>
+    	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mapperInterface<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao.Userdao<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+               
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">></span></span>
+</pre>
+<h3 class="mume-header" id="6test">6.test:</h3>
+
+<pre class="language-java"><span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	ApplicationContext app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment" spellcheck="true">/*
+	 * 从容器中获取bean，可以通过id 获取，也可以通过 目标bean 的反射获取。
+	 * Goodsdao goodsdao = (Goodsdao) app.getBean("goodsdao");
+	 * Userdao udao=(Userdao) app.getBean("userdao");
+	 * */</span>
+	Userdao udao<span class="token operator">=</span><span class="token punctuation">(</span>Userdao<span class="token punctuation">)</span> app<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Userdao<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	Goodsdao goodsdao<span class="token operator">=</span>app<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Goodsdao<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	
+	User u<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	u<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	
+	User a<span class="token operator">=</span>udao<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token punctuation">}</span>
+</pre>
+<h3 class="mume-header" id="7&#x5206;&#x6790;">7.分析：</h3>
+
+<ol>
+<li>Mybatis 没有与spring整合之前的配置文件：</li>
+</ol>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--环境配置： 指定要连接的数据库--></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environments</span> <span class="token attr-name">default</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>environment</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mysql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>transactionManager</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>JDBC<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>    <span class="token comment" spellcheck="true">&lt;!-- 事务管理 --></span>
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dataSource</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>POOLED<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>   <span class="token comment" spellcheck="true">&lt;!-- datasource 数据源配置--></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>driver<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql.jdbc.Driver<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>jdbc:mysql://localhost:3306/blog_demo?useUnicode<span class="token punctuation">=</span>true&amp;amp;characterEncoding<span class="token punctuation">=</span>utf8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>   
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>123456<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dataSource</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environment</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environments</span><span class="token punctuation">></span></span>
+ 		
+ 		
+ 		
+ 		
+		<span class="token comment" spellcheck="true">&lt;!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 --></span>
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mappers</span><span class="token punctuation">></span></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/dao/UserMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/dao/GoodsMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
+		 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+</pre>
+<p>整合之后：</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">></span></span>
+	
+		<span class="token comment" spellcheck="true">&lt;!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 --></span>
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mappers</span><span class="token punctuation">></span></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/dao/GoodsMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapper</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/dao/UserMapper.xml<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>		 		 
+		 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
+		
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">></span></span>
+</pre>
+<p><font color="red">整合之前的数据源配置移到spring的配置文件 applicationContext.xml 中</font></p>
+<ol start="2">
+<li>spring的配置文件的变化（<font color="red">注释非常重要</font>）：<br>
+<strong>①：第一种变化</strong></li>
+</ol>
+<pre class="language-xml">  <span class="token comment" spellcheck="true">&lt;!-- 配置dbcp数据库连接池,
+		从原本的mybatis的配置文件，移到spring中来，
+		当ioc 容器 启动，通过dbcp 数据源，连接数据库。
+  
+  --></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.apache.commons.dbcp.BasicDataSource<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>driverClassName<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql.jdbc.Driver<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>jdbc:mysql://localhost:3306/blog_demo?useUnicode<span class="token punctuation">=</span>true&amp;amp; characterEncoding<span class="token punctuation">=</span>utf8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>123456<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>  
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span> 
+       
+ 	
+ 	<span class="token comment" spellcheck="true">&lt;!-- ioc容器启动，通过加载mybatis的配置文件，数据源连接池，创建SqlSessionFactory ,
+	
+	 这段配置代码相当于整合之前mybatis的测试方法：
+ 			
+ 			//通过这句来读取xml 配置文件的信息
+			InputStream inputs=Resources.getResourceAsStream("mybatis_config2.xml");
+			//初始化mybatis ， 创建SqlSessionFactory，通过xml配置文件信息
+			  SqlSessionFactory ssf=new SqlSessionFactoryBuilder().build(inputs);
+		
+ 		
+ 	 --></span>
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.SqlSessionFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+ 		<span class="token comment" spellcheck="true">&lt;!-- 加载mybatis的配置文件 --></span>
+ 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>configLocation<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>classpath:Mybatis_config.xml<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+ 		
+ 		<span class="token comment" spellcheck="true">&lt;!-- 加载数据源连接池 --></span>
+    	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+ 	
+ 	
+
+ 	<span class="token comment" spellcheck="true">&lt;!-- 通过注入sqlSessionFactory ，代理接口 ，相当于创建代理接口的实例化对象，通过该对象对数据库进行CRUD操作。
+	 
+	 		相当于之前测试方法的：
+ 		
+ 			//实例化session 对象，通过SqlSessionFactory
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			
+ 	 --></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>goodsdao<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.mapper.MapperFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token comment" spellcheck="true">&lt;!-- 注入 sqlSessionFactory --></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>	
+    	
+    	<span class="token comment" spellcheck="true">&lt;!-- 注入代理接口，从而实例化所有的代理接口对象--></span>
+    	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mapperInterface<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao.Goodsdao<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+ 
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>userdao<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.mapper.MapperFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token comment" spellcheck="true">&lt;!-- 注入 sqlSessionFactory --></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sqlSessionFactory<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>	
+    	
+    	<span class="token comment" spellcheck="true">&lt;!-- 注入代理接口，从而实例化所有的代理接口对象--></span>
+    	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mapperInterface<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao.Userdao<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+</pre>
+<p><font color="red">注意：由于有多个代理接口，所以需要如上所示，注入多个代理接口</font></p>
+<p><strong>②：第二种变化</strong><br>
+<font color="blue">由于有多个代理接口，可以用扫描的方式，一次扫描代理接口的包，从而注入多个代理接口，但在获取bean时，需要通过代理接口类的反射的方式，从容器获取不同的代理接口bean。</font></p>
+<pre class="language-xml">	~~~
+	~~~
+	~~~
+	<span class="token comment" spellcheck="true">&lt;!-- 通过注入sqlSessionFactory ，代理接口 ，相当于创建代理接口的实例化对象，通过该对象对数据库进行CRUD操作。
+	 
+	 		相当于之前测试方法的：
+ 		
+ 			//实例化session 对象，通过SqlSessionFactory
+			SqlSession session=ssf.openSession();
+			//通过session对象，用反射的方式，获取代理接口的实例化对象，这段代码，相当于实例化接口对象
+			studentdao_dynamicSQL mapper =session.getMapper(studentdao_dynamicSQL.class);
+			
+ 	 --></span>
+
+ 	<span class="token comment" spellcheck="true">&lt;!-- 用扫描的方式,扫描代理接口包及其子包，注入多个代理接口，没有id值 --></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.mybatis.spring.mapper.MapperScannerConfigurer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>basePackage<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+ 
+</pre>
+<p><strong>由于通过扫描的方式注入代理接口，没有id值，所以在获取bean时，需要通过代理接口类的反射的方式，从容器获取不同的代理接口bean。</strong></p>
+<pre class="language-java">Userdao udao<span class="token operator">=</span><span class="token punctuation">(</span>Userdao<span class="token punctuation">)</span> app<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Userdao<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Goodsdao goodsdao<span class="token operator">=</span>app<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Goodsdao<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1649,7 +2210,17 @@ applicatinContext.xml</li>
 <li><a href="#2xml%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1%E5%8F%82%E8%80%83">2.XML方式配置事务（参考）：</a></li>
 </ul>
 </li>
-<li><a href="#spring-%E4%B8%8E-mybatis-%E6%95%B4%E5%90%88">Spring 与 Mybatis 整合：</a></li>
+<li><a href="#spring-%E4%B8%8E-mybatis-%E6%95%B4%E5%90%88mybatis%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E5%BC%8F%E7%BC%96%E7%A8%8B">Spring 与 Mybatis 整合（Mybatis使用接口式编程）：</a>
+<ul>
+<li><a href="#1jar%E5%8C%85%E7%9A%84%E5%87%86%E5%A4%87">1.jar包的准备：</a></li>
+<li><a href="#2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%BB%BA%E7%AB%8B">2.数据库的建立：</a></li>
+<li><a href="#3%E7%BC%96%E5%86%99%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E5%AE%9E%E4%BD%93%E7%B1%BB">3.编写持久化类（实体类）：</a></li>
+<li><a href="#4%E7%BC%96%E5%86%99%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%9A%84%E4%BB%A3%E7%90%86%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%85%B6%E5%AF%B9%E5%BA%94%E7%9A%84mapper%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6">4.编写持久化类的代理接口与其对应的Mapper映射文件：</a></li>
+<li><a href="#5%E7%BC%96%E5%86%99spring%E4%B8%8Emybatis-%E6%95%B4%E5%90%88%E5%90%8E%E7%9A%84springmyabtis%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">5.编写spring与Mybatis 整合后的spring，myabtis的配置文件：</a></li>
+<li><a href="#6test">6.test:</a></li>
+<li><a href="#7%E5%88%86%E6%9E%90">7.分析：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
