@@ -2154,7 +2154,28 @@ Goodsdao goodsdao<span class="token operator">=</span>app<span class="token punc
 </pre>
 <h3 class="mume-header" id="8&#x8865;&#x5145;">8.补充：</h3>
 
-<p><strong>如果Mybatis 不使用接口式编程的方式，使用注解的方式。则不需要创建~Mapper映射文件，配置文件不发生变化。</strong></p>
+<p><strong>如果Mybatis 不使用接口式编程的方式，使用注解的方式。则不需要创建~Mapper映射文件，配置文件不发生变化。但是Mybatis—config 配置文件需要修改。</strong><br>
+例如：</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Userdao</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(name,age) values(#{name},#{age})"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">"delete from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set name=#{name},age={age} where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">update</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> User <span class="token function">select</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> List<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token function">selectAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token punctuation">}</span>
+
+</pre>
 
       </div>
       <div class="md-sidebar-toc"><ul>
