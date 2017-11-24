@@ -1826,7 +1826,7 @@ applicationContext.xml:
 <font color="red">整合之前的数据源配置移到spring的配置文件 applicationContext.xml 中</font>
 
 
-2. spring的配置文件的变化（<font color="red">注释非常重要</font>）：
+2. spring的配置文件（applicationContext.xml）的变化（<font color="red">注释非常重要</font>）：
 **①：第一种变化**
 
 ```xml
@@ -1922,4 +1922,45 @@ applicationContext.xml:
 ```java
 Userdao udao=(Userdao) app.getBean(Userdao.class);
 Goodsdao goodsdao=app.getBean(Goodsdao.class);
+```
+
+**③：第三种变化：**
+```xml
+	~~~~
+<!-- 用扫描的方式,扫描代理接口包及其子包，注入多个代理接口，没有id值
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dao"></property>
+	</bean>
+ -->
+	 
+	 
+<!--  mybatis:scan 会将 扫描的包的所有接口当作mapper 配置，之后使用者可以自动通过反射的方式，从ioc容器中获取代理接口对象-->
+	 <mybatis:scan base-package="com.dao"/>
+```
+
+
+
+### 8.补充：
+**如果Mybatis 不使用接口式编程的方式，使用注解的方式。则不需要创建~Mapper映射文件，配置文件不发生变化。但是Mybatis—config 配置文件需要修改。**
+例如：
+```java
+public interface Userdao {
+	
+	@Insert("insert into user(name,age) values(#{name},#{age})")
+	public int insert(User user);
+	
+	@Delete("delete from user where id=#{id}")
+	public int delete(User user);
+	
+	@Update("update user set name=#{name},age={age} where id=#{id}")
+	public int update(User user);
+	
+	@Select("select * from user where id=#{id}")
+	public User select(User user);
+	
+	@Select("select * from user")
+	public List<User> selectAll();
+	
+}
+
 ```
