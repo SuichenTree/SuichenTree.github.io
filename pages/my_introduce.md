@@ -9,6 +9,6 @@
 
 &emsp;&emsp;在我看来<font color="red"> 天赋 </font>决定你学习知识的快慢，而 <font color="red">努力+时间</font> 才
 决定你知识的**广度与深度**。
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;———me
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;———me
                             
 由于学习文档是第一次写,若有不足之处，请多多指教! ^ _ ^
