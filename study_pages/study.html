@@ -19,12 +19,6 @@
     
     </style>
     <script>
-        //页面加载完，执行的函数：
-        $(function(){
-            $("#loadajax").load("my_introduce.html");
-           
-
-        });
       
         function ajaxload(obj){
             $("#loadajax").load(obj+".html");
@@ -45,8 +39,8 @@
   
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="study.html">Study</a></li>
-          <li><a href="#">随笔</a></li>
+            <li><a href="../study_pages/study.html">Study</a></li>
+            <li><a href="../essay_pages/main.html">随笔</a></li>
         
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -62,7 +56,7 @@
 </nav>
 
 <!--网上教程链接-->
-<div class="container" style="margin-bottom:20px;">
+<div class="container-fluid" style="margin-bottom:20px;">
  
         <div class="col-xs-12 col-md-10">
         <ul class="list-inline"><strong>友情推荐：</strong>
@@ -76,7 +70,7 @@
 </div>
 
 <!--页面主体-->
-<div class="container">
+<div class="container-fluid"  style="margin-left: 50px; margin-right: 100px;">
         <div class="row">
             <div class="col-xs-12 col-md-3">
                 <div class="list-group">
@@ -113,8 +107,28 @@
             <div class="col-xs-12 col-md-9">
                     <div class="list-group">
                     <span href="#" class="list-group-item" id="loadajax">
+
+                        <!--ajax 加载不同的文档区域-->
+                        <h2><strong> 欢迎阅读SuiChenTree's Blog\Study</strong></h2>
+                        <br/>
+                        <h4><strong>创建日期：2017/11/10</strong></h4> 
+                        <br/>
+                        <h4>人生格言：</h4>
+                        <p> I only see my goals,I don't believe in failure</p>
+                        <p> Cause I know the smallest voices they can make it major.<br>
+                        <br>     ————Lukas Graham <a href="https://baike.baidu.com/item/7%20Years/19311394?fr=aladdin">《7 Years》</a>
+                        </p>
+                    
+
+                        <p> 在我看来<font color="red"> 天赋 </font>决定你学习知识的快慢，而 <font color="red">努力+时间</font> 才<br>
+                         决定你知识的<strong>广度与深度</strong>。<br>
+                                 ———me</p>
+                        <p>由于学习文档是第一次写,若有不足之处，请多多指教! ^ _ ^</p>
+                        
+
+
+                         
                           
-                                    
                     </span>
                     </div>
             </div>
