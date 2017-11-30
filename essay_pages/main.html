@@ -21,8 +21,8 @@
     <script>
       
       
-        function ajaxload(obj){
-            $("#loadajax").load("./"+obj+"/"+obj+"_catalog.html");
+        function ajaxcatalog(obj){
+            $("#loadajax").load("./"+obj+".html");
         }
     
     </script>
@@ -57,28 +57,28 @@
 
 
 <!--页面主体-->
-<div class="container-fluid" style="margin-left: 50px; margin-right: 100px;">
+<div class="container-fluid" style="margin-left: 50px; margin-right:100px;">
         <div class="row">
             <div class="col-xs-12 col-md-2">
                 <div class="list-group">
-                    <a href="#" class="list-group-item" onclick="ajaxload('java')">
+                    <a href="#" class="list-group-item" onclick="ajaxcatalog('java_catalog')">
                         <h4 class="list-group-item-heading">Java</h4>
                                 
                     </a>
-                    <a href="#" class="list-group-item" onclick="ajaxload('mysql')">
+                    <a href="#" class="list-group-item" onclick="ajaxcatalog('mysql_catalog')">
                         <h4 class="list-group-item-heading">MySQL</h4>
                            
                     </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('spring')">
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('spring_catalog')">
                         <h4 class="list-group-item-heading">Spring</h4>
                     </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('mybatis')">
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('mybatis_catalog')">
                         <h4 class="list-group-item-heading">Mybatis</h4>
                     </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('springmvc')">
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('springmvc_catalog')">
                         <h4 class="list-group-item-heading">Spring MVC</h4>
                     </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('javascript')">
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('javascript_catalog')">
                         <h4 class="list-group-item-heading">JavaScript</h4>
                     </a>
                 </div>
