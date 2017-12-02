@@ -215,6 +215,7 @@ code.language-yaml {
 <li><a href="#javaweb">javaweb</a>
 <ul>
 <li><a href="#%E6%A6%82%E8%BF%B0">概述：</a></li>
+<li><a href="#javabean">javaBean</a></li>
 <li><a href="#jsp">jsp</a>
 <ul>
 <li><a href="#1%E6%A6%82%E8%BF%B0">1.概述：</a></li>
@@ -249,16 +250,40 @@ code.language-yaml {
 </li>
 <li><a href="#6jsp%E4%B9%9D%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1">6.jsp九大内置对象：</a>
 <ul>
-<li><a href="#1request%E5%AF%B9%E8%B1%A1">1.request对象</a></li>
-<li><a href="#2response%E5%AF%B9%E8%B1%A1">2.response对象</a></li>
-<li><a href="#3session%E5%AF%B9%E8%B1%A1">3.session对象</a></li>
-<li><a href="#4application%E5%AF%B9%E8%B1%A1">4.application对象</a></li>
+<li><a href="#1out-%E8%BE%93%E5%87%BA%E5%AF%B9%E8%B1%A1">1.out 输出对象：</a></li>
+<li><a href="#2request-%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1">2.request 请求对象</a></li>
+<li><a href="#3response-%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1">3.response 响应对象</a></li>
+<li><a href="#4session-%E4%BC%9A%E8%AF%9D%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE">4.session 会话对象（在同一个浏览器中共享数据）</a></li>
+<li><a href="#5application%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE">5.application对象（在同一个应用程序中共享数据）</a></li>
+<li><a href="#6page%E5%AF%B9%E8%B1%A1">6.page对象</a></li>
+<li><a href="#7pagecontent%E5%AF%B9%E8%B1%A1%E5%BE%88%E5%B0%91%E4%BD%BF%E7%94%A8">7.pageContent对象（很少使用）</a></li>
+<li><a href="#8config-%E5%AF%B9%E8%B1%A1%E8%8E%B7%E5%8F%96webxml-%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF">8.config 对象（获取web.xml 配置信息）</a></li>
+<li><a href="#9exception%E5%AF%B9%E8%B1%A1%E8%8E%B7%E5%8F%96%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF">9.exception对象（获取异常信息）</a></li>
+<li><a href="#%E8%A1%A5%E5%85%85">补充：</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#4jsp%E4%B8%8Ejavabean%E7%9A%84%E6%B7%B7%E5%90%88">4.jsp与javaBean的混合：</a></li>
 </ul>
 </li>
+<li><a href="#servlet%E7%BB%A7%E6%89%BF%E5%AE%9E%E7%8E%B0%E4%BA%86servlet%E6%8E%A5%E5%8F%A3%E7%9A%84java%E7%B1%BB">Servlet（继承，实现了Servlet接口的，Java类）</a>
+<ul>
+<li><a href="#1%E6%A6%82%E8%BF%B0-1">1.概述：</a></li>
+<li><a href="#2-%E5%8E%9F%E7%90%86%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB">2. 原理与继承关系：</a></li>
+<li><a href="#3%E5%88%9B%E5%BB%BAservlet%E4%B8%8E%E9%85%8D%E7%BD%AEservlet%E6%8A%8Aservlet%E5%AF%B9%E8%B1%A1%E6%B3%A8%E5%85%A5%E5%88%B0servlet%E5%AE%B9%E5%99%A8%E4%B8%AD">3.创建Servlet,与配置Servlet（把servlet对象注入到Servlet容器中）：</a></li>
+<li><a href="#4servlet%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">4.servlet的生命周期：</a></li>
+<li><a href="#5servlet%E7%BC%96%E5%86%99%E8%BF%87%E6%BB%A4%E5%99%A8filter-%E8%BF%87%E6%BB%A4%E5%99%A8">5.servlet编写过滤器（Filter 过滤器）：</a></li>
+<li><a href="#6servlet-%E5%AF%B9%E4%BA%8E%E5%BC%82%E5%B8%B8%E7%9A%84%E5%A4%84%E7%90%86">6.servlet 对于异常的处理：</a></li>
+</ul>
+</li>
+<li><a href="#el%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E4%B8%8E-jstl%E6%A0%87%E7%AD%BE%E5%BA%93">EL表达式 与 JSTL标签库：</a>
+<ul>
+<li><a href="#1el%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80epression-language">1.EL(表达式语言，Epression Language)</a></li>
+<li><a href="#2jstl">2.JSTL</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
 </ul>
 </li>
 </ul>
@@ -268,6 +293,17 @@ code.language-yaml {
 
 <p>  Java Web，是用Java技术来解决相关web互联网领域的技术总和。web包括：web服务器和web客户端两部分。Java在客户端的应用有java applet，不过使用得很少，Java在服务器端的应用非常的丰富，比如Servlet，JSP和第三方框架等等。Java技术对Web领域的发展注入了强大的动力。</p>
 <p>  Java的Web框架虽然各不相同，但基本也都是遵循特定的路数的：<font color="red">使用Servlet或者Filter拦截请求，使用MVC的思想设计架构，使用约定，XML或 Annotation实现配置，运用Java面向对象的特点，面向对象实现请求和响应的流程，</font>支持Jsp，Freemarker，Velocity等视图。</p>
+<h2 class="mume-header" id="javabean">javaBean</h2>
+
+<p>  javabean是一种带有特定写法的java类。<br>
+具有一些规范：<br>
+①：公共无参构造方法<br>
+②: 私有类型属性<br>
+③：公共类型属性的getter / setter 方法<br>
+④：Javabean应该直接或间接实现 java.io.Serializable 接口，以支持序列化接口。</p>
+<p><font color="red">建议javabean 属性的命名 使用驼峰命名法。</font></p>
+<p><font color="blue">驼峰命名法：</font><br>
+  <strong>第一个单词首字母小写，之后每个单词的首字母大写。例如：userName,myFirstName 等</strong></p>
 <h2 class="mume-header" id="jsp">jsp</h2>
 
 <h3 class="mume-header" id="1%E6%A6%82%E8%BF%B0">1.概述：</h3>
@@ -594,12 +630,21 @@ jsp:setProperty用来设置已经实例化的Bean对象的属性.</p>
 </pre>
 <h4 class="mume-header" id="6jsp%E4%B9%9D%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1">6.jsp九大内置对象：</h4>
 
+<p><font color="red">在任何一个jsp 页面中，都包含了输出，请求，回应，应用上下文 ，异常处理 等一些概念</font>，jsp把这些具有公共特性的功能抽象，封装为一个个jsp的内置对象。</p>
 <p>内置对象：是JSP容器为每个页面提供的Java对象，开发者可以直接使用它们而不用显式声明。</p>
-<h5 class="mume-header" id="1request%E5%AF%B9%E8%B1%A1">1.request对象</h5>
+<h5 class="mume-header" id="1out-%E8%BE%93%E5%87%BA%E5%AF%B9%E8%B1%A1">1.out 输出对象：</h5>
 
-<p>request对象是javax.servlet.http.HttpServletRequest 类的实例。<br>
-每当客户端请求一个JSP页面时，JSP容器就会制造一个新的request对象来代表这个请求。<br>
-request对象提供了一系列方法来获取HTTP头信息，cookies，HTTP方法等等。</p>
+<p>在jsp的java代码段中。主要用于向客户端的浏览器输出信息。</p>
+<pre class="language-jsp">&lt;%
+out.print(&quot;i am jsp&quot;);
+out.println(&quot;i am jsp&quot;);
+%&gt;
+
+</pre>
+<h5 class="mume-header" id="2request-%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1">2.request 请求对象</h5>
+
+<p>request对象是javax.servlet.http.HttpServletRequest 类的实例。</p>
+<p>request对象提供了一系列方法来获取客户端请求的HTTP头信息，cookies，HTTP方法等等。</p>
 <ol>
 <li>获取请求参数：<br>
   在一次请求中，可以在URL上通过使用' ? ' 的方式来传递参数。后通过request 对象的getParameter() 方法获取参数的值。</li>
@@ -641,7 +686,7 @@ String[] like=request.getParameterValues(&quot;like&quot;);
 
 </pre>
 <ol start="3">
-<li>获取请求客户端的信息（自行百度）<br>
+<li>获取请求客户端的信息（<strong>自行百度</strong>）<br>
 <br></li>
 <li>在作用域中管理属性：<br>
 通过使用 <font color="red">setAttribute() </font>方法可以在 request 对象的属性列表中添加一个属性，然后在request 对象中的作用域中使用它。用 <font color="red">getAttribute() </font>方法将属性取出。用 <font color="red">removeAttribute() </font>方法把属性删除。</li>
@@ -661,36 +706,53 @@ request.removeAttribute(&quot;time&quot;);
 &lt;/body&gt;
 </pre>
 <p><font color="red">注意：设置的属性超出request作用域就失效。</font></p>
-<h5 class="mume-header" id="2response%E5%AF%B9%E8%B1%A1">2.response对象</h5>
+<ol start="5">
+<li>解决中文乱码问题：<br>
+在通过request 对象请求参数时，若参数值为中文，则有可能 获取的参数值为乱码。</li>
+</ol>
+<p>①：若在获取请求参数时乱码：</p>
+<pre class="language-jsp">String usrename=new String(request.getParameter(&quot;username&quot;).getBytes(&quot;iso-8859-1&quot;),&quot;UTF-8&quot;)
+</pre>
+<p>②：获取表单提交的数据为乱码：<br>
+设置jsp页面的编码格式为utf-8。</p>
+<pre class="language-jsp">
+&lt;%
+request.setCharacterEncoding(&quot;UTF-8&quot;);   //&#x6CE8;&#x610F;&#x8BE5;&#x65B9;&#x6CD5;&#xFF0C;&#x8981;&#x5728;&#x9875;&#x9762;&#x4E0A;&#x6CA1;&#x6709;&#x8C03;&#x7528;&#x4EFB;&#x4F55;request&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x4F7F;&#x7528;&#x3002;
+%&gt;
+</pre>
+<h5 class="mume-header" id="3response-%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1">3.response 响应对象</h5>
 
-<p>  response对象javax.servlet.http.HttpServletResponse类的实例。当服务器创建request对象时会同时创建用于响应这个客户端的response对象。<font color="red">主要把jsp容器处理过的对象传回到客户端中。</font><br>
-  response对象也定义了处理HTTP头模块的接口。通过这个对象，开发者们可以<font color="red">添加新的cookies，时间戳，HTTP状态码</font>等等。</p>
+<p><font color="red">用于响应客户请求，向客户端输出信息</font></p>
 <ol>
 <li>重定向网页：<br>
-通过使用该对象的 sendRedirect() 方法，把相应发送到另一个指定的位置进行处理。<font color="red">重定向可以把地址重新定向到不同的主机上，用户可以从浏览器上看到跳转后的地址。并且在重定向操作后，request 中的属性失效，并且进入一个新的request 对象。</font></li>
+通过使用该对象的 sendRedirect() 方法，把原先的目标网页重定向到另一个网页。<font color="red">重定向可以把地址重新定向到不同的主机上，用户可以从浏览器上看到跳转后的地址。并且在重定向操作后，request 中的属性失效，并且进入一个新的request 对象。</font></li>
 </ol>
-<p><code>response.sendRedirect(&quot;http://www.baidu.com&quot;);</code></p>
+<p><code>response.sendRedirect(&quot;http://www.baidu.com&quot;);</code><br>
+<strong>URL可以是相对路径或绝对路径。</strong></p>
+<p><font color="red">在该方法后面，不要继续存在脚本代码。因为重定向后，进入另一个页面，原先页面的脚本代码没有用处，可能还会产生异常。</font></p>
 <ol start="2">
-<li>处理HTTP文件头：<br>
-setHeader() 方法同过两个参数————头名称 和 参数值 来设置HTTP 文件头。</li>
+<li>处理HTTP文件头信息：<br>
+setHeader(String headname,String value) 方法同过两个参数————头名称 和 参数值 来设置HTTP 文件头信息。</li>
 </ol>
 <pre class="language-jsp">&lt;%
 
 response.setHeader(&quot;refresh&quot;,&quot;5&quot;);  //&#x8BBE;&#x7F6E;&#x7F51;&#x9875;&#x6BCF;5&#x79D2;&#x5237;&#x65B0;&#x4E00;&#x6B21;
-response.setHeader(&quot;refresh&quot;,&quot;2;URL=aa.jsp&quot;);
-//&#x8BBE;&#x7F6E;2&#x79D2;&#x540E;&#xFF0C;&#x81EA;&#x52A8;&#x8DF3;&#x8F6C;&#x5230; aa.jsp&#x9875;&#x9762;&#x3002;
+response.setHeader(&quot;refresh&quot;,&quot;2;URL=aa.jsp&quot;);  //&#x8BBE;&#x7F6E;2&#x79D2;&#x540E;&#xFF0C;&#x81EA;&#x52A8;&#x8DF3;&#x8F6C;&#x5230; aa.jsp&#x9875;&#x9762;&#x3002;
 
 %&gt;
 
 </pre>
 <ol start="3">
 <li>设置页面响应类型：<br>
+默认情况下，jsp页面的内容类型是 text/html,就是html或文本数据，此值不是固定的。<br>
 <code>response.setContentType(&quot;text/html&quot;);</code></li>
 </ol>
-<h5 class="mume-header" id="3session%E5%AF%B9%E8%B1%A1">3.session对象</h5>
+<p>可选值有：text/html , application/x_msexcel , application/msword ,.....</p>
+<br>
+<h5 class="mume-header" id="4session-%E4%BC%9A%E8%AF%9D%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE">4.session 会话对象（在同一个浏览器中共享数据）</h5>
 
-<p>  session对象用来跟踪在各个客户端请求间的会话。服务器为每个用户都生成一个 session 对象，用于保存该用户的的信息。<br>
-<font color="red">session 对象内部使用Map类来保存数据，数据格式为“ key / value”</font>.</p>
+<p><strong>由于HTTP协议是一种无状态协议（客户发出请求，服务器接受请求并响应，一个流程就结束。）服务器无法一直保存请求响应信息。而session 对象用于保存该类信息。</strong></p>
+<p><font color="red">session 对象内部使用Map类来保存数据，数据格式为“ key / value”</font>.</p>
 <ol>
 <li>创建及获取session 信息：<br>
 setAttribute(String key,Object obj)方法：用于把信息保存到session 范围中。<br>
@@ -703,26 +765,644 @@ session.setAttribute(&quot;ms&quot;,s);
 out.println(session.getAttribute(&quot;ms&quot;));
 %&gt;
 </pre>
-<p><font color="red">注意：session在服务器的默认存储时间为30 分钟。超过30分钟，session 存储的信息失效，此时调用getAttribute（） 方法，会产生异常。 </font></p>
+<ol start="2">
+<li>设置session的有效时间：</li>
+</ol>
+<p><font color="red">注意：如果客户端长期不向服务器发送请求，session对象会消失。session在服务器的默认存储时间为30 分钟。超过30分钟，session 存储的信息失效，此时调用getAttribute（） 方法，会产生异常。 </font></p>
 <p><code>session.setMaxInactiveInterval(10000);</code><br>
 可以通过手动设置session的有效时间。</p>
-<ol start="2">
-<li>移除session中的对象，销毁session对象。</li>
+<ol start="3">
+<li>移除session中的对象，手动销毁session对象。</li>
 </ol>
 <p>removeAttribute(String key) 方法 ： 移除存储在session的对象。</p>
-<p><code>session.removeAttribute(&quot;ms&quot;);</code></p>
+<p><code>session.removeAttribute(&quot;ms&quot;); //若移除的session已经失效，报异常。</code></p>
 <p>invalidate()方法，删除session 对象。</p>
 <p><code>session.invalidate();</code><br>
-<font color="red">若session对象 销毁后，在调用session，则产生异常。</font></p>
-<h5 class="mume-header" id="4application%E5%AF%B9%E8%B1%A1">4.application对象</h5>
+<font color="red">若session对象 销毁后，在调用该session对象，则产生异常。</font></p>
+<h5 class="mume-header" id="5application%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE">5.application对象（在同一个应用程序中共享数据）</h5>
 
-<p>  application对象的信息保存在服务器中，知道服务器关闭，否则 application对象保存的信息都有效。与session 对象相比 application 对象生命期更长，相当于系统的 “全局变量”。</p>
+<p>  application对象的信息保存在服务器中，直到服务器关闭，否则 application对象保存的信息都有效。与session 对象相比 application 对象生命期更长，相当于系统的 “全局变量”。</p>
+<ol>
+<li>application 中数据的操作：</li>
+</ol>
+<pre class="language-jsp">&lt;%
+application.setAttribute(String name,Object obj);  //&#x521B;&#x5EFA;&#x4E00;&#x4E2A;application &#x8303;&#x56F4;&#x5185;&#x6709;&#x6548;&#x7684;&#x5C5E;&#x6027;&#x3002;
+
+application.getAttribute(String name);  //&#x83B7;&#x53D6;application &#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x67D0;&#x4E2A;&#x5C5E;&#x6027;&#x3002;
+
+application.getAttributeNames();    //&#x83B7;&#x53D6;application &#x5BF9;&#x8C61;&#x7684;&#x6240;&#x6709;&#x5C5E;&#x6027;&#xFF1B;
+
+application.removeAttribute(String name);   //&#x628A;&#x67D0;&#x4E2A;&#x5C5E;&#x6027;&#x4ECE;application&#x5BF9;&#x8C61;&#x4E2D;&#x79FB;&#x9664;&#x3002;
+
+%&gt;
+
+</pre>
+<ol start="2">
+<li>例子（实现网页计数的功能，记录网页的来访数量）</li>
+</ol>
+<pre class="language-jsp">&lt;body&gt;
+&lt;%
+
+Integer a=(Integer)application.getAttribute(&quot;visitorCount&quot;); //&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x8BBF;&#x5BA2;&#x6570;&#x91CF;
+
+if(a==null){       //&#x5982;&#x679C;&#x5F53;&#x524D;&#x8BBF;&#x5BA2;&#x6570;&#x91CF;&#x4E3A; null&#xFF0C;&#x8868;&#x793A;&#x4E3A;&#x7B2C;&#x4E00;&#x4E2A;&#x8BBF;&#x5BA2;
+	a=1;
+}else{
+	a++;
+}
+
+application.setAttribute(&quot;visitorCount&quot;,a);   //&#x628A;&#x6700;&#x65B0;&#x7684;&#x8BBF;&#x5BA2;&#x6570;&#x91CF; &#x8BBE;&#x4E3A;applciation&#x5BF9;&#x8C61;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x4F7F;&#x5F97;&#x9875;&#x9762;&#x5171;&#x4EAB;&#x8FD9;&#x4E2A;&#x6570;&#x636E;
+
+%&gt;
+&lt;p&gt;&#x7B2C;&lt;%=a %&gt;&#x4F4D;&#x8BBF;&#x5BA2;&lt;/p&gt; 
+&lt;/body&gt;
+</pre>
+<h5 class="mume-header" id="6page%E5%AF%B9%E8%B1%A1">6.page对象</h5>
+
+<p>page对象代表jsp页面本身，只在jsp页面内有效。类似于Java类中的this关键字。</p>
+<p>方法：</p>
+<pre class="language-jsp">
+&lt;%
+page.getClass();       //&#x8FD4;&#x56DE;&#x5F53;&#x524D;Object&#x7684;&#x7C7B;
+page.hashCode();       //&#x8FD4;&#x56DE;Object&#x7684;&#x54C8;&#x5E0C;&#x7801;&#xFF1B;
+page.toString();       //&#x8F6C;&#x6362;&#x6210;&#x5B57;&#x7B26;&#x4E32;
+page.equals(Object obj);    //&#x6BD4;&#x8F83;
+%&gt;
+
+</pre>
+<h5 class="mume-header" id="7pagecontent%E5%AF%B9%E8%B1%A1%E5%BE%88%E5%B0%91%E4%BD%BF%E7%94%A8">7.pageContent对象（很少使用）</h5>
+
+<p>pageContent对象的创建与初始化都有容器完成。可以通过该对象可以获得jsp 页面的其他内置对象。很少使用，因为通过pageContent对象调用其它对象很麻烦。</p>
+<pre class="language-jsp">&lt;%
+ pageContent.getRequest();  //&#x83B7;&#x53D6;request &#x5BF9;&#x8C61;
+ pageContent.getsession();  //&#x83B7;&#x53D6;session&#x5BF9;&#x8C61;
+ ~ ~ ~
+
+
+%&gt;
+
+</pre>
+<h5 class="mume-header" id="8config-%E5%AF%B9%E8%B1%A1%E8%8E%B7%E5%8F%96webxml-%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF">8.config 对象（获取web.xml 配置信息）</h5>
+
+<pre class="language-jsp">&lt;%
+config.getServletName();   //&#x5B83;&#x8FD4;&#x56DE;&#x5305;&#x542B;&#x5728;&lt;servlet-name&gt;&#x5143;&#x7D20;&#x4E2D;servlet&#x540D;&#x5B57;&#xFF0C;
+//&#x6CE8;&#x610F;&#xFF0C;&lt;servlet-name&gt;&#x5143;&#x7D20;&#x5728; WEB-INF\web.xml &#x6587;&#x4EF6;&#x4E2D;&#x5B9A;&#x4E49;&#x3002;
+
+config.getInitParameter(); //&#x83B7;&#x53D6;&#x670D;&#x52A1;&#x5668;&#x6240;&#x6709;&#x7684;&#x521D;&#x59CB;&#x53C2;&#x6570;&#x540D;&#x79F0;
+
+%&gt;
+
+</pre>
+<h5 class="mume-header" id="9exception%E5%AF%B9%E8%B1%A1%E8%8E%B7%E5%8F%96%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF">9.exception对象（获取异常信息）</h5>
+
+<p>exception对象 用来处理jsp 文件执行时发生的所有错误与异常，<font color="red">只有在page 指令中的 isErrorPage 属性值为 true 的jsp 页面中使用。</font></p>
+<p>运行流程：<br>
+<strong>当jsp 页面出现没有捕获的异常时，jsp 会生成exception 对象，并把exception 对象传送到 page指令中设定的错误页面，然后在错误页面处理相应的exception 对象。</strong></p>
+<pre class="language-jsp">&lt;%
+exception.getMessage();   //&#x8FD4;&#x56DE;exception&#x5BF9;&#x8C61;&#x7684;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#x5B57;&#x7B26;&#x4E32;
+
+exception.getLocalizedmessage();  //&#x8FD4;&#x56DE;&#x672C;&#x5730;&#x5316;&#x7684;&#x5F02;&#x5E38;&#x9519;&#x8BEF;
+
+exception.toString();   //&#x8FD4;&#x56DE;&#x5F02;&#x5E38;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x7684;&#x63CF;&#x8FF0;
+
+%&gt;
+</pre>
+<h5 class="mume-header" id="%E8%A1%A5%E5%85%85">补充：</h5>
+
+<p>在超链接中传递多个参数值(使用‘ &amp; ’)：<br>
+<code>&lt;a href=&quot;user.jsp?userid=1&amp;name=tom&amp;age=12&amp;gender=woman&quot;&gt;超链接&lt;/a&gt;</code></p>
+<h3 class="mume-header" id="4jsp%E4%B8%8Ejavabean%E7%9A%84%E6%B7%B7%E5%90%88">4.jsp与javaBean的混合：</h3>
+
+<ol>
+<li>实例化javabean对象：</li>
+</ol>
+<pre class="language-jsp">
+&lt;jsp:useBean id=&quot;beanName&quot; scope=&quot;&#x4F5C;&#x7528;&#x57DF;&quot; class=&quot;bean&#x7684;&#x7C7B;&#x8DEF;&#x5F84;&quot; /&gt;
+&lt;!--
+scope&#x7684;&#x53D6;&#x503C;&#xFF1A;
+    page:&#x5F53;&#x524D;&#x9875;&#x9762;&#x6709;&#x6548;&#x3002;
+    request&#xFF1A; &#x8BF7;&#x6C42;&#x8303;&#x56F4;&#x5185;&#x6709;&#x6548;&#x3002;
+    session&#xFF1A; session&#x8303;&#x56F4;&#x5185;&#x6709;&#x6548;&#x3002;
+    application&#xFF1A; &#x670D;&#x52A1;&#x5668;&#x5185;&#x6709;&#x6548;&#x3002;
+
+--&gt;
+
+</pre>
+<ol start="2">
+<li>访问bean的属性：<br>
+使用jsp:getProperty 与 jsp:getProperty 标签。</li>
+</ol>
+<pre class="language-jsp">&lt;jsp:useBean id=&quot;students&quot; class=&quot;com.entity.StudentsBean&quot;&gt; 
+&lt;!--
+  name&#x5C5E;&#x6027;: jsp:useBean&#x6807;&#x7B7E;&#x7684; id&#x503C;&#x3002;property&#x5C5E;&#x6027;&#xFF1A;&#x60F3;&#x8981;&#x8C03;&#x7528;&#x7684;getter&#x6216;setter&#x65B9;&#x6CD5;&#x3002;
+--&gt;
+
+   &lt;jsp:setProperty name=&quot;students&quot; property=&quot;firstName&quot; value=&quot;Zara&quot;/&gt;
+   &lt;jsp:setProperty name=&quot;students&quot; property=&quot;lastName&quot;  value=&quot;Ali&quot;/&gt;
+   &lt;jsp:setProperty name=&quot;students&quot; property=&quot;age&quot;       value=&quot;10&quot;/&gt;
+&lt;/jsp:useBean&gt;
+
+&lt;!--
+  name&#x5C5E;&#x6027;: jsp:useBean&#x6807;&#x7B7E;&#x7684; id&#x503C;&#x3002;property&#x5C5E;&#x6027;&#xFF1A;&#x60F3;&#x8981;&#x8C03;&#x7528;&#x7684;getter&#x6216;setter&#x65B9;&#x6CD5;&#x3002;
+--&gt;
+&lt;p&gt;Student First Name: 
+   &lt;jsp:getProperty name=&quot;students&quot; property=&quot;firstName&quot;/&gt;
+&lt;/p&gt;
+&lt;p&gt;Student Last Name: 
+   &lt;jsp:getProperty name=&quot;students&quot; property=&quot;lastName&quot;/&gt;
+&lt;/p&gt;
+&lt;p&gt;Student Age: 
+   &lt;jsp:getProperty name=&quot;students&quot; property=&quot;age&quot;/&gt;
+&lt;/p&gt;
+</pre>
+<h2 class="mume-header" id="servlet%E7%BB%A7%E6%89%BF%E5%AE%9E%E7%8E%B0%E4%BA%86servlet%E6%8E%A5%E5%8F%A3%E7%9A%84java%E7%B1%BB">Servlet（继承，实现了Servlet接口的，Java类）</h2>
+
+<h3 class="mume-header" id="1%E6%A6%82%E8%BF%B0-1">1.概述：</h3>
+
+<p><font color="red">Servlet 是运行在带有支持Servlet 规范的解释器的 web 服务器上的 Java 类，</font>是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。<br>
+<strong>使用 Servlet，您可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态创建网页。</strong></p>
+<p><strong>注意：</strong><font color="blue">一个jsp文件最终将会转换为Servlet 后运行的。Web容器（Tomcat）最终运行的是一个Servlet文件，而不是 jsp文件。</font></p>
+<h3 class="mume-header" id="2-%E5%8E%9F%E7%90%86%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB">2. 原理与继承关系：</h3>
+
+<p><font color="red">从http协议中的请求和响应可以得知，浏览器发出的请求是一个请求文本，而浏览器接收到的也应该是一个响应文本。并不知道是其中的内部细节。只知道浏览器发送过来的请求也就是request，我们响应回去的就用response。</font></p>
+<p><img src="../img/javaweb_img/servlet_1.png" alt="servlet&#x56FE;1"></p>
+<blockquote>
+<p>①：Tomcat将http请求文本接收并解析，然后封装成HttpServletRequest类型的request对象，所有的HTTP头数据读可以通过request对象调用对应的方法查询到。</p>
+</blockquote>
+<blockquote>
+<p>②：Tomcat同时会要响应的信息封装为HttpServletResponse类型的response对象，通过设置response属性就可以控制要输出到浏览器的内容，然后将response交给tomcat，tomcat就会将其变成响应文本的格式发送给浏览器</p>
+</blockquote>
+<blockquote>
+<p>Java Servlet API 是Tomcat和servlet之间的接口，它定义了serlvet的各种方法，还定义了Servlet容器（<mark>Tomcat</mark>）传送给Servlet的对象类，其中最重要的就是<mark>ServletRequest和ServletResponse</mark>。所以说我们在编写servlet时，需要实现Servlet接口，按照其规范进行操作。</p>
+</blockquote>
+<blockquote>
+<p><font color="red">通常情况下，编写一个Java类,继承HttpServlet类（实现的servlet接口），相当于把该java类与Tomcat（Servlet容器）进行了关联。</font></p>
+</blockquote>
+<p><img src="../img/javaweb_img/servlet_2.png" alt="&#x7EE7;&#x627F;&#x5173;&#x7CFB;"></p>
+<h3 class="mume-header" id="3%E5%88%9B%E5%BB%BAservlet%E4%B8%8E%E9%85%8D%E7%BD%AEservlet%E6%8A%8Aservlet%E5%AF%B9%E8%B1%A1%E6%B3%A8%E5%85%A5%E5%88%B0servlet%E5%AE%B9%E5%99%A8%E4%B8%AD">3.创建Servlet,与配置Servlet（把servlet对象注入到Servlet容器中）：</h3>
+
+<ol>
+<li>创建Servlet（继承HttpServlet类，并重写该类的方法）：</li>
+</ol>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">myservlet</span> <span class="token keyword">extends</span> <span class="token class-name">HttpServlet</span><span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doGet</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写HttpServlet的方法,  处理get类型的请求"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doPost</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写HttpServlet的方法， 处理post类型的请求"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写GenericServlet的方法，  Servlet对象的初始化方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写GenericServlet的方法 , Servlet对象的销毁方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	
+<span class="token punctuation">}</span>
+</pre>
+<ol start="2">
+<li>配置Servlet(在web.xml文件):<br>
+<font color="red">配置Servlet，主要用于把创建的Servlet注入到Servlet容器（Tomcat）中。<br>
+让浏览器发出的请求知道到达哪个servlet，也就是让tomcat将封装好的request找到对应的servlet让其使用<br>
+</font></li>
+</ol>
+<p>web.xml</p>
+<pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!--
+配置格式：
+  &lt;servlet>
+  	&lt;servlet-name> servlet的名称 &lt;/servlet-name>
+  	&lt;servlet-class> servlet的完整类名 &lt;/servlet-class>
+  &lt;/servlet>
+  
+  &lt;servlet-mapping>
+  	&lt;servlet-name> servlet的名称 &lt;/servlet-name>
+  	&lt;url-pattern>  访问的 url 的地址,浏览器通过它找到对应的servlet &lt;/url-pattern>
+  &lt;/servlet-mapping>
+
+--></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>com.servlet.myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+  
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/mys<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+</pre>
+<p><strong>浏览器 调用servlet的步骤：</strong><br>
+  ①：首先浏览器通过http://localhost:8080/blog_jsp/mys来找到web.xml中的url-pattern。<br>
+  ②：匹配到了url-pattern后，就会找到servlet的名字myservlet，知道了名字，就可以通过servlet-name找到第三步。<br>
+  ③：到了第三步，也就能够知道servlet类的位置了。然后到其中找到对应的处理方式进行处理。</p>
+<ol start="3">
+<li>使用Servlet处理表单数据：</li>
+</ol>
+<p>①：创建servlet（修改上面例子中的servlet）</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">myservlet</span> <span class="token keyword">extends</span> <span class="token class-name">HttpServlet</span><span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doGet</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写HttpServlet的方法,  处理get类型的请求"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doPost</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+		request<span class="token punctuation">.</span><span class="token function">setCharacterEncoding</span><span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                      <span class="token comment" spellcheck="true">//设置请求的编码格式,防止中文乱码。</span>
+		response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"text/html;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//设置响应的编码格式,防止中文乱码。</span>
+		
+		String name<span class="token operator">=</span>request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Integer age<span class="token operator">=</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"age"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名 ："</span><span class="token operator">+</span>name<span class="token operator">+</span><span class="token string">",  年龄："</span><span class="token operator">+</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		PrintWriter outp <span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//从response 中获取输出流对象。</span>
+		outp<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名 ："</span><span class="token operator">+</span>name<span class="token operator">+</span><span class="token string">",  年龄："</span><span class="token operator">+</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//输出字符串给浏览器</span>
+		
+		outp<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                                 <span class="token comment" spellcheck="true">//刷新输出流</span>
+		outp<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         						  <span class="token comment" spellcheck="true">//关闭输出流		</span>
+		
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre>
+<p>②：编写jsp中的表单：</p>
+<pre class="language-jsp">&lt;form action=&quot;mys&quot; method=&quot;post&quot;&gt;
+
+&#x540D;&#x5B57;&#xFF1A;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+&#x5E74;&#x9F84;&#xFF1A;&lt;input type=&quot;text&quot; name=&quot;age&quot; /&gt;
+&lt;input type=&quot;submit&quot; value=&quot;&#x63D0;&#x4EA4;&quot; /&gt;
+
+&lt;/form&gt;
+</pre>
+<p><font color="red">注意：action属性的值 是 表单提交的servlet的地址，即配置文件（web.xml）中的Servlet的 URL 映射值</font></p>
+<pre class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/mys<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+  
+</pre>
+<p>③: 运行<br>
+开启tomcat 服务器，运行index.jsp文件。<br>
+<img src="../img/javaweb_img/servlet_3.png" alt="servlet_3.png"></p>
+<p><img src="../img/javaweb_img/servlet_4.png" alt="servlet_4.png"></p>
+<p><img src="../img/javaweb_img/servlet_5.png" alt="servlet_4.png"></p>
+<p><font color="red">注意：浏览器的地址变化，从blog_jsp/index.jsp  ----&gt; blog_jsp/mys</font></p>
+<p>④：补充</p>
+<blockquote>
+<p>当tomcat服务器启动，服务器会根据web.xml的信息，通过调用servlet的初始化方法，来创建servlet。</p>
+</blockquote>
+<h3 class="mume-header" id="4servlet%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">4.servlet的生命周期：</h3>
+
+<p>Servlet 生命周期可被定义为从创建直到毁灭的整个过程。以下是 Servlet 遵循的过程：<br>
+①：Servlet 通过调用 init () 方法进行初始化。<br>
+②：Servlet 调用 service() 方法来处理客户端的请求。<br>
+③：Servlet 通过调用 destroy() 方法终止（结束）。<br>
+④：最后，Servlet 是由 JVM 的垃圾回收器进行垃圾回收的。</p>
+<p>服务器启动时(web.xml中配置load-on-startup=1，默认为0)或者第一次请求该servlet时，就会初始化一个Servlet对象，也就是会执行初始化方法init(ServletConfig conf).</p>
+<p>该servlet对象去处理所有客户端请求，在service(ServletRequest req，ServletResponse res)方法中执行</p>
+<p>最后服务器关闭时，才会销毁这个servlet对象，执行destroy()方法。</p>
+<p><img src="../img/javaweb_img/servlet_6.png" alt="servlet_6.png"></p>
+<h3 class="mume-header" id="5servlet%E7%BC%96%E5%86%99%E8%BF%87%E6%BB%A4%E5%99%A8filter-%E8%BF%87%E6%BB%A4%E5%99%A8">5.servlet编写过滤器（Filter 过滤器）：</h3>
+
+<p>Servlet 过滤器是可用于 Servlet 编程的 Java 类，有以下目的：<br>
+①：在客户端的请求访问数据库，后端资源之前，拦截这些请求。<br>
+②：在服务器的响应发送回客户端之前，处理这些响应。</p>
+<p><font color="red">过滤器被部署在配置在 web.xml 中，然后映射到web.xml中的 Servlet。<br>
+当 Web 容器启动 Web 应用程序时，它会为您在web.xml中声明的每一个过滤器创建一个实例。<br>
+该过滤器执行的顺序是按它们在部署描述符中声明的顺序。</font></p>
+<ol>
+<li>创建过滤器并配置：<br>
+<strong>过滤器是一个实现了 javax.servlet.Filter 接口的 Java 类。</strong></li>
+</ol>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LogFilter</span> <span class="token keyword">implements</span> <span class="token class-name">Filter</span><span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"LogFilter  destroy"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token comment" spellcheck="true">/*
+	 * 在该方法中实现过滤操作。
+	 * 请求过滤后，需要把请求释放，向下传递。
+	 * */</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doFilter</span><span class="token punctuation">(</span>ServletRequest request<span class="token punctuation">,</span> ServletResponse response<span class="token punctuation">,</span> FilterChain chain<span class="token punctuation">)</span>
+			<span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> ServletException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"LogFilter  doFilter"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		chain<span class="token punctuation">.</span><span class="token function">doFilter</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//把过滤器拦截的请求释放，向下传递</span>
+		
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>FilterConfig arg0<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"LogFilter  init"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre>
+<p>web.xml</p>
+<pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">></span></span>LoginFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-class</span><span class="token punctuation">></span></span>com.filter.LogFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-mapping</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">></span></span>LoginFilter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/*<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+   <span class="token comment" spellcheck="true">&lt;!--过滤器的URL映射--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-mapping</span><span class="token punctuation">></span></span>
+</pre>
+<p>注意：<br>
+<font color="blue">filter-mapping标签用于把过滤器和URL关联，而URL 又与servlet 关联。</font></p>
+<p>①：/* 表示对所有是servlet 都进行过滤。在少数的 Servlet 上应用过滤器，可以指定一个特定的 Servlet 路径</p>
+<p>②：<font color="red">web.xml 中的 filter-mapping 元素的顺序决定了 Web 容器应用过滤器到 Servlet 的顺序。若要反转过滤器的顺序，您只需要在 web.xml 文件中反转 filter-mapping 元素即可。</font></p>
+<br>
+<ol start="2">
+<li>多个过滤器的运行流程：<br>
+<img src="../img/javaweb_img/servlet_7.png" alt="servlet_7.png"></li>
+</ol>
+<br>
+<ol start="3">
+<li>实现字符编码过滤器：</li>
+</ol>
+<p>①：创建过滤器（修改上面的过滤器）：</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LogFilter</span> <span class="token keyword">implements</span> <span class="token class-name">Filter</span><span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"LogFilter  destroy"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token comment" spellcheck="true">/*
+	 * 在该方法中实现过滤操作。
+	 * 请求过滤后，需要把请求释放，向下传递。
+	 * */</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doFilter</span><span class="token punctuation">(</span>ServletRequest request<span class="token punctuation">,</span> ServletResponse response<span class="token punctuation">,</span> FilterChain chain<span class="token punctuation">)</span>
+			<span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> ServletException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"LogFilter  doFilter"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		request<span class="token punctuation">.</span><span class="token function">setCharacterEncoding</span><span class="token punctuation">(</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//设置request的编码格式</span>
+		response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"text/html;charset=utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		
+		chain<span class="token punctuation">.</span><span class="token function">doFilter</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//把过滤器拦截的请求释放，向下传递</span>
+		
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>FilterConfig arg0<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"LogFilter  init"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre>
+<p>②：创建jsp：</p>
+<pre class="language-jsp">&lt;form action=&quot;mys&quot; method=&quot;post&quot;&gt;
+
+&#x540D;&#x5B57;&#xFF1A;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;
+&#x5E74;&#x9F84;&#xFF1A;&lt;input type=&quot;text&quot; name=&quot;age&quot; /&gt;
+&lt;input type=&quot;submit&quot; value=&quot;&#x63D0;&#x4EA4;&quot; /&gt;
+
+&lt;/form&gt;
+</pre>
+<p>③：编写servlet：</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">myservlet</span> <span class="token keyword">extends</span> <span class="token class-name">HttpServlet</span><span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doGet</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写HttpServlet的方法,  处理get类型的请求"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">doPost</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span> HttpServletResponse response<span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+	
+		
+		String name<span class="token operator">=</span>request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Integer age<span class="token operator">=</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"age"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名 ："</span><span class="token operator">+</span>name<span class="token operator">+</span><span class="token string">",  年龄："</span><span class="token operator">+</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		PrintWriter outp <span class="token operator">=</span> response<span class="token punctuation">.</span><span class="token function">getWriter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//从response 中获取输出流对象。</span>
+		outp<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名 ："</span><span class="token operator">+</span>name<span class="token operator">+</span><span class="token string">",  年龄："</span><span class="token operator">+</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//输出字符串给浏览器</span>
+		
+		outp<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                                 <span class="token comment" spellcheck="true">//刷新输出流</span>
+		outp<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>         						  <span class="token comment" spellcheck="true">//关闭输出流		</span>
+		
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> ServletException <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写GenericServlet的方法，  Servlet对象的初始化方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is 重写GenericServlet的方法 , Servlet对象的销毁方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	
+<span class="token punctuation">}</span>
+</pre>
+<p>④：运行结果：<br>
+<img src="../img/javaweb_img/servlet_10.png" alt="servlet_10.png"></p>
+<p><img src="../img/javaweb_img/servlet_8.png" alt="servlet_8.png"></p>
+<p><img src="../img/javaweb_img/servlet_9.png" alt="servlet_9.png"></p>
+<br>
+<ol start="4">
+<li>补充：<br>
+<strong>在doFilter() 方法中，当业务逻辑处理完成。需要通过FilterChain 对象的 doFilter（）方法将请求传递到下一个过滤器或目标资源中，否则出现错误。</strong></li>
+</ol>
+<h3 class="mume-header" id="6servlet-%E5%AF%B9%E4%BA%8E%E5%BC%82%E5%B8%B8%E7%9A%84%E5%A4%84%E7%90%86">6.servlet 对于异常的处理：</h3>
+
+<p>当一个 Servlet 抛出一个异常时。web.xml 使用 error-page 元素来指定对特定异常 或 HTTP 状态码 作出相应的 Servlet 调用。</p>
+<p>web.xml</p>
+<pre class="language-xml">  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>com.servlet.myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+  
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>myservlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/mys<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+
+
+<span class="token comment" spellcheck="true">&lt;!-- error-code 相关的错误页面 
+	当状态码为404 时，URL映射为 /mys 的servlet 将被调用
+
+--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-page</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-code</span><span class="token punctuation">></span></span>404<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-code</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>location</span><span class="token punctuation">></span></span>/mys<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>location</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-page</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!-- exception-type 相关的错误页面
+	当该servlet 出现 IOException时，URL映射为 /mys 的servlet 将被调用
+ --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-page</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exception-type</span><span class="token punctuation">></span></span>java.io.IOException<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exception-type</span> <span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>location</span><span class="token punctuation">></span></span>/mys<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>location</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-page</span><span class="token punctuation">></span></span>
+</pre>
+<p><font color="red">如果您想对所有的异常有一个通用的错误处理程序，那么应该定义下面的 error-page，而不是为每个异常定义单独的 error-page 元素.</font></p>
+<pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-page</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exception-type</span><span class="token punctuation">></span></span>java.lang.Throwable<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exception-type</span> <span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>location</span><span class="token punctuation">></span></span>/mys<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>location</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-page</span><span class="token punctuation">></span></span>
+</pre>
+<p><img src="../img/javaweb_img/servlet_11.png" alt="servlet_11.png"></p>
+<h2 class="mume-header" id="el%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E4%B8%8E-jstl%E6%A0%87%E7%AD%BE%E5%BA%93">EL表达式 与 JSTL标签库：</h2>
+
+<h3 class="mume-header" id="1el%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80epression-language">1.EL(表达式语言，Epression Language)</h3>
+
+<p>EL主要用于简化jsp中对 对象的引用。</p>
+<ol>
+<li>EL表达式语法（中间为合法的表达式）：<br>
+<code>${~ ~ ~}</code></li>
+</ol>
+<p>例如：在jsp页面上显示一段话。<br>
+以前：<code>out.print(&quot;i am xiaoming&quot;);</code><br>
+现在：<code>${&quot;i am xiaoming&quot;}</code></p>
+<ol start="2">
+<li>EL的运算符：<br>
+<img src="../img/javaweb_img/el_1.png" alt="el_1.png"><br>
+<img src="../img/javaweb_img/el_2.png" alt="el_2.png"><br>
+<font color="red">注意：EL的 “ + ”运算符，不能把两个字符串连接。若两个字符串无法转化为int 类型，则抛出异常。</font></li>
+</ol>
+<br>
+<ol start="3">
+<li>EL 操作jsp的内置对象：<br>
+<img src="../img/javaweb_img/el_3.png" alt="el_3.png"></li>
+</ol>
+<pre class="language-jsp">&lt;body&gt;
+
+${1+2}
+${requestScope.user}    &lt;!--&#x83B7;&#x53D6;request &#x4F5C;&#x7528;&#x57DF;&#x7684; user&#x5C5E;&#x6027;--&gt;
+
+&lt;/body&gt; 
+</pre>
+<h3 class="mume-header" id="2jstl">2.JSTL</h3>
+
+<p>JSP 标准标签库（jstl）,是一个JSP标签集合，它封装了JSP应用的通用核心功能。</p>
+<ol>
+<li>使用前提：<br>
+①：在WEB-INF下的lib文件夹中加入<font color="red">jstl-1.2.jar 和 standard-1.1.2.jar</font><br>
+②：在需要使用jstl的jsp页面上要引入：<br>
+&lt;%@ tagliburi=&quot;<a href="http://java.sun.com/jsp/jstl/core">http://java.sun.com/jsp/jstl/core</a>&quot; prefix=&quot;c&quot;%&gt;<br>
+③：使用jstl</li>
+</ol>
+<br>
+<ol start="2">
+<li>核心标签：<br>
+<img src="../img/javaweb_img/jstl_1.png" alt="jstl_1.png"></li>
+</ol>
+<pre class="language-jsp">	
+	&lt;!--c:out&#x6807;&#x7B7E;
+		&#x683C;&#x5F0F;&#xFF1A; &lt;c:out value=&quot;&#x8868;&#x8FBE;&#x5F0F;&quot;&gt;
+	
+	 --&gt;
+	&lt;c:out value=&quot;123&quot;/&gt;
+	
+	&lt;!--c:set &#x53D8;&#x91CF;&#x8BBE;&#x7F6E;&#x6807;&#x7B7E;, c:remove &#x6807;&#x7B7E;
+	&#x683C;&#x5F0F;&#xFF1A;&lt;c:set var=&quot;&#x53D8;&#x91CF;&#x540D;&quot; value=&quot;&#x53D8;&#x91CF;&#x503C;&quot; scope=&quot;&#x53D8;&#x91CF;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;page&quot;/&gt;
+
+	&lt;c:remove var=&quot;&#x79FB;&#x9664;&#x7684;&#x53D8;&#x91CF;&#x540D;&quot; scope=&quot;&#x8BE5;&#x53D8;&#x91CF;&#x7684;&#x8303;&#x56F4;&quot;/&gt;
+	--&gt;
+	&lt;c:set value=&quot;root&quot; var=&quot;userid&quot;/&gt;
+	userid:${userid }
+	&lt;c:remove var=&quot;userid&quot;/&gt;
+	userid:${userid }
+
+
+&lt;!--
+	&#x6D41;&#x7A0B;&#x63A7;&#x5236;&#x6807;&#x7B7E;&#xFF1A;
+
+&lt;c:if&gt; &#xFF1A;&#x5224;&#x65AD;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x503C;&#xFF0C;&#x5982;&#x679C;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x503C;&#x4E3A;&#x771F;&#x5219;&#x6267;&#x884C;&#x5176;&#x4E3B;&#x4F53;&#x5185;&#x5BB9;&#x3002;
+
+&lt;c:choose&gt;&#x548C;&lt;c:when&gt;&#x548C;&lt;c:otherwise&gt; &#x6807;&#x7B7E;&#xFF1A;
+	&lt;c:choose&gt;&#x6807;&#x7B7E;&#x4E0E;Java switch&#x8BED;&#x53E5;&#x7684;&#x529F;&#x80FD;&#x4E00;&#x6837;&#xFF0C;&#x7528;&#x4E8E;&#x5728;&#x4F17;&#x591A;&#x9009;&#x9879;&#x4E2D;&#x505A;&#x51FA;&#x9009;&#x62E9;&#x3002;
+	switch&#x8BED;&#x53E5;&#x4E2D;&#x6709;case&#xFF0C;&#x800C;&lt;c:choose&gt;&#x6807;&#x7B7E;&#x4E2D;&#x5BF9;&#x5E94;&#x6709;&lt;c:when&gt;&#xFF0C;
+	switch&#x8BED;&#x53E5;&#x4E2D;&#x6709;default&#xFF0C;&#x800C;&lt;c:choose&gt;&#x6807;&#x7B7E;&#x4E2D;&#x6709;&lt;c:otherwise&gt;&#x3002;
+	
+	&lt;c:when&gt;&#x6807;&#x7B7E;&#x7684;test&#x5C5E;&#x6027;&#xFF0C;&#x7528;&#x4E8E;&#x6761;&#x4EF6;&#x5224;&#x65AD;&#x3002;
+
+	
+--&gt;
+
+&lt;c:set var=&quot;salary&quot; scope=&quot;session&quot; value=&quot;${2000*2}&quot;/&gt;
+&lt;c:if test=&quot;${salary &gt; 2000}&quot;&gt;
+   &lt;p&gt;&#x6211;&#x7684;&#x5DE5;&#x8D44;&#x4E3A;: &lt;c:out value=&quot;${salary}&quot;/&gt;&lt;p&gt;
+&lt;/c:if&gt;
+
+
+
+&lt;c:set var=&quot;salary&quot; scope=&quot;session&quot; value=&quot;${2000*2}&quot;/&gt;
+&lt;p&gt;&#x4F60;&#x7684;&#x5DE5;&#x8D44;&#x4E3A; : &lt;c:out value=&quot;${salary}&quot;/&gt;&lt;/p&gt;
+&lt;c:choose&gt;
+    &lt;c:when test=&quot;${salary &lt;= 0}&quot;&gt;
+       &#x592A;&#x60E8;&#x4E86;&#x3002;
+    &lt;/c:when&gt;
+    &lt;c:when test=&quot;${salary &gt; 1000}&quot;&gt;
+       &#x4E0D;&#x9519;&#x7684;&#x85AA;&#x6C34;&#xFF0C;&#x8FD8;&#x80FD;&#x751F;&#x6D3B;&#x3002;
+    &lt;/c:when&gt;
+    &lt;c:otherwise&gt;
+        &#x4EC0;&#x4E48;&#x90FD;&#x6CA1;&#x6709;&#x3002;
+    &lt;/c:otherwise&gt;
+&lt;/c:choose&gt;
+
+
+&lt;!--
+&#x5FAA;&#x73AF;&#x6807;&#x7B7E;&#xFF1A;&lt;c:forEach&gt;  ,  &lt;c:forTokens&gt;
+	&#x8FD9;&#x4E24;&#x4E2A;&#x6807;&#x7B7E;&#x5C01;&#x88C5;&#x4E86;Java&#x4E2D;&#x7684;for&#xFF0C;while&#xFF0C;do-while&#x5FAA;&#x73AF;&#x3002;
+	&#x76F8;&#x6BD4;&#x800C;&#x8A00;&#xFF0C;&lt;c:forEach&gt;&#x6807;&#x7B7E;&#x662F;&#x66F4;&#x52A0;&#x901A;&#x7528;&#x7684;&#x6807;&#x7B7E;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x8FED;&#x4EE3;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x3002;
+	&lt;c:forTokens&gt;&#x6807;&#x7B7E;&#x5C06;&#x5B57;&#x7B26;&#x4E32;&#x5206;&#x9694;&#x4E3A;&#x4E00;&#x4E2A;&#x5B50;&#x4E32;&#x6570;&#x7EC4;&#x7136;&#x540E;&#x8FED;&#x4EE3;&#x5B83;&#x4EEC;&#x3002;
+
+
+--&gt;
+
+&lt;c:forEach var=&quot;i&quot; begin=&quot;1&quot; end=&quot;5&quot;&gt;
+   Item &lt;c:out value=&quot;${i}&quot;/&gt;&lt;p&gt;
+&lt;/c:forEach&gt;
+
+
+&lt;c:forTokens items=&quot;google,w3cschool,taobao&quot; delims=&quot;,&quot; var=&quot;name&quot;&gt;
+   &lt;c:out value=&quot;${name}&quot;/&gt;&lt;p&gt;
+&lt;/c:forTokens&gt;
+
+</pre>
+<p><img src="../img/javaweb_img/jstl_2.png" alt="jstl_2.png"></p>
+<ol start="3">
+<li>补充：<br>
+jstl 与 el 没有什么关系，但一般把它们配合在一起使用。jstl 与 el 的配合对于简化jsp页面比单独使用更强大。</li>
+</ol>
+<h2 class="mume-header" id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</h2>
+
+<p><a href="http://www.cnblogs.com/whgk/p/6399262.html">Java Web(一) Servlet详解！！- - 一杯凉茶 - 博客园</a><br>
+<a href="http://blog.csdn.net/jiangwei0910410003/article/details/23372847">Java Web(一) Servlet过滤器详解！！- - 一杯凉茶 - 博客园</a><br>
+<a href="https://www.w3cschool.cn/">w3school</a></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#javaweb">javaweb</a>
 <ul>
 <li><a href="#%E6%A6%82%E8%BF%B0">概述：</a></li>
+<li><a href="#javabean">javaBean</a></li>
 <li><a href="#jsp">jsp</a>
 <ul>
 <li><a href="#1%E6%A6%82%E8%BF%B0">1.概述：</a></li>
@@ -757,16 +1437,40 @@ out.println(session.getAttribute(&quot;ms&quot;));
 </li>
 <li><a href="#6jsp%E4%B9%9D%E5%A4%A7%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1">6.jsp九大内置对象：</a>
 <ul>
-<li><a href="#1request%E5%AF%B9%E8%B1%A1">1.request对象</a></li>
-<li><a href="#2response%E5%AF%B9%E8%B1%A1">2.response对象</a></li>
-<li><a href="#3session%E5%AF%B9%E8%B1%A1">3.session对象</a></li>
-<li><a href="#4application%E5%AF%B9%E8%B1%A1">4.application对象</a></li>
+<li><a href="#1out-%E8%BE%93%E5%87%BA%E5%AF%B9%E8%B1%A1">1.out 输出对象：</a></li>
+<li><a href="#2request-%E8%AF%B7%E6%B1%82%E5%AF%B9%E8%B1%A1">2.request 请求对象</a></li>
+<li><a href="#3response-%E5%93%8D%E5%BA%94%E5%AF%B9%E8%B1%A1">3.response 响应对象</a></li>
+<li><a href="#4session-%E4%BC%9A%E8%AF%9D%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE">4.session 会话对象（在同一个浏览器中共享数据）</a></li>
+<li><a href="#5application%E5%AF%B9%E8%B1%A1%E5%9C%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE">5.application对象（在同一个应用程序中共享数据）</a></li>
+<li><a href="#6page%E5%AF%B9%E8%B1%A1">6.page对象</a></li>
+<li><a href="#7pagecontent%E5%AF%B9%E8%B1%A1%E5%BE%88%E5%B0%91%E4%BD%BF%E7%94%A8">7.pageContent对象（很少使用）</a></li>
+<li><a href="#8config-%E5%AF%B9%E8%B1%A1%E8%8E%B7%E5%8F%96webxml-%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF">8.config 对象（获取web.xml 配置信息）</a></li>
+<li><a href="#9exception%E5%AF%B9%E8%B1%A1%E8%8E%B7%E5%8F%96%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF">9.exception对象（获取异常信息）</a></li>
+<li><a href="#%E8%A1%A5%E5%85%85">补充：</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#4jsp%E4%B8%8Ejavabean%E7%9A%84%E6%B7%B7%E5%90%88">4.jsp与javaBean的混合：</a></li>
 </ul>
 </li>
+<li><a href="#servlet%E7%BB%A7%E6%89%BF%E5%AE%9E%E7%8E%B0%E4%BA%86servlet%E6%8E%A5%E5%8F%A3%E7%9A%84java%E7%B1%BB">Servlet（继承，实现了Servlet接口的，Java类）</a>
+<ul>
+<li><a href="#1%E6%A6%82%E8%BF%B0-1">1.概述：</a></li>
+<li><a href="#2-%E5%8E%9F%E7%90%86%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB">2. 原理与继承关系：</a></li>
+<li><a href="#3%E5%88%9B%E5%BB%BAservlet%E4%B8%8E%E9%85%8D%E7%BD%AEservlet%E6%8A%8Aservlet%E5%AF%B9%E8%B1%A1%E6%B3%A8%E5%85%A5%E5%88%B0servlet%E5%AE%B9%E5%99%A8%E4%B8%AD">3.创建Servlet,与配置Servlet（把servlet对象注入到Servlet容器中）：</a></li>
+<li><a href="#4servlet%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">4.servlet的生命周期：</a></li>
+<li><a href="#5servlet%E7%BC%96%E5%86%99%E8%BF%87%E6%BB%A4%E5%99%A8filter-%E8%BF%87%E6%BB%A4%E5%99%A8">5.servlet编写过滤器（Filter 过滤器）：</a></li>
+<li><a href="#6servlet-%E5%AF%B9%E4%BA%8E%E5%BC%82%E5%B8%B8%E7%9A%84%E5%A4%84%E7%90%86">6.servlet 对于异常的处理：</a></li>
+</ul>
+</li>
+<li><a href="#el%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E4%B8%8E-jstl%E6%A0%87%E7%AD%BE%E5%BA%93">EL表达式 与 JSTL标签库：</a>
+<ul>
+<li><a href="#1el%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80epression-language">1.EL(表达式语言，Epression Language)</a></li>
+<li><a href="#2jstl">2.JSTL</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
 </ul>
 </li>
 </ul>

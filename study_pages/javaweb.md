@@ -6,6 +6,24 @@
 
 &emsp;&emsp;Java的Web框架虽然各不相同，但基本也都是遵循特定的路数的：<font color="red">使用Servlet或者Filter拦截请求，使用MVC的思想设计架构，使用约定，XML或 Annotation实现配置，运用Java面向对象的特点，面向对象实现请求和响应的流程，</font>支持Jsp，Freemarker，Velocity等视图。
 
+
+
+## javaBean
+
+&emsp;&emsp;javabean是一种带有特定写法的java类。
+具有一些规范：
+①：公共无参构造方法
+②: 私有类型属性
+③：公共类型属性的getter / setter 方法
+④：Javabean应该直接或间接实现 java.io.Serializable 接口，以支持序列化接口。
+
+<font color="red">建议javabean 属性的命名 使用驼峰命名法。</font>
+
+<font color="blue">驼峰命名法：</font>
+&emsp;&emsp;**第一个单词首字母小写，之后每个单词的首字母大写。例如：userName,myFirstName 等**
+
+
+
 ## jsp
 
 ### 1.概述：
@@ -374,12 +392,25 @@ jsp:forward动作把请求转到另外的页面。jsp:forward标记只有一个�
 
 
 #### 6.jsp九大内置对象：
+<font color="red">在任何一个jsp 页面中，都包含了输出，请求，回应，应用上下文 ，异常处理 等一些概念</font>，jsp把这些具有公共特性的功能抽象，封装为一个个jsp的内置对象。
+
 内置对象：是JSP容器为每个页面提供的Java对象，开发者可以直接使用它们而不用显式声明。
 
-##### 1.request对象
+##### 1.out 输出对象：
+在jsp的java代码段中。主要用于向客户端的浏览器输出信息。
+```jsp
+<%
+out.print("i am jsp");
+out.println("i am jsp");
+%>
+
+```
+
+
+##### 2.request 请求对象
 request对象是javax.servlet.http.HttpServletRequest 类的实例。
-每当客户端请求一个JSP页面时，JSP容器就会制造一个新的request对象来代表这个请求。
-request对象提供了一系列方法来获取HTTP头信息，cookies，HTTP方法等等。
+
+request对象提供了一系列方法来获取客户端请求的HTTP头信息，cookies，HTTP方法等等。
 
 1. 获取请求参数：
 &emsp;&emsp;在一次请求中，可以在URL上通过使用' ? ' 的方式来传递参数。后通过request 对象的getParameter() 方法获取参数的值。
@@ -426,7 +457,7 @@ String[] like=request.getParameterValues("like");
 
 ```
 
-3. 获取请求客户端的信息（自行百度）
+3. 获取请求客户端的信息（**自行百度**）
 <br/>
 4. 在作用域中管理属性：
 通过使用 <font color="red">setAttribute() </font>方法可以在 request 对象的属性列表中添加一个属性，然后在request 对象中的作用域中使用它。用 <font color="red">getAttribute() </font>方法将属性取出。用 <font color="red">removeAttribute() </font>方法把属性删除。
@@ -450,25 +481,43 @@ request.removeAttribute("time");
 <font color="red">注意：设置的属性超出request作用域就失效。</font>
 
 
-##### 2.response对象
-&emsp;&emsp;response对象javax.servlet.http.HttpServletResponse类的实例。当服务器创建request对象时会同时创建用于响应这个客户端的response对象。<font color="red">主要把jsp容器处理过的对象传回到客户端中。</font>
-&emsp;&emsp;response对象也定义了处理HTTP头模块的接口。通过这个对象，开发者们可以<font color="red">添加新的cookies，时间戳，HTTP状态码</font>等等。
+5. 解决中文乱码问题：
+在通过request 对象请求参数时，若参数值为中文，则有可能 获取的参数值为乱码。
+
+①：若在获取请求参数时乱码：
+```jsp
+String usrename=new String(request.getParameter("username").getBytes("iso-8859-1"),"UTF-8")
+```
+
+②：获取表单提交的数据为乱码：
+设置jsp页面的编码格式为utf-8。
+```jsp
+
+<%
+request.setCharacterEncoding("UTF-8");   //注意该方法，要在页面上没有调用任何request对象的方法中使用。
+%>
+```
+
+
+##### 3.response 响应对象
+<font color="red">用于响应客户请求，向客户端输出信息</font>
 
 
 1. 重定向网页：
-通过使用该对象的 sendRedirect() 方法，把相应发送到另一个指定的位置进行处理。<font color="red">重定向可以把地址重新定向到不同的主机上，用户可以从浏览器上看到跳转后的地址。并且在重定向操作后，request 中的属性失效，并且进入一个新的request 对象。</font>
+通过使用该对象的 sendRedirect() 方法，把原先的目标网页重定向到另一个网页。<font color="red">重定向可以把地址重新定向到不同的主机上，用户可以从浏览器上看到跳转后的地址。并且在重定向操作后，request 中的属性失效，并且进入一个新的request 对象。</font>
 
 `response.sendRedirect("http://www.baidu.com");`
+**URL可以是相对路径或绝对路径。**
 
+<font color="red">在该方法后面，不要继续存在脚本代码。因为重定向后，进入另一个页面，原先页面的脚本代码没有用处，可能还会产生异常。</font>
 
-2. 处理HTTP文件头：
-setHeader() 方法同过两个参数————头名称 和 参数值 来设置HTTP 文件头。
+2. 处理HTTP文件头信息：
+setHeader(String headname,String value) 方法同过两个参数————头名称 和 参数值 来设置HTTP 文件头信息。
 ```jsp
 <%
 
 response.setHeader("refresh","5");  //设置网页每5秒刷新一次
-response.setHeader("refresh","2;URL=aa.jsp");
-//设置2秒后，自动跳转到 aa.jsp页面。
+response.setHeader("refresh","2;URL=aa.jsp");  //设置2秒后，自动跳转到 aa.jsp页面。
 
 %>
 
@@ -476,12 +525,18 @@ response.setHeader("refresh","2;URL=aa.jsp");
 
 
 3. 设置页面响应类型：
+默认情况下，jsp页面的内容类型是 text/html,就是html或文本数据，此值不是固定的。
 `response.setContentType("text/html");`
 
+可选值有：text/html , application/x_msexcel , application/msword ,.....
 
-##### 3.session对象
+<br/>
 
-&emsp;&emsp;session对象用来跟踪在各个客户端请求间的会话。服务器为每个用户都生成一个 session 对象，用于保存该用户的的信息。
+
+##### 4.session 会话对象（在同一个浏览器中共享数据）
+
+**由于HTTP协议是一种无状态协议（客户发出请求，服务器接受请求并响应，一个流程就结束。）服务器无法一直保存请求响应信息。而session 对象用于保存该类信息。**
+
 <font color="red">session 对象内部使用Map类来保存数据，数据格式为“ key / value”</font>.
 
 1. 创建及获取session 信息：
@@ -496,26 +551,736 @@ session.setAttribute("ms",s);
 out.println(session.getAttribute("ms"));
 %>
 ```
+2. 设置session的有效时间：
 
-<font color="red">注意：session在服务器的默认存储时间为30 分钟。超过30分钟，session 存储的信息失效，此时调用getAttribute（） 方法，会产生异常。 </font>
+<font color="red">注意：如果客户端长期不向服务器发送请求，session对象会消失。session在服务器的默认存储时间为30 分钟。超过30分钟，session 存储的信息失效，此时调用getAttribute（） 方法，会产生异常。 </font>
 
 `session.setMaxInactiveInterval(10000);`
 可以通过手动设置session的有效时间。
 
 
 
-2. 移除session中的对象，销毁session对象。
+3. 移除session中的对象，手动销毁session对象。
 
 removeAttribute(String key) 方法 ： 移除存储在session的对象。
 
-`session.removeAttribute("ms");`
+`session.removeAttribute("ms");   //若移除的session已经失效，报异常。`
 
 invalidate()方法，删除session 对象。
 
 `session.invalidate(); `   
-<font color="red">若session对象 销毁后，在调用session，则产生异常。</font>
+<font color="red">若session对象 销毁后，在调用该session对象，则产生异常。</font>
 
 
 
-##### 4.application对象
-&emsp;&emsp;application对象的信息保存在服务器中，知道服务器关闭，否则 application对象保存的信息都有效。与session 对象相比 application 对象生命期更长，相当于系统的 “全局变量”。
+##### 5.application对象（在同一个应用程序中共享数据）
+&emsp;&emsp;application对象的信息保存在服务器中，直到服务器关闭，否则 application对象保存的信息都有效。与session 对象相比 application 对象生命期更长，相当于系统的 “全局变量”。
+
+1. application 中数据的操作：
+```jsp
+<%
+application.setAttribute(String name,Object obj);  //创建一个application 范围内有效的属性。
+
+application.getAttribute(String name);  //获取application 对象中的某个属性。
+
+application.getAttributeNames();    //获取application 对象的所有属性；
+
+application.removeAttribute(String name);   //把某个属性从application对象中移除。
+
+%>
+
+```
+
+
+2. 例子（实现网页计数的功能，记录网页的来访数量）
+```jsp
+<body>
+<%
+
+Integer a=(Integer)application.getAttribute("visitorCount"); //获取当前访客数量
+
+if(a==null){       //如果当前访客数量为 null，表示为第一个访客
+	a=1;
+}else{
+	a++;
+}
+
+application.setAttribute("visitorCount",a);   //把最新的访客数量 设为applciation对象的属性，使得页面共享这个数据
+
+%>
+<p>第<%=a %>位访客</p> 
+</body>
+```
+
+
+##### 6.page对象
+page对象代表jsp页面本身，只在jsp页面内有效。类似于Java类中的this关键字。
+
+方法：
+```jsp
+
+<%
+page.getClass();       //返回当前Object的类
+page.hashCode();       //返回Object的哈希码；
+page.toString();       //转换成字符串
+page.equals(Object obj);    //比较
+%>
+
+```
+
+##### 7.pageContent对象（很少使用）
+pageContent对象的创建与初始化都有容器完成。可以通过该对象可以获得jsp 页面的其他内置对象。很少使用，因为通过pageContent对象调用其它对象很麻烦。
+
+```jsp
+<%
+ pageContent.getRequest();  //获取request 对象
+ pageContent.getsession();  //获取session对象
+ ~ ~ ~
+
+
+%>
+
+```
+
+
+##### 8.config 对象（获取web.xml 配置信息）
+```jsp
+<%
+config.getServletName();   //它返回包含在<servlet-name>元素中servlet名字，
+//注意，<servlet-name>元素在 WEB-INF\web.xml 文件中定义。
+
+config.getInitParameter(); //获取服务器所有的初始参数名称
+
+%>
+
+```
+
+##### 9.exception对象（获取异常信息）
+exception对象 用来处理jsp 文件执行时发生的所有错误与异常，<font color="red">只有在page 指令中的 isErrorPage 属性值为 true 的jsp 页面中使用。</font>
+
+运行流程：
+**当jsp 页面出现没有捕获的异常时，jsp 会生成exception 对象，并把exception 对象传送到 page指令中设定的错误页面，然后在错误页面处理相应的exception 对象。**
+```jsp
+<%
+exception.getMessage();   //返回exception对象的异常信息字符串
+
+exception.getLocalizedmessage();  //返回本地化的异常错误
+
+exception.toString();   //返回异常错误信息的描述
+
+%>
+```
+
+
+##### 补充：
+在超链接中传递多个参数值(使用‘ & ’)：
+`<a href="user.jsp?userid=1&name=tom&age=12&gender=woman">超链接</a>`
+
+
+### 4.jsp与javaBean的混合：
+1. 实例化javabean对象：
+
+```jsp
+
+<jsp:useBean id="beanName" scope="作用域" class="bean的类路径" />
+<!--
+scope的取值：
+    page:当前页面有效。
+    request： 请求范围内有效。
+    session： session范围内有效。
+    application： 服务器内有效。
+
+-->
+
+```
+
+2. 访问bean的属性：
+使用jsp:getProperty 与 jsp:getProperty 标签。
+
+```jsp
+<jsp:useBean id="students" class="com.entity.StudentsBean"> 
+<!--
+  name属性: jsp:useBean标签的 id值。property属性：想要调用的getter或setter方法。
+-->
+
+   <jsp:setProperty name="students" property="firstName" value="Zara"/>
+   <jsp:setProperty name="students" property="lastName"  value="Ali"/>
+   <jsp:setProperty name="students" property="age"       value="10"/>
+</jsp:useBean>
+
+<!--
+  name属性: jsp:useBean标签的 id值。property属性：想要调用的getter或setter方法。
+-->
+<p>Student First Name: 
+   <jsp:getProperty name="students" property="firstName"/>
+</p>
+<p>Student Last Name: 
+   <jsp:getProperty name="students" property="lastName"/>
+</p>
+<p>Student Age: 
+   <jsp:getProperty name="students" property="age"/>
+</p>
+```
+
+
+
+## Servlet（继承，实现了Servlet接口的，Java类）
+
+### 1.概述：
+<font color="red">Servlet 是运行在带有支持Servlet 规范的解释器的 web 服务器上的 Java 类，</font>是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。
+**使用 Servlet，您可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态创建网页。**
+
+**注意：**<font color="blue">一个jsp文件最终将会转换为Servlet 后运行的。Web容器（Tomcat）最终运行的是一个Servlet文件，而不是 jsp文件。</font>
+
+### 2. 原理与继承关系：
+<font color="red">从http协议中的请求和响应可以得知，浏览器发出的请求是一个请求文本，而浏览器接收到的也应该是一个响应文本。并不知道是其中的内部细节。只知道浏览器发送过来的请求也就是request，我们响应回去的就用response。</font>
+
+
+![servlet图1](../img/javaweb_img/servlet_1.png)
+
+> ①：Tomcat将http请求文本接收并解析，然后封装成HttpServletRequest类型的request对象，所有的HTTP头数据读可以通过request对象调用对应的方法查询到。
+
+> ②：Tomcat同时会要响应的信息封装为HttpServletResponse类型的response对象，通过设置response属性就可以控制要输出到浏览器的内容，然后将response交给tomcat，tomcat就会将其变成响应文本的格式发送给浏览器
+
+
+> Java Servlet API 是Tomcat和servlet之间的接口，它定义了serlvet的各种方法，还定义了Servlet容器（==Tomcat==）传送给Servlet的对象类，其中最重要的就是==ServletRequest和ServletResponse==。所以说我们在编写servlet时，需要实现Servlet接口，按照其规范进行操作。
+
+
+> <font color="red">通常情况下，编写一个Java类,继承HttpServlet类（实现的servlet接口），相当于把该java类与Tomcat（Servlet容器）进行了关联。</font>
+
+
+![继承关系](../img/javaweb_img/servlet_2.png)
+
+
+### 3.创建Servlet,与配置Servlet（把servlet对象注入到Servlet容器中）：
+
+1. 创建Servlet（继承HttpServlet类，并重写该类的方法）：
+
+```java
+public class myservlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("this is 重写HttpServlet的方法,  处理get类型的请求");
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("this is 重写HttpServlet的方法， 处理post类型的请求");
+	}
+
+	@Override
+	public void init() throws ServletException {
+		System.out.println("this is 重写GenericServlet的方法，  Servlet对象的初始化方法");
+	}
+
+	@Override
+	public void destroy() {
+		System.out.println("this is 重写GenericServlet的方法 , Servlet对象的销毁方法");
+	}
+	
+	
+}
+```
+
+
+2. 配置Servlet(在web.xml文件):
+<font color="red">配置Servlet，主要用于把创建的Servlet注入到Servlet容器（Tomcat）中。
+让浏览器发出的请求知道到达哪个servlet，也就是让tomcat将封装好的request找到对应的servlet让其使用
+</font>
+
+
+web.xml
+```xml
+<!--
+配置格式：
+  <servlet>
+  	<servlet-name> servlet的名称 </servlet-name>
+  	<servlet-class> servlet的完整类名 </servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name> servlet的名称 </servlet-name>
+  	<url-pattern>  访问的 url 的地址,浏览器通过它找到对应的servlet </url-pattern>
+  </servlet-mapping>
+
+-->
+
+  <servlet>
+  	<servlet-name>myservlet</servlet-name>
+  	<servlet-class>com.servlet.myservlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>myservlet</servlet-name>
+  	<url-pattern>/mys</url-pattern>
+  </servlet-mapping>
+```
+
+**浏览器 调用servlet的步骤：**
+&emsp;&emsp;①：首先浏览器通过http://localhost:8080/blog_jsp/mys来找到web.xml中的url-pattern。
+&emsp;&emsp;②：匹配到了url-pattern后，就会找到servlet的名字myservlet，知道了名字，就可以通过servlet-name找到第三步。
+&emsp;&emsp;③：到了第三步，也就能够知道servlet类的位置了。然后到其中找到对应的处理方式进行处理。
+
+
+
+
+3. 使用Servlet处理表单数据：
+  
+①：创建servlet（修改上面例子中的servlet）
+```java
+public class myservlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("this is 重写HttpServlet的方法,  处理get类型的请求");
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");                      //设置请求的编码格式,防止中文乱码。
+		response.setContentType("text/html;charset=utf-8");         //设置响应的编码格式,防止中文乱码。
+		
+		String name=request.getParameter("name");
+		Integer age=Integer.valueOf(request.getParameter("age"));
+		
+		System.out.println("姓名 ："+name+",  年龄："+age);
+		
+		PrintWriter outp = response.getWriter();      //从response 中获取输出流对象。
+		outp.println("姓名 ："+name+",  年龄："+age);     //输出字符串给浏览器
+		
+		outp.flush();                                 //刷新输出流
+		outp.close();         						  //关闭输出流		
+		
+	}
+
+}
+```
+
+②：编写jsp中的表单：
+
+```jsp
+<form action="mys" method="post">
+
+名字：<input type="text" name="name">
+年龄：<input type="text" name="age" />
+<input type="submit" value="提交" />
+
+</form>
+```
+
+
+<font color="red">注意：action属性的值 是 表单提交的servlet的地址，即配置文件（web.xml）中的Servlet的 URL 映射值</font>
+
+```xml
+ <servlet-mapping>
+  	<servlet-name>myservlet</servlet-name>
+  	<url-pattern>/mys</url-pattern>
+  </servlet-mapping>
+  
+```
+
+
+③: 运行
+开启tomcat 服务器，运行index.jsp文件。
+![servlet_3.png](../img/javaweb_img/servlet_3.png)
+
+
+![servlet_4.png](../img/javaweb_img/servlet_4.png)
+
+
+![servlet_4.png](../img/javaweb_img/servlet_5.png)
+
+<font color="red">注意：浏览器的地址变化，从blog_jsp/index.jsp  ----> blog_jsp/mys</font>
+
+
+④：补充
+>当tomcat服务器启动，服务器会根据web.xml的信息，通过调用servlet的初始化方法，来创建servlet。
+
+
+
+### 4.servlet的生命周期：
+Servlet 生命周期可被定义为从创建直到毁灭的整个过程。以下是 Servlet 遵循的过程：
+①：Servlet 通过调用 init () 方法进行初始化。
+②：Servlet 调用 service() 方法来处理客户端的请求。
+③：Servlet 通过调用 destroy() 方法终止（结束）。
+④：最后，Servlet 是由 JVM 的垃圾回收器进行垃圾回收的。
+
+
+服务器启动时(web.xml中配置load-on-startup=1，默认为0)或者第一次请求该servlet时，就会初始化一个Servlet对象，也就是会执行初始化方法init(ServletConfig conf).
+
+该servlet对象去处理所有客户端请求，在service(ServletRequest req，ServletResponse res)方法中执行
+
+最后服务器关闭时，才会销毁这个servlet对象，执行destroy()方法。
+
+![servlet_6.png](../img/javaweb_img/servlet_6.png)
+
+
+
+### 5.servlet编写过滤器（Filter 过滤器）：
+Servlet 过滤器是可用于 Servlet 编程的 Java 类，有以下目的：
+①：在客户端的请求访问数据库，后端资源之前，拦截这些请求。
+②：在服务器的响应发送回客户端之前，处理这些响应。
+
+<font color="red">过滤器被部署在配置在 web.xml 中，然后映射到web.xml中的 Servlet。
+当 Web 容器启动 Web 应用程序时，它会为您在web.xml中声明的每一个过滤器创建一个实例。
+该过滤器执行的顺序是按它们在部署描述符中声明的顺序。</font>
+
+1. 创建过滤器并配置：
+**过滤器是一个实现了 javax.servlet.Filter 接口的 Java 类。**
+
+```java
+public class LogFilter implements Filter{
+
+	@Override
+	public void destroy() {
+		System.out.println("LogFilter  destroy");
+		
+	}
+	
+	/*
+	 * 在该方法中实现过滤操作。
+	 * 请求过滤后，需要把请求释放，向下传递。
+	 * */
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		System.out.println("LogFilter  doFilter");
+		
+		chain.doFilter(request, response);            //把过滤器拦截的请求释放，向下传递
+		
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		System.out.println("LogFilter  init");
+		
+	}
+
+}
+```
+
+web.xml
+```xml
+<filter>
+	<filter-name>LoginFilter</filter-name>
+	<filter-class>com.filter.LogFilter</filter-class>
+</filter>
+
+<filter-mapping>
+   <filter-name>LoginFilter</filter-name>
+   <url-pattern>/*</url-pattern>
+   <!--过滤器的URL映射-->
+</filter-mapping>
+```
+
+注意：
+<font color="blue">filter-mapping标签用于把过滤器和URL关联，而URL 又与servlet 关联。</font>
+
+①：/* 表示对所有是servlet 都进行过滤。在少数的 Servlet 上应用过滤器，可以指定一个特定的 Servlet 路径
+
+②：<font color="red">web.xml 中的 filter-mapping 元素的顺序决定了 Web 容器应用过滤器到 Servlet 的顺序。若要反转过滤器的顺序，您只需要在 web.xml 文件中反转 filter-mapping 元素即可。
+
+
+<br/>
+
+2. 多个过滤器的运行流程：
+![servlet_7.png](../img/javaweb_img/servlet_7.png)
+
+<br/>
+
+
+3. 实现字符编码过滤器：
+
+①：创建过滤器（修改上面的过滤器）：
+```java
+public class LogFilter implements Filter{
+
+	@Override
+	public void destroy() {
+		System.out.println("LogFilter  destroy");
+		
+	}
+	
+	/*
+	 * 在该方法中实现过滤操作。
+	 * 请求过滤后，需要把请求释放，向下传递。
+	 * */
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		System.out.println("LogFilter  doFilter");
+		
+		request.setCharacterEncoding("utf-8");     //设置request的编码格式
+		response.setContentType("text/html;charset=utf-8");
+		
+		
+		chain.doFilter(request, response);            //把过滤器拦截的请求释放，向下传递
+		
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		System.out.println("LogFilter  init");
+		
+	}
+
+}
+```
+
+②：创建jsp：
+```jsp
+<form action="mys" method="post">
+
+名字：<input type="text" name="name">
+年龄：<input type="text" name="age" />
+<input type="submit" value="提交" />
+
+</form>
+```
+
+
+③：编写servlet：
+```java
+public class myservlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("this is 重写HttpServlet的方法,  处理get类型的请求");
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		
+		String name=request.getParameter("name");
+		Integer age=Integer.valueOf(request.getParameter("age"));
+		
+		System.out.println("姓名 ："+name+",  年龄："+age);
+		
+		PrintWriter outp = response.getWriter();      //从response 中获取输出流对象。
+		outp.println("姓名 ："+name+",  年龄："+age);     //输出字符串给浏览器
+		
+		outp.flush();                                 //刷新输出流
+		outp.close();         						  //关闭输出流		
+		
+	}
+
+	@Override
+	public void init() throws ServletException {
+		System.out.println("this is 重写GenericServlet的方法，  Servlet对象的初始化方法");
+	}
+
+	@Override
+	public void destroy() {
+		System.out.println("this is 重写GenericServlet的方法 , Servlet对象的销毁方法");
+	}
+	
+	
+}
+```
+
+
+④：运行结果：
+![servlet_10.png](../img/javaweb_img/servlet_10.png)
+
+![servlet_8.png](../img/javaweb_img/servlet_8.png)
+
+![servlet_9.png](../img/javaweb_img/servlet_9.png)
+
+<br/>
+
+4. 补充：
+**在doFilter() 方法中，当业务逻辑处理完成。需要通过FilterChain 对象的 doFilter（）方法将请求传递到下一个过滤器或目标资源中，否则出现错误。**
+
+
+### 6.servlet 对于异常的处理：
+当一个 Servlet 抛出一个异常时。web.xml 使用 error-page 元素来指定对特定异常 或 HTTP 状态码 作出相应的 Servlet 调用。
+
+web.xml
+```xml
+  <servlet>
+  	<servlet-name>myservlet</servlet-name>
+  	<servlet-class>com.servlet.myservlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>myservlet</servlet-name>
+  	<url-pattern>/mys</url-pattern>
+  </servlet-mapping>
+
+
+<!-- error-code 相关的错误页面 
+	当状态码为404 时，URL映射为 /mys 的servlet 将被调用
+
+-->
+<error-page>
+    <error-code>404</error-code>
+    <location>/mys</location>
+</error-page>
+
+<!-- exception-type 相关的错误页面
+	当该servlet 出现 IOException时，URL映射为 /mys 的servlet 将被调用
+ -->
+<error-page>
+    <exception-type>java.io.IOException</exception-type >
+    <location>/mys</location>
+</error-page>
+```
+
+<font color="red">如果您想对所有的异常有一个通用的错误处理程序，那么应该定义下面的 error-page，而不是为每个异常定义单独的 error-page 元素.</font>
+
+```xml
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type >
+    <location>/mys</location>
+</error-page>
+```
+
+![servlet_11.png](../img/javaweb_img/servlet_11.png)
+
+
+
+## EL表达式 与 JSTL标签库：
+
+### 1.EL(表达式语言，Epression Language)
+EL主要用于简化jsp中对 对象的引用。
+
+1. EL表达式语法（中间为合法的表达式）：
+`${~ ~ ~}  `  
+
+例如：在jsp页面上显示一段话。
+以前：`out.print("i am xiaoming");`
+现在：`${"i am xiaoming"}`
+
+
+2. EL的运算符：
+![el_1.png](../img/javaweb_img/el_1.png)
+![el_2.png](../img/javaweb_img/el_2.png)
+<font color="red">注意：EL的 “ + ”运算符，不能把两个字符串连接。若两个字符串无法转化为int 类型，则抛出异常。</font>
+
+<br/>
+
+3. EL 操作jsp的内置对象：
+![el_3.png](../img/javaweb_img/el_3.png)
+
+
+```jsp
+<body>
+
+${1+2}
+${requestScope.user}    <!--获取request 作用域的 user属性-->
+
+</body> 
+```
+
+
+### 2.JSTL
+JSP 标准标签库（jstl）,是一个JSP标签集合，它封装了JSP应用的通用核心功能。
+
+1. 使用前提：
+①：在WEB-INF下的lib文件夹中加入<font color="red">jstl-1.2.jar 和 standard-1.1.2.jar</font>
+②：在需要使用jstl的jsp页面上要引入：
+<%@ tagliburi="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+③：使用jstl
+
+<br/>
+
+2. 核心标签：
+![jstl_1.png](../img/javaweb_img/jstl_1.png)
+
+```jsp
+	
+	<!--c:out标签
+		格式： <c:out value="表达式">
+	
+	 -->
+	<c:out value="123"/>
+	
+	<!--c:set 变量设置标签, c:remove 标签
+	格式：<c:set var="变量名" value="变量值" scope="变量的作用域，默认为page"/>
+
+	<c:remove var="移除的变量名" scope="该变量的范围"/>
+	-->
+	<c:set value="root" var="userid"/>
+	userid:${userid }
+	<c:remove var="userid"/>
+	userid:${userid }
+
+
+<!--
+	流程控制标签：
+
+<c:if> ：判断表达式的值，如果表达式的值为真则执行其主体内容。
+
+<c:choose>和<c:when>和<c:otherwise> 标签：
+	<c:choose>标签与Java switch语句的功能一样，用于在众多选项中做出选择。
+	switch语句中有case，而<c:choose>标签中对应有<c:when>，
+	switch语句中有default，而<c:choose>标签中有<c:otherwise>。
+	
+	<c:when>标签的test属性，用于条件判断。
+
+	
+-->
+
+<c:set var="salary" scope="session" value="${2000*2}"/>
+<c:if test="${salary > 2000}">
+   <p>我的工资为: <c:out value="${salary}"/><p>
+</c:if>
+
+
+
+<c:set var="salary" scope="session" value="${2000*2}"/>
+<p>你的工资为 : <c:out value="${salary}"/></p>
+<c:choose>
+    <c:when test="${salary <= 0}">
+       太惨了。
+    </c:when>
+    <c:when test="${salary > 1000}">
+       不错的薪水，还能生活。
+    </c:when>
+    <c:otherwise>
+        什么都没有。
+    </c:otherwise>
+</c:choose>
+
+
+<!--
+循环标签：<c:forEach>  ,  <c:forTokens>
+	这两个标签封装了Java中的for，while，do-while循环。
+	相比而言，<c:forEach>标签是更加通用的标签，因为它迭代一个集合中的对象。
+	<c:forTokens>标签将字符串分隔为一个子串数组然后迭代它们。
+
+
+-->
+
+<c:forEach var="i" begin="1" end="5">
+   Item <c:out value="${i}"/><p>
+</c:forEach>
+
+
+<c:forTokens items="google,w3cschool,taobao" delims="," var="name">
+   <c:out value="${name}"/><p>
+</c:forTokens>
+
+```
+
+![jstl_2.png](../img/javaweb_img/jstl_2.png)
+
+
+
+3. 补充：
+jstl 与 el 没有什么关系，但一般把它们配合在一起使用。jstl 与 el 的配合对于简化jsp页面比单独使用更强大。
+
+
+
+
+
+
+
+
+
+## 参考资料：
+[Java Web(一) Servlet详解！！- - 一杯凉茶 - 博客园](http://www.cnblogs.com/whgk/p/6399262.html)
+[Java Web(一) Servlet过滤器详解！！- - 一杯凉茶 - 博客园](http://blog.csdn.net/jiangwei0910410003/article/details/23372847)
+[w3school](https://www.w3cschool.cn/)
