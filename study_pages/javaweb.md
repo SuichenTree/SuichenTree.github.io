@@ -1274,7 +1274,533 @@ jstl 与 el 没有什么关系，但一般把它们配合在一起使用。jstl 
 
 
 
+## JDBC
 
+参考链接：[Class.forName()方法的作用](http://blog.csdn.net/angus_17/article/details/8020652)
+
+
+JDBC（Java DataBase Connectivity,java数据库连接）是<font color="red">一种用于执行SQL语句的Java API，可以为多种关系数据库提供统一访问,用来连接 Java 编程语言和广泛的数据库</font>，它由一组用Java语言编写的类和接口组成。JDBC提供了一种基准，据此可以构建更高级的工具和接口，使数据库开发人员能够编写数据库应用程序。
+
+<br/>
+
+### 1.jdbcl连接数据库，以mysql数据库为例：
+
+![jdbc_1.png](../img/javaweb_img/jdbc_1.png)
+
+1. ①：加载驱动：
+把mysql的驱动程序（不同的数据库驱动程序，都由数据库厂商提供）放到WEB-INF/lib目录下： 
+mysql-connector-java-5.1.40-bin.jar
+
+`Class.forName("com.mysql.jdbc.Driver");`
+
+<font color="red">加载数据库驱动程序使用的是Class.forName（）方法。该方法会把驱动程序加入到 JVM 中。 </font>
+
+2. 设置数据库的用户名，密码，连接URL.
+连接URL的基本格式：“jdbc协议 + 数据库ip 地址 + 数据库端口号 + 数据库名称”
+```java
+String url="jdbc:mysql://localhost:3306/test";
+String user="root";
+String password="123456";
+```
+
+<font color="blue">注意：这里的用户，密码 要与你安装的MySQL 数据库的用户，密码，对应。</font>
+
+
+3. ②：连接:
+通过jdbc api的DriverManager类的getConnection（）方法，创建数据库的连接。
+
+`Connection	conn=DriverManager.getConnection(url,user,password);`
+
+4. 建立连接后，使用连接对象创建<font color="red">操作SQL语句的Statement 对象或PreparedStatement对象</font>。
+```java
+
+String sql="insert into goods (name,price,address) values(?,?,?)";      
+PreparedStatement pstmt=conn.prepareStatement(sql);
+	pstmt.setString(1,g.getName());      
+	pstmt.setDouble(2,g.getPrice());
+	pstmt.setString(3,g.getAddress());
+
+/*
+	? 表示占位符，表示要插入数据的位置
+
+	pstmt.setString(1,g.getName()); 表示给第一个占位符赋值。
+
+*/
+```
+
+
+5. 调用对象的execute（）方法,编译执行sql语句：
+```java
+int a=pstmt.execute();   //a=1 ,表示 数据表的一行 受影响。
+
+```
+
+6. 关闭数据库连接，释放系统资源：
+`conn.close();`
+
+
+7. 完整代码：
+
+```java
+public class linkdatabase {
+	private static String dirverName="com.mysql.jdbc.Driver";
+	private static String url="jdbc:mysql://localhost:3306/test";
+	private static String user="root";
+	private static String password="123456";
+	
+	public static Connection getconnection(){
+		Connection conn=null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn=DriverManager.getConnection(url,user,password);
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("数据库链接失败1");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("数据库链接失败2");
+		}
+		
+		return conn;
+		
+	}
+}
+
+
+-----------------------------------
+
+public class Goods_delete_Controller extends HttpServlet {
+	private Connection conn=linkdatabase.getconnection();     //获取数据库连接
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Integer id=2;
+
+		int a=0;
+		String sql="delete from goods where id=?";
+		PreparedStatement pstmt;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,id); 							//给占位符赋值
+			a=pstmt.executeUpdate();                        //执行sql语句，返回 a
+			
+		} catch (SQLException e) {
+			System.out.println(" GoodsDao  delete 异常");
+			e.printStackTrace();
+		}
+
+
+		if(a==1) {
+			System.out.println("删除成功");
+			
+			/*
+			 * 查询全部数据
+			 * */
+			List<Goods> lg=gs.selectAll_service(conn);
+			request.setAttribute("listgoods", lg);             //把查出来的数据，存放在request对象的listgoods属性中
+			request.getRequestDispatcher("goodslist.jsp").forward(request,response);        //把查询的数据传递给下一个 goodslist.jsp 页面
+			
+		}
+	
+	}
+
+	
+}
+
+```
+
+
+
+
+### 2.Statement 接口与PreparedStatement接口:
+JDBC 的 Statement 和 PreparedStatement 接口定义的方法和属性，可以让你发送 SQL 命令到数据库，并从你的数据库接收数据。
+
+
+==注意：开发中不建议使用Statement来操作数据库，而是使用PreparedStatement，因为Statement是执行的是完整的SQL语句。而PreparedStatement 可以执行带参数的sql语句。==
+
+
+
+#### 1.Statement 接口：
+<font color="red">主要用于执行静态的sql语句（不带参的sql 语句），并返回结果。
+</font>
+
+①：创建Statement 对象：
+` Statement stmt=conn.createStatement( );`
+
+
+
+②：你可以用它的三个常用执行方法的任一方法来执行 SQL 语句：
+
+1. boolean execute(String SQL) : 
+如果 ResultSet 对象可以被检索，则返回的布尔值为 true ，否则返回 false 。当你需要使用真正的动态 SQL 时，可以使用这个方法来执行 SQL 语句。
+
+2. int executeUpdate(String SQL) :
+ 返回执行 SQL 语句影响的行的数目。 <font color="red">常用于INSERT，UPDATE 或 DELETE 语句。</font>
+
+3. ResultSet executeQuery(String SQL) :
+ 返回一个 ResultSet 对象。当你希望得到一个结果集时使用该方法。 <font color="red">常用于SELECT  语句。</font>
+
+
+
+
+#### 2.PreparedStatement 接口：
+>Statement 对象执行静态sql 语句，但在实际过程中，往往将程序的变量作为sql 语句的参数。而这时，使用Statement 对象 操作sql语句会过于繁琐，并且存在安全方面的缺陷。因此这是，使用PreparedStatement 对象比较好。
+
+PreparedStatement 对象继承 Statement 对象，它们之间的区别：
+①：PreparedStatement 对象 执行的sql 语句都是预编译的,可以高效的多次执行sql 语句。
+②：可以使用占位符 “ ？ ” 来代替sql语句的参数，然后通过 setXXX() 方法，给占位符赋值。
+
+
+1. 创建PreparedStatement 对象：
+
+```java
+String SQL = "Update Employees SET age = ? WHERE id = ?";
+PreparedStatement  pstmt = conn.prepareStatement(SQL);
+pstmt.setInt(1,age);         //把参数的age值，赋值给 第一个占位符。
+pstmt.setInt(2,id);
+int a=pstmt.executeUpdate();         //执行sql语句,并传回结果。
+```
+
+2. 常用方法
+
+```java
+
+pstmt.execute();    //执行的sql语句可以说任何种类的sql 语句
+
+pstmt.executeQuery();    //执行查询语句
+
+pstmt.executeUpdate();   // 必须是insert ，update ， delete 语句
+
+
+pstmt.setBoolean(int index,boolean b);     //给占位符设置boolean值
+
+pstmt.setDate(int index,Date d);      //给占位符设置date值
+
+pstmt.setString(int index,String str);    //给占位符设置String值
+
+pstmt.setInt(int index,int a);     //给占位符设置int值
+
+....
+
+```
+
+### 3.结果集ResultSet接口（提供指针功能）:
+
+`ResultSet rs=pstmt.executeQuery("select * from user");`
+
+其用于保存查询时，返回的结果集。<font color="red">结果集与数据库表的字段相对应，与表一样也是由行与列组成。并且在结果集的行上提供指针功能。可以通过指针来操作结果集的数据</font>
+
+1. 常用方法：
+```java
+
+beforeFirst();      //把指针移到ResultSet 对象的开头，正好在第一行之前。
+afterLast();       //把指针移到ResultSet 对象的末尾，正好在最后一行之后。
+close();           //释放资源。
+first();          //把指针移到第一行。
+
+next();            //把指针从当前行，下移一行，常用与while循环的迭代条件。
+
+getBoolean(int columnindex);     //获取当前行上指定列的值（Boolean类型的）
+getBoolean(String columnName);     //通过列名获取当前行上列的值（Boolean类型的）
+
+
+getDate(int columnindex);     //获取当前行上指定列的值（Date类型的）
+getDate(String columnName);     //通过列名获取当前行上指定列的值（Boolean类型的）
+
+
+getInt(int columnindex);     //获取当前行上指定列的值（Int类型的）
+getInt(String columnName);     //通过列名获取当前行上指定列的值（Boolean类型的）
+
+
+getString(int columnindex);     //获取当前行上指定列的值（String类型的）
+getString(String columnName);     //通过列名获取当前行上指定列的值（Boolean类型的）
+
+
+
+...
+
+```
+
+
+2. 例子：
+```java
+
+ResultSet result = stmt.executeQuery("SELECT * FROM user");
+
+　　while(result.next()){
+
+　　System.out.print(result.getString("name"));       
+ //name 是表的name列，若name列是第一列，可写成：result.getString(1);
+
+　　System.out.print(result.getString("email"));     
+
+　　System.out.print(result.getInt("age"));
+
+　　
+
+　　}
+```
+
+
+### 4.例子：jdbc 操作数据库:
+<font color="red">首先，导入MySQL的数据库驱动程序包（mysql-connector-java-5.1.40-bin.jar）</font>
+
+
+1. 创建表（goods表）,数据库名称为test
+
+![jdbc_2.png](../img/javaweb_img/jdbc_2.png)
+
+
+
+2. 创建实体类（数据表的映射）：
+```java
+package com.entity;
+
+public class Goods {
+	private Integer id;
+	private String name;
+	private Double price;
+	private String address;
+	public Goods() {
+		
+	}
+	public Goods(String name, Double price, String address) {
+		this.name = name;
+		this.price = price;
+		this.address = address;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	@Override
+	public String toString() {
+		return "Goods [id=" + id + ", name=" + name + ", price=" + price + ", address=" + address + "]";
+	}
+	
+	
+}
+
+```
+
+
+3. jdbc连接数据库：
+```java
+package com.link;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class linkdatabase {
+	private static String dirverName="com.mysql.jdbc.Driver";
+	private static String url="jdbc:mysql://localhost:3306/test";
+	//我这里的数据库名称是test
+	private static String user="root";
+	private static String password="123456";
+	
+	public static Connection getconnection(){
+		Connection conn=null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");   //把数据库驱动程序加载到jvm中。
+			conn=DriverManager.getConnection(url,user,password);  //连接数据库
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("数据库链接失败1");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("数据库链接失败2");
+		}
+		
+		return conn;        //返回数据库的连接
+		
+	}
+}
+
+```
+
+
+4. 测试jdbc 对数据库的增删改查：
+```java
+package com.test;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.junit.Test;
+
+import com.entity.Goods;
+import com.link.linkdatabase;
+
+public class test_jdbc {
+
+	/*
+	 * 插入数据
+	 * */
+	@Test
+	public void test_insert() throws Exception {
+		Connection conn=linkdatabase.getconnection();       //获取数据库连接
+		
+		String sql="insert into goods (name,price,address) values(?,?,?)";        
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(sql);           //创建prepareStatement对象
+			pstmt.setString(1,"xiaoming");                               //给占位符赋值
+			pstmt.setDouble(2,22);
+			pstmt.setString(3,"beijing");
+			
+			int a=pstmt.executeUpdate();                        //执行sql语句
+			
+			if(a==1){
+				System.out.println("insert success");
+			}else {
+				System.out.println("insert shibai ");
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("  insert 异常");
+			e.printStackTrace();
+		}finally {
+			conn.close();                          //关闭连接，释放资源
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	/*
+	 * 删除数据
+	 * */
+	@Test
+	public void test_delete() throws Exception {
+		Connection conn=linkdatabase.getconnection();       //获取数据库连接
+		
+		String sql="delete from goods where id=?";        
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(sql);           //创建prepareStatement对象
+			pstmt.setInt(1,1);                        //给占位符赋值
+
+			
+			int a=pstmt.executeUpdate();                        //执行sql语句
+			
+			if(a==1){
+				System.out.println("delete success");
+			}else {
+				System.out.println("delete shibai ");
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("   delete 异常");
+			e.printStackTrace();
+		}finally {
+			conn.close();                          //关闭连接，释放资源
+			
+		}
+		
+		
+		
+	}
+	
+	/*
+	 * 修改数据
+	 * */
+	@Test
+	public void test_update() throws Exception {
+		Connection conn=linkdatabase.getconnection();       //获取数据库连接
+		
+		String sql="update goods set name=? ,price=? , address=? where id=?";        
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(sql);           //创建prepareStatement对象
+			pstmt.setString(1,"xiaoho");                               //给占位符赋值
+			pstmt.setDouble(2,55);
+			pstmt.setString(3,"beijing");
+			pstmt.setInt(4,33);
+			
+			int a=pstmt.executeUpdate();                        //执行sql语句
+			
+			if(a==1){
+				System.out.println("update success");
+			}else {
+				System.out.println("update shibai ");
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("update 异常");
+			e.printStackTrace();
+		}finally {
+			conn.close();                          //关闭连接，释放资源
+			
+		}
+		
+		
+		
+	}
+	
+	
+	/*
+	 * 查询全部数据
+	 * */
+	@Test
+	public void test_selectAll() throws Exception {
+		Connection conn=linkdatabase.getconnection();       //获取数据库连接
+		
+		String sql="select * from goods";        
+		try {
+			PreparedStatement pstmt=conn.prepareStatement(sql);           //创建prepareStatement对象
+		
+			ResultSet rs=pstmt.executeQuery(sql);                        //执行sql语句
+			
+			
+			while(rs.next()){                                   //遍历ResultSet结果集
+				System.out.println("id:  "+rs.getInt("id")+"  ,   name: "+rs.getString("name")+"    "
+						+ "price:"+rs.getDouble("price")+"   address :"+rs.getString("address"));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("  selectAll 异常");
+			e.printStackTrace();
+		}finally {
+			conn.close();                          //关闭连接，释放资源
+			
+		}
+		
+		
+	}
+}
+
+```
 
 
 
