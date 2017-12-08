@@ -216,6 +216,18 @@ code.language-yaml {
 <ul>
 <li><a href="#%E6%A6%82%E8%BF%B0">概述：</a></li>
 <li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AAhibernate%E7%9A%84crud-%E4%BE%8B%E5%AD%90">第一个Hibernate的CRUD 例子</a></li>
+<li><a href="#%E7%BC%93%E5%AD%98">缓存：</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98session%E7%BA%A7%E5%88%AB%E9%BB%98%E8%AE%A4%E7%BC%93%E5%AD%98">一级缓存（session级别，默认缓存）：</a></li>
+<li><a href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98sessionfactory-%E7%BA%A7%E5%88%AB%E4%B8%8D%E6%98%AF%E9%BB%98%E8%AE%A4%E7%9A%84%E9%9C%80%E8%A6%81%E5%BC%80%E5%90%AF">二级缓存（SessionFactory 级别，不是默认的需要开启）：</a></li>
+</ul>
+</li>
+<li><a href="#hibernate-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">Hibernate 配置文件：</a>
+<ul>
+<li><a href="#1%E9%85%8D%E7%BD%AEc3p0%E6%95%B0%E6%8D%AE%E6%BA%90%E8%BF%9E%E6%8E%A5%E6%B1%A0">1.配置C3P0数据源连接池：</a></li>
+<li><a href="#2%E9%85%8D%E7%BD%AE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9Ccrud%E7%9A%84%E5%B1%9E%E6%80%A7%E4%B8%BB%E8%A6%81%E9%80%82%E7%94%A8%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93">2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -546,6 +558,95 @@ mysql-connector-java-5.1.42-bin.jar</p>
 会与数据库的表进行比较，若 .hbm.xml文件的列在数据表中不存在，抛出异常。</li>
 </ol>
 </blockquote>
+<h2 class="mume-header" id="%E7%BC%93%E5%AD%98">缓存：</h2>
+
+<p>缓存是关于应用程序性能的优化，<font color="red">降低了应用程序对物理数据源访问的频次</font>，从而提高应用程序的运行性能。</p>
+<p>Hibernate的缓存分为一级缓存，二级缓存。</p>
+<h3 class="mume-header" id="%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98session%E7%BA%A7%E5%88%AB%E9%BB%98%E8%AE%A4%E7%BC%93%E5%AD%98">一级缓存（session级别，默认缓存）：</h3>
+
+<p>一级缓存是 Session 级别缓存并且是一种强制性的缓存。它随session的创建被创建，随session的销毁被销毁。<font color="red">不同的session之间无法共享一级缓存。</font></p>
+<p><font color="blue">当程序使用session的加载持久化对象时。session首先会根据加载的数据类和唯一的标识（id）在缓存中查找曾经是否执行过的例子。若存在，则把曾经的例子作为结果返回，若不存在，session会在二级缓存中查找。若还不存在，则session加载新的持久化对象（session直接访问数据库）。</font></p>
+<pre class="language-java"><span class="token comment" spellcheck="true">/*
+	 * 查询操作，不需要提交事务
+	 * 
+	 * 	session.get(User.class, 7);    //参数1:需要查询的类对应的clas文件  , 参数2： 查询条件（唯一标识，id值）
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">selectone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		User user <span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		User user2 <span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		session<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		sessionFactory<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+
+</pre>
+<p><img src="../img/Hibernate_img/3.png" alt="3.png"></p>
+<p><mark>查询了两次数据库，但只打印了一次sql 语句。说明，第二次查询，是调用了一级缓存中之前查的结果。</mark></p>
+<h3 class="mume-header" id="%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98sessionfactory-%E7%BA%A7%E5%88%AB%E4%B8%8D%E6%98%AF%E9%BB%98%E8%AE%A4%E7%9A%84%E9%9C%80%E8%A6%81%E5%BC%80%E5%90%AF">二级缓存（SessionFactory 级别，不是默认的需要开启）：</h3>
+
+<p>当session加载持久化对象在一级缓存找不到匹配的缓存实例时，session会向二级缓存查找该实例对象。若找不到，session直接访问数据库。</p>
+<p><font color="red">由于Hibernate 本身没有提供二级缓存的实现方式。所以需要引入第三方的插件来实现Hibernate的二级缓存。</font></p>
+<p><strong>这里以EHCache 作为Hibernate的二级缓存：</strong></p>
+<h2 class="mume-header" id="hibernate-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">Hibernate 配置文件：</h2>
+
+<h3 class="mume-header" id="1%E9%85%8D%E7%BD%AEc3p0%E6%95%B0%E6%8D%AE%E6%BA%90%E8%BF%9E%E6%8E%A5%E6%B1%A0">1.配置C3P0数据源连接池：</h3>
+
+<ol>
+<li>导入C3P0jar包，加入到类路径中：<br>
+一般在你下载的Hibernate的文件夹的<br>
+hibernate-release-5.2.12.Final\lib\optional\c3p0</li>
+</ol>
+<blockquote>
+<p>c3p0-0.9.5.2.jar<br>
+hibernate-c3p0-5.2.12.Final.jar<br>
+mchange-commons-java-0.2.11.jar</p>
+</blockquote>
+<ol start="2">
+<li>添加配置文件信息：</li>
+</ol>
+<p>hibernate.cfg.xml</p>
+<pre class="language-xml">
+        <span class="token comment" spellcheck="true">&lt;!-- 配置C3P0数据库连接池
+        	hibernate.c3p0.max_size:  最大连接数 
+        	hibernate.c3p0.min_size： 最小连接数 
+        	c3p0.acquire_increment：  当连接池里面的连接快用完的时候，C3P0同一时刻内可以同时获取的新的连接数的数量
+        
+        	c3p0.idle_test_period： 每隔2秒检查连接池里的连接对象是否超时，若超时，会有专门的线程每隔一段时间销毁超时的连接对象.
+        	c3p0.timeout:  连接数多长时间没有使用后，被销毁
+        	
+        	c3p0.max_statements: 缓存的Statement的最大数量
+         --></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hibernate.c3p0.max_size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>10<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hibernate.c3p0.min_size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c3p0.acquire_increment<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c3p0.idle_test_period<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>2000<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c3p0.timeout<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>2000<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>c3p0.max_statements<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>10<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+   
+</pre>
+<h3 class="mume-header" id="2%E9%85%8D%E7%BD%AE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9Ccrud%E7%9A%84%E5%B1%9E%E6%80%A7%E4%B8%BB%E8%A6%81%E9%80%82%E7%94%A8%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93">2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：</h3>
+
+<p>hibernate.cfg.xml</p>
+<pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 
+   			这两个属性主要适用于Oracle数据库， Mysql数据库不支持fetch_size特性
+   		
+   			hibernate.jdbc.fetch_size:  该属性 设定jdbc的Statement 读取数据的时候每次从数据库取出的记录条数。
+   			例如：当一次性查询10000条数据时，一条一条的查询，内存消耗小，但速度慢。
+   			而100条100条的查询，速度快，但内存消耗大。因此取合适的值100。
+   			
+   			hibernate.jdbc.batch_size： 对数据库进行批量删除，更新，插入时的每个批次的数量大小。
+   		
+   		
+   		 --></span>
+   		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hibernate.jdbc.fetch_size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>100<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+   		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hibernate.jdbc.batch_size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>50<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+</pre>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -553,6 +654,18 @@ mysql-connector-java-5.1.42-bin.jar</p>
 <ul>
 <li><a href="#%E6%A6%82%E8%BF%B0">概述：</a></li>
 <li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AAhibernate%E7%9A%84crud-%E4%BE%8B%E5%AD%90">第一个Hibernate的CRUD 例子</a></li>
+<li><a href="#%E7%BC%93%E5%AD%98">缓存：</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98session%E7%BA%A7%E5%88%AB%E9%BB%98%E8%AE%A4%E7%BC%93%E5%AD%98">一级缓存（session级别，默认缓存）：</a></li>
+<li><a href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98sessionfactory-%E7%BA%A7%E5%88%AB%E4%B8%8D%E6%98%AF%E9%BB%98%E8%AE%A4%E7%9A%84%E9%9C%80%E8%A6%81%E5%BC%80%E5%90%AF">二级缓存（SessionFactory 级别，不是默认的需要开启）：</a></li>
+</ul>
+</li>
+<li><a href="#hibernate-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">Hibernate 配置文件：</a>
+<ul>
+<li><a href="#1%E9%85%8D%E7%BD%AEc3p0%E6%95%B0%E6%8D%AE%E6%BA%90%E8%BF%9E%E6%8E%A5%E6%B1%A0">1.配置C3P0数据源连接池：</a></li>
+<li><a href="#2%E9%85%8D%E7%BD%AE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9Ccrud%E7%9A%84%E5%B1%9E%E6%80%A7%E4%B8%BB%E8%A6%81%E9%80%82%E7%94%A8%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93">2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -338,4 +338,108 @@ public class hibernate_test {
 
 
 
+##  缓存：
+缓存是关于应用程序性能的优化，<font color="red">降低了应用程序对物理数据源访问的频次</font>，从而提高应用程序的运行性能。
 
+Hibernate的缓存分为一级缓存，二级缓存。
+
+### 一级缓存（session级别，默认缓存）：
+一级缓存是 Session 级别缓存并且是一种强制性的缓存。它随session的创建被创建，随session的销毁被销毁。<font color="red">不同的session之间无法共享一级缓存。</font>
+
+<font color="blue">当程序使用session的加载持久化对象时。session首先会根据加载的数据类和唯一的标识（id）在缓存中查找曾经是否执行过的例子。若存在，则把曾经的例子作为结果返回，若不存在，session会在二级缓存中查找。若还不存在，则session加载新的持久化对象（session直接访问数据库）。</font>
+
+```java
+/*
+	 * 查询操作，不需要提交事务
+	 * 
+	 * 	session.get(User.class, 7);    //参数1:需要查询的类对应的clas文件  , 参数2： 查询条件（唯一标识，id值）
+	 * */
+	@Test
+	public void selectone(){
+		User user =session.get(User.class,7);
+		System.out.println(user);
+		
+		User user2 =session.get(User.class,7);
+		System.out.println(user2);
+		
+		session.close();
+		sessionFactory.close();
+		
+	}
+
+```
+
+
+![3.png](../img/Hibernate_img/3.png)
+
+==查询了两次数据库，但只打印了一次sql 语句。说明，第二次查询，是调用了一级缓存中之前查的结果。==
+
+
+### 二级缓存（SessionFactory 级别，不是默认的需要开启）：
+当session加载持久化对象在一级缓存找不到匹配的缓存实例时，session会向二级缓存查找该实例对象。若找不到，session直接访问数据库。
+
+<font color="red">由于Hibernate 本身没有提供二级缓存的实现方式。所以需要引入第三方的插件来实现Hibernate的二级缓存。</font>
+
+**这里以EHCache 作为Hibernate的二级缓存：**
+
+
+
+
+
+
+## Hibernate 配置文件：
+
+### 1.配置C3P0数据源连接池：
+
+1. 导入C3P0jar包，加入到类路径中：
+一般在你下载的Hibernate的文件夹的
+hibernate-release-5.2.12.Final\lib\optional\c3p0
+
+> c3p0-0.9.5.2.jar
+> hibernate-c3p0-5.2.12.Final.jar
+> mchange-commons-java-0.2.11.jar
+
+2. 添加配置文件信息：
+
+hibernate.cfg.xml
+```xml
+
+        <!-- 配置C3P0数据库连接池
+        	hibernate.c3p0.max_size:  最大连接数 
+        	hibernate.c3p0.min_size： 最小连接数 
+        	c3p0.acquire_increment：  当连接池里面的连接快用完的时候，C3P0同一时刻内可以同时获取的新的连接数的数量
+        
+        	c3p0.idle_test_period： 每隔2秒检查连接池里的连接对象是否超时，若超时，会有专门的线程每隔一段时间销毁超时的连接对象.
+        	c3p0.timeout:  连接数多长时间没有使用后，被销毁
+        	
+        	c3p0.max_statements: 缓存的Statement的最大数量
+         -->
+       <property name="hibernate.c3p0.max_size">10</property>
+       <property name="hibernate.c3p0.min_size">5</property>
+       <property name="c3p0.acquire_increment">2</property>
+        
+       <property name="c3p0.idle_test_period">2000</property>
+       <property name="c3p0.timeout">2000</property>
+       <property name="c3p0.max_statements">10</property>
+   
+```
+
+
+### 2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：
+
+hibernate.cfg.xml
+```xml
+<!-- 
+   			这两个属性主要适用于Oracle数据库， Mysql数据库不支持fetch_size特性
+   		
+   			hibernate.jdbc.fetch_size:  该属性 设定jdbc的Statement 读取数据的时候每次从数据库取出的记录条数。
+   			例如：当一次性查询10000条数据时，一条一条的查询，内存消耗小，但速度慢。
+   			而100条100条的查询，速度快，但内存消耗大。因此取合适的值100。
+   			
+   			hibernate.jdbc.batch_size： 对数据库进行批量删除，更新，插入时的每个批次的数量大小。
+   		
+   		
+   		 -->
+   		<property name="hibernate.jdbc.fetch_size">100</property>
+   		<property name="hibernate.jdbc.batch_size">50</property>
+```
