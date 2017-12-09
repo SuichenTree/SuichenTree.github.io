@@ -228,6 +228,28 @@ code.language-yaml {
 <li><a href="#2%E9%85%8D%E7%BD%AE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9Ccrud%E7%9A%84%E5%B1%9E%E6%80%A7%E4%B8%BB%E8%A6%81%E9%80%82%E7%94%A8%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93">2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：</a></li>
 </ul>
 </li>
+<li><a href="#hibernate-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6hbmxml">Hibernate 映射文件（*.hbm.xml）:</a>
+<ul>
+<li><a href="#1-%E6%A6%82%E8%BF%B0">1. 概述：</a></li>
+<li><a href="#2%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7">2.映射文件常用属性：</a></li>
+<li><a href="#3%E5%B1%9E%E6%80%A7%E7%9A%84%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B">3.属性的映射类型：</a></li>
+</ul>
+</li>
+<li><a href="#hibernate%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">Hibernate的映射关系：</a>
+<ul>
+<li><a href="#1%E7%BB%84%E4%BB%B6%E6%98%A0%E5%B0%84%E5%8E%9F%E5%85%88%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%AF%B9%E5%BA%94%E4%B8%80%E4%B8%AA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%8E%B0%E5%9C%A8%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E6%98%A0%E5%B0%84%E5%8F%AF%E4%BB%A5%E6%8A%8A%E4%B8%80%E5%BC%A0%E8%A1%A8%E6%8B%86%E5%88%86%E4%B8%BA%E5%A4%9A%E4%B8%AA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB">1.组件映射（原先一张表对应一个持久化类，现在使用组件映射可以把一张表拆分为多个持久化类）：</a></li>
+<li><a href="#2-%E5%8D%95%E5%90%91%E5%A4%9A%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">2. 单向多对一映射关系：</a></li>
+<li><a href="#3%E5%8F%8C%E5%90%911-n%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">3.双向1-N关联关系：</a></li>
+<li><a href="#4%E5%8F%8C%E5%90%911-1%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">4.双向1-1关联关系:</a></li>
+<li><a href="#4n-n%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">4.N-N关联关系：</a>
+<ul>
+<li><a href="#1%E5%8D%95%E5%90%91n-n%E5%85%B3%E8%81%94">1.单向N-N关联:</a></li>
+<li><a href="#2%E5%8F%8C%E5%90%91n-n%E5%85%B3%E8%81%94">2.双向N-N关联:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
 </ul>
 </li>
 </ul>
@@ -276,8 +298,10 @@ mysql-connector-java-5.1.42-bin.jar</p>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>connection.password<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>123456<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>connection.driver_class<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>com.mysql.jdbc.Driver<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
  
- 		<span class="token comment" spellcheck="true">&lt;!-- 告訴hibernate 使用什么数据库,  dialect（方言） --></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dialect<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>org.hibernate.dialect.MySQLInnoDBDialect<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+ 		<span class="token comment" spellcheck="true">&lt;!-- SQL dialect（方言），  dialect和Mysql的版本不匹配,这段代码是MySQL 5.0以前的版本，下面是MySQL 5.0后的版本
+        &lt;property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect&lt;/property>
+        --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dialect<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>org.hibernate.dialect.MySQL5InnoDBDialect<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
         
          <span class="token comment" spellcheck="true">&lt;!-- 执行操作时，是否在控制台打印sql语句--></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>show_sql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
@@ -647,6 +671,1039 @@ mchange-commons-java-0.2.11.jar</p>
    		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hibernate.jdbc.fetch_size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>100<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
    		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hibernate.jdbc.batch_size<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>50<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
 </pre>
+<h2 class="mume-header" id="hibernate-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6hbmxml">Hibernate 映射文件（*.hbm.xml）:</h2>
+
+<p><font color="red">映射文件的扩展名： “ .hbm.xml ”</font></p>
+<h3 class="mume-header" id="1-%E6%A6%82%E8%BF%B0">1. 概述：</h3>
+
+<p>一个对象/关系型映射一般定义在 XML 文件中。映射文件指示 Hibernate 如何将已经定义的<font color="red">类或类组与数据库中的表对应起来</font>。</p>
+<h3 class="mume-header" id="2%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7">2.映射文件常用属性：</h3>
+
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>  
+<span class="token doctype">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"    
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span><span class="token punctuation">></span></span>  
+   <span class="token comment" spellcheck="true">&lt;!-- 
+   	&lt;hibernate-mapping>标签：
+   		 package="com.entity" 属性 :指定包前缀 指定持久化类所在的包名 。这样之后class子标签中的name属性就不必使用全限定性的类名 
+   
+   -----------------------------------
+  	 -- &lt;class>标签：使用class元素表示一个持久化类（实体类）。注意：可以有多个&lt;class>标签，对于多个映射文件，但建议一个持久化类对应一个映射文件。
+   		-- name="com.entity.User" ：表明持久化类的全类名，如果&lt;hibernate-mapping>标签的package属性已经指明了包名，则可以少写代码； 		
+   		-- table="user" ：对应数据库表名，默认持久化类名作为表名；
+   		-- dynamic-update="false" : 默认为false ,若为true，动态修改那些有改变过的字段，而不用修改所有字段。 
+   		-- dynamic-insert="false" : 默认为false ,若为true，动态插入非空值字段。 
+   		-- lazy="true" : 指定是否用于延迟加载。
+   		
+   		
+   		 
+   		-- &lt;id>子标签：定义了该属性到数据库表主键字段的映射。
+   		 		-- name="id"：实体类主键的名字；  
+   		 		-- type 属性：   指定实体类主键的数据类型
+   				-- column="id" ：数据表主键字段的名字，如果不填写与name一样； 
+   				
+   				-- &lt;generator>标签： 指定主键由什么方式生成    native:使用数据库本地的方式
+   				
+   		***** &lt;generator>标签的class取值： 
+   		
+   			1. native（推荐，跨数据库） ：由hibernate根据使用的数据库自行判断采用identity、hilo、sequence其中一种作为主键生成方式，灵活性很强。
+   						如果能支持identity则使用identity，如果支持sequence则使用sequence。
+    			
+   				
+   			2. increment： 由Hibernate从数据库中取出主键的最大值（每个session只取1次），以该值为基础，每次增量为1，
+   							在内存中生成主键，不依赖于底层的数据库，因此可以跨数据库
+   					注意：适用与，只能有一个Hibernate应用进程访问数据库，否则就可能产生主键冲突，
+   						所以不适合多进程并发更新数据库，适合单一进程访问数据库，不能用于群集环境。
+   				
+   			3. identity :由数据库负责主键自增,但这个主键必须设置为自增长,Hibernate不负责该任务，该策略适用于Mysql或者sql server这种主键可以自增的数据库。
+   						 主要是利用long、int、short类型可以直接自增的情况。
+   						 注意： Oracle这类没有自增字段的则不支持。
+   					
+   			4. sequence ：采用数据库提供的sequence机制生成主键，需要数据库支持sequence。如oralce、DB，~。
+   						  MySQL这种不支持sequence的数据库则不行（可以使用identity）。
+   						  
+   			5. hilo(可以跨数据库,主键需设为int/long/short类型) ： 使用高低（high/low）位算法生成主键，由Hibernate负责生成主键，该算法生成的标志只能保证在一个数据库中唯一。
+   						需要一张额外的表来存储high的值，只和第一条数据有关系，至少要有一条数据。
+						hilo方式生成主键的过程：
+						1). 读取high值，表已经指定的话就读取指定的表中的数据，然后读取完成值+1，
+						如果没有进行指定的话，默认读取hibernate_unique_key表中的next_hi字段的值，读完同样的+1。
+						
+						2). 获取low值，从0到最大的那个low值，循环的取值，
+						如果获取的是最大的low值的时候就重新获取high值，然后low继续从0-最大low循环。
+						
+						3). 由公式：high*(maxLow + 1) + low
+						如果需要建立大量的主键并且不需要经常重启的话，就将high设置的大一些，
+						否则设置稍微小一些比较好，如果设置为0的时候就是自然数序列了1,2,3,4,5.....
+   				
+   			
+   		
+   		-- &lt;property>子标签： 为类定义一个持久化的javaBean风格的属性。
+    			-- name="name"：标识持久化类属性的名字，以小写字母开头；
+    			-- type="java.lang.String" ： 持久化类属性对应的java类型。也可以写为Hibernate的数据类型
+    			-- column="name"：表字段的名字，如果不填写与name属性值一样；
+    			-- unique="false" : 是否为该属性所对应的数据表的字段添加唯一性约束
+    			-- update="false" : 指定该属性的值是否可以被修改。
+    			
+    --></span>
+    
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span> <span class="token attr-name">dynamic-update</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">dynamic-insert</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">lazy</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+ 		
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>    
+     	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">update</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">unique</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>  
+     
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>  
+  
+  
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+
+</pre>
+<h3 class="mume-header" id="3%E5%B1%9E%E6%80%A7%E7%9A%84%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B">3.属性的映射类型：</h3>
+
+<ol>
+<li>原始数据类型的映射：</li>
+</ol>
+<p><img src="../img/Hibernate_img/4.png" alt="4.png"></p>
+<ol start="2">
+<li>时间日期类型数据的映射：</li>
+</ol>
+<p><img src="../img/Hibernate_img/5.png" alt="5.png"></p>
+<p><font color="red">当数据库的某一个字段的数据类型设为时间类型（date ， timestamp ） 时，持久化类的对应属性可以设为 java.util.Date 。当然在Hibernate的映射文件也需要指明该属性的Hibernate数据类型。</font></p>
+<blockquote>
+<p>date : 数据库的date 数据类型 表示 日期 2017-11-12 。<br>
+timestamp : 表示 时间日期 2017-11-12 12:21:22 。</p>
+</blockquote>
+<p>User.java</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Date<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">{</span>
+ 
+	<span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Date createtime<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Integer age<span class="token punctuation">,</span> Date createtime<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	
+		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>createtime <span class="token operator">=</span> createtime<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> Date <span class="token function">getCreatetime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> createtime<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setCreatetime</span><span class="token punctuation">(</span>Date createtime<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>createtime <span class="token operator">=</span> createtime<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> name<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> age<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span>Integer age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"User [id="</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">", name="</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">", age="</span> <span class="token operator">+</span> age
+				<span class="token operator">+</span> <span class="token string">", createtime="</span> <span class="token operator">+</span> createtime <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	
+<span class="token punctuation">}</span>
+
+</pre>
+<p>User.hbm.xml</p>
+<pre class="language-xml">
+<span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>  
+<span class="token doctype">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"    
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span><span class="token punctuation">></span></span>  
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.User<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>    
+     	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>  
+     
+     
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">update</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">unique</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>  
+     
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>createtime<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timestamp<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>createtime<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>   
+	 <span class="token comment" spellcheck="true">&lt;!-- type="timestamp" : 该属性可以写java类型或Hibernate类型  --></span>
+	
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>  
+  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+
+
+</pre>
+<ol start="3">
+<li>其他数据类型的映射：<br>
+<img src="../img/Hibernate_img/6.png" alt="6.png"></li>
+</ol>
+<h2 class="mume-header" id="hibernate%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">Hibernate的映射关系：</h2>
+
+<p>参考链接：<br>
+<a href="http://blog.csdn.net/huangaigang6688/article/details/7761310">Hibernate映射解析——七种映射关系</a></p>
+<h3 class="mume-header" id="1%E7%BB%84%E4%BB%B6%E6%98%A0%E5%B0%84%E5%8E%9F%E5%85%88%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%AF%B9%E5%BA%94%E4%B8%80%E4%B8%AA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%8E%B0%E5%9C%A8%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E6%98%A0%E5%B0%84%E5%8F%AF%E4%BB%A5%E6%8A%8A%E4%B8%80%E5%BC%A0%E8%A1%A8%E6%8B%86%E5%88%86%E4%B8%BA%E5%A4%9A%E4%B8%AA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB">1.组件映射（原先一张表对应一个持久化类，现在使用组件映射可以把一张表拆分为多个持久化类）：</h3>
+
+<p>组件属性的意思是：非基本数据类型、字符串、日期等类型，而是一个复合类型的对象，在持久化的过程中，它仅仅当作值类型，而并非引用另一个持久化实体。<font color="red">例如：一个持久化类A其中一个属性是另一个持久化类B的实例化对象， 表示B类 是 A类的组件。</font></p>
+<p><img src="../img/Hibernate_img/7.png" alt="7.png"></p>
+<p>User.java</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Date<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">{</span>
+ 
+	<span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Date createtime<span class="token punctuation">;</span>
+
+	<span class="token keyword">private</span> House house<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//house 是House类的对象</span>
+	
+	<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> Integer age<span class="token punctuation">,</span> Date createtime<span class="token punctuation">,</span> House house<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>createtime <span class="token operator">=</span> createtime<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>house <span class="token operator">=</span> house<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+
+
+	<span class="token keyword">public</span> Date <span class="token function">getCreatetime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> createtime<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setCreatetime</span><span class="token punctuation">(</span>Date createtime<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>createtime <span class="token operator">=</span> createtime<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> name<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> age<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span>Integer age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> House <span class="token function">getHouse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> house<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setHouse</span><span class="token punctuation">(</span>House house<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>house <span class="token operator">=</span> house<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"User [id="</span> <span class="token operator">+</span> id <span class="token operator">+</span> <span class="token string">", name="</span> <span class="token operator">+</span> name <span class="token operator">+</span> <span class="token string">", age="</span> <span class="token operator">+</span> age
+				<span class="token operator">+</span> <span class="token string">", createtime="</span> <span class="token operator">+</span> createtime <span class="token operator">+</span> <span class="token string">", house="</span> <span class="token operator">+</span> house <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+
+<span class="token punctuation">}</span>
+
+
+</pre>
+<p>House.java</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Date<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">House</span> <span class="token punctuation">{</span>
+		
+	<span class="token keyword">private</span> Integer price<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Integer size<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String  address<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token function">House</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token function">House</span><span class="token punctuation">(</span>Integer price<span class="token punctuation">,</span> Integer size<span class="token punctuation">,</span> String address<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> price<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>size <span class="token operator">=</span> size<span class="token punctuation">;</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>address <span class="token operator">=</span> address<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getPrice</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> price<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setPrice</span><span class="token punctuation">(</span>Integer price<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>price <span class="token operator">=</span> price<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Integer <span class="token function">getSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> size<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setSize</span><span class="token punctuation">(</span>Integer size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>size <span class="token operator">=</span> size<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> address<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAddress</span><span class="token punctuation">(</span>String address<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>address <span class="token operator">=</span> address<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"House [price="</span> <span class="token operator">+</span> price <span class="token operator">+</span> <span class="token string">", size="</span> <span class="token operator">+</span> size <span class="token operator">+</span> <span class="token string">", address="</span>
+				<span class="token operator">+</span> address <span class="token operator">+</span> <span class="token string">"]"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
+
+</pre>
+<p>Hibernate.cfg.xml</p>
+<pre class="language-xml">   <span class="token comment" spellcheck="true">&lt;!-- 告诉hibernate 去哪找 映射文件（默认后缀为 .hbm.xml文件） ，resource： 表示路径为目录结构形式--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapping</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/hbm/xml/User.hbm.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+
+	<span class="token comment" spellcheck="true">&lt;!-- 不需要写House的映射文件，因为house的映射文件写在User.hbm.xml 中--></span>
+      
+</pre>
+<p><mark>不需要写House的映射文件，因为house的映射文件写在User.hbm.xml 中</mark></p>
+<p>User.hbm.xml</p>
+<pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>User<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>    
+     	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>  
+     
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">update</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">unique</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>age<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>  
+     
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>createtime<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>timestamp<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>createtime<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>   
+	 <span class="token comment" spellcheck="true">&lt;!-- type="timestamp" : 该属性可以写java类型或Hibernate类型  --></span>
+	
+
+
+	<span class="token comment" spellcheck="true">&lt;!-- House类是User类中的属性,这里相当于House的映射文件 --></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>component</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>house<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>House<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>price<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>price<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>size<span class="token punctuation">"</span></span>  <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>size<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>address<span class="token punctuation">"</span></span>  <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>address<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+	
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>component</span><span class="token punctuation">></span></span>
+	
+	
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>  
+  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+</pre>
+<p><mark>&lt;component&gt;标签指定组件的属性</mark></p>
+<pre class="language-java"><span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		
+		Transaction transaction<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//开启事务</span>
+		House h<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">House</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">,</span><span class="token string">"hunan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		User user<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token string">"xiaoxiao"</span><span class="token punctuation">,</span><span class="token number">33</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>h<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//插入数据</span>
+		
+		transaction<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//提交事务</span>
+		
+		session<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		sessionFactory<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+</pre>
+<h3>说明:</h3>
+<blockquote>
+<ol>
+<li>&lt;component&gt;指定User类的House为User的组件，House并不是一个可以直接映射为表字段的属性而是一个类对象，class是指定类的名称，&lt;component&gt;的子元素&lt;property&gt;指定组件类的属性与user表字段的映射关系。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li><font color="red">不必为House对象写一个House.hbm.xml映射文件，因为House是作为User的一部分即值类型而不是实体被持久化的，所以House的属性会与User的其它属性一样被映射为users表中的字段，而不会将House映射为单独的一个表。</font></li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>User与House的关系是&quot;整体与部分&quot;，也可以将他们表示为一对一关联关系，这样的话两者就是“平等&quot;关系，那么House就会被映射为单独的一张表（需要配置House.hbm.xml文件）。</li>
+</ol>
+</blockquote>
+<h2><font color="blue">简单来说：原先一张表对应一个持久化类，现在使用组件映射可以把一张表拆分为多个持久化类，数据表的字段将被多个持久化类拆分。其中有一个为主要的持久化类。其余的持久化类都是主要持久化类的组件。</font></h2>
+<h3 class="mume-header" id="2-%E5%8D%95%E5%90%91%E5%A4%9A%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">2. 单向多对一映射关系：</h3>
+
+<p><font color="red">多对一关联映射原理：在多的一端加入一个外键，指向一的一端.</font><br>
+如下图：</p>
+<p><img src="../img/Hibernate_img/8.png" alt="8.png"></p>
+<ol>
+<li>例子：多的一端是Ord类 ，一的一端是 Customer 类。现实中，一个客户可以有多个订单，但在订单的角度看，多个订单可以有一个客户。</li>
+</ol>
+<p>①：持久化类：</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Customer</span> <span class="token punctuation">{</span>
+		<span class="token keyword">private</span> Integer cid<span class="token punctuation">;</span>
+		<span class="token keyword">private</span> String cname<span class="token punctuation">;</span>
+		
+		<span class="token keyword">public</span> <span class="token function">Customer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> <span class="token function">Customer</span><span class="token punctuation">(</span>Integer cid<span class="token punctuation">,</span> String cname<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">super</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>cid <span class="token operator">=</span> cid<span class="token punctuation">;</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>cname <span class="token operator">=</span> cname<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+	 <span class="token comment" spellcheck="true">//get,set，toString 方法省略</span>
+		
+		
+<span class="token punctuation">}</span>
+
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+
+<span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Ord</span> <span class="token punctuation">{</span>
+		<span class="token keyword">private</span> Integer oid<span class="token punctuation">;</span>
+		<span class="token keyword">private</span> String oname<span class="token punctuation">;</span>
+		
+		<span class="token keyword">private</span> Customer customer<span class="token punctuation">;</span>
+
+		<span class="token keyword">public</span> <span class="token function">Ord</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">public</span> <span class="token function">Ord</span><span class="token punctuation">(</span>Integer oid<span class="token punctuation">,</span> String oname<span class="token punctuation">,</span> Customer customer<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			
+			<span class="token keyword">this</span><span class="token punctuation">.</span>oid <span class="token operator">=</span> oid<span class="token punctuation">;</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>oname <span class="token operator">=</span> oname<span class="token punctuation">;</span>
+			<span class="token keyword">this</span><span class="token punctuation">.</span>customer <span class="token operator">=</span> customer<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+	
+		<span class="token comment" spellcheck="true">//get,set，toString 方法省略</span>
+		
+		
+<span class="token punctuation">}</span>
+
+</pre>
+<p>②：Hibernate的映射文件：</p>
+<pre class="language-xml">
+<span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>  
+<span class="token doctype">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"    
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Customer<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>customer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cid<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cid<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>    
+     	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>  
+     
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cname<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cname<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+  
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>  
+  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+
+
+-----------------------------
+
+<span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>  
+<span class="token doctype">&lt;!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"    
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"></span>  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Ord<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ord<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>oid<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>oid<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>    
+     	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> 
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>  
+     
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>oname<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>oname<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>  
+  
+  <span class="token comment" spellcheck="true">&lt;!-- 
+  	  多对一关联映射原理：在多的一端加入一个外键，指向一的一端。
+  		many-to-one :多对一关联映射标签，该标签写在多的一端。
+  				name属性：多的一端中指向一的一端的属性名。
+  				cloumn属性：指明外键连向一的一端的那个字段。
+  				class属性： 是 指向一 的一端的全类名，如果&lt;hibernate-mapping>标签有package属性值，只写类名。
+   --></span>
+  
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>many-to-one</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>customer<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Customer<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cid<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+	
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>  
+  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+
+
+</pre>
+<p>③：Hibernate的配置文件：</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version='1.0' encoding='utf-8'?></span>
+<span class="token doctype">&lt;!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-configuration</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>session-factory</span><span class="token punctuation">></span></span>
+    	
+        <span class="token comment" spellcheck="true">&lt;!-- 数据库连接信息 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>connection.url<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>jdbc:mysql://localhost:3306/test2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>connection.username<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>root<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>connection.password<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>123456<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>connection.driver_class<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>com.mysql.jdbc.Driver<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+ 
+ 		<span class="token comment" spellcheck="true">&lt;!-- 告訴hibernate 使用什么数据库 --></span>
+        
+        <span class="token comment" spellcheck="true">&lt;!-- SQL dialect，  dialect和Mysql的版本不匹配,这段代码是MySQL 5.0以前的版本
+        &lt;property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect&lt;/property>
+        --></span>
+        
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dialect<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>org.hibernate.dialect.MySQL5InnoDBDialect<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        
+         <span class="token comment" spellcheck="true">&lt;!-- 执行操作时，是否在控制台打印sql语句--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>show_sql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        
+        <span class="token comment" spellcheck="true">&lt;!-- 是否 对在控制台打印的sql语句进行格式化 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>format_sql<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        
+        <span class="token comment" spellcheck="true">&lt;!-- 指定程序运行时，是否在数据库中自动生成数据表--></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hbm2ddl.auto<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>update<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+         
+         
+       <span class="token comment" spellcheck="true">&lt;!-- 告诉hibernate 去哪找 映射文件（默认后缀为 .hbm.xml文件） ，resource： 表示路径为目录结构形式--></span>
+     
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapping</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/hbm/xml/Customer.hbm.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mapping</span> <span class="token attr-name">resource</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com/hbm/xml/Ord.hbm.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+     
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>session-factory</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-configuration</span><span class="token punctuation">></span></span>
+
+</pre>
+<p>④：test：</p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>test<span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">hibernate_test</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">private</span> <span class="token keyword">static</span> SessionFactory sessionFactory<span class="token operator">=</span>null<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Session session<span class="token operator">=</span>null<span class="token punctuation">;</span>
+
+	<span class="token annotation punctuation">@Before</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		StandardServiceRegistry serviceRegistry<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">StandardServiceRegistryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">configure</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		SessionFactory sessionFactory<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">MetadataSources</span><span class="token punctuation">(</span>serviceRegistry<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">buildMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">buildSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	   session<span class="token operator">=</span>sessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@After</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">after</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		session<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		sessionFactory<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_insert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		Transaction beginTransaction <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//开启事务</span>
+		
+		Customer cus<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Customer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cus<span class="token punctuation">.</span><span class="token function">setCname</span><span class="token punctuation">(</span><span class="token string">"aa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Ord ord<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Ord</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"ASASA"</span><span class="token punctuation">,</span>cus<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>cus<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>ord<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		beginTransaction<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment" spellcheck="true">//提交事务</span>
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_select</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">//查询 ord 会把 相关联的customer 也查询出来</span>
+		Ord ord <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Ord<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ord<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		Transaction beginTransaction <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Ord ord <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Ord<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ord<span class="token punctuation">.</span><span class="token function">setOname</span><span class="token punctuation">(</span><span class="token string">"asasasa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		session<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>ord<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		beginTransaction<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_delete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 不能先删除Customer，因为有外键
+		 * 
+		 * */</span>
+		Transaction beginTransaction <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Ord ord <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Ord<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		session<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>ord<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		beginTransaction<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		
+	<span class="token punctuation">}</span>
+	
+
+<span class="token punctuation">}</span>
+
+</pre>
+<p>⑤：运行结果：</p>
+<blockquote>
+<p>test_insert（）方法：<br>
+Hibernate:<br>
+insert into customer (cname) values (?)<br>
+Hibernate:<br>
+insert into ord (oname, cid) values (?, ?)</p>
+</blockquote>
+<blockquote>
+<p>test_select() 方法：<br>
+Hibernate:<br>
+select ord0_.oid as oid1_1_0_, ord0_.oname as oname2_1_0_, ord0_.cid as cid3_1_0_ from ord ord0_ where ord0_.oid=?<br>
+Hibernate:<br>
+select customer0_.cid as cid1_0_0_, customer0_.cname as cname2_0_0_ from customer customer0_ where customer0_.cid=?<br>
+Orders [oid=2, oname=ASASA, customer=Customer [cid=2, cname=aa]]</p>
+</blockquote>
+<blockquote>
+<p>test_update()方法：<br>
+Hibernate:<br>
+select ord0_.oid as oid1_1_0_, ord0_.oname as oname2_1_0_, ord0_.cid as cid3_1_0_ from ord ord0_ where ord0_.oid=?<br>
+Hibernate:<br>
+update ord set oname=?, cid=? where oid=?</p>
+</blockquote>
+<blockquote>
+<p>test_delete()方法：<br>
+Hibernate:<br>
+select ord0_.oid as oid1_1_0_, ord0_.oname as oname2_1_0_, ord0_.cid as cid3_1_0_ from ord ord0_ where ord0_.oid=?<br>
+Hibernate:<br>
+delete from ord where oid=?</p>
+</blockquote>
+<h3 class="mume-header" id="3%E5%8F%8C%E5%90%911-n%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">3.双向1-N关联关系：</h3>
+
+<p><font color="red">对于1-N关联，Hibernate推荐使用双向关联，而且不要让1的一端控制关联关系，而使用N的一端控制关联关系。</font><br>
+双向的N-1关联与1-N关联是完全相同的两种情形。<br>
+<font color="blue">两端都需要增加对关联属性的访问，N的一端增加引用到关联实体的属性，1的一端增加集合属性，集合元素为关联实体。</font></p>
+<p><img src="../img/Hibernate_img/9.png" alt="9.png"></p>
+<h2>注意：</h2>
+<blockquote>
+<p>①：当Session从数据库中加载Java集合时，创建的是Hibernate内置集合类的实例，因此，在持久化类中定义集合属性时，必须把属性声明为Java接口。<br>
+②：Hibernate的内置集合类具有集合代理功能，支持延迟检索策略<br>
+事实上，Hibernate的内置集合类封装了JDK中的集合类，这使得Hibernate能够对缓存中的集合对象进行脏检查，按照集合对象的状态来同步更新数据库。</p>
+</blockquote>
+<blockquote>
+<p>③：在定义集合属性时，通常把它初始化为集合实现类的一个实例，这样可以提高程序的健壮性，避免应用程序访问取值为null的集合的方法。</p>
+</blockquote>
+<blockquote>
+<p>例如：private Set<Order> orders = new HashSet<Order>();</Order></Order></p>
+</blockquote>
+<h2>demo:</h2>
+<p>①：持久化类：</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Customer</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer customerId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String customerName<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Set<span class="token operator">&lt;</span>Order<span class="token operator">></span> orders <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span>Order<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//省去get和set</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Order</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer orderId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String orderName<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Customer customer<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//省去get和set</span>
+<span class="token punctuation">}</span>
+
+
+</pre>
+<p>②：映射文件：</p>
+<pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- Customer.hbm.xml --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Customer<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CUSTOMERS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>customerId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CUSTOMER_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>customerName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CUSTOMER_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>set</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>orders<span class="token punctuation">"</span></span>  <span class="token attr-name">inverse</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CUSTOMER_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>one-to-many</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Order<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>set</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--
+
+set标签：
+	name属性: 设定待映射的持久化类的属性。
+
+	inverse 属性：
+		通过对 inverse 属性的来决定是由双向关联的哪一方来维护表和表之间的关系。 inverse = false 的为主动方，inverse = true 的为被动方, 由主动方负责维护关联关系。在没有设置 inverse=true 的情况下，父子两边都维护父子关系
+
+		在 1-N 关系中，将 N 方设为主控方将有助于性能改善(如果要国家元首记住全国人民的名字，不是太可能，但要让全国人民知道国家元首，就容易的多)
+
+		在 1-N 关系中，若将 1 方设为主控方,会额外多出 update 语句。插入数据时无法同时插入外键列，因而无法为外键列添加非空约束.
+
+	order-by 属性：
+		如果设置了该属性, 当 Hibernate 通过 select 语句到数据库中检索集合对象时, 可以利用 order by 子句进行排序
+
+
+	key标签：设定与所关联的持久化类对应的表的外键
+		column: 指定关联表的外键名
+
+	one-to-many标签；设定集合属性中所关联的持久化类
+		class: 指定关联的持久化类的类名
+
+
+--></span>
+
+----------------------
+
+<span class="token comment" spellcheck="true">&lt;!-- Order.hbm.xml --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Order<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ORDERS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>orderId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ORDER_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>orderName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ORDER_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>many-to-one</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>customer<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Customer<span class="token punctuation">"</span></span> <span class="token attr-name">cascade</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>all<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CUSTOMER_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>many-to-one</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>  
+
+
+<span class="token comment" spellcheck="true">&lt;!--
+该标签用于映射多对一关联关系
+
+&lt;many-to-one name="customer" class="Customer" cascade="all" column="CUSTOMER_ID">&lt;/many-to-one>
+
+	name: 设定待映射的持久化类的属性的名字
+	column: 设定和持久化类的属性对应的表的外键
+	class：设定待映射的持久化类的属性的类型
+	cascade：意味着系统将先自动级联插入主表记录，也就是说先持久化Customer对象，再持久化Person对象。开发时不建议使用该属性，建议使用手工的方式。
+
+
+
+--></span>
+</pre>
+<h3 class="mume-header" id="4%E5%8F%8C%E5%90%911-1%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">4.双向1-1关联关系:</h3>
+
+<ol>
+<li>双向1-1关联需要修改两边的持久化类代码，让两个持久化类都增加引用关联实体的属性，并为该属性提供get和set方法。</li>
+<li>双向1-1关联有三种映射模式：①基于主键 ，②基于外键，③使用连接表。这里主要介绍前两种。</li>
+</ol>
+<p><img src="../img/Hibernate_img/10.png" alt="10.png"></p>
+<p><img src="../img/Hibernate_img/11.png" alt="11.png"></p>
+<h3>①基于主键: </h3>
+<p><font color="red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</font></p>
+<pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 
+	&lt;param>子元素指定使用当前持久化类的哪个属性作为“对方”。
+--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>foreign<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>property<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>manager<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>generator</span><span class="token punctuation">></span></span>
+</pre>
+<p>当然，任意一端都可以采用foreign主键生成器策略，表明将根据对方主键来生成自己的主键。</p>
+<ol>
+<li>采用foreign主键生成器策略的一端增加one-to-one元素映射相关属性，其ont-to-one属性还应增加constrained=true属性；另一端增加one-to-one元素映射关联属性。</li>
+<li>constrained：指定为当前持久化类对应的数据库表的主键添加一个外键约束，引用被关联对象所对应的数据库主键。</li>
+</ol>
+<h3>demo(有些省略了):</h3>
+<p>Hibernate 映射文件：</p>
+<pre class="language-xml">
+<span class="token comment" spellcheck="true">&lt;!--  Manager.hbm.xml --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lihui.hibernate.double_1_1.primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Manager<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MANAGERS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mgrId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MGR_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mgrName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MGR_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>one-to-one</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>department<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Department<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>one-to-one</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+
+-----------------------------------------
+
+<span class="token comment" spellcheck="true">&lt;!--  Department.hbm.xml --></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lihui.hibernate.double_1_1.primary<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Department<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DEPARTMENTS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>deptId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DEPT_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>foreign<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>property<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>manager<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>generator</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>deptName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DEPT_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>one-to-one</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>manager<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Manager<span class="token punctuation">"</span></span> <span class="token attr-name">constrained</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>one-to-one</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+
+</pre>
+<h3 class="mume-header" id="4n-n%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">4.N-N关联关系：</h3>
+
+<h4 class="mume-header" id="1%E5%8D%95%E5%90%91n-n%E5%85%B3%E8%81%94">1.单向N-N关联:</h4>
+
+<p><font color="red">N-N关联映射增加一张表才完成基本映射。</font></p>
+<ol>
+<li>与1-N映射相似，必须为set集合元素添加key子元素，指定CATEGORIES_ITEMS表中参照CATEGORIES表的外键为CATEGORIY_ID。</li>
+<li>与1-N不同的是，建立N-N关联时，集合中的元素使用many-to-many。关于配置文件的属性的介绍，将在代码实现部分介绍。</li>
+</ol>
+<p><img src="../img/Hibernate_img/12.png" alt="12.png"></p>
+<h3>demo:</h3>
+<p>①：持久化类：</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Category</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer categoryId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String catregoryName<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> Set<span class="token operator">&lt;</span>Item<span class="token operator">></span> items <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span>Item<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//省去get和set方法</span>
+<span class="token punctuation">}</span>
+
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Item</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer itemId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String itemName<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//省去get和set方法</span>
+<span class="token punctuation">}</span>
+</pre>
+<p>②：映射文件：</p>
+<pre class="language-xml">
+<span class="token comment" spellcheck="true">&lt;!-- Category.hbm.xml  --></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lihui.hibernate.single_n_n<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Category<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORIES<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>categoryId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORY_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>catregoryName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATREGORY_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>set</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>items<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORIES_ITEMS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>C_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>column</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>many-to-many</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Item<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>I_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>many-to-many</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>set</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--
+
+table:指定中间表
+many-to-many:指定多对多的关联关系
+column:执行set集合中的持久化类在中间表的外键列的名称
+
+
+--></span>
+------------------------------
+
+
+<span class="token comment" spellcheck="true">&lt;!-- Item.hbm.xml   --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lihui.hibernate.single_n_n<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Item<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ITEMS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>itemId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ITEM_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>itemName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ITEM_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+</pre>
+<p>③：test:</p>
+<pre class="language-java"><span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testSave</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Category c1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c1<span class="token punctuation">.</span><span class="token function">setCatregoryName</span><span class="token punctuation">(</span><span class="token string">"C-AA"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Category c2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Category</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c2<span class="token punctuation">.</span><span class="token function">setCatregoryName</span><span class="token punctuation">(</span><span class="token string">"C-BB"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Item i1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        i1<span class="token punctuation">.</span><span class="token function">setItemName</span><span class="token punctuation">(</span><span class="token string">"I-AA"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Item i2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Item</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        i2<span class="token punctuation">.</span><span class="token function">setItemName</span><span class="token punctuation">(</span><span class="token string">"I-BB"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        c1<span class="token punctuation">.</span><span class="token function">getItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>i1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c1<span class="token punctuation">.</span><span class="token function">getItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>i2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c2<span class="token punctuation">.</span><span class="token function">getItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>i1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c2<span class="token punctuation">.</span><span class="token function">getItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>i2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>i1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        session<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>i2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+
+</pre>
+<h4 class="mume-header" id="2%E5%8F%8C%E5%90%91n-n%E5%85%B3%E8%81%94">2.双向N-N关联:</h4>
+
+<p><font color="red">双向N-N关联需要两端都使用set集合属性，两端都增加对集合属性的访问。</font></p>
+<ol>
+<li>
+<p>在双向N-N关联的两边都需指定连接表的表名及外键列的列名. 两个集合元素 set 的 table 元素的值必须指定，而且必须相同。</p>
+</li>
+<li>
+<p>set元素的两个子元素：key 和 many-to-many 都必须指定 column 属性，其中，key 和 many-to-many 分别指定本持久化类和关联类在连接表中的外键列名，因此两边的 key 与 many-to-many 的column属性交叉相同。</p>
+</li>
+<li>
+<p>也就是说，一边的set元素的key的 cloumn值为a,many-to-many 的 column 为b；则另一边的 set 元素的 key 的 column 值 b,many-to-many的 column 值为 a。</p>
+</li>
+</ol>
+<p><img src="../img/Hibernate_img/13.png" alt="13.png"></p>
+<p><img src="../img/Hibernate_img/14.png" alt="14.png"></p>
+<h3>demo:</h3>
+<p>①：持久化类：</p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Category</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer categoryId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String catregoryName<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> Set<span class="token operator">&lt;</span>Item<span class="token operator">></span> items <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span>Item<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//省去get和set方法</span>
+<span class="token punctuation">}</span>
+
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Item</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer itemId<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String itemName<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//省去get和set方法</span>
+<span class="token punctuation">}</span>
+</pre>
+<p>②：映射文件：</p>
+<pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- Category.hbm.xml  --></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lihui.hibernate.single_n_n<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Category<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORIES<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>categoryId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORY_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>catregoryName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATREGORY_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>set</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>items<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORIES_ITEMS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>C_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>column</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>many-to-many</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Item<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>I_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>many-to-many</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>set</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--
+
+table:指定中间表
+many-to-many:指定多对多的关联关系
+column:执行set集合中的持久化类在中间表的外键列的名称
+
+
+--></span>
+
+----------------------------------------
+
+<span class="token comment" spellcheck="true">&lt;!-- Item.hbm.xml --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>hibernate-mapping</span> <span class="token attr-name">package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.lihui.hibernate.single_n_n<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>class</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Item<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ITEMS<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>itemId<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.Integer<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ITEM_ID<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generator</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>native<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>itemName<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.lang.String<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ITEM_NAME<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>set</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>categories<span class="token punctuation">"</span></span> <span class="token attr-name">table</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>CATEGORIES_ITEMS<span class="token punctuation">"</span></span> <span class="token attr-name">inverse</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>key</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>column</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>I_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>column</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>key</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>many-to-many</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Category<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>C_ID<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>many-to-many</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>set</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>hibernate-mapping</span><span class="token punctuation">></span></span>
+
+</pre>
+<p><mark>注意要在其中一端加入inverse=&quot;true&quot;，否则会造成主键冲突。</mark></p>
+<h2 class="mume-header" id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</h2>
+
+<p><a href="http://blog.csdn.net/wangchuanqi1234/article/details/51131285">Hibernate配置文件与映射文件详解</a><br>
+<a href="https://www.cnblogs.com/hoobey/p/5508992.html">Hibernate各种主键生成策略与配置详解</a><br>
+<a href="https://www.w3cschool.cn/">w3school</a><br>
+<a href="https://www.cnblogs.com/lycsky/p/6087794.html">使用hibernate自动创建Mysql表失败原因</a><br>
+<a href="http://blog.csdn.net/huangaigang6688/article/details/7761310">Hibernate映射解析——七种映射关系</a></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -666,6 +1723,28 @@ mchange-commons-java-0.2.11.jar</p>
 <li><a href="#2%E9%85%8D%E7%BD%AE%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9Ccrud%E7%9A%84%E5%B1%9E%E6%80%A7%E4%B8%BB%E8%A6%81%E9%80%82%E7%94%A8%E4%BA%8Eoracle%E6%95%B0%E6%8D%AE%E5%BA%93">2.配置批量操作（CRUD）的属性（主要适用于Oracle数据库）：</a></li>
 </ul>
 </li>
+<li><a href="#hibernate-%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6hbmxml">Hibernate 映射文件（*.hbm.xml）:</a>
+<ul>
+<li><a href="#1-%E6%A6%82%E8%BF%B0">1. 概述：</a></li>
+<li><a href="#2%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7">2.映射文件常用属性：</a></li>
+<li><a href="#3%E5%B1%9E%E6%80%A7%E7%9A%84%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B">3.属性的映射类型：</a></li>
+</ul>
+</li>
+<li><a href="#hibernate%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">Hibernate的映射关系：</a>
+<ul>
+<li><a href="#1%E7%BB%84%E4%BB%B6%E6%98%A0%E5%B0%84%E5%8E%9F%E5%85%88%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%AF%B9%E5%BA%94%E4%B8%80%E4%B8%AA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%8E%B0%E5%9C%A8%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E6%98%A0%E5%B0%84%E5%8F%AF%E4%BB%A5%E6%8A%8A%E4%B8%80%E5%BC%A0%E8%A1%A8%E6%8B%86%E5%88%86%E4%B8%BA%E5%A4%9A%E4%B8%AA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB">1.组件映射（原先一张表对应一个持久化类，现在使用组件映射可以把一张表拆分为多个持久化类）：</a></li>
+<li><a href="#2-%E5%8D%95%E5%90%91%E5%A4%9A%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">2. 单向多对一映射关系：</a></li>
+<li><a href="#3%E5%8F%8C%E5%90%911-n%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">3.双向1-N关联关系：</a></li>
+<li><a href="#4%E5%8F%8C%E5%90%911-1%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">4.双向1-1关联关系:</a></li>
+<li><a href="#4n-n%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB">4.N-N关联关系：</a>
+<ul>
+<li><a href="#1%E5%8D%95%E5%90%91n-n%E5%85%B3%E8%81%94">1.单向N-N关联:</a></li>
+<li><a href="#2%E5%8F%8C%E5%90%91n-n%E5%85%B3%E8%81%94">2.双向N-N关联:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
 </ul>
 </li>
 </ul>
