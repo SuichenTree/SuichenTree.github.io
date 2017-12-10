@@ -1290,7 +1290,7 @@ set标签：
 
 <h3>①基于主键: </h3>
 
-<font color="red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</font>
+<font clor="red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</font>
 
 ```xml
 <!-- 
@@ -1560,17 +1560,425 @@ column:执行set集合中的持久化类在中间表的外键列的名称
 
 ==注意要在其中一端加入inverse="true"，否则会造成主键冲突。==
 
+<br/>
+
+___
+
+## Hibernate的HQL：
+
+### 1.概述：
+HQL(Hibernate Query Language) 是面向对象的查询语言, 它和 SQL 查询语言有些相似. 
+
+<h3>HQL 查询包括以下步骤:</h3>
+
+1. 获取Hibernate Session对象。
+
+2. 编写HQL语句
+
+3. 以HQL语句作为参数，调用Session的createQuery方法创建查询对象。
+
+4. 如果HQL语句包含参数，则调用Query的setXxx方法为参数赋值。
+
+5. 调用Query对象的list()或uniqueResult()方法(若结果数据唯一)返回查询结果列表（持久化实体集）
+
+==Qurey 接口支持方法链编程风格, 它的 setXxx() 方法返回自身实例, 而不是 void 类型，因此可以写类似于.setXxx().setXxx().setXxx()...样式的语句。==
+
+<h2><font color="red">注意:</font></h2>
+
+1. HQL语言，是基于对象进行查询的，不是基于数据库的表。
+
+2. 在HQL中，不能使用 select * from Student ,但是可以使用别名 select stu from Student stu 。
+
+3. <font color="red">在HQL语句中，本身大小写无关，但是其中出现的类名和属性名必须注意大小写区分。</font>
+
+4. HQL 查询语句是面向对象的, Hibernate 负责解析 HQL 查询语句, 然后根据对象-关系映射文件中的映射信息, 把 HQL 查询语句翻译成相应的 SQL 语句。HQL 查询语句中的主体是域模型中的类及类的属性。
 
 
 
+### 2.查询：
+
+![15.png](../img/Hibernate_img/15.png)
 
 
+#### 0.创建Session，SessionFactory：
+
+```java
+
+	private static SessionFactory sessionFactory=null;
+	private static Session session=null;
+
+	@Before         //在@Test 标记的代码之前执行
+	public void init(){
+		StandardServiceRegistry serviceRegistry=new StandardServiceRegistryBuilder().configure().build();
+		SessionFactory sessionFactory=new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
+	   session=sessionFactory.openSession();
+	}
+
+	@After          //在@Test 标记的代码之后执行
+	public void after(){
+		session.close();       //关闭session，释放系统资源
+		
+	}
+	
+```
+
+<br/>
+
+#### 1.全查：
+
+==HQL语句: "from User"== 
+
+```java
+	/*
+	 * 实体查询
+	 * */
+	@Test
+	public void aa(){
+		/*
+		 * HQL查询：
+		 * 
+		 * 1.创建Query对象,通过hql语句
+		 * 2.执行查询。
+		 * 3.控制台打印结果：
+
+		 *  Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as 			 createti4_2_ from user user0_
+			
+			[User [id=1, name=1, age=1, createtime=2017-12-10 14:36:20.0], User [id=2, name=2, age=2, createtime=2017-12-10 14:36:27.0], User [id=3, name=3, age=3, createtime=2017-12-10 14:36:33.0]]
+
+		 * 
+		 * */
+		String hql="from User ";
+		Query query=session.createQuery(hql);
+		
+		List<User> list = query.list();
+		
+		System.out.println(list);
+		
+	}
+```
+
+> 控制台打印结果:
+
+> Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as 			 createti4_2_ from user user0_
+			
+> [User [id=1, name=1, age=1, createtime=2017-12-10 14:36:20.0], 
+> User [id=2, name=2, age=2, createtime=2017-12-10 14:36:27.0], 
+> User [id=3, name=3, age=3, createtime=2017-12-10 14:36:33.0]]
+
+<br/>
+
+#### 2.使用占位符？查询:
+
+==HQL语句 : " FROM User where id=? "==
+
+```java
+
+	/*
+	 * 使用占位符？ 查询
+	 * 
+	   *    　Hibernate和JDBC占位符的区别：在Hibernate占位符下标从0开始，在JDBC中的占位符下标从1开始
+	 * */
+	@Test
+	public void aa_2(){
+		/*
+		 * 
+		 * 
+		 * Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?
+			User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
+
+		 * */
+		String hql="FROM User where id=?";
+		Query query=session.createQuery(hql);
+		query.setInteger(0, 1);
+		
+		List<User> list = query.list();
+		
+		for (User user : list) {
+			System.out.println(user);
+		}
+		
+	}
+```
 
 
+> 控制台打印结果:
+
+> Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_     from user user0_ where user0_.id=?
+
+> User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
+
+<br/>
+
+#### 3.当查询的数据唯一时，可以使用uniqueResult方法
+
+```java
+@Test
+	public void aa_2_1(){
+		/*
+		 * 
+		 * uniqueResult();
+		 * 
+		 * */
+		String hql="FROM User where id=?";
+		Query query=session.createQuery(hql);
+		query.setInteger(0, 1);
+		
+		User user = (User) query.uniqueResult();
+		
+		System.out.println(user);
+		
+	}
+```
+> 控制台打印结果：
+
+> Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?
+> User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
 
 
+<br/>
+
+#### 4.有参数的查询：
+
+==HQL语句 : "FROM User where id=:ids"==
+
+```java
+/*
+	 * 使用参数 查询
+	 * 
+	 * 使用参数的方式，在HQL中在参数前面需要加上冒号
+	 * */
+	@Test
+	public void aa_3(){
+		/*
+		 *
+		 * 
+		 *Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?
+			User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
+
+		 * */
+		
+		String hql="FROM User where id=:ids";      //使用参数的方式，在HQL中在参数前面需要加上冒号
+		Query query=session.createQuery(hql);
+		query.setParameter("ids", 1);
+		
+		List<User> list = query.list();
+		
+		for (User user : list) {
+			System.out.println(user);
+		}
+		
+	}
+	
+```
+
+> 控制台打印结果：
+
+> Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?
+			
+> User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
+
+<br/>
+
+#### 5.单个属性查询，查询某个类的单个属性:
+
+==HQL语句 :"SELECT user.name FROM User user "==
+
+```java
+
+	/*
+	 * 属性查询，查询某个类的单个属性
+	 * */
+	@Test
+	public void bb(){
+		/*
+		 * 查询User类的name属性。
+		 * 
+		 * Hibernate: select user0_.name as col_0_0_ from user user0_
+						[1, 2, 3]
+		 * */
+		String hql="SELECT user.name FROM User user ";
+		Query query=session.createQuery(hql);
+		
+		List<User> list = query.list();
+		
+		System.out.println(list);
+	}
+	
+```
 
 
+> 控制台打印结果：
+
+> Hibernate: select user0_.name as col_0_0_ from user user0_
+
+> [1, 2, 3]
+
+<br/>
+
+#### 6.多个属性查询，查询某个类的多个属性，属性封装在数组中:
+
+==HQL语句:"SELECT user.id,user.name , user.age FROM User user "==
+
+```java
+
+	/*
+	 * 属性查询，查询某个类的多个属性,这些查询的数据被封装到数组中,返回的是一个数组
+	 * */
+	@Test
+	public void cc(){
+		/*
+		 * 查询User类的name，age,createtime属性。
+		 * 
+		 * Hibernate: select user0_.id as col_0_0_, user0_.name as col_1_0_, user0_.age as col_2_0_ from user user0_
+					[1, 1, 1]
+					[2, 2, 2]
+					[3, 3, 3]
+								
+		 * */
+		String hql="SELECT user.id,user.name , user.age FROM User user ";
+		Query query=session.createQuery(hql);
+		
+		List<User> list = query.list();
+		
+		
+		for(Object obj:list){      
+		    System.out.println(Arrays.toString((Object[])obj));
+		}
+	}
+	
+```
+
+> 控制台打印结果:
+
+> Hibernate: select user0_.id as col_0_0_, user0_.name as col_1_0_, user0_.age as col_2_0_ from user user0_
+	
+> 	[1, 1, 1]
+>	[2, 2, 2]
+>	[3, 3, 3]
+
+<br/>
+
+
+#### 7.多个属性查询，查询某个类的多个属性，属性封装在对象中:
+
+==HQL语句："SELECT new User(user.name,user.age,user.createtime) FROM User user where user.id=?"==
+
+```java
+	/*
+	 * 属性查询，查询某个类的多个属性，这些查询的数据被封装到对象中
+	 * */
+	@Test
+	public void dd(){
+		/*
+		 * 查询User类的name，age,createtime属性。
+		 * 
+		 * Hibernate: select user0_.name as col_0_0_, user0_.age as col_1_0_, user0_.createtime as col_2_0_ from user user0_ where user0_.id=?
+			User [id=null, name=2, age=2, createtime=2017-12-10 14:36:27.0]
+		 * 					
+		 * */
+		String hql = "SELECT new User(user.name,user.age,user.createtime) FROM User user where user.id=?";
+		Query query=session.createQuery(hql);
+		query.setInteger(0, 2);    //为占位符赋值。
+		
+		List<User> list = query.list();    //执行查询，并返回数据
+        
+       for (User object : list) {
+    	   System.out.println(object);
+       	}
+	}
+	
+```
+
+> 控制台打印结果：
+
+> Hibernate: select user0_.name as col_0_0_, user0_.age as col_1_0_, user0_.createtime as col_2_0_ from user user0_ where user0_.id=?
+
+> User [id=null, name=2, age=2, createtime=2017-12-10 14:36:27.0]
+
+<br/>
+
+#### 8.更新:
+
+==HQL语句:"UPDATE User e SET e.name=? WHERE id=1"==
+
+```java
+	/*
+	 * 更新
+	 * */
+	@Test
+	public void ee(){
+		/*
+		 * 更新的HQL语句
+		 * 
+		 * Hibernate: update user set name=? where id=1
+			1
+		 * 
+		 * */
+		//开启事务
+		Transaction beginTransaction = session.beginTransaction();
+		
+		String hql ="UPDATE User e SET e.name=? WHERE id=1";
+		Query query=session.createQuery(hql);
+		query.setString(0, "xiaoming");
+		int a = query.executeUpdate();       //返回受影响的行数
+		
+		//提交事务
+		beginTransaction.commit();
+		
+		System.out.println(a);
+		
+       
+	}
+	
+```
+
+> 控制台打印结果：
+
+>  Hibernate: update user set name=? where id=1
+> 1
+
+
+<br/>
+
+#### 9.删除:
+
+==HQL语句:"delete from User  WHERE id=2"==
+
+```java
+/*
+	 * 删除
+	 * */
+	@Test
+	public void ff(){
+		/*
+		 * 删除的HQL语句
+		 * 
+		 * Hibernate: delete from user where id=2
+			1
+		 * 
+		 * */
+		//开启事务
+		Transaction beginTransaction = session.beginTransaction();
+		
+		String hql ="delete from User  WHERE id=2";
+		Query query=session.createQuery(hql);
+	
+		int a = query.executeUpdate();           //返回受影响的行数
+		
+		//提交事务
+		beginTransaction.commit();
+		
+		System.out.println(a);
+		
+       
+	}
+	
+```
+
+> 控制台打印结果：
+
+> Hibernate: delete from user where id=2
+> 1
 
 
 
@@ -1581,3 +1989,4 @@ column:执行set集合中的持久化类在中间表的外键列的名称
 [w3school](https://www.w3cschool.cn/)
 [使用hibernate自动创建Mysql表失败原因](https://www.cnblogs.com/lycsky/p/6087794.html)
 [Hibernate映射解析——七种映射关系](http://blog.csdn.net/huangaigang6688/article/details/7761310)
+[Hibernate HQL详解](https://www.cnblogs.com/caoyc/p/5606444.html)

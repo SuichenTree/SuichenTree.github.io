@@ -249,6 +249,25 @@ code.language-yaml {
 </li>
 </ul>
 </li>
+<li><a href="#hibernate%E7%9A%84hql">Hibernate的HQL：</a>
+<ul>
+<li><a href="#1%E6%A6%82%E8%BF%B0">1.概述：</a></li>
+<li><a href="#2%E6%9F%A5%E8%AF%A2">2.查询：</a>
+<ul>
+<li><a href="#0%E5%88%9B%E5%BB%BAsessionsessionfactory">0.创建Session，SessionFactory：</a></li>
+<li><a href="#1%E5%85%A8%E6%9F%A5">1.全查：</a></li>
+<li><a href="#2%E4%BD%BF%E7%94%A8%E5%8D%A0%E4%BD%8D%E7%AC%A6%E6%9F%A5%E8%AF%A2">2.使用占位符？查询:</a></li>
+<li><a href="#3%E5%BD%93%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%95%B0%E6%8D%AE%E5%94%AF%E4%B8%80%E6%97%B6%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8uniqueresult%E6%96%B9%E6%B3%95">3.当查询的数据唯一时，可以使用uniqueResult方法</a></li>
+<li><a href="#4%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E6%9F%A5%E8%AF%A2">4.有参数的查询：</a></li>
+<li><a href="#5%E5%8D%95%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%8D%95%E4%B8%AA%E5%B1%9E%E6%80%A7">5.单个属性查询，查询某个类的单个属性:</a></li>
+<li><a href="#6%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%B1%9E%E6%80%A7%E5%B0%81%E8%A3%85%E5%9C%A8%E6%95%B0%E7%BB%84%E4%B8%AD">6.多个属性查询，查询某个类的多个属性，属性封装在数组中:</a></li>
+<li><a href="#7%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%B1%9E%E6%80%A7%E5%B0%81%E8%A3%85%E5%9C%A8%E5%AF%B9%E8%B1%A1%E4%B8%AD">7.多个属性查询，查询某个类的多个属性，属性封装在对象中:</a></li>
+<li><a href="#8%E6%9B%B4%E6%96%B0">8.更新:</a></li>
+<li><a href="#9%E5%88%A0%E9%99%A4">9.删除:</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
 </ul>
 </li>
@@ -1456,7 +1475,7 @@ set标签：
 <p><img src="../img/Hibernate_img/10.png" alt="10.png"></p>
 <p><img src="../img/Hibernate_img/11.png" alt="11.png"></p>
 <h3>①基于主键: </h3>
-<p><font color="red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</font></p>
+<p><font clor="red">如果采用基于主键的映射策略，则一端的主键生成器需要使用foreign策略，表明将根据对方的主键来生成自己的主键，本实体不能拥有自己的主键声称策略。</font></p>
 <pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 
 	&lt;param>子元素指定使用当前持久化类的哪个属性作为“对方”。
 --></span>
@@ -1697,13 +1716,421 @@ column:执行set集合中的持久化类在中间表的外键列的名称
 
 </pre>
 <p><mark>注意要在其中一端加入inverse=&quot;true&quot;，否则会造成主键冲突。</mark></p>
+<br>
+<hr>
+<h2 class="mume-header" id="hibernate%E7%9A%84hql">Hibernate的HQL：</h2>
+
+<h3 class="mume-header" id="1%E6%A6%82%E8%BF%B0">1.概述：</h3>
+
+<p>HQL(Hibernate Query Language) 是面向对象的查询语言, 它和 SQL 查询语言有些相似.</p>
+<h3>HQL 查询包括以下步骤:</h3>
+<ol>
+<li>
+<p>获取Hibernate Session对象。</p>
+</li>
+<li>
+<p>编写HQL语句</p>
+</li>
+<li>
+<p>以HQL语句作为参数，调用Session的createQuery方法创建查询对象。</p>
+</li>
+<li>
+<p>如果HQL语句包含参数，则调用Query的setXxx方法为参数赋值。</p>
+</li>
+<li>
+<p>调用Query对象的list()或uniqueResult()方法(若结果数据唯一)返回查询结果列表（持久化实体集）</p>
+</li>
+</ol>
+<p><mark>Qurey 接口支持方法链编程风格, 它的 setXxx() 方法返回自身实例, 而不是 void 类型，因此可以写类似于.setXxx().setXxx().setXxx()...样式的语句。</mark></p>
+<h2><font color="red">注意:</font></h2>
+<ol>
+<li>
+<p>HQL语言，是基于对象进行查询的，不是基于数据库的表。</p>
+</li>
+<li>
+<p>在HQL中，不能使用 select * from Student ,但是可以使用别名 select stu from Student stu 。</p>
+</li>
+<li>
+<p><font color="red">在HQL语句中，本身大小写无关，但是其中出现的类名和属性名必须注意大小写区分。</font></p>
+</li>
+<li>
+<p>HQL 查询语句是面向对象的, Hibernate 负责解析 HQL 查询语句, 然后根据对象-关系映射文件中的映射信息, 把 HQL 查询语句翻译成相应的 SQL 语句。HQL 查询语句中的主体是域模型中的类及类的属性。</p>
+</li>
+</ol>
+<h3 class="mume-header" id="2%E6%9F%A5%E8%AF%A2">2.查询：</h3>
+
+<p><img src="../img/Hibernate_img/15.png" alt="15.png"></p>
+<h4 class="mume-header" id="0%E5%88%9B%E5%BB%BAsessionsessionfactory">0.创建Session，SessionFactory：</h4>
+
+<pre class="language-java">
+	<span class="token keyword">private</span> <span class="token keyword">static</span> SessionFactory sessionFactory<span class="token operator">=</span>null<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Session session<span class="token operator">=</span>null<span class="token punctuation">;</span>
+
+	<span class="token annotation punctuation">@Before</span>         <span class="token comment" spellcheck="true">//在@Test 标记的代码之前执行</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		StandardServiceRegistry serviceRegistry<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">StandardServiceRegistryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">configure</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		SessionFactory sessionFactory<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">MetadataSources</span><span class="token punctuation">(</span>serviceRegistry<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">buildMetadata</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">buildSessionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	   session<span class="token operator">=</span>sessionFactory<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@After</span>          <span class="token comment" spellcheck="true">//在@Test 标记的代码之后执行</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">after</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		session<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//关闭session，释放系统资源</span>
+		
+	<span class="token punctuation">}</span>
+	
+</pre>
+<br>
+<h4 class="mume-header" id="1%E5%85%A8%E6%9F%A5">1.全查：</h4>
+
+<p><mark>HQL语句: &quot;from User&quot;</mark></p>
+<pre class="language-java">	<span class="token comment" spellcheck="true">/*
+	 * 实体查询
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">aa</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * HQL查询：
+		 * 
+		 * 1.创建Query对象,通过hql语句
+		 * 2.执行查询。
+		 * 3.控制台打印结果：
+
+		 *  Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as 			 createti4_2_ from user user0_
+			
+			[User [id=1, name=1, age=1, createtime=2017-12-10 14:36:20.0], User [id=2, name=2, age=2, createtime=2017-12-10 14:36:27.0], User [id=3, name=3, age=3, createtime=2017-12-10 14:36:33.0]]
+
+		 * 
+		 * */</span>
+		String hql<span class="token operator">=</span><span class="token string">"from User "</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>list<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+</pre>
+<blockquote>
+<p>控制台打印结果:</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as 			 createti4_2_ from user user0_</p>
+</blockquote>
+<blockquote>
+<p>[User [id=1, name=1, age=1, createtime=2017-12-10 14:36:20.0],<br>
+User [id=2, name=2, age=2, createtime=2017-12-10 14:36:27.0],<br>
+User [id=3, name=3, age=3, createtime=2017-12-10 14:36:33.0]]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="2%E4%BD%BF%E7%94%A8%E5%8D%A0%E4%BD%8D%E7%AC%A6%E6%9F%A5%E8%AF%A2">2.使用占位符？查询:</h4>
+
+<p><mark>HQL语句 : &quot; FROM User where id=? &quot;</mark></p>
+<pre class="language-java">
+	<span class="token comment" spellcheck="true">/*
+	 * 使用占位符？ 查询
+	 * 
+	   *    　Hibernate和JDBC占位符的区别：在Hibernate占位符下标从0开始，在JDBC中的占位符下标从1开始
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">aa_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 
+		 * 
+		 * Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?
+			User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
+
+		 * */</span>
+		String hql<span class="token operator">=</span><span class="token string">"FROM User where id=?"</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		query<span class="token punctuation">.</span><span class="token function">setInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>User user <span class="token operator">:</span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+</pre>
+<blockquote>
+<p>控制台打印结果:</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_     from user user0_ where user0_.id=?</p>
+</blockquote>
+<blockquote>
+<p>User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="3%E5%BD%93%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%95%B0%E6%8D%AE%E5%94%AF%E4%B8%80%E6%97%B6%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8uniqueresult%E6%96%B9%E6%B3%95">3.当查询的数据唯一时，可以使用uniqueResult方法</h4>
+
+<pre class="language-java"><span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">aa_2_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 
+		 * uniqueResult();
+		 * 
+		 * */</span>
+		String hql<span class="token operator">=</span><span class="token string">"FROM User where id=?"</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		query<span class="token punctuation">.</span><span class="token function">setInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		User user <span class="token operator">=</span> <span class="token punctuation">(</span>User<span class="token punctuation">)</span> query<span class="token punctuation">.</span><span class="token function">uniqueResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+</pre>
+<blockquote>
+<p>控制台打印结果：</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?<br>
+User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="4%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E6%9F%A5%E8%AF%A2">4.有参数的查询：</h4>
+
+<p><mark>HQL语句 : &quot;FROM User where id=:ids&quot;</mark></p>
+<pre class="language-java"><span class="token comment" spellcheck="true">/*
+	 * 使用参数 查询
+	 * 
+	 * 使用参数的方式，在HQL中在参数前面需要加上冒号
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">aa_3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 *
+		 * 
+		 *Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?
+			User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]
+
+		 * */</span>
+		
+		String hql<span class="token operator">=</span><span class="token string">"FROM User where id=:ids"</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//使用参数的方式，在HQL中在参数前面需要加上冒号</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		query<span class="token punctuation">.</span><span class="token function">setParameter</span><span class="token punctuation">(</span><span class="token string">"ids"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>User user <span class="token operator">:</span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+	
+</pre>
+<blockquote>
+<p>控制台打印结果：</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.id as id1_2_, user0_.name as name2_2_, user0_.age as age3_2_, user0_.createtime as createti4_2_ from user user0_ where user0_.id=?</p>
+</blockquote>
+<blockquote>
+<p>User [id=1, name=xiaoming, age=1, createtime=2017-12-10 14:36:20.0]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="5%E5%8D%95%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%8D%95%E4%B8%AA%E5%B1%9E%E6%80%A7">5.单个属性查询，查询某个类的单个属性:</h4>
+
+<p><mark>HQL语句 :&quot;SELECT <a href="http://user.name">user.name</a> FROM User user &quot;</mark></p>
+<pre class="language-java">
+	<span class="token comment" spellcheck="true">/*
+	 * 属性查询，查询某个类的单个属性
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">bb</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 查询User类的name属性。
+		 * 
+		 * Hibernate: select user0_.name as col_0_0_ from user user0_
+						[1, 2, 3]
+		 * */</span>
+		String hql<span class="token operator">=</span><span class="token string">"SELECT user.name FROM User user "</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>list<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+</pre>
+<blockquote>
+<p>控制台打印结果：</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.name as col_0_0_ from user user0_</p>
+</blockquote>
+<blockquote>
+<p>[1, 2, 3]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="6%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%B1%9E%E6%80%A7%E5%B0%81%E8%A3%85%E5%9C%A8%E6%95%B0%E7%BB%84%E4%B8%AD">6.多个属性查询，查询某个类的多个属性，属性封装在数组中:</h4>
+
+<p><mark>HQL语句:&quot;SELECT <a href="http://user.id">user.id</a>,<a href="http://user.name">user.name</a> , user.age FROM User user &quot;</mark></p>
+<pre class="language-java">
+	<span class="token comment" spellcheck="true">/*
+	 * 属性查询，查询某个类的多个属性,这些查询的数据被封装到数组中,返回的是一个数组
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 查询User类的name，age,createtime属性。
+		 * 
+		 * Hibernate: select user0_.id as col_0_0_, user0_.name as col_1_0_, user0_.age as col_2_0_ from user user0_
+					[1, 1, 1]
+					[2, 2, 2]
+					[3, 3, 3]
+								
+		 * */</span>
+		String hql<span class="token operator">=</span><span class="token string">"SELECT user.id,user.name , user.age FROM User user "</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		
+		<span class="token keyword">for</span><span class="token punctuation">(</span>Object obj<span class="token operator">:</span>list<span class="token punctuation">)</span><span class="token punctuation">{</span>      
+		    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Object<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+</pre>
+<blockquote>
+<p>控制台打印结果:</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.id as col_0_0_, user0_.name as col_1_0_, user0_.age as col_2_0_ from user user0_</p>
+</blockquote>
+<blockquote>
+<p>[1, 1, 1]<br>
+[2, 2, 2]<br>
+[3, 3, 3]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="7%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%B1%9E%E6%80%A7%E5%B0%81%E8%A3%85%E5%9C%A8%E5%AF%B9%E8%B1%A1%E4%B8%AD">7.多个属性查询，查询某个类的多个属性，属性封装在对象中:</h4>
+
+<p><mark>HQL语句：&quot;SELECT new User(<a href="http://user.name">user.name</a>,user.age,user.createtime) FROM User user where user.id=?&quot;</mark></p>
+<pre class="language-java">	<span class="token comment" spellcheck="true">/*
+	 * 属性查询，查询某个类的多个属性，这些查询的数据被封装到对象中
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">dd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 查询User类的name，age,createtime属性。
+		 * 
+		 * Hibernate: select user0_.name as col_0_0_, user0_.age as col_1_0_, user0_.createtime as col_2_0_ from user user0_ where user0_.id=?
+			User [id=null, name=2, age=2, createtime=2017-12-10 14:36:27.0]
+		 * 					
+		 * */</span>
+		String hql <span class="token operator">=</span> <span class="token string">"SELECT new User(user.name,user.age,user.createtime) FROM User user where user.id=?"</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		query<span class="token punctuation">.</span><span class="token function">setInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//为占位符赋值。</span>
+		
+		List<span class="token operator">&lt;</span>User<span class="token operator">></span> list <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//执行查询，并返回数据</span>
+        
+       <span class="token keyword">for</span> <span class="token punctuation">(</span>User object <span class="token operator">:</span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	   System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       	<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+</pre>
+<blockquote>
+<p>控制台打印结果：</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: select user0_.name as col_0_0_, user0_.age as col_1_0_, user0_.createtime as col_2_0_ from user user0_ where user0_.id=?</p>
+</blockquote>
+<blockquote>
+<p>User [id=null, name=2, age=2, createtime=2017-12-10 14:36:27.0]</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="8%E6%9B%B4%E6%96%B0">8.更新:</h4>
+
+<p><mark>HQL语句:&quot;UPDATE User e SET e.name=? WHERE id=1&quot;</mark></p>
+<pre class="language-java">	<span class="token comment" spellcheck="true">/*
+	 * 更新
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 更新的HQL语句
+		 * 
+		 * Hibernate: update user set name=? where id=1
+			1
+		 * 
+		 * */</span>
+		<span class="token comment" spellcheck="true">//开启事务</span>
+		Transaction beginTransaction <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		String hql <span class="token operator">=</span><span class="token string">"UPDATE User e SET e.name=? WHERE id=1"</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		query<span class="token punctuation">.</span><span class="token function">setString</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"xiaoming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> a <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//返回受影响的行数</span>
+		
+		<span class="token comment" spellcheck="true">//提交事务</span>
+		beginTransaction<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+       
+	<span class="token punctuation">}</span>
+	
+</pre>
+<blockquote>
+<p>控制台打印结果：</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: update user set name=? where id=1<br>
+1</p>
+</blockquote>
+<br>
+<h4 class="mume-header" id="9%E5%88%A0%E9%99%A4">9.删除:</h4>
+
+<p><mark>HQL语句:&quot;delete from User  WHERE id=2&quot;</mark></p>
+<pre class="language-java"><span class="token comment" spellcheck="true">/*
+	 * 删除
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ff</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">/*
+		 * 删除的HQL语句
+		 * 
+		 * Hibernate: delete from user where id=2
+			1
+		 * 
+		 * */</span>
+		<span class="token comment" spellcheck="true">//开启事务</span>
+		Transaction beginTransaction <span class="token operator">=</span> session<span class="token punctuation">.</span><span class="token function">beginTransaction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		String hql <span class="token operator">=</span><span class="token string">"delete from User  WHERE id=2"</span><span class="token punctuation">;</span>
+		Query query<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">createQuery</span><span class="token punctuation">(</span>hql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+		<span class="token keyword">int</span> a <span class="token operator">=</span> query<span class="token punctuation">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment" spellcheck="true">//返回受影响的行数</span>
+		
+		<span class="token comment" spellcheck="true">//提交事务</span>
+		beginTransaction<span class="token punctuation">.</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+       
+	<span class="token punctuation">}</span>
+	
+</pre>
+<blockquote>
+<p>控制台打印结果：</p>
+</blockquote>
+<blockquote>
+<p>Hibernate: delete from user where id=2<br>
+1</p>
+</blockquote>
 <h2 class="mume-header" id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</h2>
 
 <p><a href="http://blog.csdn.net/wangchuanqi1234/article/details/51131285">Hibernate配置文件与映射文件详解</a><br>
 <a href="https://www.cnblogs.com/hoobey/p/5508992.html">Hibernate各种主键生成策略与配置详解</a><br>
 <a href="https://www.w3cschool.cn/">w3school</a><br>
 <a href="https://www.cnblogs.com/lycsky/p/6087794.html">使用hibernate自动创建Mysql表失败原因</a><br>
-<a href="http://blog.csdn.net/huangaigang6688/article/details/7761310">Hibernate映射解析——七种映射关系</a></p>
+<a href="http://blog.csdn.net/huangaigang6688/article/details/7761310">Hibernate映射解析——七种映射关系</a><br>
+<a href="https://www.cnblogs.com/caoyc/p/5606444.html">Hibernate HQL详解</a></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1740,6 +2167,25 @@ column:执行set集合中的持久化类在中间表的外键列的名称
 <ul>
 <li><a href="#1%E5%8D%95%E5%90%91n-n%E5%85%B3%E8%81%94">1.单向N-N关联:</a></li>
 <li><a href="#2%E5%8F%8C%E5%90%91n-n%E5%85%B3%E8%81%94">2.双向N-N关联:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#hibernate%E7%9A%84hql">Hibernate的HQL：</a>
+<ul>
+<li><a href="#1%E6%A6%82%E8%BF%B0">1.概述：</a></li>
+<li><a href="#2%E6%9F%A5%E8%AF%A2">2.查询：</a>
+<ul>
+<li><a href="#0%E5%88%9B%E5%BB%BAsessionsessionfactory">0.创建Session，SessionFactory：</a></li>
+<li><a href="#1%E5%85%A8%E6%9F%A5">1.全查：</a></li>
+<li><a href="#2%E4%BD%BF%E7%94%A8%E5%8D%A0%E4%BD%8D%E7%AC%A6%E6%9F%A5%E8%AF%A2">2.使用占位符？查询:</a></li>
+<li><a href="#3%E5%BD%93%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%95%B0%E6%8D%AE%E5%94%AF%E4%B8%80%E6%97%B6%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8uniqueresult%E6%96%B9%E6%B3%95">3.当查询的数据唯一时，可以使用uniqueResult方法</a></li>
+<li><a href="#4%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E6%9F%A5%E8%AF%A2">4.有参数的查询：</a></li>
+<li><a href="#5%E5%8D%95%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%8D%95%E4%B8%AA%E5%B1%9E%E6%80%A7">5.单个属性查询，查询某个类的单个属性:</a></li>
+<li><a href="#6%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%B1%9E%E6%80%A7%E5%B0%81%E8%A3%85%E5%9C%A8%E6%95%B0%E7%BB%84%E4%B8%AD">6.多个属性查询，查询某个类的多个属性，属性封装在数组中:</a></li>
+<li><a href="#7%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E6%9F%A5%E8%AF%A2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%B1%BB%E7%9A%84%E5%A4%9A%E4%B8%AA%E5%B1%9E%E6%80%A7%E5%B1%9E%E6%80%A7%E5%B0%81%E8%A3%85%E5%9C%A8%E5%AF%B9%E8%B1%A1%E4%B8%AD">7.多个属性查询，查询某个类的多个属性，属性封装在对象中:</a></li>
+<li><a href="#8%E6%9B%B4%E6%96%B0">8.更新:</a></li>
+<li><a href="#9%E5%88%A0%E9%99%A4">9.删除:</a></li>
 </ul>
 </li>
 </ul>
