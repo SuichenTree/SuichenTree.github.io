@@ -656,11 +656,22 @@ public void create(){
 2. 创建外部属性文件，db.properties
 
 ```
-jdbc.driver=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&amp;characterEncoding=utf8
-jdbc.username=root
+jdbc.driverClass=com.mysql.jdbc.Driver
+jdbc.jdbcUrl=jdbc:mysql://localhost:3306/blog_demo
+jdbc.user=root
 jdbc.password=123456
 ```
+
+<h2>注意：</h2>
+
+==不同的数据源，它们的外部属性文件就不一样。==
+
+
+> <font color="red">C3P0数据源 有这些属性:  driverClass , jdbcUrl , user , password </font>
+
+
+>  <font color="red">dbcp数据源 有这些属性:  driver , url, username , password </font>
+
 
 
 3. 增加配置在applicationContext.xml
@@ -671,11 +682,27 @@ jdbc.password=123456
  
 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 
-	<!-- 使用外部属性文件的属性 -->
+	
+	
+
+	<!--
+	如果使用dbcp数据源 ，就使用这些
+
 	<property name="driver" value="${jdbc.driver}"/>
 	<property name="url" value="${jdbc.url}"/>   
 	<property name="username" value="${jdbc.username}"/>
 	<property name="password" value="${jdbc.password}"/>
+	
+	
+	-->
+
+	<!-- 使用外部属性文件的属性 -->
+	<bean id="dataSource" class="${jdbc.driverClass}">
+			<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+			<property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>   
+			<property name="user" value="${jdbc.user}"/>
+			<property name="password" value="${jdbc.password}"/>
+	</bean>
 
 </bean>
 

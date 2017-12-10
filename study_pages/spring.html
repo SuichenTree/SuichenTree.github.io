@@ -5,7 +5,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\18271\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.0\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\18271\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
       
       
       
@@ -294,7 +297,7 @@ code.language-yaml {
 </ul>
 <h1 class="mume-header" id="spring">Spring</h1>
 
-<h2 class="mume-header" id="&#x6982;&#x8FF0;">概述：</h2>
+<h2 class="mume-header" id="%E6%A6%82%E8%BF%B0">概述：</h2>
 
 <p>参考链接：<br>
 <a href="http://spring.io/">Spring</a><br>
@@ -306,7 +309,7 @@ code.language-yaml {
   Spring是全面的和模块化的。Spring有分层的体系结构，这意味着你能选择使用它孤立的任何部分，它的架构仍然是内在稳定的。因此从你的学习中，你可得到最大的价值。例如，你可能选择仅仅使用Spring来简单化JDBC的使用，或用来管理所有的业务对象。<br>
   它的设计从底部帮助你编写易于测试的代码。Spring是用于测试驱动工程的理想的framework。<br>
   Spring对你的工程来说，它不需要一个以上的framework。Spring是潜在地一站式解决方案，定位于与典型应用相关的大部分基础结构。它也涉及到其他framework没有考虑到的内容。</p>
-<h2 class="mume-header" id="spring&#x7684;&#x4F7F;&#x7528;&#x524D;&#x63D0;spring&#x7684;&#x57FA;&#x7840;&#x73AF;&#x5883;&#x642D;&#x5EFA;">spring的使用前提（spring的基础环境搭建）：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84%E4%BD%BF%E7%94%A8%E5%89%8D%E6%8F%90spring%E7%9A%84%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">spring的使用前提（spring的基础环境搭建）：</h2>
 
 <p>使用spring前，需要导入spring的jar包，你可以去官网下载。<br>
 spring最基础的几个jar包：<br>
@@ -318,7 +321,7 @@ spring最基础的几个jar包：<br>
   spring-expression-4.3.8.RELEASE.jar</p>
 <p>把这些jar包，添加到类路径中（Add Build Path）。</p>
 <hr>
-<h2 class="mume-header" id="spring&#x7684;&#x7EC4;&#x6210;">Spring的组成：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84%E7%BB%84%E6%88%90">Spring的组成：</h2>
 
 <p>spring主要有7大模块组成。<font color="red">每个模块既可以单独使用，又可以与其他模块组合使用。</font></p>
 <ol>
@@ -352,9 +355,9 @@ WEB模块建立在context 模块的基础上，它提供了Servlet 监听器的C
 </li>
 </ol>
 <hr>
-<h2 class="mume-header" id="spring&#x7684;xml&#x4F7F;&#x7528;&#x65B9;&#x5F0F;">Spring的XML使用方式：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84xml%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F">Spring的XML使用方式：</h2>
 
-<h3 class="mume-header" id="1&#x4F8B;&#x5B50;&#x7F16;&#x5199;spring&#x65B9;&#x5F0F;&#x7684;-hello-world">1.例子：编写spring方式的 Hello world:</h3>
+<h3 class="mume-header" id="1%E4%BE%8B%E5%AD%90%E7%BC%96%E5%86%99spring%E6%96%B9%E5%BC%8F%E7%9A%84-hello-world">1.例子：编写spring方式的 Hello world:</h3>
 
 <ol>
 <li>编写一个JavaBean：<br>
@@ -492,7 +495,7 @@ User [name=xiaoming]  say hello world</p>
 <p>this is student 无参构造函数<br>
 User [name=xiaobing]  say hello world</p>
 </blockquote>
-<h3 class="mume-header" id="2&#x5206;&#x6790;&#x4E0A;&#x9762;&#x7684;&#x5B9E;&#x4F8B;">2.分析上面的实例（★★★★★）：</h3>
+<h3 class="mume-header" id="2%E5%88%86%E6%9E%90%E4%B8%8A%E9%9D%A2%E7%9A%84%E5%AE%9E%E4%BE%8B">2.分析上面的实例（★★★★★）：</h3>
 
 <p>①：spring框架会 通过spring的配置文件（applicationContext.xml）来创建 spring的ioc 容器（applicationContext)</p>
 <pre class="language-java">ApplicationContext app<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -506,7 +509,7 @@ User [name=xiaobing]  say hello world</p>
 <code>Student stu=(Student) app.getBean(&quot;student&quot;);</code></p>
 <p>④：直接调用从容器获取的bean对象的方法。<br>
 <code>stu.sayHelloWorld(stu);</code></p>
-<h2 class="mume-header" id="spring&#x7684;&#x63A7;&#x5236;&#x53CD;&#x8F6C;inverse-of-controlioc&#x6216;-&#x4F9D;&#x8D56;&#x6CE8;&#x5165;dependency-injection">Spring的控制反转（Inverse of Control，IoC）或 依赖注入（Dependency Injection）：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%ACinverse-of-controlioc%E6%88%96-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5dependency-injection">Spring的控制反转（Inverse of Control，IoC）或 依赖注入（Dependency Injection）：</h2>
 
 <p><font color="blue">注意：控制反转与依赖注入是一个意思。</font></p>
 <p>Spring框架的核心功能有两个：</p>
@@ -515,7 +518,7 @@ User [name=xiaobing]  say hello world</p>
 Spring容器管理容器中Bean之间的依赖关系，Spring使用一种被称为&quot;依赖注入（控制反转）&quot;的方式来管理Bean之间的依赖关系。</p>
 </blockquote>
 <p><strong>使用依赖注入（控制反转），不仅可以为Bean注入普通的属性值，还可以注入其他Bean的引用。依赖注入（控制反转）是一种优秀的解耦方式，其可以让Bean以配置文件组织在一起，而不是以硬编码的方式耦合在一起。</strong></p>
-<h3 class="mume-header" id="1&#x6982;&#x5FF5;">1.概念：</h3>
+<h3 class="mume-header" id="1%E6%A6%82%E5%BF%B5">1.概念：</h3>
 
 <p>  当某个Java对象（调用者）需要调用另一个Java对象（被依赖对象）的方法时，在传统模式下通常有两种做法：</p>
 <ol>
@@ -525,7 +528,7 @@ Spring容器管理容器中Bean之间的依赖关系，Spring使用一种被称�
 <p>注意上面的<font color="red">主动</font>二字，<strong>这必然会导致调用者与被依赖对象实现类的硬编码耦合，非常不利于项目升级的维护。</strong>(<font color="red">可以理解为牵一发而动全身，或者对象与对象之间的关系太紧密，耦合度太高。</font>)</p>
 <p>使用Spring框架之后，调用者无需主动获取，创建被依赖对象，<font color="red">调用者只要被动接受Spring容器为调用者的成员变量赋值即可</font>，由此可见，<strong>使用Spring后，调用者获取被依赖对象的方式由原来的主动获取，变成了被动接受——所以称之为控制反转。</strong></p>
 <p><strong>另外从Spring容器的角度来看，Spring容器负责将被依赖对象赋值给调用者要使用的成员变量——相当于为调用者注入它依赖的实例，因此被称之为依赖注入。</strong></p>
-<h3 class="mume-header" id="2spring&#x5BB9;&#x5668;&#x7684;&#x5B9E;&#x73B0;beanfactoryapplicationcontext">2.spring容器的实现（BeanFactory，ApplicationContext）：</h3>
+<h3 class="mume-header" id="2spring%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0beanfactoryapplicationcontext">2.spring容器的实现（BeanFactory，ApplicationContext）：</h3>
 
 <p><strong>spring容器实现方式有两种：</strong></p>
 <p>BeanFactory :ioc容器的基本实现,是spring框架的基础设施，面向spring本身。</p>
@@ -535,7 +538,7 @@ Spring容器管理容器中Bean之间的依赖关系，Spring使用一种被称�
 <p>ApplicationContext是Spring容器最常用的接口，该接口有如下两个实现类：<br>
    ClassPathXmlApplicationContext: 从类加载路径下搜索配置文件，并根据配置文件来创建Spring容器。</p>
 <p>   FileSystemXmlApplicationContext: 从文件系统的相对路径或绝对路径下去搜索配置文件，并根据配置文件来创建Spring容器。</p>
-<h3 class="mume-header" id="3&#x901A;&#x8FC7;applicationcontext&#x6765;&#x8FDB;&#x884C;bean&#x7684;&#x914D;&#x7F6E;">3.通过applicationContext来进行bean的配置：</h3>
+<h3 class="mume-header" id="3%E9%80%9A%E8%BF%87applicationcontext%E6%9D%A5%E8%BF%9B%E8%A1%8Cbean%E7%9A%84%E9%85%8D%E7%BD%AE">3.通过applicationContext来进行bean的配置：</h3>
 
 <p>applicationContext.xml</p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>student<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Student<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -551,19 +554,19 @@ stu<span class="token punctuation">.</span><span class="token function">sayHello
 <p>id : ioc容器可以用getBean方法，通过该标识符来获取bean对象。<br>
 class : javabean对象的全类名。通过反射的方式,来寻找javaBean对象，并在容器中创建该bean对象。<br>
 <font color="red">注意：ioc容器创建时，会调用bean标签对应的对象的无参构造函数，来创建该bean对象。所以对象必须有无参构造函数。</font></p>
-<h3 class="mume-header" id="4&#x901A;&#x8FC7;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x914D;&#x7F6E;bean&#x4E0D;&#x63A8;&#x8350;&#x4F7F;&#x7528;">4.通过工厂方法配置bean（不推荐使用）：</h3>
+<h3 class="mume-header" id="4%E9%80%9A%E8%BF%87%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E9%85%8D%E7%BD%AEbean%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8">4.通过工厂方法配置bean（不推荐使用）：</h3>
 
 <p><strong>请自行百度</strong></p>
-<h3 class="mume-header" id="5&#x4F9D;&#x8D56;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;&#x4E3B;&#x8981;&#x6709;2&#x79CD;">5.依赖注入的方式（主要有2种）：</h3>
+<h3 class="mume-header" id="5%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B8%BB%E8%A6%81%E6%9C%892%E7%A7%8D">5.依赖注入的方式（主要有2种）：</h3>
 
-<h4 class="mume-header" id="1&#x5C5E;&#x6027;&#x6CE8;&#x5165;">1.属性注入：</h4>
+<h4 class="mume-header" id="1%E5%B1%9E%E6%80%A7%E6%B3%A8%E5%85%A5">1.属性注入：</h4>
 
 <p>  属性注入通过setter方法注入Bean的属性值或依赖的对象。<font color="red">其通过&lt;property&gt; 标签，使用name 属性指定Bean对象中的某个属性，value 指定其属性值。</font></p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>student<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Student<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xiaobing<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </pre>
-<h4 class="mume-header" id="2&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x6CE8;&#x5165;">2.构造方法注入：</h4>
+<h4 class="mume-header" id="2%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5">2.构造方法注入：</h4>
 
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>student<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Student<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
  	
@@ -587,9 +590,9 @@ class : javabean对象的全类名。通过反射的方式,来寻找javaBean对�
 </pre>
 <p>  构造方法注入通过对象的有参构造方法，注入Bean的属性值或依赖的对象。<font color="red">其通过&lt;constructor-arg&gt; 标签，使用index属性指定有参构造方法中的那个参数，value 指定其属性值。type指定属性的类型</font></p>
 <p><strong>注意：当有多个有参构造方法时，可以使用index , type来区别不同的构造方法</strong></p>
-<h3 class="mume-header" id="6bean&#x7684;&#x8BE6;&#x89E3;">6.bean的详解：</h3>
+<h3 class="mume-header" id="6bean%E7%9A%84%E8%AF%A6%E8%A7%A3">6.bean的详解：</h3>
 
-<h4 class="mume-header" id="1bean&#x4E0E;bean&#x4E4B;&#x95F4;&#x7684;&#x6CE8;&#x5165;&#x5F15;&#x7528;">1.bean与bean之间的注入（引用）：</h4>
+<h4 class="mume-header" id="1bean%E4%B8%8Ebean%E4%B9%8B%E9%97%B4%E7%9A%84%E6%B3%A8%E5%85%A5%E5%BC%95%E7%94%A8">1.bean与bean之间的注入（引用）：</h4>
 
 <ol>
 <li>创建学生证类 Schoolcard</li>
@@ -703,7 +706,7 @@ Student [name=xiaoming, scard=Schoolcard [id=1, name=xiaohuang]]</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </pre>
 <p><font color="red">ref 属性表示被引用的bean </font></p>
-<h4 class="mume-header" id="2&#x5185;&#x90E8;bean&#x5185;&#x90E8;bean&#x4E0D;&#x80FD;&#x88AB;&#x5916;&#x90E8;&#x5F15;&#x7528;">2.内部bean（内部bean不能被外部引用）：</h4>
+<h4 class="mume-header" id="2%E5%86%85%E9%83%A8bean%E5%86%85%E9%83%A8bean%E4%B8%8D%E8%83%BD%E8%A2%AB%E5%A4%96%E9%83%A8%E5%BC%95%E7%94%A8">2.内部bean（内部bean不能被外部引用）：</h4>
 
 <p>applicationContext.xml</p>
 <pre class="language-xml"> 
@@ -742,7 +745,7 @@ Student [name=xiaoming, scard=Schoolcard [id=1, name=xiaohuang]]</p>
 this is student 无参构造函数<br>
 Student [name=xiaoming, scard=Schoolcard [id=2, name=hehe]]</p>
 </blockquote>
-<h4 class="mume-header" id="3&#x4E3A;bean&#x4E2D;&#x7684;&#x96C6;&#x5408;&#x5C5E;&#x6027;&#x8D4B;&#x503C;">3.为bean中的集合属性赋值：</h4>
+<h4 class="mume-header" id="3%E4%B8%BAbean%E4%B8%AD%E7%9A%84%E9%9B%86%E5%90%88%E5%B1%9E%E6%80%A7%E8%B5%8B%E5%80%BC">3.为bean中的集合属性赋值：</h4>
 
 <p>若一名学生有多个学生证(小学学生证，~)。</p>
 <ol>
@@ -806,7 +809,7 @@ this is student 无参构造函数<br>
 Student [name=xiaoming, cards=[Schoolcard [id=1, name=xiaohuang], Schoolcard [id=3, name=mingming]]]</p>
 </blockquote>
 <p><strong><font color="red">总结：使用list元素或内部bean的方式，给集合属性赋值。</font></strong></p>
-<h4 class="mume-header" id="4&#x81EA;&#x52A8;&#x88C5;&#x914D;&#x4E0D;&#x63A8;&#x8350;&#x4F7F;&#x7528;">4.自动装配（不推荐使用）：</h4>
+<h4 class="mume-header" id="4%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8">4.自动装配（不推荐使用）：</h4>
 
 <p>Spring的ioc容器可以自动装配Bean，需要做的是在<font color="red">&lt;bean&gt;的autowire属性中指定自动装配的模式。</font></p>
 <p><strong>模式有两种：</strong></p>
@@ -822,7 +825,7 @@ Student [name=xiaoming, cards=[Schoolcard [id=1, name=xiaohuang], Schoolcard [id
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xiaoming<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </pre>
-<h4 class="mume-header" id="5bean&#x4E0E;bean&#x7684;&#x5173;&#x7CFB;">5.bean与bean的关系：</h4>
+<h4 class="mume-header" id="5bean%E4%B8%8Ebean%E7%9A%84%E5%85%B3%E7%B3%BB">5.bean与bean的关系：</h4>
 
 <p>Spring允许继承bean的配置，被继承的bean 称为父bean。</p>
 <blockquote>
@@ -855,9 +858,9 @@ Student [name=xiaoming, cards=[Schoolcard [id=1, name=xiaohuang], Schoolcard [id
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 
 </pre>
-<h4 class="mume-header" id="6bean&#x7684;&#x4F5C;&#x7528;&#x57DF;">6.bean的作用域：</h4>
+<h4 class="mume-header" id="6bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">6.bean的作用域：</h4>
 
-<h5 class="mume-header" id="1singleton-&#x4F5C;&#x7528;&#x57DF;&#x9ED8;&#x8BA4;&#x7684;&#x4F5C;&#x7528;&#x57DF;">1.Singleton 作用域（默认的作用域）：</h5>
+<h5 class="mume-header" id="1singleton-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%BB%98%E8%AE%A4%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">1.Singleton 作用域（默认的作用域）：</h5>
 
 <p>当spring中的一个bean的作用域为 singleton 时，IOC的容器中只会存在一个共享的该bean的实例，并且所有对该bean的引用，只要id 与该bean的id 相符合，就只会返回bean的单一实例。</p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>school_card<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.Schoolcard<span class="token punctuation">"</span></span> <span class="token attr-name">scope</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>singleton<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -872,13 +875,13 @@ Student [name=xiaoming, cards=[Schoolcard [id=1, name=xiaohuang], Schoolcard [id
 	
 </pre>
 <p><font color="red">例如：上面代码的运行结果为 true。</font></p>
-<h5 class="mume-header" id="2prototype-&#x4F5C;&#x7528;&#x57DF;">2..prototype 作用域：</h5>
+<h5 class="mume-header" id="2prototype-%E4%BD%9C%E7%94%A8%E5%9F%9F">2..prototype 作用域：</h5>
 
 <p>prototype 作用域的bean 会导致每次对该bean的请求时 ，会创建一个新的bean实例，<font color="blue">但是,当bean创建完毕并将实例对象返回给使用者时，容器不在拥有该实例对象的引用，因此，必须使用bean的后置处理器清除prototype的bean。</font></p>
 <p><strong>scope=&quot;prototype&quot;，表示每次向容器获取同一个bean，容器会创建新的bean对象给使用者使用。</strong></p>
 <p><font color="red">例如：上面代码的运行结果为 false。</font></p>
 <hr>
-<h4 class="mume-header" id="7ioc&#x5BB9;&#x5668;&#x7BA1;&#x7406;bean-&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;">7.IOC容器管理bean 的生命周期：</h4>
+<h4 class="mume-header" id="7ioc%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86bean-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">7.IOC容器管理bean 的生命周期：</h4>
 
 <p>管理过程:</p>
 <ol>
@@ -907,7 +910,7 @@ Student [name=xiaoming, cards=[Schoolcard [id=1, name=xiaohuang], Schoolcard [id
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>xiaohuang<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </pre>
-<h3 class="mume-header" id="7spring-&#x914D;&#x7F6E;c3p0&#x6570;&#x636E;&#x6E90;&#x4F7F;&#x7528;&#x5916;&#x90E8;&#x5C5E;&#x6027;&#x6587;&#x4EF6;properties&#x6587;&#x4EF6;">7.Spring 配置c3p0数据源，使用外部属性文件（properties文件）：</h3>
+<h3 class="mume-header" id="7spring-%E9%85%8D%E7%BD%AEc3p0%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8%E5%A4%96%E9%83%A8%E5%B1%9E%E6%80%A7%E6%96%87%E4%BB%B6properties%E6%96%87%E4%BB%B6">7.Spring 配置c3p0数据源，使用外部属性文件（properties文件）：</h3>
 
 <ol>
 <li>
@@ -917,11 +920,19 @@ Student [name=xiaoming, cards=[Schoolcard [id=1, name=xiaohuang], Schoolcard [id
 <p>创建外部属性文件，db.properties</p>
 </li>
 </ol>
-<pre class="language-">jdbc.driver=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://localhost:3306/blog_demo?useUnicode=true&amp;amp;characterEncoding=utf8
-jdbc.username=root
+<pre class="language-">jdbc.driverClass=com.mysql.jdbc.Driver
+jdbc.jdbcUrl=jdbc:mysql://localhost:3306/blog_demo
+jdbc.user=root
 jdbc.password=123456
 </pre>
+<h2>注意：</h2>
+<p><mark>不同的数据源，它们的外部属性文件就不一样。</mark></p>
+<blockquote>
+<p><font color="red">C3P0数据源 有这些属性:  driverClass , jdbcUrl , user , password </font></p>
+</blockquote>
+<blockquote>
+<p><font color="red">dbcp数据源 有这些属性:  driver , url, username , password </font></p>
+</blockquote>
 <ol start="3">
 <li>增加配置在applicationContext.xml</li>
 </ol>
@@ -930,11 +941,27 @@ jdbc.password=123456
  
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mchange.v2.c3p0.ComboPooledDataSource<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
 
+	
+	
+
+	<span class="token comment" spellcheck="true">&lt;!--
+	如果使用dbcp数据源 ，就使用这些
+
+	&lt;property name="driver" value="${jdbc.driver}"/>
+	&lt;property name="url" value="${jdbc.url}"/>   
+	&lt;property name="username" value="${jdbc.username}"/>
+	&lt;property name="password" value="${jdbc.password}"/>
+	
+	
+	--></span>
+
 	<span class="token comment" spellcheck="true">&lt;!-- 使用外部属性文件的属性 --></span>
-	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>driver<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.driver}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.url}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>   
-	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.username}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
-	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.password}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.driverClass}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+			<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>driverClass<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql.jdbc.Driver<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+			<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>jdbcUrl<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.jdbcUrl}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>   
+			<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.user}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+			<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>${jdbc.password}<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 
@@ -964,7 +991,7 @@ jdbc.password=123456
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 
 </pre>
-<h2 class="mume-header" id="spring&#x7684;&#x6CE8;&#x89E3;&#x4F7F;&#x7528;&#x65B9;&#x5F0F;">Spring的注解使用方式：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F">Spring的注解使用方式：</h2>
 
 <ol>
 <li>组件扫描：<br>
@@ -1010,9 +1037,9 @@ spring能够从classpath 下 自动扫描，检查，实例化具有特定注解
 </pre>
 <p>base-package ：指定需要扫描的基类包及其子包。<strong>当需要扫描多个包时，用逗号隔开。</strong><br>
 resource-pattern ：过滤，指定需要扫描的资源 ,<font color="red">默认值是： **/*.class 表示为基类包的所有类。</font></p>
-<h3 class="mume-header" id="1&#x901A;&#x8FC7;&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x5F0F;&#x914D;&#x7F6E;bean">1.通过注解的方式配置Bean:</h3>
+<h3 class="mume-header" id="1%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AEbean">1.通过注解的方式配置Bean:</h3>
 
-<h4 class="mume-header" id="1&#x914D;&#x7F6E;&#x8FC7;&#x7A0B;">1.配置过程：</h4>
+<h4 class="mume-header" id="1%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B">1.配置过程：</h4>
 
 <blockquote>
 <ol>
@@ -1028,7 +1055,7 @@ resource-pattern ：过滤，指定需要扫描的资源 ,<font color="red">默�
 <li>你的类也许能更好地被工具处理，或与切面进行关联。</li>
 </ol>
 </blockquote>
-<h4 class="mume-header" id="2&#x4EE3;&#x7801;">2.代码：</h4>
+<h4 class="mume-header" id="2%E4%BB%A3%E7%A0%81">2.代码：</h4>
 
 <p>com.entity.User</p>
 <pre class="language-java">
@@ -1094,7 +1121,7 @@ this  is  Student 无参构造函数<br>
 this is user 无参构造函数<br>
 User [name=null]<br>
 com.Controller.UserController@3869f4</p>
-<h3 class="mume-header" id="2&#x901A;&#x8FC7;&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x5F0F;&#x88C5;&#x914D;bean&#x5230;&#x53E6;&#x4E00;&#x4E2A;bean&#x4E2D;&#x4F7F;&#x4E00;&#x4E2A;bean-&#x4F7F;&#x7528;&#x53E6;&#x4E00;&#x4E2A;bean-&#x5728;&#x7701;&#x53BB;getset-&#x65B9;&#x6CD5;&#x65F6;">2.通过注解的方式装配Bean到另一个bean中（使一个bean 使用另一个bean ，在省去get/set 方法时）:</h3>
+<h3 class="mume-header" id="2%E9%80%9A%E8%BF%87%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F%E8%A3%85%E9%85%8Dbean%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AAbean%E4%B8%AD%E4%BD%BF%E4%B8%80%E4%B8%AAbean-%E4%BD%BF%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AAbean-%E5%9C%A8%E7%9C%81%E5%8E%BBgetset-%E6%96%B9%E6%B3%95%E6%97%B6">2.通过注解的方式装配Bean到另一个bean中（使一个bean 使用另一个bean ，在省去get/set 方法时）:</h3>
 
 <p>参考链接：<br>
 <a href="https://www.cnblogs.com/szlbm/p/5512931.html">@Autowired注解、@Resource注解和@Service注解</a></p>
@@ -1128,7 +1155,7 @@ com.Controller.UserController@3869f4</p>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>usimpl<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UserImpl<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
 </pre>
-<h2 class="mume-header" id="spring&#x7684;aop&#x9762;&#x5411;&#x5207;&#x9762;&#x7F16;&#x7A0B;">Spring的AOP(面向切面编程)：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84aop%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B">Spring的AOP(面向切面编程)：</h2>
 
 <p>  AOP(Aspect-Oriented Programming), 即 面向切面编程, 它与 OOP( Object-Oriented Programming, 面向对象编程) 相辅相成, 提供了与 OOP 不同的抽象软件结构的视角.<br>
   在 OOP 中, 我们以类(class)作为我们的基本单元, 而 AOP 中的基本单元是 Aspect(切面)</p>
@@ -1154,7 +1181,7 @@ com.Controller.UserController@3869f4</p>
 </pre>
 <p><font color="red">上面是对两个参数之加减乘除的方法，里面有对该方法的日志输出。试想一想，如果对这四个方法的日志输出都修改，一次修改需要改四个地方，N次修改就需要修改4n次，并且这四个方法的日志，都差不多，是否可以抽象出来。</font><br>
 <strong>AOP可以分离与业务无关的代码出来,使得方法保持纯洁。日志输入与方法的逻辑是无关的。</strong></p>
-<h3 class="mume-header" id="1spring&#x7684;aop&#x672F;&#x8BED;">1.Spring的AOP术语：</h3>
+<h3 class="mume-header" id="1spring%E7%9A%84aop%E6%9C%AF%E8%AF%AD">1.Spring的AOP术语：</h3>
 
 <ol>
 <li>
@@ -1199,7 +1226,7 @@ com.Controller.UserController@3869f4</p>
   把切面功能引用到目标对象的过程。</p>
 </li>
 </ol>
-<h3 class="mume-header" id="2&#x57FA;&#x4E8E;xml&#x65B9;&#x5F0F;-&#x4F7F;&#x7528;aop">2.基于XML方式 使用AOP：</h3>
+<h3 class="mume-header" id="2%E5%9F%BA%E4%BA%8Exml%E6%96%B9%E5%BC%8F-%E4%BD%BF%E7%94%A8aop">2.基于XML方式 使用AOP：</h3>
 
 <ol start="0">
 <li>注意：<br>
@@ -1376,7 +1403,7 @@ this is  后置通知</p>
 </blockquote>
 <p><strong>流程：</strong><br>
   <font color="red">当程序流程运行到切入点时，会查看该切入点在那个切面上，并且该切面的前置或后置等通知是否与该切入点进行了绑定。若绑定，则根据通知的类型，若是前置通知，则先执行前置通知，再执行原本的程序流程。</font></p>
-<h3 class="mume-header" id="3&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x65B9;&#x5F0F;-&#x4F7F;&#x7528;aop">3.基于注解方式 使用AOP：</h3>
+<h3 class="mume-header" id="3%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F-%E4%BD%BF%E7%94%A8aop">3.基于注解方式 使用AOP：</h3>
 
 <ol>
 <li>修改目标类：</li>
@@ -1517,7 +1544,7 @@ this is  后置通知<br>
 this is 返回通知  ,  返回值是1<br>
 1</li>
 </ol>
-<h3 class="mume-header" id="4&#x8865;&#x5145;">4.补充：</h3>
+<h3 class="mume-header" id="4%E8%A1%A5%E5%85%85">4.补充：</h3>
 
 <ol>
 <li>
@@ -1542,7 +1569,7 @@ Aspect.java</p>
 		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is  前置通知"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 </pre>
-<h2 class="mume-header" id="spring&#x7684;&#x4E8B;&#x52A1;&#x7BA1;&#x7406;">Spring的事务管理：</h2>
+<h2 class="mume-header" id="spring%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86">Spring的事务管理：</h2>
 
 <p>  <strong>事务是一系列的动作，事务是一个最小的逻辑执行单元，整个事务不能分开执行，要么同时执行，要么同时不执行，绝不能执行一部分（比如：当你从银行转账，如果你的账户钱少了，那别人的账户钱多了。一定不能出现你的钱少了，别人的钱不变。）。</strong><br>
   <font color="red">Spring 通过spring aop 来支持事务管理，它把事务代码从业务方法中分离出来。</font></p>
@@ -1550,7 +1577,7 @@ Aspect.java</p>
 <p>参考链接：<br>
 <a href="https://www.cnblogs.com/of-fanruice/p/7460441.html">spring事务属性—1</a><br>
 <a href="http://blog.csdn.net/zmx729618/article/details/51084321">spring事务属性—2</a></p>
-<h3 class="mume-header" id="1&#x6CE8;&#x89E3;&#x65B9;&#x5F0F;&#x914D;&#x7F6E;&#x4E8B;&#x52A1;">1.注解方式配置事务：</h3>
+<h3 class="mume-header" id="1%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1">1.注解方式配置事务：</h3>
 
 <ol start="0">
 <li><font color="red">由于要使用spring的事务。因此要导入spring的事务jar包，spring-tx-4.3.8.RELEASE.jar</font></li>
@@ -1583,14 +1610,14 @@ applicatinContext.xml</li>
 	<span class="token punctuation">}</span>
 </pre>
 <p><font color="red">当该方法内发生异常时，被事务注解标记的方法，会产生回滚。形成没有执行该方法的效果。</font></p>
-<h3 class="mume-header" id="2xml&#x65B9;&#x5F0F;&#x914D;&#x7F6E;&#x4E8B;&#x52A1;&#x53C2;&#x8003;">2.XML方式配置事务（参考）：</h3>
+<h3 class="mume-header" id="2xml%E6%96%B9%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%BA%8B%E5%8A%A1%E5%8F%82%E8%80%83">2.XML方式配置事务（参考）：</h3>
 
 <p>参考链接：<br>
 <a href="https://www.cnblogs.com/longronglang/p/6298200.html">xml方式</a></p>
-<h2 class="mume-header" id="spring-&#x4E0E;-mybatis-&#x6574;&#x5408;mybatis&#x4F7F;&#x7528;&#x63A5;&#x53E3;&#x5F0F;&#x7F16;&#x7A0B;">Spring 与 Mybatis 整合（Mybatis使用接口式编程）：</h2>
+<h2 class="mume-header" id="spring-%E4%B8%8E-mybatis-%E6%95%B4%E5%90%88mybatis%E4%BD%BF%E7%94%A8%E6%8E%A5%E5%8F%A3%E5%BC%8F%E7%BC%96%E7%A8%8B">Spring 与 Mybatis 整合（Mybatis使用接口式编程）：</h2>
 
 <p>  在实际的项目开发中，我们需要把Spring 和 Mybatis 整合在一起。使用Spring的依赖注入来减少代码的耦合，使得mybatis 更加便捷的完成数据库操作。</p>
-<h3 class="mume-header" id="1jar&#x5305;&#x7684;&#x51C6;&#x5907;">1.jar包的准备：</h3>
+<h3 class="mume-header" id="1jar%E5%8C%85%E7%9A%84%E5%87%86%E5%A4%87">1.jar包的准备：</h3>
 
 <blockquote>
 <p>Spring框架的jar 包。<br>
@@ -1601,11 +1628,11 @@ aspectj 的jar 包（spring的aop 是基于aspectj）。<br>
 数据源c3p0 或 dbcp 的jar包。<br>
 jstl 标签库的jar 包（选要）。</p>
 </blockquote>
-<h3 class="mume-header" id="2&#x6570;&#x636E;&#x5E93;&#x7684;&#x5EFA;&#x7ACB;">2.数据库的建立：</h3>
+<h3 class="mume-header" id="2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%BB%BA%E7%AB%8B">2.数据库的建立：</h3>
 
 <p><img src="../img/spring_img_1.png" alt="&#x6570;&#x636E;&#x5E93;&#x622A;&#x56FE;"><br>
 <img src="../img/spring_img_2.png" alt="&#x6570;&#x636E;&#x5E93;&#x622A;&#x56FE;"></p>
-<h3 class="mume-header" id="3&#x7F16;&#x5199;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x5B9E;&#x4F53;&#x7C7B;">3.编写持久化类（实体类）：</h3>
+<h3 class="mume-header" id="3%E7%BC%96%E5%86%99%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E5%AE%9E%E4%BD%93%E7%B1%BB">3.编写持久化类（实体类）：</h3>
 
 <p>Goods.java:</p>
 <pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
@@ -1702,7 +1729,7 @@ jstl 标签库的jar 包（选要）。</p>
 <span class="token punctuation">}</span>
 
 </pre>
-<h3 class="mume-header" id="4&#x7F16;&#x5199;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x7684;&#x4EE3;&#x7406;&#x63A5;&#x53E3;&#x4E0E;&#x5176;&#x5BF9;&#x5E94;&#x7684;mapper&#x6620;&#x5C04;&#x6587;&#x4EF6;">4.编写持久化类的代理接口与其对应的Mapper映射文件：</h3>
+<h3 class="mume-header" id="4%E7%BC%96%E5%86%99%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%9A%84%E4%BB%A3%E7%90%86%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%85%B6%E5%AF%B9%E5%BA%94%E7%9A%84mapper%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6">4.编写持久化类的代理接口与其对应的Mapper映射文件：</h3>
 
 <pre class="language-java">
 <span class="token comment" spellcheck="true">// Goods 类的代理接口Goodsdao:</span>
@@ -1874,7 +1901,7 @@ update user
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span>
 
 </pre>
-<h3 class="mume-header" id="5&#x7F16;&#x5199;spring&#x4E0E;mybatis-&#x6574;&#x5408;&#x540E;&#x7684;springmyabtis&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">5.编写spring与Mybatis 整合后的spring，myabtis的配置文件：</h3>
+<h3 class="mume-header" id="5%E7%BC%96%E5%86%99spring%E4%B8%8Emybatis-%E6%95%B4%E5%90%88%E5%90%8E%E7%9A%84springmyabtis%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">5.编写spring与Mybatis 整合后的spring，myabtis的配置文件：</h3>
 
 <p>Mybatis_config:</p>
 <pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
@@ -1998,7 +2025,7 @@ update user
 	
 	<span class="token punctuation">}</span>
 </pre>
-<h3 class="mume-header" id="7&#x5206;&#x6790;">7.分析：</h3>
+<h3 class="mume-header" id="7%E5%88%86%E6%9E%90">7.分析：</h3>
 
 <ol>
 <li>Mybatis 没有与spring整合之前的配置文件：</li>
@@ -2152,7 +2179,7 @@ Goodsdao goodsdao<span class="token operator">=</span>app<span class="token punc
 <span class="token comment" spellcheck="true">&lt;!--  mybatis:scan 会将 扫描的包的所有接口当作mapper 配置，之后使用者可以自动通过反射的方式，从ioc容器中获取代理接口对象--></span>
 	 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mybatis:</span>scan</span> <span class="token attr-name">base-package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 </pre>
-<h3 class="mume-header" id="8&#x8865;&#x5145;">8.补充：</h3>
+<h3 class="mume-header" id="8%E8%A1%A5%E5%85%85">8.补充：</h3>
 
 <p><strong>如果Mybatis 不使用接口式编程的方式，使用注解的方式。则不需要创建~Mapper映射文件，配置文件不发生变化。但是Mybatis—config 配置文件需要修改。</strong><br>
 例如：</p>
@@ -2265,6 +2292,8 @@ Goodsdao goodsdao<span class="token operator">=</span>app<span class="token punc
 </div>
       <a id="sidebar-toc-btn">≡</a>
     </body>
+    
+    
     
     
     
