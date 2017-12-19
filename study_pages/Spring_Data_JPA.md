@@ -1,6 +1,8 @@
 [toc]
 # Spring Date JPA 
 
+&emsp;&emsp;**Spring Date JPA，主要用于简化传统连接数据库中，dao层的写法的代码，重复代码太多等问题来提供的解决方案。** 
+
 ## 1. 概述：
 
 <h2>JPA( JPA规范 )和Hibernate的关系：</h2>
@@ -170,6 +172,10 @@ applicationContext.xml
    	-->
      <jpa:repositories base-package="com.entity" entity-manager-factory-ref="entityManagerFactory"/>
     
+	<!--把实体包的类注入到ioc容器中-->
+	<context:component-scan base-package="com.entity"/>
+
+
    
 </beans>
 ```
@@ -235,6 +241,7 @@ public class Person {
 	
 	public Person(){}
 
+	@Column(length=20)              //设置该字段的长度为20
 	public Integer getId() {
 		return id;
 	}
@@ -287,7 +294,10 @@ package com.entity;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.RepositoryDefinition;
 
-public interface PersonRepsotory extends Repository<Person, Integer>{
+/*
+   Repository<Person, Integer> 中 Person为对应的持久化类，Integer 为对应的数据表主键的java类型
+*/
+public interface PersonRepsotory extends Repository<Person, Integer>{        
 
 	public Person getById(Integer id); 
 }
@@ -370,15 +380,27 @@ public interface PersonRepsotory extends Repository<Person, Integer>{
 ```
 
 
-1. Repository 是一个空接口，其中没有任何实现方法。
+1. Repository 是一个空接口(标记)，其中没有任何实现方法。
+
+```java
+
+// Repository 是一个空接口，其中没有任何实现方法
+public interface Repository<T, ID extends Serializable> { 
+
+
+
+}
+```
+
 <br/>
-2. 当我们编写的接口继承 Repository 时。当spring 的ioc 容器开启时，若在			spring的配置文件中编写如下配置。
+2. 当我们编写的接口继承 Repository 时。应该在spring的配置文件中编写如下配置。
 
 ```xml
 <jpa:repositories base-package="com.entity" entity-manager-factory-ref="entityManagerFactory"/>
 ```
 
-3. <font color="red">IOC 容器会扫描 base-package 指向的路径，若扫描到继承 Repository接口的类，ioc 容器会把它标记为  Repository bean </font>。
+
+3. <font color="red">当spring 的ioc 容器开启时，IOC 容器会扫描 base-package 指向的路径，若扫描到继承 Repository接口的类，ioc 容器会把它标记为一个Repository bean </font>。
 <br/>
 4. 被标记为Repository bean，会被注入到ioc 容器中。
 <br/>
@@ -398,7 +420,7 @@ public interface PersonRepsotory extends Repository<Person, Integer>{
 
 
 
-### 3.Repsotory的子接口:
+### 3.Repsotory的几个子接口:
 
 <h4>①：CrudRepsotory : 继承自Repsotory， 实现了一组CRUD的方法。</h4>
 
@@ -641,6 +663,85 @@ public class test {
 
 </font>
 
+<br/>
+
+### 4.事务操作（update，insert，delete）在springdata jpa的使用（一般把涉及到事务操作的方法，不放在 XxxRepsotory 接口中，单独放在service层中）：
+
+PersonRepsotory.java
+```java
+
+public interface PersonRepsotory extends Repository<Person, Integer>{
+
+	
+	@Modifying
+	@Query("UPDATE Person set name=?1 where id=?2")
+	public int  update_name(String name,Integer id);
+	
+	@Modifying
+	@Query("delete from Person where id=?1")
+	public int delete_PersonByid(Integer id);
+
+	
+}
+
+```
+
+
+PersonService.java:
+
+```java
+....
+
+@Service
+public class PersonService{
+
+	/*
+	  @Autowired 注解使用的前提条件，在配置文件中：
+					<!--把实体包的类注入到ioc容器中-->
+					<context:component-scan base-package="com.entity"/>
+	*/
+
+	@Autowired
+	private PersonRepsotory personrepsotory;
+
+	//设计到事务操作的方法，不放在 XxxRepsotory 接口中，单独放在service层中。
+
+	@Transactional
+	public void update(Integer id){
+		personrepsotory.update_name(name,id);
+	}
+
+	@Transactional
+	public void delete(String name,Integer id){
+		personrepsotory.delete_PersonByid(id);
+	}
+
+}
+```
+<br/>
+
+test.java:
+
+```java
+
+public class test {
+
+	public static void main(String[] args) {
+		ApplicationContext app = new ClassPathXmlApplicationContext("applicationContext.xml");
+		
+		//PersonRepsotory personRepsotory = app.getBean(PersonRepsotory.class);
+		
+		PersonService pers=app.getBean(PersonService.class);
+
+		pers.update("xiaoming",3);
+		pers.delete(3);
+
+	
+	}
+	
+}
+
+```
 
 
 

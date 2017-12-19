@@ -220,7 +220,7 @@ code.language-yaml {
 <ul>
 <li><a href="#1%E7%BB%A7%E6%89%BFrepository-%E6%8E%A5%E5%8F%A3">1.继承Repository 接口:</a></li>
 <li><a href="#2%E5%AE%9E%E7%8E%B0repositorydefinition-%E6%B3%A8%E8%A7%A3">2.实现@RepositoryDefinition 注解:</a></li>
-<li><a href="#3repsotory%E7%9A%84%E5%AD%90%E6%8E%A5%E5%8F%A3">3.Repsotory的子接口:</a></li>
+<li><a href="#3repsotory%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%90%E6%8E%A5%E5%8F%A3">3.Repsotory的几个子接口:</a></li>
 </ul>
 </li>
 <li><a href="#4%E5%9C%A8xxxrepsotory-%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%BC%96%E5%86%99crud%E6%96%B9%E6%B3%95crud%E6%96%B9%E6%B3%95%E7%BC%96%E5%86%99%E5%85%B7%E6%9C%89%E4%B8%80%E5%AE%9A%E7%9A%84%E8%A7%84%E5%88%99">4.在XxxRepsotory 接口中编写CRUD方法（CRUD方法编写具有一定的规则）：</a>
@@ -228,6 +228,7 @@ code.language-yaml {
 <li><a href="#1%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E6%96%B9%E5%BC%8F%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95%E5%90%8D">1.使用关键字的方式定义方法名：</a></li>
 <li><a href="#2%E4%BD%BF%E7%94%A8-query-%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89-jpql-%E8%AF%AD%E5%8F%A5%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%9B%B4%E4%B8%BA%E5%A4%8D%E6%9D%82%E7%9A%84%E6%9F%A5%E8%AF%A2">2.使用 @Query 注解的方式（可以用自定义 JPQL 语句来实现更为复杂的查询）：</a></li>
 <li><a href="#3%E4%BD%BF%E7%94%A8-querymodifyingtransactional%E6%B3%A8%E8%A7%A3%E6%9D%A5%E5%AE%9E%E7%8E%B0update-deletespringdata-%E7%9A%84jpql%E8%AF%AD%E5%8F%A5%E4%B8%8D%E6%94%AF%E6%8C%81-insert%E4%BD%86%E5%8F%AF%E4%BB%A5%E7%94%A8sql%E7%9A%84%E6%96%B9%E5%BC%8F%E7%BC%96%E5%86%99insert">3.使用 @Query,@Modifying,@Transactional注解来实现update, delete（springdata 的jpql语句不支持 insert，但可以用sql的方式编写insert）：</a></li>
+<li><a href="#4%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9Cupdateinsertdelete%E5%9C%A8springdata-jpa%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%80%E8%88%AC%E6%8A%8A%E6%B6%89%E5%8F%8A%E5%88%B0%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%8D%E6%94%BE%E5%9C%A8-xxxrepsotory-%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%8D%95%E7%8B%AC%E6%94%BE%E5%9C%A8service%E5%B1%82%E4%B8%AD">4.事务操作（update，insert，delete）在springdata jpa的使用（一般把涉及到事务操作的方法，不放在 XxxRepsotory 接口中，单独放在service层中）：</a></li>
 </ul>
 </li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
@@ -236,6 +237,7 @@ code.language-yaml {
 </ul>
 <h1 class="mume-header" id="spring-date-jpa">Spring Date JPA</h1>
 
+<p>  <strong>Spring Date JPA，主要用于简化传统连接数据库中，dao层的写法的代码，重复代码太多等问题来提供的解决方案。</strong></p>
 <h2 class="mume-header" id="1-%E6%A6%82%E8%BF%B0">1. 概述：</h2>
 
 <h2>JPA( JPA规范 )和Hibernate的关系：</h2>
@@ -391,6 +393,10 @@ mysql-connector-java-5.1.42-bin.jar</li>
    	--></span>
      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">jpa:</span>repositories</span> <span class="token attr-name">base-package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span> <span class="token attr-name">entity-manager-factory-ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>entityManagerFactory<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
     
+	<span class="token comment" spellcheck="true">&lt;!--把实体包的类注入到ioc容器中--></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">context:</span>component-scan</span> <span class="token attr-name">base-package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+
+
    
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">></span></span>
 </pre>
@@ -444,6 +450,7 @@ mysql-connector-java-5.1.42-bin.jar</li>
 	
 	<span class="token keyword">public</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
 
+	<span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>length<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">)</span>              <span class="token comment" spellcheck="true">//设置该字段的长度为20</span>
 	<span class="token keyword">public</span> Integer <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">return</span> id<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
@@ -492,7 +499,10 @@ mysql-connector-java-5.1.42-bin.jar</li>
 <span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>data<span class="token punctuation">.</span>repository<span class="token punctuation">.</span>Repository<span class="token punctuation">;</span>
 <span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>data<span class="token punctuation">.</span>repository<span class="token punctuation">.</span>RepositoryDefinition<span class="token punctuation">;</span>
 
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">PersonRepsotory</span> <span class="token keyword">extends</span> <span class="token class-name">Repository</span><span class="token operator">&lt;</span>Person<span class="token punctuation">,</span> Integer<span class="token operator">></span><span class="token punctuation">{</span>
+<span class="token comment" spellcheck="true">/*
+   Repository&lt;Person, Integer> 中 Person为对应的持久化类，Integer 为对应的数据表主键的java类型
+*/</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">PersonRepsotory</span> <span class="token keyword">extends</span> <span class="token class-name">Repository</span><span class="token operator">&lt;</span>Person<span class="token punctuation">,</span> Integer<span class="token operator">></span><span class="token punctuation">{</span>        
 
 	<span class="token keyword">public</span> Person <span class="token function">getById</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">;</span> 
 <span class="token punctuation">}</span>
@@ -563,14 +573,22 @@ public interface PersonRepsotory extends Repository&lt;Person, Integer&gt;{
 
 </pre>
 <ol>
-<li>Repository 是一个空接口，其中没有任何实现方法。<br>
-<br></li>
-<li>当我们编写的接口继承 Repository 时。当spring 的ioc 容器开启时，若在			spring的配置文件中编写如下配置。</li>
+<li>Repository 是一个空接口(标记)，其中没有任何实现方法。</li>
 </ol>
+<pre class="language-java">
+<span class="token comment" spellcheck="true">// Repository 是一个空接口，其中没有任何实现方法</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Repository</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span> ID <span class="token keyword">extends</span> <span class="token class-name">Serializable</span><span class="token operator">></span> <span class="token punctuation">{</span> 
+
+
+
+<span class="token punctuation">}</span>
+</pre>
+<br>
+2. 当我们编写的接口继承 Repository 时。应该在spring的配置文件中编写如下配置。
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">jpa:</span>repositories</span> <span class="token attr-name">base-package</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity<span class="token punctuation">"</span></span> <span class="token attr-name">entity-manager-factory-ref</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>entityManagerFactory<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 </pre>
 <ol start="3">
-<li><font color="red">IOC 容器会扫描 base-package 指向的路径，若扫描到继承 Repository接口的类，ioc 容器会把它标记为  Repository bean </font>。<br>
+<li><font color="red">当spring 的ioc 容器开启时，IOC 容器会扫描 base-package 指向的路径，若扫描到继承 Repository接口的类，ioc 容器会把它标记为一个Repository bean </font>。<br>
 <br></li>
 <li>被标记为Repository bean，会被注入到ioc 容器中。<br>
 <br></li>
@@ -585,7 +603,7 @@ public interface PersonRepsotory extends Repository&lt;Person, Integer&gt;{
 		
 		<span class="token punctuation">}</span>
 </pre>
-<h3 class="mume-header" id="3repsotory%E7%9A%84%E5%AD%90%E6%8E%A5%E5%8F%A3">3.Repsotory的子接口:</h3>
+<h3 class="mume-header" id="3repsotory%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%90%E6%8E%A5%E5%8F%A3">3.Repsotory的几个子接口:</h3>
 
 <h4>①：CrudRepsotory : 继承自Repsotory， 实现了一组CRUD的方法。</h4>
 <h4>②：PagingAndSortingRepsotory : 继承自CrudRepsotory， 实现了一组分页排序的方法。</h4>
@@ -790,6 +808,76 @@ public interface PersonRepsotory extends Repository&lt;Person, Integer&gt;{
 <p>insert into jpa_person(id,name,gender,birth) values(?,?,?,?)</p>
 </blockquote>
 </font>
+<br>
+<h3 class="mume-header" id="4%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9Cupdateinsertdelete%E5%9C%A8springdata-jpa%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%80%E8%88%AC%E6%8A%8A%E6%B6%89%E5%8F%8A%E5%88%B0%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%8D%E6%94%BE%E5%9C%A8-xxxrepsotory-%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%8D%95%E7%8B%AC%E6%94%BE%E5%9C%A8service%E5%B1%82%E4%B8%AD">4.事务操作（update，insert，delete）在springdata jpa的使用（一般把涉及到事务操作的方法，不放在 XxxRepsotory 接口中，单独放在service层中）：</h3>
+
+<p>PersonRepsotory.java</p>
+<pre class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">PersonRepsotory</span> <span class="token keyword">extends</span> <span class="token class-name">Repository</span><span class="token operator">&lt;</span>Person<span class="token punctuation">,</span> Integer<span class="token operator">></span><span class="token punctuation">{</span>
+
+	
+	<span class="token annotation punctuation">@Modifying</span>
+	<span class="token annotation punctuation">@Query</span><span class="token punctuation">(</span><span class="token string">"UPDATE Person set name=?1 where id=?2"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span>  <span class="token function">update_name</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Modifying</span>
+	<span class="token annotation punctuation">@Query</span><span class="token punctuation">(</span><span class="token string">"delete from Person where id=?1"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete_PersonByid</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	
+<span class="token punctuation">}</span>
+
+</pre>
+<p>PersonService.java:</p>
+<pre class="language-java"><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonService</span><span class="token punctuation">{</span>
+
+	<span class="token comment" spellcheck="true">/*
+	  @Autowired 注解使用的前提条件，在配置文件中：
+					&lt;!--把实体包的类注入到ioc容器中-->
+					&lt;context:component-scan base-package="com.entity"/>
+	*/</span>
+
+	<span class="token annotation punctuation">@Autowired</span>
+	<span class="token keyword">private</span> PersonRepsotory personrepsotory<span class="token punctuation">;</span>
+
+	<span class="token comment" spellcheck="true">//设计到事务操作的方法，不放在 XxxRepsotory 接口中，单独放在service层中。</span>
+
+	<span class="token annotation punctuation">@Transactional</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		personrepsotory<span class="token punctuation">.</span><span class="token function">update_name</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Transactional</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span>Integer id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		personrepsotory<span class="token punctuation">.</span><span class="token function">delete_PersonByid</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre>
+<br>
+<p>test.java:</p>
+<pre class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">test</span> <span class="token punctuation">{</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		ApplicationContext app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ClassPathXmlApplicationContext</span><span class="token punctuation">(</span><span class="token string">"applicationContext.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment" spellcheck="true">//PersonRepsotory personRepsotory = app.getBean(PersonRepsotory.class);</span>
+		
+		PersonService pers<span class="token operator">=</span>app<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>PersonService<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		pers<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span><span class="token string">"xiaoming"</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		pers<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
+
+</pre>
 <h2 class="mume-header" id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</h2>
 
 <p><a href="https://www.cnblogs.com/liuyitian/p/4062748.html">Spring Data Jpa 详解 （配置篇）</a></p>
@@ -804,7 +892,7 @@ public interface PersonRepsotory extends Repository&lt;Person, Integer&gt;{
 <ul>
 <li><a href="#1%E7%BB%A7%E6%89%BFrepository-%E6%8E%A5%E5%8F%A3">1.继承Repository 接口:</a></li>
 <li><a href="#2%E5%AE%9E%E7%8E%B0repositorydefinition-%E6%B3%A8%E8%A7%A3">2.实现@RepositoryDefinition 注解:</a></li>
-<li><a href="#3repsotory%E7%9A%84%E5%AD%90%E6%8E%A5%E5%8F%A3">3.Repsotory的子接口:</a></li>
+<li><a href="#3repsotory%E7%9A%84%E5%87%A0%E4%B8%AA%E5%AD%90%E6%8E%A5%E5%8F%A3">3.Repsotory的几个子接口:</a></li>
 </ul>
 </li>
 <li><a href="#4%E5%9C%A8xxxrepsotory-%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%BC%96%E5%86%99crud%E6%96%B9%E6%B3%95crud%E6%96%B9%E6%B3%95%E7%BC%96%E5%86%99%E5%85%B7%E6%9C%89%E4%B8%80%E5%AE%9A%E7%9A%84%E8%A7%84%E5%88%99">4.在XxxRepsotory 接口中编写CRUD方法（CRUD方法编写具有一定的规则）：</a>
@@ -812,6 +900,7 @@ public interface PersonRepsotory extends Repository&lt;Person, Integer&gt;{
 <li><a href="#1%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E6%96%B9%E5%BC%8F%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95%E5%90%8D">1.使用关键字的方式定义方法名：</a></li>
 <li><a href="#2%E4%BD%BF%E7%94%A8-query-%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8F%AF%E4%BB%A5%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89-jpql-%E8%AF%AD%E5%8F%A5%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%9B%B4%E4%B8%BA%E5%A4%8D%E6%9D%82%E7%9A%84%E6%9F%A5%E8%AF%A2">2.使用 @Query 注解的方式（可以用自定义 JPQL 语句来实现更为复杂的查询）：</a></li>
 <li><a href="#3%E4%BD%BF%E7%94%A8-querymodifyingtransactional%E6%B3%A8%E8%A7%A3%E6%9D%A5%E5%AE%9E%E7%8E%B0update-deletespringdata-%E7%9A%84jpql%E8%AF%AD%E5%8F%A5%E4%B8%8D%E6%94%AF%E6%8C%81-insert%E4%BD%86%E5%8F%AF%E4%BB%A5%E7%94%A8sql%E7%9A%84%E6%96%B9%E5%BC%8F%E7%BC%96%E5%86%99insert">3.使用 @Query,@Modifying,@Transactional注解来实现update, delete（springdata 的jpql语句不支持 insert，但可以用sql的方式编写insert）：</a></li>
+<li><a href="#4%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9Cupdateinsertdelete%E5%9C%A8springdata-jpa%E7%9A%84%E4%BD%BF%E7%94%A8%E4%B8%80%E8%88%AC%E6%8A%8A%E6%B6%89%E5%8F%8A%E5%88%B0%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%8D%E6%94%BE%E5%9C%A8-xxxrepsotory-%E6%8E%A5%E5%8F%A3%E4%B8%AD%E5%8D%95%E7%8B%AC%E6%94%BE%E5%9C%A8service%E5%B1%82%E4%B8%AD">4.事务操作（update，insert，delete）在springdata jpa的使用（一般把涉及到事务操作的方法，不放在 XxxRepsotory 接口中，单独放在service层中）：</a></li>
 </ul>
 </li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料：</a></li>
