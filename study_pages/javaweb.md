@@ -1802,6 +1802,1293 @@ public class test_jdbc {
 
 ```
 
+---
+
+## Javaweb 实现CRUD的例子（商品表，订单表）：
+
+![项目路径图](../img/javaweb_img/demo_1.png)
+
+
+<h4>①.创建数据库,导入jar包：</h4>
+1. 创建goods表，其中oid 字段对应 orders表的id： 
+
+![goods表](../img/javaweb_img/demo_2.png)
+
+2. 创建orders表（<font color="red">注意：order 是mysql 数据库的关键字，无法作为表名。</font>）
+
+![orders表](../img/javaweb_img/demo_3.png)
+
+
+需要的jar包：
+> jstl-1.2.jar
+> mysql-connector-java-5.1.42-bin.jar
+
+
+<h4>②.创建实体类bean：</h4>
+
+```java
+
+package com.entity;
+public class Goods {
+	private Integer id;
+	private Integer oid;
+	private String gname;
+	private Double gprice;
+	public Goods() {}
+	public Goods(Integer id, Integer oid, String gname, Double gprice) {
+		super();
+		this.id = id;
+		this.oid = oid;
+		this.gname = gname;
+		this.gprice = gprice;
+	}
+	// get/set/toString 方法省略
+}
+
+```
+
+```java
+package com.entity;
+
+import java.util.Date;
+import java.util.List;
+
+public class Orders {
+	private Integer id;
+	private String name;
+	private Date birth;                       //Date 是日期类型 例如： 2017-12-18 
+	private Goods goods;
+	
+	public Orders(){}
+	public Orders(Integer id, String name, Date birth) {
+		this.id = id;
+		this.name = name;
+		this.birth = birth;
+	}
+	public Orders(Integer id, String name, Date birth, Goods goods) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birth = birth;
+		this.goods = goods;
+	}
+	// get/set/toString 方法省略
+}
+
+```
+
+
+<h4>③.创建与数据库的连接：</h4>
+
+```java
+package com.link;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Linkdb {
+	private static String url="jdbc:mysql://localhost:3306/test";
+	private static String username="root";
+	private static String password="root";
+	
+	public static Connection getlinkDB(){
+		Connection conn=null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn=DriverManager.getConnection(url, username, password);
+		} catch (SQLException e) {
+			System.out.println("link shibai");
+		}catch(ClassNotFoundException e){
+			System.out.println("link shibai22222");
+
+		}finally{
+			if(conn==null){
+				System.out.println("link shibai3333");
+			}
+		}
+		return conn;	
+	}
+}
+
+```
+
+<h4>④.Dao层(直接用实体类bean和 SQL语句来操作数据库)：</h4>
+
+Goodsdao.java：
+```java
+package com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.entity.Goods;
+import com.link.Linkdb;
+
+/*
+ * 这里为 dao层 ，直接操作 实体类 和sql 语句来实现对数据的操作（增删改查）
+ * 
+ * */
+public class GoodsDao {
+	
+	private static Connection conn=Linkdb.getlinkDB();  //获取数据库连接
+	
+	/** insert
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
+	public int insert(Goods g) throws SQLException{
+    	String sql="insert into goods(oid, gname,gprice) values(?,?,?) ";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, g.getOid());
+		pstmt.setString(2,g.getGname());
+		pstmt.setDouble(3,g.getGprice());
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("insert shibai ");
+		}
+		return a;
+	}
+	
+	
+	/** delete
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public int delete(Integer id) throws SQLException{
+		String sql="delete from goods where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,id);
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("delete shibai ");
+		}
+		return a;
+	}
+	
+	
+	/** deleteByOid
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deleteByOid(Integer oid) throws SQLException{
+		String sql="delete from goods where oid=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,oid);
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("deleteByOid shibai ");
+		}
+		return a;
+	}
+	
+	
+	/** update
+	 * @param id
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
+	public int update(Goods g) throws SQLException{
+		String sql="update goods set  gname=? , gprice=?  where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, g.getGname());
+		pstmt.setDouble(2,g.getGprice());
+		pstmt.setInt(3, g.getId());
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("update shibai ");
+		}
+		return a;
+	}
+	
+	
+	
+	/** selectone 
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public Goods selectone(Integer id) throws SQLException{
+		Goods goods=new Goods();
+		String sql="select * from goods where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, id);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()){
+			goods.setId(rs.getInt("id"));
+			goods.setOid(rs.getInt("oid"));
+			goods.setGname(rs.getString("gname"));
+			goods.setGprice(rs.getDouble("gprice"));
+		}
+		return goods;
+	}
+	
+	
+
+	/** selectAll
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Goods> selectAll() throws SQLException{
+		List<Goods> listGoods=new ArrayList<Goods>();
+		String sql="select * from goods";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+	
+		while(rs.next()){
+			Goods ods=new Goods(rs.getInt("id"),rs.getInt("oid"),rs.getString("gname"),rs.getDouble("gprice"));
+			listGoods.add(ods);
+		}
+		return listGoods;
+	}
+
+
+	/**查询某个订单下的全部商品
+	 * @param oid
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Goods> selectByoid(Integer oid) throws SQLException {
+		List<Goods> goodslist=new ArrayList<Goods>();
+		String sql="select * from goods where oid=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, oid);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()){
+			Goods goods=new Goods();
+			goods.setId(rs.getInt("id"));
+			goods.setOid(rs.getInt("oid"));
+			goods.setGname(rs.getString("gname"));
+			goods.setGprice(rs.getDouble("gprice"));
+			goodslist.add(goods);            //把结果集的数据放到List<Goods> 中
+		}
+		return goodslist;
+		
+	}
+
+
+	/**通过id 查询某个表单下的商品
+	 * @param id
+	 * @param oid
+	 * @return
+	 * @throws SQLException
+	 */
+	public Goods selectByoidAndid(Integer id, Integer oid) throws SQLException {
+		Goods goods=new Goods();
+		String sql="select * from goods where oid=? and id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, oid);
+		pstmt.setInt(2, id);
+		ResultSet rs = pstmt.executeQuery();
+
+		while(rs.next()){
+			goods.setId(rs.getInt("id"));
+			goods.setOid(rs.getInt("oid"));
+			goods.setGname(rs.getString("gname"));
+			goods.setGprice(rs.getDouble("gprice"));
+		}
+		return goods;
+	}
+	
+}
+
+```
+
+
+OrdersDao.java:
+```java
+package com.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.entity.Goods;
+import com.entity.Orders;
+import com.link.Linkdb;
+
+/*
+ * 这里为 dao层 ，直接操作 实体类 和sql 语句来实现对数据的操作（增删改查）
+ * 
+ * */
+public class OrdersDao {
+	
+	private static Connection conn=Linkdb.getlinkDB();  //获取数据库连接
+	
+	
+	/** insert
+	 * 
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
+	public int insert(Orders o) throws SQLException{
+    	String sql="insert into orders(name, birth) values(?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,o.getName());
+		pstmt.setDate(2,(java.sql.Date) o.getBirth());
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("insert shibai ");
+		}
+		return a;       //返回insert orders表生成的主键id值
+	 
+	}
+	
+	
+	/** delete
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public int delete(Integer id) throws SQLException{
+		String sql="delete from orders where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,id);
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("delete shibai ");
+		}
+		return a;
+	}
+	
+	
+	/** update
+	 * @param id
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
+	public int update(Orders o) throws SQLException{
+		String sql="update orders set name=? , birth=? where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,o.getName());
+		pstmt.setDate(2, (java.sql.Date) o.getBirth());
+		pstmt.setInt(3,o.getId());
+		
+		int a = pstmt.executeUpdate();
+		if(a==0){
+			System.out.println("update shibai ");
+		}
+		return a;
+	}
+	
+	
+	
+	/** selectone 
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public Orders selectone(Integer id) throws SQLException{
+		Orders orders=new Orders();
+		String sql="select * from orders where id=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, id);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()){
+			orders.setId(rs.getInt("id"));
+			orders.setName(rs.getString("name"));
+			orders.setBirth(rs.getDate("birth"));
+		}
+		return orders;
+	}
+	
+	
+
+	/** selectAll  
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Orders> selectAll() throws SQLException{
+		List<Orders> listorders=new ArrayList<Orders>();
+		String sql="select * from orders";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()){
+			Orders ods=new Orders(rs.getInt("id"),rs.getString("name"),rs.getDate("birth"));
+			listorders.add(ods);
+		}
+		return listorders;
+	}
+}
+
+```
+
+
+<h4>⑤：Service层（对Dao层的封装）：</h4>
+
+GoodsService.java：
+```java
+package com.service;
+import java.sql.SQLException;
+import java.util.List;
+import com.dao.GoodsDao;
+import com.entity.Goods;
+
+/*
+ * 这里是 service 层，一般用于对dao 层的方法进行封装，因为有些操作需要多个 dao层的方法联合使用
+ * 
+ * */
+public class GoodsService {
+	
+	GoodsDao goodsdao=new GoodsDao();	
+	
+	public int insert(Goods o) throws SQLException{
+		return goodsdao.insert(o);
+	}
+	
+	public int delete(Integer id) throws SQLException{
+		return goodsdao.delete(id);
+	}
+	
+	public int deleteByOid(Integer oid) throws SQLException{
+		return goodsdao.deleteByOid(oid);
+	}
+
+	public int update(Goods o) throws SQLException{
+		return goodsdao.update(o);
+	}
+	
+	public Goods selectone(Integer id) throws SQLException{
+		return goodsdao.selectone(id);
+	}
+	
+	public List<Goods> selectAll() throws SQLException{
+		return goodsdao.selectAll();
+	}
+
+	public List<Goods> selectByoid(Integer oid) throws SQLException {
+		return goodsdao.selectByoid(oid);
+	}
+
+	//通过id查询该订单表的商品,如果该订单表没有该id的商品，显示无。
+	public Goods selectByoidAndid(Integer id, Integer oid) throws SQLException {
+		return goodsdao.selectByoidAndid(id,oid);
+	}
+	
+}
+
+```
+
+OrdersService.java:
+```java
+package com.service;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.dao.OrdersDao;
+import com.entity.Orders;
+/*
+ * 这里是 service 层，一般用于对dao 层的方法进行封装，因为有些操作需要多个 dao层的方法联合使用
+ * 
+ * */
+public class OrdersService {
+	
+	OrdersDao orderdao=new OrdersDao();	
+	
+	public int insert(Orders o) throws SQLException{
+	    return orderdao.insert(o);
+	}
+	
+	public int delete(Integer id) throws SQLException{
+		return orderdao.delete(id);
+	}
+	
+	public int update(Orders o) throws SQLException{
+		return orderdao.update(o);
+	}
+	
+	public Orders selectone(Integer id) throws SQLException{
+		return orderdao.selectone(id);
+	}
+	
+	public List<Orders> selectAll() throws SQLException{
+		return orderdao.selectAll();
+	}
+
+}
+
+```
+
+<h4>⑥：Controller层（对Service层的封装）</h4>
+
+GoodsController.java:
+```java
+package com.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.entity.Goods;
+import com.service.GoodsService;
+/*
+ * 
+ * 这里是 Controller 层，一般用于对service 层的方法进行封装，因为有些业务操作需要多个 service 层的方法联合使用。
+ * */
+public class GoodsController {
+	
+	GoodsService goodsservice=new GoodsService();
+	
+	public int insert(Goods o) throws SQLException{
+		return goodsservice.insert(o);
+	}
+	
+	public int delete(Integer id) throws SQLException{
+		 return goodsservice.delete(id);
+	}
+	
+	
+	public int deleteByOid(Integer oid) throws SQLException{
+		 return goodsservice.deleteByOid(oid);
+	}
+	
+	public int update(Goods o) throws SQLException{
+		 return goodsservice.update(o);
+	}
+	
+	
+	public Goods selectone(Integer id) throws SQLException{
+		 return goodsservice.selectone(id);
+	}
+	
+	//查询该表单下的所有商品
+	public List<Goods> selectByoid(Integer oid) throws SQLException{
+		 return goodsservice.selectByoid(oid);
+	}
+	
+	//通过id查询该订单表的商品,如果该订单表没有该id的商品，显示无。
+	public Goods selectByoidAndid(Integer id,Integer oid) throws SQLException{
+		 return goodsservice.selectByoidAndid(id,oid);
+	}
+	
+	
+	public List<Goods> selectAll() throws SQLException{
+		 return goodsservice.selectAll();
+	}
+
+}
+
+```
+
+OrdersController.java:
+```java
+package com.controller;
+import java.sql.SQLException;
+import java.util.List;
+import com.entity.Orders;
+import com.service.OrdersService;
+/*
+ * 
+ * 这里是 Controller 层，一般用于对service 层的方法进行封装，因为有些业务操作需要多个 service 层的方法联合使用。
+ * */
+public class OrdersController {
+	
+	OrdersService ordersservice=new OrdersService();
+	
+	public int insert(Orders o) throws SQLException{
+		return ordersservice.insert(o);
+	}
+	
+	public int delete(Integer id) throws SQLException{
+		 return ordersservice.delete(id);
+	}
+	
+	
+	public int update(Orders o) throws SQLException{
+		 return ordersservice.update(o);
+	}
+	
+	
+	public Orders selectone(Integer id) throws SQLException{
+		 return ordersservice.selectone(id);
+	}
+	
+	
+	public List<Orders> selectAll() throws SQLException{
+		 return ordersservice.selectAll();
+	}
+
+}
+
+```
+
+<h4>⑦：编写字符编码过滤器：</h4>
+
+```java
+
+package com.filter;
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+
+/**
+   /* 表示对每个请求都要进行过滤操作，
+ 
+@WebFilter("/*") 表示用注解的配置该过滤器的映射路径，这样可以不用在web.xml中使用xml标签进行映射路径的配置。
+
+ */
+@WebFilter("/*")
+public class Encoding implements Filter {
+
+	/*
+	 * 设置编码过滤器，对每个请求都进行编码设置，防止中文乱码
+	 * */
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	
+	request.setCharacterEncoding("utf-8");         //设置请求的字符编码变为utf-8
+	response.setContentType("text/html;charset=utf-8");  //设置响应的字符编码变为utf-8
+		chain.doFilter(request, response);
+	}
+
+	@Override
+	public void destroy() {
+		System.out.println("filter destory");
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		System.out.println("filter init");
+	}
+
+	
+}
+
+```
+
+
+<h4>⑧：编写Servlet文件：</h4>
+<font color="red">
+注意：
+
+OrdersDispathServlet : 处理从ShowOrders.jsp 页面发送的请求(通过code值的不同，进行CRUD)。
+OrdersList  ： 处理从 OrdersDispathServlet 发送的请求（通过status值的不同，来决定是全查还是根据条件查询），并跳转到ShowOrders.jsp 页面。
+
+GoodsDispathServlet  ： 处理从GoodsEdit.jsp 页面发送的请求(通过code值的不同，进行CRUD)。
+Goodslist  ：处理从 GoodsDispathServlet 发送的请求（通过status值的不同，来决定是全查还是根据条件查询），并跳转到GoodsEdit.jsp 页面。
+
+</font>
+
+OrdersDispathServlet.java: 
+```java
+package com.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.jasper.tagplugins.jstl.core.Out;
+
+import com.controller.GoodsController;
+import com.controller.OrdersController;
+import com.entity.Goods;
+import com.entity.Orders;
+
+/**
+ *   /OrdersDispathServlet  ： 表示这个servlet的映射路径，   使用@WebServlet 可以省略在web.xml 上使用xml标签进行servlet的配置
+ */
+@WebServlet("/OrdersDispathServlet")
+public class OrdersDispathServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	/*
+	 * 该servlet 初步实现了对不同的请求进行不同的处理，主要通过code 来识别不同的请求
+	 * */
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int success=0;
+		OrdersController ordersc=new OrdersController();
+		GoodsController goodsc=new GoodsController();
+		Integer code = Integer.valueOf(request.getParameter("code"));
+		System.out.println("code   "+code);
+		
+		/* code    1：insert  2:delete  3:update  4: 输入框有值式：selectone ，输入框无值时：selectAll
+		 * status  1：全查（有关联的 ）   2:单查（有关联的）
+		 * 
+		 * success ：表示数据操作状态， 0： 表示插入失败，更新失败 ,删除失败 。      1：表示成功
+		 * */
+		if(code==1) {
+		    Orders o=new Orders();
+			String name=request.getParameter("name");
+			Date birth=Date.valueOf(request.getParameter("birth"));
+			o.setName(name);
+			o.setBirth(birth);
+			try {
+				success=ordersc.insert(o);	  //insert orders表.返回1 表示insert成功 ，0表示失败
+				request.getRequestDispatcher("/OrdersList?status=1&success="+success).forward(request, response);//从该servlet 调用 另一个servlet，并传值status=1
+			} catch (SQLException e) {
+				System.out.println("OrdersDispathServlet insert error");
+			}
+			
+
+		}else if(code==2) {
+			Integer id=Integer.valueOf(request.getParameter("id"));     
+			try {
+				/*
+				 * 根据id删除Orders表的数据，和与之关联的goods表的数据
+				 * */
+				success=ordersc.delete(id);       
+				goodsc.deleteByOid(id);
+				request.getRequestDispatcher("/OrdersList?status=1&success="+success).forward(request, response); 
+				
+			} catch (SQLException e) {
+				System.out.println("OrdersDispathServlet delete error");
+			}
+			
+		}else if(code==3) {
+			Orders o=new Orders();
+			Integer id=Integer.valueOf(request.getParameter("id"));
+			String name=request.getParameter("name");
+			Date birth=Date.valueOf(request.getParameter("birth"));
+			o.setId(id);
+			o.setName(name);
+			o.setBirth(birth);
+			
+			try {
+				success=ordersc.update(o);
+				request.getRequestDispatcher("/OrdersList?status=1&success="+success).forward(request, response);    
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("OrdersDispathServlet update error");
+			}
+			
+		}else if(code==4) {
+			/*
+			 * code=4 表示查询，如果没有id值，表示全查，否则根据id查
+			 * 
+			 * */
+			String id=request.getParameter("id");
+			if(id.equals("")==true) {
+				request.getRequestDispatcher("/OrdersList?status=1").forward(request, response);               
+			}else {
+				request.getRequestDispatcher("/OrdersList?status=2&id="+id).forward(request, response);              
+			}
+		}
+	
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		doGet(request, response);
+	}
+
+}
+
+```
+
+OrdersList.java:
+```java
+package com.servlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.controller.OrdersController;
+import com.entity.Orders;
+
+/**
+ * 配置 @WebServlet(value="/OrdersList") ，就相当于在web.xml 文件配置该servlet。 映射路径为/OrdersList
+ * 
+ */
+@WebServlet(value="/OrdersList")
+public class OrdersList extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Orders> orderslist=new ArrayList<Orders>();
+		OrdersController orderc=new OrdersController();
+		String status = request.getParameter("status");	
+		String success=request.getParameter("success");
+		System.out.println("status : "+status+"   success : "+success);
+		
+		/*
+		 *  status  1：全查   2:单查
+		 *  success ：表示数据操作状态， 0： 表示插入失败，更新失败 ,删除失败 。      1：表示成功
+		 * */
+		if(status.equals("1")) {
+			try {
+				orderslist = orderc.selectAll();
+				request.setAttribute("orderslist", orderslist);
+				request.getRequestDispatcher("ShowOrders.jsp?success="+success).forward(request, response);//重定向到ShowOrders.jsp 页面，并把orderslist带回
+			} catch (SQLException e) {
+				System.out.println("OrdersList servlet  全查    error");
+			}
+			
+			
+			
+		}else if(status.equals("2")) {
+			
+			Integer id=Integer.valueOf(request.getParameter("id"));
+			try {
+				Orders selectone = orderc.selectone(id);   //单个查询返回的是Orders对象
+			    orderslist.add(selectone);       
+				request.setAttribute("orderslist", orderslist);
+				request.getRequestDispatcher("ShowOrders.jsp?success="+success).forward(request, response);
+			} catch (SQLException e) {
+				System.out.println("OrdersList  servlet 单查    shibai ");
+			}
+			
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
+
+```
+
+GoodsDispathServlet.java:
+```java
+package com.servlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.controller.GoodsController;
+import com.entity.Goods;
+
+@WebServlet("/GoodsDispathServlet")
+public class GoodsDispathServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int success=0;
+		GoodsController goodsc=new GoodsController();
+		Integer code=Integer.valueOf(request.getParameter("code"));
+		Integer oid=Integer.valueOf(request.getParameter("oid"));
+		System.out.println("code  "+code+"   oid   "+oid);
+			/*
+			 * code 1:insert  2:delete  3:update  4:输入框有值式：selectone ，输入框无值时：selectAll
+			 * status  1：全查     2:单查
+			 * success ：表示数据操作状态， 0： 表示插入失败，更新失败 ,删除失败 。      1：表示成功
+			 * 
+			 * oid ： 表示商品表的订单id ,连接订单表与商品表的纽带。
+			 * */
+			if(code==1) {
+				String gname=request.getParameter("gname");
+				Double gprice=Double.valueOf(request.getParameter("gprice"));
+				Goods good=new Goods();
+				good.setOid(oid);
+				good.setGname(gname);
+				good.setGprice(gprice);
+				
+				try {
+					success=goodsc.insert(good);      //insert goods表.返回1 表示insert成功 ，0表示失败
+					request.getRequestDispatcher("/Goodslist?status=1&oid="+oid+"&success="+success).forward(request, response);		
+				} catch (SQLException e) {
+					System.out.println(" GoodsDispathServlet  code=1  error ");
+				}
+				
+			}else if(code==2) {
+				Integer id=Integer.valueOf(request.getParameter("id"));
+				try {
+					success=goodsc.delete(id);
+					request.getRequestDispatcher("/Goodslist?status=1&oid="+oid+"&success"+success).forward(request, response);
+				} catch (SQLException e) {
+					System.out.println(" GoodsDispathServlet  code=2  error ");
+				}
+			}else if(code==3) {
+				Integer id=Integer.valueOf(request.getParameter("id"));
+				String gname=request.getParameter("gname");
+				Double gprice=Double.valueOf(request.getParameter("gprice"));
+				
+				Goods good=new Goods();
+				good.setId(id);
+				good.setGname(gname);
+				good.setGprice(gprice);
+				try {
+					success=goodsc.update(good);
+					request.getRequestDispatcher("/Goodslist?status=1&oid="+oid+"&success="+success).forward(request, response);		
+				} catch (SQLException e) {
+					System.out.println(" GoodsDispathServlet  code=3  error ");
+				}
+			}else if(code==4) {
+				String id=request.getParameter("id");
+				if(id=="") {
+					request.getRequestDispatcher("/Goodslist?status=1&oid="+oid).forward(request, response);		
+				}else {
+					Integer id2=Integer.valueOf(id);
+					request.getRequestDispatcher("/Goodslist?status=2&id="+id2+"&oid="+oid).forward(request, response);
+				}
+				
+			}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
+
+```
+
+Goodslist.java:
+```java
+package com.servlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.controller.GoodsController;
+import com.entity.Goods;
+
+/**
+ * Servlet implementation class Goodslist
+ */
+@WebServlet("/Goodslist")
+public class Goodslist extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		GoodsController goodsc=new GoodsController();
+		List<Goods> goodslist =new ArrayList<Goods>();
+		String status=request.getParameter("status");
+		String success=request.getParameter("success");
+		System.out.println("status : "+status+"   success: "+success);
+		
+		/*
+		 * status  1:查询该表单下的全部商品       2：通过id 查询该表单下的商品
+		 * success ：表示数据操作状态， 0： 表示插入失败，更新失败 ,删除失败 。      1：表示成功
+		 * oid ： 表示商品表的订单id ,连接订单表与商品表的纽带。
+		 * */
+		if(status.equals("1")) {
+			Integer oid=Integer.valueOf(request.getParameter("oid"));
+			try {
+				goodslist = goodsc.selectByoid(oid);
+				request.setAttribute("goodslist", goodslist);
+				request.getRequestDispatcher("GoodsEdit.jsp?oid="+oid+"&success="+success).forward(request, response);
+			} catch (SQLException e) {
+				System.out.println("Goodslist  doGet  error 111");
+			}
+			
+		}else if(status.equals("2")) {
+			Integer id=Integer.valueOf(request.getParameter("id"));
+			Integer oid=Integer.valueOf(request.getParameter("oid"));
+			try {
+				goodslist.add(goodsc.selectByoidAndid(id, oid));
+				request.setAttribute("goodslist", goodslist);
+				request.getRequestDispatcher("GoodsEdit.jsp?oid="+oid+"&success="+success).forward(request, response);
+			} catch (SQLException e) {
+				System.out.println("Goodslist  doGet  error 222");
+			}
+			
+		}
+		
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doGet(request, response);
+	}
+
+}
+
+```
+
+
+<h4>⑨：编写jsp：</h4>
+
+ShowOrders.jsp:
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<!--使用jstl 标签 需要的配置-->  
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ShowOrders.jsp</title>
+</head>
+<body>
+
+<table border="1">
+	<tr>
+		<th>序号</th>
+		<th>id</th>
+		<th>name</th>
+		<th>birth</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+	<c:forEach items="${orderslist }" var="aa" varStatus="vst"> <!-- varStatus="vst" 该属性给遍历的数据设置序号，  ${vst.count } 从1开始，逐次递增   -->
+		<tr>
+			<c:if test="${aa.id != null }">
+			<td>${vst.count }</td>
+			</c:if>
+			<c:if test="${aa.id == null }">
+			<script>alert("列表为空");</script>
+			</c:if>
+			<td>${aa.id }</td>
+			<td>${aa.name }</td>
+			<td>${aa.birth }</td>
+			<c:if test="${aa.id >0 }">    <!-- 当列表有数据时，才显示edit选项 -->
+			<td><a href="Goodslist?status=1&oid=${aa.id }">edit</a></td>
+			</c:if>
+			<c:if test="${aa.id >0 }">    <!-- 当列表有数据时，才显示delete选项 -->
+			<td><a href="OrdersDispathServlet?code=2&id=${aa.id }">delete</a></td>
+			</c:if>
+		</tr>
+	</c:forEach>
+</table>
+
+
+<br/>
+insert
+<form action="OrdersDispathServlet?code=1" method="post" onsubmit="return check(this)">
+name:<input name="name" type="text"/>
+birth:<input type="date" name="birth"/>
+<input type="submit" value="submit"/>
+</form>
+
+<br/>
+update(根据id更新)
+<form action="OrdersDispathServlet?code=3" method="post" onsubmit="return check(this)">
+id:<input type="text" name="id"/>
+name:<input name="name" type="text"/>
+birth:<input type="date" name="birth"/>
+<input type="submit" value="submit" />
+</form>
+
+
+<br/>
+selectone/selectAll(通过id查询。输入框为空，全查)
+<form  action="OrdersDispathServlet?code=4" method="post">
+id:<input type="text" name="id"/>
+<input type="submit" value="submit"/>
+</form>
+
+
+</body>
+<script type="text/javascript">
+
+//校验form表单的input 输入框是否为空
+
+    function check(form) {
+
+		  if(form.id.value=='') {
+		           alert("请输入用户id!");
+		           form.id.focus();
+		           return false;
+		  }
+		  if(form.name.value=='') {
+	           alert("请输入用户姓名!");
+	           form.name.focus();
+	           return false;
+	      }
+		  if(form.birth.value==''){
+		           alert("请输入日期!");
+		           form.birth.focus();
+		           return false;
+		  }
+		  return true;
+    }
+    
+// 通过Goodslist 这个servlet 传来的success 状态码 ，来判断当前操作 是否成功
+
+	<c:if test="${param.success == '1'}">
+		alert("操作成功");
+	</c:if>
+	<c:if test="${param.success == '0'}">
+	alert("操作失败");
+	</c:if>
+ 
+</script>
+
+</html>
+```
+
+GoodsEdit.jsp:
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!--使用jstl 标签 需要的配置-->  
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GoodsEdit.jsp</title>
+</head>
+<body>
+
+<table border="1">
+	<tr>
+		<th>序号</th>
+		<th>id</th>
+		<th>oid</th>
+		<th>gname</th>
+		<th>gprice</th>
+		<th>delete</th>
+	</tr>
+	<c:forEach items="${goodslist }" var="aa" varStatus="vst"> <!-- varStatus="vst" 该属性给遍历的数据设置序号，  ${vst.count } 从1开始，逐次递增   -->
+		<tr>
+			<c:if test="${aa.id != null }">
+			<td>${vst.count }</td>
+			</c:if>
+			<c:if test="${aa.id == null }">
+			<script>alert("列表为空");</script>
+			</c:if>
+			<td>${aa.id }</td>
+			<td>${aa.oid }</td>
+			<td>${aa.gname }</td>
+			<td>${aa.gprice }</td>
+			<c:if test="${aa.id >0 }">    <!-- 当列表有数据时，才显示delete选项 -->
+			<td><a href="GoodsDispathServlet?code=2&id=${aa.id }&oid=${aa.oid}">delete</a></td>
+			</c:if>
+		</tr>
+	</c:forEach>
+</table>
+
+
+
+<br/>
+insert
+<form action="GoodsDispathServlet?code=1"  method="post" onsubmit="return check(this)">
+<input type="hidden" name="oid" value="${param.oid}">   <!-- type="hidden" 表示该input 框隐藏 -->
+gname:<input type="text" name="gname"/>
+gprice:<input type="text" name="gprice"/>
+<input type="submit" value="submit"/>
+</form>
+
+<br/>
+update(根据id修改)
+<form action="GoodsDispathServlet?code=3" method="post" onsubmit="return check(this)">
+id:<input type="text" name="id"/>
+<input type="hidden" name="oid" value="${param.oid}">
+gname:<input type="text" name="gname"/>
+gprice:<input type="text" name="gprice"/>
+<input type="submit" value="submit" />
+</form>
+
+
+<br/>
+selectone/selectAll(输入框为空，根据oid查询该表单下的全部商品，否则根据id查该表单的商品)
+<form  action="GoodsDispathServlet?code=4" method="post">
+id:<input type="text" name="id"/>
+<input type="hidden" name="oid" value="${param.oid}">
+<input type="submit" value="submit"/>
+</form>
+
+<br/>
+<a href="ShowOrders.jsp">查看订单信息</a>
+
+</body>
+<script type="text/javascript">
+
+//校验form表单的input 输入框是否为空
+
+    function check(form) {
+
+		  if(form.id.value=='') {
+		           alert("请输入商品id!");
+		           form.id.focus();
+		           return false;
+		  }
+		  if(form.gname.value=='') {
+	           alert("请输入商品姓名!");
+	           form.gname.focus();
+	           return false;
+	      }
+		  if(form.gprice.value==''){
+		           alert("请商品价格!");
+		           form.gprice.focus();
+		           return false;
+		  }
+		  return true;
+    }
+    
+    
+ // 通过Orderslist 这个servlet 传来的success 状态码 ，来判断当前操作 是否成功
+ 	<c:if test="${param.success == '1'}">
+ 		alert("操作成功");
+ 	</c:if>
+ 	<c:if test="${param.success == '0'}">
+ 	alert("操作失败");
+ 	</c:if>
+ 	
+</script>
+
+</body>
+</html>
+
+```
+
+
+<h4>⑩：运行截图：</h4>
+订单编辑页面：
+
+![showorders.jsp](../img/javaweb_img/demo_4.png)
+
+某个订单下的商品编辑页面：
+
+![goodsedit.jsp](../img/javaweb_img/demo_5.png)
 
 
 
