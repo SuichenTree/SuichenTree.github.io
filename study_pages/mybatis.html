@@ -5,7 +5,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\18271\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.0\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
       
       
       
@@ -313,26 +316,27 @@ code.language-yaml {
 </li>
 <li><a href="#mybatis%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%9C%8B%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">Mybatis的事务(看参考链接)：</a></li>
 <li><a href="#spring-%E4%B8%8E-mybatis-%E7%9A%84%E6%95%B4%E5%90%88">Spring 与 Mybatis 的整合 ：</a></li>
+<li><a href="#mybatis%E7%9A%84%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B">Mybatis的逆向工程：</a></li>
 </ul>
 </li>
 </ul>
 <h1 class="mume-header" id="mybatis">Mybatis</h1>
 
-<h2 class="mume-header" id="&#x6982;&#x8FF0;">概述：</h2>
+<h2 class="mume-header" id="%E6%A6%82%E8%BF%B0">概述：</h2>
 
 <p>  MyBatis 是支持定制化 SQL、存储过程以及高级映射的优秀的持久层框架。MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。MyBatis 可以对配置和原生Map使用简单的 XML 或注解，将接口和 Java 的 POJOs(Plain Old Java Objects,普通的 Java对象)映射成数据库中的记录。</p>
-<h2 class="mume-header" id="orm&#x6846;&#x67B6;">ORM框架：</h2>
+<h2 class="mume-header" id="orm%E6%A1%86%E6%9E%B6">ORM框架：</h2>
 
 <p>目前流行的ORM框架：<br>
 JPA , <a href="https://baike.baidu.com/item/Hibernate/206989?fr=aladdin">Hibernate</a> , <font color="red">Mybatis(半ORM框架)</font></p>
 <p>Hibernate： 会根据数据库的表的结构，自动生成SQL语句，它提供全面的数据库封装机制。<br>
 Mybatis：这里的半ORM框架，是相对与Hibernate 这种提供全面的数据库封装机制的“全自动化ORM框架”而言。mybatis不会为程序员在运行期间自动生成 sql 语句执行，具体的sql 语句需要程序员自己编写，然后通过映射配置文件，把sql语句与持久化类进行一一对应。</p>
-<h3 class="mume-header" id="1&#x6982;&#x8FF0;">1.概述：</h3>
+<h3 class="mume-header" id="1%E6%A6%82%E8%BF%B0">1.概述：</h3>
 
 <p>  <strong>对象关系映射</strong>(<font color="red">Object Relational Mapping</font>，简称ORM，或O/RM，或O/R mapping），是一种程序技术，用于实现面向对象编程语言里不同类型系统的数据之间的转换。从效果上说，它其实是创建了一个可在编程语言里使用的--“虚拟对象数据库”。<br>
   对象关系映射技术:<strong><font color="red">用来把对象模型表示的对象映射到基于S Q L 的关系模型数据库结构中去</font></strong>。这样，我们在具体的操作实体对象的时候，就<strong color="blue">不需要再去和复杂的 SQ L 语句打交道，只需简单的操作实体对象的属性和方法</strong>。<br>
 O R M 技术是在对象和关系之间提供了一条桥梁，前台的对象型数据和数据库中的关系型的数据通过这个桥梁来相互转化。</p>
-<h3 class="mume-header" id="2orm&#x6846;&#x67B6;&#x7684;&#x57FA;&#x672C;&#x6620;&#x5C04;&#x65B9;&#x5F0F;">2.ORM框架的基本映射方式：</h3>
+<h3 class="mume-header" id="2orm%E6%A1%86%E6%9E%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%98%A0%E5%B0%84%E6%96%B9%E5%BC%8F">2.ORM框架的基本映射方式：</h3>
 
 <ol>
 <li>数据表映射类（持久化类/实体类/entity/pojo）：<br>
@@ -342,7 +346,7 @@ O R M 技术是在对象和关系之间提供了一条桥梁，前台的对象�
 <li>数据表的列（字段）映射对象的属性：<br>
   <strong>当程序修改某个持久化类的某个实例化对象的属性时，就相当与修改某数据表的某一条记录的某一个列（字段）的数据。</strong></li>
 </ol>
-<h2 class="mume-header" id="mybatis&#x7684;&#x4F7F;&#x7528;&#x524D;&#x63D0;">mybatis的使用前提：</h2>
+<h2 class="mume-header" id="mybatis%E7%9A%84%E4%BD%BF%E7%94%A8%E5%89%8D%E6%8F%90">mybatis的使用前提：</h2>
 
 <p>①要使用 MyBatis， 只需将 mybatis-x.x.x.jar 文件置于应用程序的 classpath 中即可。<font color="red">由于Mybatis的底层是基于JDBC 的，因此还要还少不了JDBC驱动的，不同的数据库使用不同的数据库驱动。我这里使用的是MySQL数据库。</font></p>
 <p>Mysql的数据库驱动 ： mysql-connector-java-5.1.42-bin.jar<br>
@@ -362,11 +366,11 @@ Mybatis jar包：mybatis-3.4.3.jar</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">></span></span>
 </pre>
-<h2 class="mume-header" id="mybatis&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x6587;&#x4EF6;sql&#x6620;&#x5C04;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x8BB2;&#x89E3;">Mybatis的配置文件（全局配置文件，SQL映射配置文件）讲解：</h2>
+<h2 class="mume-header" id="mybatis%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6sql%E6%98%A0%E5%B0%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AE%B2%E8%A7%A3">Mybatis的配置文件（全局配置文件，SQL映射配置文件）讲解：</h2>
 
 <p>参考链接：<br>
 <a href="http://www.mybatis.org/mybatis-3/zh/configuration.html">推荐使用官方settings的文档</a></p>
-<h3 class="mume-header" id="1mybatis-&#x5168;&#x5C40;&#x914D;&#x7F6E;&#x6587;&#x4EF6;-mybatisconfigxml">1.Mybatis 全局配置文件 Mybatis—config.xml:</h3>
+<h3 class="mume-header" id="1mybatis-%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-mybatisconfigxml">1.Mybatis 全局配置文件 Mybatis—config.xml:</h3>
 
 <p><strong>注意:</strong><br>
 <font color="red">全局配置文件中的各个标签的先后位置，不能弄错，否则报错。</font><br>
@@ -396,7 +400,7 @@ properties, settings, typeAliases, typeHandlers, objectFactory, objectWrapperFac
 
 </pre>
 <p>上面代码中的<code>&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</code>，用于代码提示。</p>
-<h4 class="mume-header" id="2&#x5F15;&#x5165;&#x5916;&#x90E8;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">②.引入外部配置文件：</h4>
+<h4 class="mume-header" id="2%E5%BC%95%E5%85%A5%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">②.引入外部配置文件：</h4>
 
 <p><strong>Mybatis通过 properties 标签来引入外部 properties配置文件。</strong></p>
 <p><img src="../img/mybatis_img/20.png" alt="&#x6587;&#x6863;&#x7ED3;&#x6784;&#x56FE;"></p>
@@ -426,7 +430,7 @@ jdbc.password=123456
 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environment</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>environments</span><span class="token punctuation">></span></span>
 </pre>
-<h4 class="mume-header" id="3settings&#x6807;&#x7B7E;&#x8BBE;&#x7F6E;mybatis&#x7684;&#x4E3B;&#x8981;&#x914D;&#x7F6E;&#x6807;&#x7B7E;">③.settings标签，设置Mybatis的主要配置标签：</h4>
+<h4 class="mume-header" id="3settings%E6%A0%87%E7%AD%BE%E8%AE%BE%E7%BD%AEmybatis%E7%9A%84%E4%B8%BB%E8%A6%81%E9%85%8D%E7%BD%AE%E6%A0%87%E7%AD%BE">③.settings标签，设置Mybatis的主要配置标签：</h4>
 
 <p>参考链接：<br>
 <a href="http://www.mybatis.org/mybatis-3/zh/configuration.html">推荐使用官方settings的文档</a></p>
@@ -451,7 +455,7 @@ Mybatis2_config.xml</p>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>lazyLoadTriggerMethods<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>equals,clone,hashCode,toString<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span>
 </pre>
-<h4 class="mume-header" id="4typealiases&#x6807;&#x7B7E;&#x4E0D;&#x63A8;&#x8350;&#x4F7F;&#x7528;">④.typeAliases标签（不推荐使用）：</h4>
+<h4 class="mume-header" id="4typealiases%E6%A0%87%E7%AD%BE%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8">④.typeAliases标签（不推荐使用）：</h4>
 
 <p>typeAliases标签是为 Java 类型设置一个短的名字，<font color="blue">别名(不区分大小写)</font>。它只和 XML 配置有关，存在的意义仅在于用来减少类完全限定名的冗余。<br>
 Mybatis2_config.xml</p>
@@ -476,11 +480,11 @@ Mybatis2_config.xml</p>
     <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 <span class="token punctuation">}</span>
 </pre>
-<h4 class="mume-header" id="5environments&#x6807;&#x7B7E;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x914D;&#x7F6E;">⑤.environments标签，运行环境配置：</h4>
+<h4 class="mume-header" id="5environments%E6%A0%87%E7%AD%BE%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">⑤.environments标签，运行环境配置：</h4>
 
 <p>参考链接：<br>
 <a href="http://www.mybatis.org/mybatis-3/zh/configuration.html">推荐使用官方settings的文档</a></p>
-<p>MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中， 现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者共享相同 Schema 的多个生产数据库， 想使用相同的 SQL 映射。许多类似的用例。<br>
+<p><mark>MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中</mark>， 现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者共享相同 Schema 的多个生产数据库， 想使用相同的 SQL 映射。许多类似的用例。<br>
 <strong>不过要记住：尽管可以配置多个环境，每个 SqlSessionFactory 实例只能选择其一。</strong><br>
 所以，如果你想连接两个数据库，就需要创建两个 SqlSessionFactory 实例，每个数据库对应一个。而如果是三个数据库，就需要三个实例，依此类推</p>
 <pre class="language-xml"><span class="token comment" spellcheck="true">&lt;!--environments 运行环境配置，
@@ -526,10 +530,10 @@ Mybatis2_config.xml</p>
 <p>其中的一些标签：<br>
 <code>&lt;dataSource type=&quot;POOLED&quot;&gt;</code><br>
 该配置的type 有三个值可选： type=“[UNPOOLED|POOLED|JNDI]”。</p>
-<p>UNPOOLED : 这个数据源的实现只是每次被请求时打开和关闭连接。虽然一点慢，它对在及时可用连接方面没有性能要求的简单应用程序是一个很好的选择。 不同的数据库在这方面表现也是不一样的，所以对某些数据库来说使用连接池并不重要，这个配置也是理想的</p>
-<p>POOLED– 这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。 这是一种使得并发 Web 应用快速响应请求的流行处理方式.</p>
-<p>JNDI– 这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的引用。</p>
-<h4 class="mume-header" id="6databaseidprovider&#x6807;&#x7B7E;&#x652F;&#x6301;&#x591A;&#x6570;&#x636E;&#x5E93;&#x8FD0;&#x884C;">⑥.databaseIdProvider标签,支持多数据库运行：</h4>
+<p><mark>UNPOOLED</mark>: 这个数据源的实现只是每次被请求时打开和关闭连接。虽然一点慢，它对在及时可用连接方面没有性能要求的简单应用程序是一个很好的选择。 不同的数据库在这方面表现也是不一样的，所以对某些数据库来说使用连接池并不重要，这个配置也是理想的</p>
+<p><mark>POOLED</mark> 这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。 这是一种使得并发 Web 应用快速响应请求的流行处理方式.</p>
+<p><mark>JNDI</mark> 这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的引用。</p>
+<h4 class="mume-header" id="6databaseidprovider%E6%A0%87%E7%AD%BE%E6%94%AF%E6%8C%81%E5%A4%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%90%E8%A1%8C">⑥.databaseIdProvider标签,支持多数据库运行：</h4>
 
 <p>MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于~Mapper.xml映射文件的sql标签语句中的 databaseId 属性。<br>
 <font color="red">MyBatis 会加载不带 databaseId 属性和带有匹配当前数据库 databaseId 属性的所有语句。如果同时找到带有 databaseId 和不带 databaseId 的相同语句，则后者会被舍弃。</font></p>
@@ -559,7 +563,7 @@ Mybatis2_config.xml</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
 
 </pre>
-<h4 class="mume-header" id="7mappers&#x6807;&#x7B7E;">⑦.mappers标签：</h4>
+<h4 class="mume-header" id="7mappers%E6%A0%87%E7%AD%BE">⑦.mappers标签：</h4>
 
 <p>告诉 MyBatis 到哪里去找映射文件。</p>
 <pre class="language-xml">	<span class="token comment" spellcheck="true">&lt;!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 --></span>
@@ -575,7 +579,7 @@ Mybatis2_config.xml</p>
 		 		
 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mappers</span><span class="token punctuation">></span></span>
 </pre>
-<h3 class="mume-header" id="2mapper&#x6620;&#x5C04;&#x6587;&#x4EF6;-~mapperxml">2.Mapper映射文件 ~Mapper.xml:</h3>
+<h3 class="mume-header" id="2mapper%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6-~mapperxml">2.Mapper映射文件 ~Mapper.xml:</h3>
 
 <p>  MyBatis 的真正强大在于它的映射语句,如果拿它跟具有相同功能的 JDBC 代码进行对比，你会立即发现省掉了将近 95% 的代码。</p>
 <p>SQL 映射文件有很少的几个顶级元素（按照它们应该被定义的顺序）：</p>
@@ -613,19 +617,19 @@ select – 映射查询语句</p>
 
 </pre>
 <p>id:命名空间中唯一的标识符.<br>
-parameterType： <font color="blue">将会传入这条语句的参数类的完全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过TypeHandler 推断出具体传入语句的参数，默认值为 unset。</font></p>
-<p>resultType:	从这条语句中返回的期望类型的类的完全限定名或别名。注意如果是集合情形，那应该是集合可以包含的类型，而不能是集合本身。使用 resultType 或 resultMap，但不能同时使用。</p>
-<p>resultMap :	外部 resultMap 的命名引用。结果集的映射是 MyBatis 最强大的特性，对其有一个很好的理解的话，许多复杂映射的情形都能迎刃而解。使用 resultMap 或 resultType，但不能同时使用.</p>
-<p>flushCache :将其设置为 true，任何时候只要语句被调用，都会导致本地缓存和二级缓存都会被清空，默认值：false。</p>
-<p>useCache: 将其设置为 true，将会导致本条语句的结果被二级缓存，默认值：对 select 元素为 true。</p>
-<p>timeout	:这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为 unset（依赖驱动）。</p>
-<p>fetchSize:这是尝试影响驱动程序每次批量返回的结果行数和这个设置值相等。默认值为 unset（依赖驱动）。</p>
-<p>statementType: STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement,PreparedStatement 或 CallableStatement，默认值：PREPARED。</p>
-<p>resultSetType: FORWARD_ONLY，SCROLL_SENSITIVE 或 SCROLL_INSENSITIVE 中的一个，默认值为 unset （依赖驱动）。</p>
-<p>databaseId	:如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。</p>
-<p>resultOrdered :这个设置仅针对嵌套结果 select 语句适用：如果为 true，就是假设包含了嵌套结果集或是分组了，这样的话当返回一个主结果行的时候，就不会发生有对前面结果集的引用的情况。这就使得在获取嵌套的结果集的时候不至于导致内存不够用。默认值：false。</p>
-<p>resultSets :这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。</p>
-<h4 class="mume-header" id="2insert-update-&#x548C;-delete">②.insert, update 和 delete</h4>
+<mark>parameterType</mark>： <font color="blue">将会传入这条语句的参数类的完全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过TypeHandler 推断出具体传入语句的参数，默认值为 unset。</font></p>
+<p><mark>resultType</mark>:	从这条语句中返回的期望类型的类的完全限定名或别名。注意如果是集合情形，那应该是集合可以包含的类型，而不能是集合本身。使用 resultType 或 resultMap，但不能同时使用。</p>
+<p><mark>resultMap</mark> :	外部 resultMap 的命名引用。结果集的映射是 MyBatis 最强大的特性，对其有一个很好的理解的话，许多复杂映射的情形都能迎刃而解。使用 resultMap 或 resultType，但不能同时使用.</p>
+<p><mark>flushCache</mark> :将其设置为 true，任何时候只要语句被调用，都会导致本地缓存和二级缓存都会被清空，默认值：false。</p>
+<p><mark>useCache</mark>: 将其设置为 true，将会导致本条语句的结果被二级缓存，默认值：对 select 元素为 true。</p>
+<p><mark>timeout</mark>	:这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为 unset（依赖驱动）。</p>
+<p><mark>fetchSize</mark>:这是尝试影响驱动程序每次批量返回的结果行数和这个设置值相等。默认值为 unset（依赖驱动）。</p>
+<p><mark>statementType</mark>: STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement,PreparedStatement 或 CallableStatement，默认值：PREPARED。</p>
+<p><mark>resultSetType</mark>: FORWARD_ONLY，SCROLL_SENSITIVE 或 SCROLL_INSENSITIVE 中的一个，默认值为 unset （依赖驱动）。</p>
+<p><mark>databaseId</mark>	:如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。</p>
+<p><mark>resultOrdered</mark> :这个设置仅针对嵌套结果 select 语句适用：如果为 true，就是假设包含了嵌套结果集或是分组了，这样的话当返回一个主结果行的时候，就不会发生有对前面结果集的引用的情况。这就使得在获取嵌套的结果集的时候不至于导致内存不够用。默认值：false。</p>
+<p><mark>resultSets</mark> :这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。</p>
+<h4 class="mume-header" id="2insert-update-%E5%92%8C-delete">②.insert, update 和 delete</h4>
 
 <p>简单的insert, update 和 delete例子：</p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insertAuthor<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
@@ -679,7 +683,7 @@ useGeneratedKeys="":获取自动生成的主键的值。
 <p>useGeneratedKeys :<font color="red">（仅对 insert 和 update 有用）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系数据库管理系统的自动递增字段），默认值：false。</font></p>
 <p>keyProperty	:（仅对 insert 和 update 有用）唯一标记一个属性，MyBatis 会通过 getGeneratedKeys 的返回值或者通过 insert 语句的 selectKey 子元素设置它的键值，默认：unset。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。</p>
 <p>keyColumn:（仅对 insert 和 update 有用）通过生成的键值设置表中的列名，这个设置仅在某些数据库（像 PostgreSQL）是必须的，当主键列不是表中的第一列的时候需要设置。如果希望得到多个生成的列，也可以是逗号分隔的属性名称列表。</p>
-<h4 class="mume-header" id="3&#x53C2;&#x6570;&#x5904;&#x7406;&#x5355;&#x4E2A;&#x53C2;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x5BF9;&#x8C61;&#x96C6;&#x5408;">③.参数处理(单个参数，多个参数,对象，集合)：</h4>
+<h4 class="mume-header" id="3%E5%8F%82%E6%95%B0%E5%A4%84%E7%90%86%E5%8D%95%E4%B8%AA%E5%8F%82%E6%95%B0%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88">③.参数处理(单个参数，多个参数,对象，集合)：</h4>
 
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insertUser<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   insert into users (id, username, password)
@@ -733,16 +737,16 @@ useGeneratedKeys="":获取自动生成的主键的值。
 <pre class="language-java"><span class="token keyword">public</span> List<span class="token operator">&lt;</span>School_class<span class="token operator">></span> <span class="token function">selectAllSchool_class</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre>
 <p><font color="bule">当代理接口的某个方法返回集合类型时，sql语句的 resultType=&quot;com.entity.School_class&quot;，写为集合内每个元素的类型，则mybatis，会把多个查询出来的元素，自动封装为集合。</font></p>
-<h3 class="mume-header" id="3-&#x4E0E;-&#x7684;&#x533A;&#x522B;">3.&quot;#{} 与 ${} 的区别&quot;：</h3>
+<h3 class="mume-header" id="3-%E4%B8%8E-%E7%9A%84%E5%8C%BA%E5%88%AB">3.&quot;#{} 与 ${} 的区别&quot;：</h3>
 
 <p>  #{} :以预编译的方式，把参数设置到sql语句中，类似JDBC的PreparedStatement;用于防止sql注入。<br>
   ${} :直接把参数的值，拼接在sql语句中，有安全问题。<br>
  其他方面，没有问题。</p>
-<h2 class="mume-header" id="mybatis&#x7684;xml&#x65B9;&#x5F0F;&#x4F7F;&#x7528;">Mybatis的XML方式使用：</h2>
+<h2 class="mume-header" id="mybatis%E7%9A%84xml%E6%96%B9%E5%BC%8F%E4%BD%BF%E7%94%A8">Mybatis的XML方式使用：</h2>
 
 <p>porject 类视图(所建项目为Dynamic web project)：<br>
 <img src="../img/mybatis_img/3.png" alt="demo &#x7C7B;&#x89C6;&#x56FE;"></p>
-<h3 class="mume-header" id="1&#x5B89;&#x88C5;mysql&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;&#x521B;&#x5EFA;&#x6570;&#x636E;&#x8868;">①安装MySQL,创建数据库,创建数据表：</h3>
+<h3 class="mume-header" id="1%E5%AE%89%E8%A3%85mysql%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8">①安装MySQL,创建数据库,创建数据表：</h3>
 
 <p>安装mysql，===》<font color="red">请自行百度</font><br>
 推荐一个数据库图形界面工具：<a href="http://www.navicat.com.cn/">Navicat</a></p>
@@ -750,7 +754,7 @@ useGeneratedKeys="":获取自动生成的主键的值。
 <img src="../img/mybatis_img/1.png" alt="&#x6570;&#x636E;&#x5E93;&#x622A;&#x56FE;"><br>
 数据表截图：<br>
 <img src="../img/mybatis_img/2.png" alt="&#x6570;&#x636E;&#x5E93;&#x622A;&#x56FE;"></p>
-<h3 class="mume-header" id="2&#x521B;&#x5EFA;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x6570;&#x636E;&#x5E93;&#x6620;&#x5C04;&#x7C7B;javabean&#x5B9E;&#x4F53;&#x7C7B;">②创建持久化类（数据库映射类/javaBean/实体类）：</h3>
+<h3 class="mume-header" id="2%E5%88%9B%E5%BB%BA%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E6%98%A0%E5%B0%84%E7%B1%BBjavabean%E5%AE%9E%E4%BD%93%E7%B1%BB">②创建持久化类（数据库映射类/javaBean/实体类）：</h3>
 
 <p>Student.java</p>
 <pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
@@ -786,7 +790,7 @@ useGeneratedKeys="":获取自动生成的主键的值。
 <span class="token punctuation">}</span>
 
 </pre>
-<h3 class="mume-header" id="3&#x521B;&#x5EFA;mybatis_configxml-&#x6570;&#x636E;&#x5E93;&#x540D;&#x5B57;blog_demo">③创建Mybatis_config.xml ， 数据库名字：blog_demo</h3>
+<h3 class="mume-header" id="3%E5%88%9B%E5%BB%BAmybatis_configxml-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E5%AD%97blog_demo">③创建Mybatis_config.xml ， 数据库名字：blog_demo</h3>
 
 <p>Mybatis_config.xml ---<strong>通过mybatis配置文件来告诉mybatis 连接那个数据库，以及连接数据库的用户名，密码等信息。</strong></p>
 <pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
@@ -817,7 +821,7 @@ useGeneratedKeys="":获取自动生成的主键的值。
 
 
 </pre>
-<h3 class="mume-header" id="4&#x521B;&#x5EFA;studentmapperxml-&#x6570;&#x636E;&#x8868;&#x540D;&#x5B57;student">④创建studentMapper.xml  ，数据表名字：student</h3>
+<h3 class="mume-header" id="4%E5%88%9B%E5%BB%BAstudentmapperxml-%E6%95%B0%E6%8D%AE%E8%A1%A8%E5%90%8D%E5%AD%97student">④创建studentMapper.xml  ，数据表名字：student</h3>
 
 <p>studentMapper.xml----(<font color="red">Mybatis 通过XML 文件去完成持久化类与数据库表之间的映射关系</font>)</p>
 <pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
@@ -889,7 +893,7 @@ update student
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mapper</span><span class="token punctuation">></span></span>
 
 </pre>
-<h3 class="mume-header" id="5&#x521B;&#x5EFA;test&#x7C7B;mainjava">⑤创建test类，main.java</h3>
+<h3 class="mume-header" id="5%E5%88%9B%E5%BB%BAtest%E7%B1%BBmainjava">⑤创建test类，main.java</h3>
 
 <p>main.java ---测试mybatis的CRUD操作：</p>
 <pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>test<span class="token punctuation">;</span>
@@ -955,13 +959,13 @@ update student
 <span class="token punctuation">}</span>
 
 </pre>
-<h2 class="mume-header" id="mybatis-&#x63A5;&#x53E3;&#x5F0F;&#x7F16;&#x7A0B;&#x65B9;&#x5F0F;-&#x76F8;&#x6BD4;&#x4E4B;&#x524D;&#x8C03;&#x7528;&#x6570;&#x636E;&#x5E93;&#x7684;&#x65B9;&#x5F0F;&#x63A5;&#x53E3;&#x5F0F;&#x7F16;&#x7A0B;&#x7684;&#x65B9;&#x5F0F;&#x53EA;&#x8981;&#x6539;&#x52A8;&#x51E0;&#x4E2A;&#x5730;&#x65B9;">Mybatis 接口式编程方式， （相比之前调用数据库的方式，接口式编程的方式只要改动几个地方）：</h2>
+<h2 class="mume-header" id="mybatis-%E6%8E%A5%E5%8F%A3%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%96%B9%E5%BC%8F-%E7%9B%B8%E6%AF%94%E4%B9%8B%E5%89%8D%E8%B0%83%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%96%B9%E5%BC%8F%E6%8E%A5%E5%8F%A3%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E6%96%B9%E5%BC%8F%E5%8F%AA%E8%A6%81%E6%94%B9%E5%8A%A8%E5%87%A0%E4%B8%AA%E5%9C%B0%E6%96%B9">Mybatis 接口式编程方式， （相比之前调用数据库的方式，接口式编程的方式只要改动几个地方）：</h2>
 
 <p>  接口式编程，我们可以简单的理解是<font color="red"> Mybatis 为连接持久化类与数据表之间的映射文件定义了一个代理接口，以后全部通过这个接口来和映射文件交互，而不再是使用以前方法。</font><br>
   映射文件如何知道自己被哪个接口代理呢？这里就是通过名称空间来实现的，<strong>映射文件的名称空间再也不是随心所欲的定义的了，而是要使用代理接口的全限定名作为其名称空间。所谓全限定名，就是接口所在的包名加上接口名称。</strong></p>
 <p><strong>类路径图：</strong><br>
 <img src="../img/mybatis_img/4.png" alt="&#x7C7B;&#x8DEF;&#x5F84;&#x56FE;"></p>
-<h3 class="mume-header" id="1&#x589E;&#x52A0;&#x4EE3;&#x7406;&#x63A5;&#x53E3;-studentdaojava">①：增加代理接口： studentdao.java</h3>
+<h3 class="mume-header" id="1%E5%A2%9E%E5%8A%A0%E4%BB%A3%E7%90%86%E6%8E%A5%E5%8F%A3-studentdaojava">①：增加代理接口： studentdao.java</h3>
 
 <pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>dao<span class="token punctuation">;</span>
 
@@ -986,7 +990,7 @@ update student
 <span class="token punctuation">}</span>
 
 </pre>
-<h3 class="mume-header" id="2&#x4FEE;&#x6539;&#x6620;&#x5C04;&#x6587;&#x4EF6;&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;&#x7684;&#x503C;-studentmapperxml-&#x7684;&#x547D;&#x540D;&#x7A7A;&#x95F4;">②：修改映射文件的命名空间的值---studentMapper.xml 的命名空间：</h3>
+<h3 class="mume-header" id="2%E4%BF%AE%E6%94%B9%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E5%80%BC-studentmapperxml-%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">②：修改映射文件的命名空间的值---studentMapper.xml 的命名空间：</h3>
 
 <pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
 <span class="token doctype">&lt;!DOCTYPE mapper
@@ -998,7 +1002,7 @@ update student
 ......
 
 </pre>
-<h3 class="mume-header" id="3&#x6D4B;&#x8BD5;&#x7C7B;-mainjava">③测试类 ，main.java</h3>
+<h3 class="mume-header" id="3%E6%B5%8B%E8%AF%95%E7%B1%BB-mainjava">③测试类 ，main.java</h3>
 
 <pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>test<span class="token punctuation">;</span>
 
@@ -1065,15 +1069,15 @@ update student
 <span class="token punctuation">}</span>
 
 </pre>
-<h2 class="mume-header" id="font-colorredresultmap&#x6CE8;&#x91CA;&#x5F88;&#x91CD;&#x8981;font"><font color="red">ResultMap（注释很重要）</font>:</h2>
+<h2 class="mume-header" id="font-colorredresultmap%E6%B3%A8%E9%87%8A%E5%BE%88%E9%87%8D%E8%A6%81font"><font color="red">ResultMap（注释很重要）</font>:</h2>
 
-<h3 class="mume-header" id="1resultmap&#x7684;&#x4F5C;&#x7528;&#x6982;&#x8FF0;">1.ResultMap的作用概述：</h3>
+<h3 class="mume-header" id="1resultmap%E7%9A%84%E4%BD%9C%E7%94%A8%E6%A6%82%E8%BF%B0">1.ResultMap的作用概述：</h3>
 
 <p>  MyBatis中在查询进行select映射的时候，返回类型可以用resultType，也可以用resultMap，resultType是直接表示返回类型的，而resultMap则是对外部ResultMap的引用（<font color="red">相当于自定义结果集映射规则</font>），但是<strong>resultType跟resultMap不能同时存在</strong>。</p>
 <p>  在MyBatis进行查询映射时,<font color="blue">由于Mybatis的底层是JDBC，其实查询出来的每一个属性都是放在一个对应的Map里面的，其中键是属性名，值则是其对应的值。</font></p>
 <p>  ①当提供的返回类型属性是resultType时，<font color="red">MyBatis会将Map里面的键值对取出赋给resultType所指定的对象对应的属性。所以其实MyBatis的每一个查询映射的返回类型都是ResultMap，只是当提供的返回类型属性是resultType的时候，MyBatis对自动的给把对应的值赋给resultType所指定对象的属性。</font><br>
   ②当提供的返回类型是resultMap时，因为Map不能很好表示领域模型，就需要自己再进一步的把它转化为对应的对象，这常常在复杂查询中很有作用<font color="green">(需要程序员自定义结果集映射规则，手动的把查询的结果一个一个转化为想要对应的对象)</font>。</p>
-<h3 class="mume-header" id="2&#x82E5;&#x8868;&#x7684;&#x5217;&#x540D;&#x4E0E;&#x6301;&#x4E45;&#x5316;&#x7C7B;&#x7684;&#x5C5E;&#x6027;&#x540D;&#x4E0D;&#x76F8;&#x540C;&#x53EF;&#x7528;resultmap&#x89E3;&#x51B3;">2.若表的列名与持久化类的属性名不相同，可用ResultMap解决：</h3>
+<h3 class="mume-header" id="2%E8%8B%A5%E8%A1%A8%E7%9A%84%E5%88%97%E5%90%8D%E4%B8%8E%E6%8C%81%E4%B9%85%E5%8C%96%E7%B1%BB%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8D%E7%9B%B8%E5%90%8C%E5%8F%AF%E7%94%A8resultmap%E8%A7%A3%E5%86%B3">2.若表的列名与持久化类的属性名不相同，可用ResultMap解决：</h3>
 
 <p><font color="red">这段代码中，student表的列名为 sid,sname,sage,而持久化类(实体类)的属性为 id, name,age</font></p>
 <p>studentMapper.xml</p>
@@ -1091,7 +1095,7 @@ update student
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>resultMap</span><span class="token punctuation">></span></span>
 
 </pre>
-<h3 class="mume-header" id="3&#x4E00;&#x5BF9;&#x4E00;&#x5173;&#x8054;&#x67E5;&#x8BE2;association&#x6807;&#x7B7E;">3.一对一关联查询（association标签）：</h3>
+<h3 class="mume-header" id="3%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2association%E6%A0%87%E7%AD%BE">3.一对一关联查询（association标签）：</h3>
 
 <p>参考链接：<br>
 <a href="http://blog.csdn.net/lee4037/article/details/16798941">MyBatis两张表字段名相同产生的问题</a></p>
@@ -1252,7 +1256,7 @@ StudentMapper.xml</p>
 <li>结果截图：<br>
 <img src="../img/mybatis_img/7.png" alt="&#x7ED3;&#x679C;&#x622A;&#x56FE;"></li>
 </ol>
-<h3 class="mume-header" id="4&#x4E00;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x67E5;&#x8BE2;collection&#x6807;&#x7B7E;">4.一对多关联查询（collection标签）：</h3>
+<h3 class="mume-header" id="4%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2collection%E6%A0%87%E7%AD%BE">4.一对多关联查询（collection标签）：</h3>
 
 <p>参考链接：<br>
 <a href="http://blog.csdn.net/xzm_rainbow/article/details/15336933">一对多表关系详解</a></p>
@@ -1354,7 +1358,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 </pre>
 <p><strong>运行结果：</strong><br>
 School_class [id=1, name=A, stulist=[Student [id=5,name=xiao, age=12, sclass=School_class [id=1, name=null,stulist=null]]]]</p>
-<h3 class="mume-header" id="5&#x591A;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x67E5;&#x8BE2;">5.多对多关联查询：</h3>
+<h3 class="mume-header" id="5%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">5.多对多关联查询：</h3>
 
 <p>参考链接：<br>
 <a href="https://www.cnblogs.com/hnlictmso/p/6363277.html">Mybatis多对多关联查询</a></p>
@@ -1390,7 +1394,7 @@ School_class [id=1, name=A, stulist=[Student [id=5,name=xiao, age=12, sclass=Sch
 <img src="../img/mybatis_img/12.png" alt="&#x4E2D;&#x95F4;&#x8868;"></p>
 </li>
 </ol>
-<h4 class="mume-header" id="1&#x67E5;&#x8BE2;&#x67D0;&#x4E2A;&#x73ED;&#x7EA7;&#x65F6;&#x628A;&#x73ED;&#x7EA7;&#x6240;&#x5728;&#x7684;&#x591A;&#x4E2A;&#x8001;&#x5E08;&#x4E5F;&#x67E5;&#x8BE2;&#x51FA;&#x6765;">①查询某个班级时，把班级所在的多个老师也查询出来：</h4>
+<h4 class="mume-header" id="1%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E7%8F%AD%E7%BA%A7%E6%97%B6%E6%8A%8A%E7%8F%AD%E7%BA%A7%E6%89%80%E5%9C%A8%E7%9A%84%E5%A4%9A%E4%B8%AA%E8%80%81%E5%B8%88%E4%B9%9F%E6%9F%A5%E8%AF%A2%E5%87%BA%E6%9D%A5">①查询某个班级时，把班级所在的多个老师也查询出来：</h4>
 
 <p><img src="../img/mybatis_img/16.png" alt=""></p>
 <p>School_classMapper.xml</p>
@@ -1435,7 +1439,7 @@ where ct.c_id=sc.id and ct.t_id=t.id and sc.id=#{id};
 </pre>
 <p>测试结果：<br>
 School_class [id=1, name=A, stulist=null, tealist=[Teacher [id=1, name=tom, stulist=null, sclass=null], Teacher [id=2, name=jim, stulist=null, sclass=null]]]</p>
-<h4 class="mume-header" id="2&#x67E5;&#x8BE2;&#x67D0;&#x4E2A;&#x8001;&#x5E08;&#x65F6;&#x628A;&#x8001;&#x5E08;&#x6240;&#x5728;&#x7684;&#x591A;&#x4E2A;&#x73ED;&#x7EA7;&#x4E5F;&#x67E5;&#x8BE2;&#x51FA;&#x6765;">②查询某个老师时，把老师所在的多个班级也查询出来：</h4>
+<h4 class="mume-header" id="2%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%AA%E8%80%81%E5%B8%88%E6%97%B6%E6%8A%8A%E8%80%81%E5%B8%88%E6%89%80%E5%9C%A8%E7%9A%84%E5%A4%9A%E4%B8%AA%E7%8F%AD%E7%BA%A7%E4%B9%9F%E6%9F%A5%E8%AF%A2%E5%87%BA%E6%9D%A5">②查询某个老师时，把老师所在的多个班级也查询出来：</h4>
 
 <p><img src="../img/mybatis_img/17.png" alt=""></p>
 <p>TeacherMapper.xml</p>
@@ -1482,7 +1486,7 @@ where t.id=ct.t_id and ct.c_id=sc.id and t.id=#{id};
 </pre>
 <p>测试结果：<br>
 Teacher [id=1, name=tom, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=2, name=B, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]]</p>
-<h4 class="mume-header" id="3&#x628A;&#x67E5;&#x8BE2;&#x5168;&#x90E8;&#x8001;&#x5E08;&#x7684;&#x540C;&#x65F6;&#x628A;&#x6240;&#x6709;&#x8001;&#x5E08;&#x7684;&#x6240;&#x6559;&#x7684;&#x73ED;&#x7EA7;&#x90FD;&#x67E5;&#x8BE2;&#x51FA;&#x6765;">③把查询全部老师的同时，把所有老师的所教的班级都查询出来：</h4>
+<h4 class="mume-header" id="3%E6%8A%8A%E6%9F%A5%E8%AF%A2%E5%85%A8%E9%83%A8%E8%80%81%E5%B8%88%E7%9A%84%E5%90%8C%E6%97%B6%E6%8A%8A%E6%89%80%E6%9C%89%E8%80%81%E5%B8%88%E7%9A%84%E6%89%80%E6%95%99%E7%9A%84%E7%8F%AD%E7%BA%A7%E9%83%BD%E6%9F%A5%E8%AF%A2%E5%87%BA%E6%9D%A5">③把查询全部老师的同时，把所有老师的所教的班级都查询出来：</h4>
 
 <p><img src="../img/mybatis_img/18.png" alt=""></p>
 <p>TeacherMapper.xml:</p>
@@ -1527,9 +1531,9 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 </pre>
 <p>测试结果：<br>
 [Teacher [id=1, name=tom, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=2, name=B, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]], Teacher [id=2, name=jim, stulist=null, sclass=[School_class [id=1, name=A, stulist=null, tealist=null], School_class [id=3, name=C, stulist=null, tealist=null]]], Teacher [id=3, name=jack, stulist=null, sclass=[School_class [id=4, name=D, stulist=null, tealist=null]]]]</p>
-<h3 class="mume-header" id="6&#x5173;&#x8054;&#x67E5;&#x8BE2;&#x8865;&#x5145;">6.关联查询补充：</h3>
+<h3 class="mume-header" id="6%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2%E8%A1%A5%E5%85%85">6.关联查询补充：</h3>
 
-<h4 class="mume-header" id="1&#x61D2;&#x52A0;&#x8F7D;&#x5EF6;&#x8FDF;&#x52A0;&#x8F7D;">1.懒加载（延迟加载）：</h4>
+<h4 class="mume-header" id="1%E6%87%92%E5%8A%A0%E8%BD%BD%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD">1.懒加载（延迟加载）：</h4>
 
 <p>  resultMap可实现高级映射（使用association、collection实现一对一及一对多映射），association、collection具备延迟加载功能。<br>
   如果查询订单并且关联查询用户信息。如果先查询订单信息即可满足要求，当我们需要查询用户信息时再查询用户信息。把对用户信息的按需去查询就是延迟加载。<strong>白话文：不会立即发送sql语句去查询用户信息，而是等到要用用户信息时，才会发送sql语句查询订单对应的用户信息。</strong><br>
@@ -1572,7 +1576,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>setting</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>aggressiveLazyLoading<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span>	 
 </pre>
-<h4 class="mume-header" id="2&#x4F7F;&#x7528;associationcollection-&#x6807;&#x7B7E;&#x8FDB;&#x884C;&#x5206;&#x5E03;&#x67E5;&#x8BE2;&#x65F6;&#x53EF;&#x4EE5;&#x4F20;&#x591A;&#x5217;&#x7684;&#x503C;">2.使用association，collection 标签进行分布查询时，可以传多列的值：</h4>
+<h4 class="mume-header" id="2%E4%BD%BF%E7%94%A8associationcollection-%E6%A0%87%E7%AD%BE%E8%BF%9B%E8%A1%8C%E5%88%86%E5%B8%83%E6%9F%A5%E8%AF%A2%E6%97%B6%E5%8F%AF%E4%BB%A5%E4%BC%A0%E5%A4%9A%E5%88%97%E7%9A%84%E5%80%BC">2.使用association，collection 标签进行分布查询时，可以传多列的值：</h4>
 
 <p>注意：<font color="red">需要把多列的值封装为map，传过去</font>：<br>
   column=&quot;{key1=column1,key2=column2,...}&quot;</p>
@@ -1580,12 +1584,12 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>association</span> <span class="token attr-name">property</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>sclass<span class="token punctuation">"</span></span> <span class="token attr-name">column</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{id<span class="token punctuation">=</span>class_id}<span class="token punctuation">"</span></span> <span class="token attr-name">javaType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.entity.School_class<span class="token punctuation">"</span></span> <span class="token attr-name">select</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>selectClass<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
 
 </pre>
-<h4 class="mume-header" id="3mybatis&#x7684;&#x9274;&#x522B;&#x5668;discriminator">3.MyBatis的鉴别器（discriminator）:</h4>
+<h4 class="mume-header" id="3mybatis%E7%9A%84%E9%89%B4%E5%88%AB%E5%99%A8discriminator">3.MyBatis的鉴别器（discriminator）:</h4>
 
 <p>  使用鉴别器，进行分段查询时，根据表中某个字段区别数据，根据查询的结果，选择不同的封装结果集的规则，将查询出的数据自动封装成不同类型的对象（选择不同的分段查询，类似switch）。<br>
 参考链接：<br>
 <a href="http://blog.csdn.net/ykzhen2015/article/details/51249963">MyBatis鉴别器</a></p>
-<h2 class="mume-header" id="&#x52A8;&#x6001;sql">动态SQL:</h2>
+<h2 class="mume-header" id="%E5%8A%A8%E6%80%81sql">动态SQL:</h2>
 
 <p>  Mybatis的动态sql是基于OGNL的表达式来完成的，OGNL表达式可以被用在任意的sql映射语句中。<br>
 常用的动态SQL元素：</p>
@@ -1601,7 +1605,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 </ol>
 <p>参考链接：<br>
 <a href="https://baike.baidu.com/item/OGNL/10365326?fr=aladdin">OGNL</a></p>
-<h3 class="mume-header" id="1if-&#x8BED;&#x53E5;-&#x7B80;&#x5355;&#x7684;&#x6761;&#x4EF6;&#x5224;&#x65AD;">1.if 语句 (简单的条件判断)：</h3>
+<h3 class="mume-header" id="1if-%E8%AF%AD%E5%8F%A5-%E7%AE%80%E5%8D%95%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD">1.if 语句 (简单的条件判断)：</h3>
 
 <pre class="language-xml">
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>select1<span class="token punctuation">"</span></span> <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Student<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
@@ -1615,7 +1619,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 ....
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>  
 </pre>
-<h3 class="mume-header" id="2choose-whenotherwize&#x8BED;&#x53E5;">2.choose (when,otherwize)语句：</h3>
+<h3 class="mume-header" id="2choose-whenotherwize%E8%AF%AD%E5%8F%A5">2.choose (when,otherwize)语句：</h3>
 
 <p><font color="red">如果传入了id,就根据id查询，没有传入id，就根据name查询，否则就根据 gender=&quot;男&quot; 查询。<font color="red">只会进入其中一个分支（条件）去查询</font>。<strong>例如传入了id，name，还是按id查询。</strong></font></p>
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>select2<span class="token punctuation">"</span></span>  <span class="token attr-name">resultType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Student<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>  
@@ -1637,7 +1641,7 @@ where t.id=ct.t_id and ct.c_id=sc.id ;
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>   
 </pre>
-<h3 class="mume-header" id="3trim&#x6807;&#x7B7E;&#x5E38;&#x7528;&#x4E09;&#x79CD;&#x7528;&#x6CD5;">3.trim标签（常用，三种用法）</h3>
+<h3 class="mume-header" id="3trim%E6%A0%87%E7%AD%BE%E5%B8%B8%E7%94%A8%E4%B8%89%E7%A7%8D%E7%94%A8%E6%B3%95">3.trim标签（常用，三种用法）</h3>
 
 <ol>
 <li>第一种用法：</li>
@@ -1747,7 +1751,7 @@ insert into goods（ name, price, introduce）values （ 'xx' , 'xx', 'xx' ）<b
 </pre>
 <p>若没有传入 age ,它会自动清除最近内容的and或者or，SQL语句为：<font color="red"><br>
 SELECT * FROM User  where  name like #{name}  </font></p>
-<h3 class="mume-header" id="5set&#x8BED;&#x53E5;&#x9002;&#x7528;&#x4E0E;&#x52A8;&#x6001;&#x66F4;&#x65B0;">5.set语句（适用与动态更新）：</h3>
+<h3 class="mume-header" id="5set%E8%AF%AD%E5%8F%A5%E9%80%82%E7%94%A8%E4%B8%8E%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0">5.set语句（适用与动态更新）：</h3>
 
 <pre class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>update</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>update1<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span><span class="token punctuation">></span></span> 
   update User  
@@ -1767,7 +1771,7 @@ SELECT * FROM User  where  name like #{name}  </font></p>
 </pre>
 <p>set 元素会前置set 关键字，同时会消除多出来的无关的逗号。sql语句：<font color="red"><br>
 update user  set  username=#{username},password=#{password}, Age =#{Age}  where id=#{id}  </font></p>
-<h3 class="mume-header" id="6foreach&#x8BED;&#x53E5;">6.foreach语句：</h3>
+<h3 class="mume-header" id="6foreach%E8%AF%AD%E5%8F%A5">6.foreach语句：</h3>
 
 <p>  关于动态sql的另一个常用的操作就是对集合进行遍历，通常发生在构建 in 条件语句时。<br>
   <font color="red">foreach 的元素功能非常强大。它允许指定一个集合，声明可以用在元素体内的集合项和索引变量。它也允许指定开闭匹配的字符串以及在迭代中间放置分隔符。</font></p>
@@ -1810,7 +1814,7 @@ mysql支持<font color="red"> insert into tbale_name() values (),(),(),...这种
 </pre>
 <p>SQL语句(一个？表示一个id)：</p>
 <p><font color="red">insert into student(id,name,gender) values (?,?,?) ,(?,?,?)...</font></p>
-<h3 class="mume-header" id="7bind&#x8BED;&#x53E5;&#x6211;&#x4E5F;&#x4E0D;&#x592A;&#x4F1A;">7.bind语句(我也不太会)：</h3>
+<h3 class="mume-header" id="7bind%E8%AF%AD%E5%8F%A5%E6%88%91%E4%B9%9F%E4%B8%8D%E5%A4%AA%E4%BC%9A">7.bind语句(我也不太会)：</h3>
 
 <p>  bind元素可以从OGNL表达式中创建一个变量并将其绑定到上下文中。</p>
 <p>bind元素允许你在自定义变量（不用符合OGNL规范），并且应用到上下文中。把OGNL表达式的值绑定到一个变量中，方便后来引用这个变量。<br>
@@ -1833,7 +1837,7 @@ value=&quot;'%' + _parameter.getName() + '%'&quot; ：对被绑定的属性，�
 </pre>
 <p>SQL语句：<br>
 <font color="red"> SELECT * FROM user WHERE name LIKE '%o%' </font></p>
-<h3 class="mume-header" id="8sqlinclude-&#x6807;&#x7B7E;&#x62BD;&#x53D6;&#x53EF;&#x91CD;&#x590D;&#x4F7F;&#x7528;&#x7684;sql&#x7247;&#x6BB5;&#x65B9;&#x4FBF;&#x5F15;&#x7528;">8.sql，include 标签（抽取可重复使用的sql片段，方便引用）：</h3>
+<h3 class="mume-header" id="8sqlinclude-%E6%A0%87%E7%AD%BE%E6%8A%BD%E5%8F%96%E5%8F%AF%E9%87%8D%E5%A4%8D%E4%BD%BF%E7%94%A8%E7%9A%84sql%E7%89%87%E6%AE%B5%E6%96%B9%E4%BE%BF%E5%BC%95%E7%94%A8">8.sql，include 标签（抽取可重复使用的sql片段，方便引用）：</h3>
 
 <p>sql标签  :抽取sql片段。<br>
 inculde标签  :引用被抽取的sql片段。</p>
@@ -1852,11 +1856,11 @@ inculde标签  :引用被抽取的sql片段。</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span>
 
 </pre>
-<h2 class="mume-header" id="mybatis&#x7684;&#x7F13;&#x5B58;&#x673A;&#x5236;">Mybatis的缓存机制：</h2>
+<h2 class="mume-header" id="mybatis%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6">Mybatis的缓存机制：</h2>
 
 <p>  在大型项目开发，由于涉及到的表多，数据量大，通常对数据库查询的性能要求很高。Mybatis提供了<font color="red">查询缓存机制，用于缓存查询出来的数据，减轻数据库的压力。从而提高数据库的查询性能。</font><br>
   Mybatis的查询缓存分为：<font color="blue">一级缓存（SqlSession 级别的缓存），二级缓存（mapper 级别的缓存）</font>。其中，二级缓存是多个SqlSession 共享的。</p>
-<h3 class="mume-header" id="&#x4E00;&#x7EA7;&#x7F13;&#x5B58;sqlsession-&#x7EA7;&#x522B;">一级缓存（SqlSession 级别）：</h3>
+<h3 class="mume-header" id="%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98sqlsession-%E7%BA%A7%E5%88%AB">一级缓存（SqlSession 级别）：</h3>
 
 <p>  <font color="blue">Mybatis默认开启一级缓存，不需要进行任何配置。</font><br>
 在之前的例子中可以知道，操作数据库之前，需要以下几步：</p>
@@ -1875,7 +1879,7 @@ inculde标签  :引用被抽取的sql片段。</p>
 ①：如果SqlSession 执行了对数据库的数据进行了修改（如：update，insert，delete）等sql语句，并提交到数据库时。该SqlSession的一级缓存会被清空，保证缓存中的数据是最新的。<br>
 ②：Mybatis的缓存机制是基于 id 进行缓存的，当HashMap缓存数据时，是使用对象的id，作为key，而对象作为 value 保存的。</p>
 <p><mark>当一个SqlSession关闭后，其缓存消失。</mark></p>
-<h3 class="mume-header" id="&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;mapper-&#x7EA7;&#x522B;">二级缓存（mapper 级别）：</h3>
+<h3 class="mume-header" id="%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98mapper-%E7%BA%A7%E5%88%AB">二级缓存（mapper 级别）：</h3>
 
 <p>  <font color="blue">Mybatis默认没有开启二级缓存，需要在Mybatis的配置文件中setting 全局参数中配置开启二级缓存。</font></p>
 <p>二级缓存原理及实现过程：<br>
@@ -1917,9 +1921,9 @@ UserMapper.xml</p>
 </pre>
 <p><strong>注意：</strong><br>
 <font color="red">查询出来的数据默认会放在一级缓存中，只有当SqlSession 提交，关闭时，一级缓存的数据转移到二级缓存中，并清空一级缓存。</font></p>
-<h2 class="mume-header" id="mybatis&#x7684;&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x5F0F;&#x7684;&#x4F7F;&#x7528;">Mybatis的基于注解的方式的使用：</h2>
+<h2 class="mume-header" id="mybatis%E7%9A%84%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E5%BC%8F%E7%9A%84%E4%BD%BF%E7%94%A8">Mybatis的基于注解的方式的使用：</h2>
 
-<h3 class="mume-header" id="1&#x914D;&#x7F6E;&#x4E0E;&#x4F7F;&#x7528;">1.配置与使用：</h3>
+<h3 class="mume-header" id="1%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BD%BF%E7%94%A8">1.配置与使用：</h3>
 
 <p>  Mybatis提供了比使用XML更加简便的基于注解（Annotation）的方式使用Mybatis。<br>
 <font color="red">当使用注解的方式使用Mybatis时，相比XML方式：</font></p>
@@ -2016,7 +2020,7 @@ UserMapper.xml</p>
 	<span class="token punctuation">}</span>
 </pre>
 <hr>
-<h3 class="mume-header" id="2mybatis&#x5E38;&#x7528;&#x6CE8;&#x89E3;">2.Mybatis常用注解：</h3>
+<h3 class="mume-header" id="2mybatis%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3">2.Mybatis常用注解：</h3>
 
 <p>在上面代码中：</p>
 <pre class="language-java">	<span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into student(name,age) values(#{name},#{age})"</span><span class="token punctuation">)</span>
@@ -2062,9 +2066,9 @@ UserMapper.xml</p>
   column属性：查询结果数据中对应的列名。<br>
   one 属性：是单独的联系，类似与XML配置的 <mark>&lt;association&gt;标签。</mark><br>
   many属性：对集合而言，，类似与XML配置的 <mark>&lt;collection&gt; 标签。</mark></p>
-<h3 class="mume-header" id="2&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x65B9;&#x5F0F;&#x7684;&#x5173;&#x8054;&#x67E5;&#x8BE2;">2.基于注解方式的关联查询：</h3>
+<h3 class="mume-header" id="2%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E7%9A%84%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">2.基于注解方式的关联查询：</h3>
 
-<h4 class="mume-header" id="1&#x4E00;&#x5BF9;&#x4E00;&#x5173;&#x8054;&#x67E5;&#x8BE2;">1.一对一关联查询：</h4>
+<h4 class="mume-header" id="1%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">1.一对一关联查询：</h4>
 
 <p>参考链接：<br>
 <a href="http://blog.csdn.net/gluawwa/article/details/53289162">注解关联查询</a></p>
@@ -2112,7 +2116,7 @@ UserMapper.xml</p>
 		
 	<span class="token punctuation">}</span>
 </pre>
-<h4 class="mume-header" id="2&#x4E00;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x67E5;&#x8BE2;">2.一对多关联查询 ？：</h4>
+<h4 class="mume-header" id="2%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2">2.一对多关联查询 ？：</h4>
 
 <p>参考链接：<br>
 <a href="http://blog.csdn.net/linhaiyun_ytdx/article/details/68947723">注解关联查询</a></p>
@@ -2154,11 +2158,11 @@ UserMapper.xml</p>
 School_class [id=2, name=B, stulist=[Student [id=7, name=xiaoming, age=12, sclass=null, tealist=null], Student [id=8, name=hui, age=22, sclass=null, tealist=null]], tealist=null]]</p>
 </blockquote>
 <p><strong>这段代码返回了两个School_class对象，两个对象一摸一样。暂时不知为什么.</strong></p>
-<h4 class="mume-header" id="3&#x591A;&#x5BF9;&#x591A;&#x5173;&#x8054;&#x67E5;&#x8BE2;&#x61D2;&#x5F97;&#x5199;&#x597D;&#x9EBB;&#x70E6;">3.多对多关联查询(懒得写，好麻烦):</h4>
+<h4 class="mume-header" id="3%E5%A4%9A%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2%E6%87%92%E5%BE%97%E5%86%99%E5%A5%BD%E9%BA%BB%E7%83%A6">3.多对多关联查询(懒得写，好麻烦):</h4>
 
 <p>参考链接：<br>
 <a href="http://blog.csdn.net/linhaiyun_ytdx/article/details/68947739">基于注解多对多关联查询</a></p>
-<h3 class="mume-header" id="3&#x57FA;&#x4E8E;&#x6CE8;&#x89E3;&#x65B9;&#x5F0F;&#x7684;&#x52A8;&#x6001;sql">3.基于注解方式的动态SQL：</h3>
+<h3 class="mume-header" id="3%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8A%A8%E6%80%81sql">3.基于注解方式的动态SQL：</h3>
 
 <ol>
 <li>新建一个代理接口：</li>
@@ -2292,14 +2296,193 @@ Mybatis中有一个SQL 工具类org.apache.ibatis.jdbc.SQL ,该类不适用字�
 			session<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 		<span class="token punctuation">}</span>
 </pre>
-<h2 class="mume-header" id="mybatis&#x7684;&#x4E8B;&#x52A1;&#x770B;&#x53C2;&#x8003;&#x94FE;&#x63A5;">Mybatis的事务(看参考链接)：</h2>
+<h2 class="mume-header" id="mybatis%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%9C%8B%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">Mybatis的事务(看参考链接)：</h2>
 
 <p>  <strong>多条sql语句访问数据库的过程叫事务，事务是一个最小的逻辑执行单元，整个事务不能分开执行，要么同时执行，要么同时不执行，绝不能执行一部分（比如：当你从银行转账，如果你的账户钱少了，那别人的账户钱多了。一定不能出现你的钱少了，别人的钱不变。）。</strong></p>
 <p>参考链接：<br>
 <a href="http://blog.csdn.net/luanlouis/article/details/37992171">MyBatis事务管理机制</a></p>
-<h2 class="mume-header" id="spring-&#x4E0E;-mybatis-&#x7684;&#x6574;&#x5408;">Spring 与 Mybatis 的整合 ：</h2>
+<h2 class="mume-header" id="spring-%E4%B8%8E-mybatis-%E7%9A%84%E6%95%B4%E5%90%88">Spring 与 Mybatis 的整合 ：</h2>
 
 <p><font color="red">整合过程写在 Spring 教程 中的Mybatis 与Spring 之间的整合中，请去哪里观看</font></p>
+<h2 class="mume-header" id="mybatis%E7%9A%84%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B">Mybatis的逆向工程：</h2>
+
+<p><strong>mybaits需要程序员自己编写sql语句,mybatis官方提供逆向工程,可以针对单表自动生成mybatis执行所需要的代码（entity,mapper接口文件，mapper映射文件）</strong></p>
+<p>官网：<br>
+<a href="http://www.mybatis.org/generator/index.html">mybatis_逆向工程</a></p>
+<h3>1.导入需要的jar包：</h3>
+<p>mybatis-3.4.3.jar<br>
+mybatis-generator-core-1.3.5.jar   这是mybatis逆向工程必须的核心jar包<br>
+mysql-connector-java-5.1.42-bin.jar</p>
+<br>
+<h3>2. 创建数据表（orders表 ， goods表）：</h3>
+![23-png](../img/mybatis_img/23.png)
+<br>
+<h3>3. 创建逆向工程的配置文件（MybatisGenerator.xml）</h3>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token doctype">&lt;!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>generatorConfiguration</span><span class="token punctuation">></span></span>
+	<span class="token comment" spellcheck="true">&lt;!-- 通过路径名指定jar包的位置，如果jar包已经导入到类路径，则不需要该标签 ：
+ 		 &lt;classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />   
+  	--></span>
+  	
+  	<span class="token comment" spellcheck="true">&lt;!-- 
+  		 &lt;context>标签用于指定生成mybatis代码的环境，
+  			 targetRuntime="MyBatis3Simple"  :表示是生成mybatis3版本的简化版的CRUD代码，注意：默认值是 MyBatis3。 
+  			 id:唯一标识符	
+  	 	 &lt;jdbcConnection> : 指定如何连接目标数据库。
+  	 --></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>context</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>DB2Tables<span class="token punctuation">"</span></span> <span class="token attr-name">targetRuntime</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MyBatis3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  	
+  	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>commentGenerator</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- 是否去除自动生成的注释 true：是 ： false:否 --></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>suppressAllComments<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>commentGenerator</span><span class="token punctuation">></span></span>
+  
+  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>jdbcConnection</span> <span class="token attr-name">driverClass</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mysql.jdbc.Driver<span class="token punctuation">"</span></span>
+        <span class="token attr-name">connectionURL</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>jdbc:mysql:///test<span class="token punctuation">"</span></span>
+        <span class="token attr-name">userId</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span>
+        <span class="token attr-name">password</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>jdbcConnection</span><span class="token punctuation">></span></span>
+
+	<span class="token comment" spellcheck="true">&lt;!-- 
+		&lt;javaTypeResolver> :java类型解析器。    forceBigDecimals属性 ：表示这里是是否强制转换Bigdecimal类型
+    &lt;javaTypeResolver >
+      &lt;property name="forceBigDecimals" value="false" />
+    &lt;/javaTypeResolver>
+    --></span>
+    
+    <span class="token comment" spellcheck="true">&lt;!-- 生成javabean的策略：
+    		targetPackage="test.model"             ：表示 生成javabean的目标包名
+    		targetProject=".\src"    ： 表示生成在那个工程项目下 ,这里表示为当前工程的src目录下
+    		enableSubPackages:是否让schema作为包的后缀
+    		trimStrings      :从数据库返回的值被清理前后的空格
+     --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>javaModelGenerator</span> <span class="token attr-name">targetPackage</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.model<span class="token punctuation">"</span></span> <span class="token attr-name">targetProject</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>.\src<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>enableSubPackages<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>trimStrings<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>javaModelGenerator</span><span class="token punctuation">></span></span>
+
+	<span class="token comment" spellcheck="true">&lt;!-- 生成mapper映射文件的策略：
+		targetPackage="com.mapper"    
+		targetProject=".\src"    ： 表示生成在那个工程项目下 ,这里表示为当前工程的src目录下
+	 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sqlMapGenerator</span> <span class="token attr-name">targetPackage</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.mapper<span class="token punctuation">"</span></span>  <span class="token attr-name">targetProject</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>.\src<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>enableSubPackages<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sqlMapGenerator</span><span class="token punctuation">></span></span>
+
+	<span class="token comment" spellcheck="true">&lt;!-- 生成mapper接口文件的策略--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>javaClientGenerator</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>XMLMAPPER<span class="token punctuation">"</span></span> <span class="token attr-name">targetPackage</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.dao<span class="token punctuation">"</span></span>  <span class="token attr-name">targetProject</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>.\src<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>enableSubPackages<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>javaClientGenerator</span><span class="token punctuation">></span></span>
+
+
+	<span class="token comment" spellcheck="true">&lt;!-- 指定要通过那些表生成mybatis  domainObjectName: 通过表生成的bean名字--></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>table</span> <span class="token attr-name">tableName</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>orders<span class="token punctuation">"</span></span> <span class="token attr-name">domainObjectName</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Orders<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>table</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>table</span> <span class="token attr-name">tableName</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>goods<span class="token punctuation">"</span></span> <span class="token attr-name">domainObjectName</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Goods<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>table</span><span class="token punctuation">></span></span>
+
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>context</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>generatorConfiguration</span><span class="token punctuation">></span></span>
+</pre>
+<h3>4. 编写运行逆向工程的主方法test_main ,里面有其他的test方法：</h3>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>main<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>File<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>InputStream<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>SQLException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>io<span class="token punctuation">.</span>Resources<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>session<span class="token punctuation">.</span>SqlSession<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>session<span class="token punctuation">.</span>SqlSessionFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>session<span class="token punctuation">.</span>SqlSessionFactoryBuilder<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>junit<span class="token punctuation">.</span>Test<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>generator<span class="token punctuation">.</span>api<span class="token punctuation">.</span>MyBatisGenerator<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>generator<span class="token punctuation">.</span>config<span class="token punctuation">.</span>Configuration<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>generator<span class="token punctuation">.</span>config<span class="token punctuation">.</span>xml<span class="token punctuation">.</span>ConfigurationParser<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>generator<span class="token punctuation">.</span>exception<span class="token punctuation">.</span>InvalidConfigurationException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>generator<span class="token punctuation">.</span>exception<span class="token punctuation">.</span>XMLParserException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>mybatis<span class="token punctuation">.</span>generator<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>DefaultShellCallback<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>dao<span class="token punctuation">.</span>OrdersMapper<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>model<span class="token punctuation">.</span>Orders<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>model<span class="token punctuation">.</span>OrdersExample<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>model<span class="token punctuation">.</span>OrdersExample<span class="token punctuation">.</span>Criteria<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Index</span> <span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token keyword">throws</span> IOException<span class="token punctuation">,</span> XMLParserException<span class="token punctuation">,</span> InvalidConfigurationException<span class="token punctuation">,</span> SQLException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
+		List<span class="token operator">&lt;</span>String<span class="token operator">></span> warnings <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">boolean</span> overwrite <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+		<span class="token comment" spellcheck="true">// 指定逆向工程配置文件</span>
+		File configFile <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"MybatisGenerator.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ConfigurationParser cp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConfigurationParser</span><span class="token punctuation">(</span>warnings<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Configuration config <span class="token operator">=</span> cp<span class="token punctuation">.</span><span class="token function">parseConfiguration</span><span class="token punctuation">(</span>configFile<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		DefaultShellCallback callback <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultShellCallback</span><span class="token punctuation">(</span>overwrite<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		MyBatisGenerator myBatisGenerator <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyBatisGenerator</span><span class="token punctuation">(</span>config<span class="token punctuation">,</span> callback<span class="token punctuation">,</span> warnings<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		myBatisGenerator<span class="token punctuation">.</span><span class="token function">generate</span><span class="token punctuation">(</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"ok"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">/*
+	 * 简单查询
+	 * */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_select</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+		InputStream inputs <span class="token operator">=</span> Resources<span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"mybatis_config.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		SqlSessionFactory ssf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>inputs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		SqlSession session <span class="token operator">=</span> ssf<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		OrdersMapper ordersmapper<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>OrdersMapper<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		Orders orders <span class="token operator">=</span> ordersmapper<span class="token punctuation">.</span><span class="token function">selectByPrimaryKey</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>orders<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	
+	<span class="token comment" spellcheck="true">/** 复杂查询
+	 * @throws Exception
+	 */</span>
+	<span class="token annotation punctuation">@Test</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_selectlike</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+		InputStream inputs <span class="token operator">=</span> Resources<span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"mybatis_config.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		SqlSessionFactory ssf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>inputs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		SqlSession session <span class="token operator">=</span> ssf<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+		OrdersMapper ordersmapper<span class="token operator">=</span>session<span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span>OrdersMapper<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment" spellcheck="true">/* select * from orders where name like '%b%'
+		 * 
+		 * OrdersExample : 用于封装查询条件的example，例子.
+		 * Criteria : 在 Criteria对象中 拼写查询条件
+		 * */</span>
+		OrdersExample oe<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">OrdersExample</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Criteria criteria <span class="token operator">=</span> oe<span class="token punctuation">.</span><span class="token function">createCriteria</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		criteria<span class="token punctuation">.</span><span class="token function">andNameLike</span><span class="token punctuation">(</span><span class="token string">"%a%"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">// where name like '%b%'</span>
+		
+		List<span class="token operator">&lt;</span>Orders<span class="token operator">></span> orders <span class="token operator">=</span> ordersmapper<span class="token punctuation">.</span><span class="token function">selectByExample</span><span class="token punctuation">(</span>oe<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//通过封装查询条件的example，来查询数据。</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>orders<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre>
+<h3>5. 运行截图：</h3>
+<font color="red">
+注意：
+<p>①：mybatis_config.xml 是测试用的.不是自动生成的。</p>
+<p>②：index.java 是test类。</p>
+<p>③：com.dao,com.model,com.mapper 需要自己创建，里面的代码自动生成的。</p>
+<p>④：com.model包中的XxxExample类是用于复杂查询使用的，在测试方法中有说明。<br>
+</p></font>
+<p><img src="../img/mybatis_img/24.png" alt="24.png"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -2407,12 +2590,15 @@ Mybatis中有一个SQL 工具类org.apache.ibatis.jdbc.SQL ,该类不适用字�
 </li>
 <li><a href="#mybatis%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%9C%8B%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">Mybatis的事务(看参考链接)：</a></li>
 <li><a href="#spring-%E4%B8%8E-mybatis-%E7%9A%84%E6%95%B4%E5%90%88">Spring 与 Mybatis 的整合 ：</a></li>
+<li><a href="#mybatis%E7%9A%84%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B">Mybatis的逆向工程：</a></li>
 </ul>
 </li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">≡</a>
     </body>
+    
+    
     
     
     

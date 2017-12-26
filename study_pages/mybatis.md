@@ -190,7 +190,7 @@ public class Student {
 参考链接：
 [推荐使用官方settings的文档](http://www.mybatis.org/mybatis-3/zh/configuration.html)
 
-MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中， 现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者共享相同 Schema 的多个生产数据库， 想使用相同的 SQL 映射。许多类似的用例。
+==MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射应用于多种数据库之中==， 现实情况下有多种理由需要这么做。例如，开发、测试和生产环境需要有不同的配置；或者共享相同 Schema 的多个生产数据库， 想使用相同的 SQL 映射。许多类似的用例。
 **不过要记住：尽管可以配置多个环境，每个 SqlSessionFactory 实例只能选择其一。**
 所以，如果你想连接两个数据库，就需要创建两个 SqlSessionFactory 实例，每个数据库对应一个。而如果是三个数据库，就需要三个实例，依此类推
 
@@ -239,11 +239,11 @@ MyBatis 可以配置成适应多种环境，这种机制有助于将 SQL 映射�
 `<dataSource type="POOLED">` 
 该配置的type 有三个值可选： type=“[UNPOOLED|POOLED|JNDI]”。
 
-UNPOOLED : 这个数据源的实现只是每次被请求时打开和关闭连接。虽然一点慢，它对在及时可用连接方面没有性能要求的简单应用程序是一个很好的选择。 不同的数据库在这方面表现也是不一样的，所以对某些数据库来说使用连接池并不重要，这个配置也是理想的
+==UNPOOLED==: 这个数据源的实现只是每次被请求时打开和关闭连接。虽然一点慢，它对在及时可用连接方面没有性能要求的简单应用程序是一个很好的选择。 不同的数据库在这方面表现也是不一样的，所以对某些数据库来说使用连接池并不重要，这个配置也是理想的
 
-POOLED– 这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。 这是一种使得并发 Web 应用快速响应请求的流行处理方式.
+==POOLED== 这种数据源的实现利用“池”的概念将 JDBC 连接对象组织起来，避免了创建新的连接实例时所必需的初始化和认证时间。 这是一种使得并发 Web 应用快速响应请求的流行处理方式.
 
-JNDI– 这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的引用。
+==JNDI== 这个数据源的实现是为了能在如 EJB 或应用服务器这类容器中使用，容器可以集中或在外部配置数据源，然后放置一个 JNDI 上下文的引用。
 
 
 
@@ -342,29 +342,29 @@ SQL 映射文件有很少的几个顶级元素（按照它们应该被定义的�
 
 ```
 id:命名空间中唯一的标识符.
-parameterType： <font color="blue">将会传入这条语句的参数类的完全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过TypeHandler 推断出具体传入语句的参数，默认值为 unset。</font>
+==parameterType==： <font color="blue">将会传入这条语句的参数类的完全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过TypeHandler 推断出具体传入语句的参数，默认值为 unset。</font>
 
-resultType:	从这条语句中返回的期望类型的类的完全限定名或别名。注意如果是集合情形，那应该是集合可以包含的类型，而不能是集合本身。使用 resultType 或 resultMap，但不能同时使用。
+==resultType==:	从这条语句中返回的期望类型的类的完全限定名或别名。注意如果是集合情形，那应该是集合可以包含的类型，而不能是集合本身。使用 resultType 或 resultMap，但不能同时使用。
 
-resultMap :	外部 resultMap 的命名引用。结果集的映射是 MyBatis 最强大的特性，对其有一个很好的理解的话，许多复杂映射的情形都能迎刃而解。使用 resultMap 或 resultType，但不能同时使用.
+==resultMap== :	外部 resultMap 的命名引用。结果集的映射是 MyBatis 最强大的特性，对其有一个很好的理解的话，许多复杂映射的情形都能迎刃而解。使用 resultMap 或 resultType，但不能同时使用.
 
-flushCache :将其设置为 true，任何时候只要语句被调用，都会导致本地缓存和二级缓存都会被清空，默认值：false。
+==flushCache== :将其设置为 true，任何时候只要语句被调用，都会导致本地缓存和二级缓存都会被清空，默认值：false。
 
-useCache: 将其设置为 true，将会导致本条语句的结果被二级缓存，默认值：对 select 元素为 true。
+==useCache==: 将其设置为 true，将会导致本条语句的结果被二级缓存，默认值：对 select 元素为 true。
 
-timeout	:这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为 unset（依赖驱动）。
+==timeout==	:这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为 unset（依赖驱动）。
 
-fetchSize:这是尝试影响驱动程序每次批量返回的结果行数和这个设置值相等。默认值为 unset（依赖驱动）。
+==fetchSize==:这是尝试影响驱动程序每次批量返回的结果行数和这个设置值相等。默认值为 unset（依赖驱动）。
 
-statementType: STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement,PreparedStatement 或 CallableStatement，默认值：PREPARED。
+==statementType==: STATEMENT，PREPARED 或 CALLABLE 的一个。这会让 MyBatis 分别使用 Statement,PreparedStatement 或 CallableStatement，默认值：PREPARED。
 
-resultSetType: FORWARD_ONLY，SCROLL_SENSITIVE 或 SCROLL_INSENSITIVE 中的一个，默认值为 unset （依赖驱动）。
+==resultSetType==: FORWARD_ONLY，SCROLL_SENSITIVE 或 SCROLL_INSENSITIVE 中的一个，默认值为 unset （依赖驱动）。
 
-databaseId	:如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。
+==databaseId==	:如果配置了 databaseIdProvider，MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。
 
-resultOrdered :这个设置仅针对嵌套结果 select 语句适用：如果为 true，就是假设包含了嵌套结果集或是分组了，这样的话当返回一个主结果行的时候，就不会发生有对前面结果集的引用的情况。这就使得在获取嵌套的结果集的时候不至于导致内存不够用。默认值：false。
+==resultOrdered== :这个设置仅针对嵌套结果 select 语句适用：如果为 true，就是假设包含了嵌套结果集或是分组了，这样的话当返回一个主结果行的时候，就不会发生有对前面结果集的引用的情况。这就使得在获取嵌套的结果集的时候不至于导致内存不够用。默认值：false。
 
-resultSets :这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。
+==resultSets== :这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。
 
 
 #### ②.insert, update 和 delete
@@ -2214,3 +2214,205 @@ Mybatis中有一个SQL 工具类org.apache.ibatis.jdbc.SQL ,该类不适用字�
 
 ## Spring 与 Mybatis 的整合 ：
 <font color="red">整合过程写在 Spring 教程 中的Mybatis 与Spring 之间的整合中，请去哪里观看</font>
+
+
+## Mybatis的逆向工程：
+
+**mybaits需要程序员自己编写sql语句,mybatis官方提供逆向工程,可以针对单表自动生成mybatis执行所需要的代码（entity,mapper接口文件，mapper映射文件）**
+
+官网：
+[mybatis_逆向工程](http://www.mybatis.org/generator/index.html)
+
+
+<h3>1.导入需要的jar包：</h3>
+
+mybatis-3.4.3.jar
+mybatis-generator-core-1.3.5.jar   这是mybatis逆向工程必须的核心jar包
+mysql-connector-java-5.1.42-bin.jar
+
+<br/>
+
+<h3>2. 创建数据表（orders表 ， goods表）：</h3>
+![23-png](../img/mybatis_img/23.png)
+
+<br/>
+
+<h3>3. 创建逆向工程的配置文件（MybatisGenerator.xml）</h3>
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 通过路径名指定jar包的位置，如果jar包已经导入到类路径，则不需要该标签 ：
+ 		 <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />   
+  	-->
+  	
+  	<!-- 
+  		 <context>标签用于指定生成mybatis代码的环境，
+  			 targetRuntime="MyBatis3Simple"  :表示是生成mybatis3版本的简化版的CRUD代码，注意：默认值是 MyBatis3。 
+  			 id:唯一标识符	
+  	 	 <jdbcConnection> : 指定如何连接目标数据库。
+  	 -->
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+  	
+  	<commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+    </commentGenerator>
+  
+  
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql:///test"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+
+	<!-- 
+		<javaTypeResolver> :java类型解析器。    forceBigDecimals属性 ：表示这里是是否强制转换Bigdecimal类型
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    -->
+    
+    <!-- 生成javabean的策略：
+    		targetPackage="test.model"             ：表示 生成javabean的目标包名
+    		targetProject=".\src"    ： 表示生成在那个工程项目下 ,这里表示为当前工程的src目录下
+    		enableSubPackages:是否让schema作为包的后缀
+    		trimStrings      :从数据库返回的值被清理前后的空格
+     -->
+    <javaModelGenerator targetPackage="com.model" targetProject=".\src">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+	<!-- 生成mapper映射文件的策略：
+		targetPackage="com.mapper"    
+		targetProject=".\src"    ： 表示生成在那个工程项目下 ,这里表示为当前工程的src目录下
+	 -->
+    <sqlMapGenerator targetPackage="com.mapper"  targetProject=".\src">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+	<!-- 生成mapper接口文件的策略-->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.dao"  targetProject=".\src">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+
+	<!-- 指定要通过那些表生成mybatis  domainObjectName: 通过表生成的bean名字-->
+	<table tableName="orders" domainObjectName="Orders"></table>
+	<table tableName="goods" domainObjectName="Goods"></table>
+
+
+  </context>
+</generatorConfiguration>
+```
+
+<h3>4. 编写运行逆向工程的主方法test_main ,里面有其他的test方法：</h3>
+
+```java
+package com.main;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.XMLParserException;
+import org.mybatis.generator.internal.DefaultShellCallback;
+
+import com.dao.OrdersMapper;
+import com.model.Orders;
+import com.model.OrdersExample;
+import com.model.OrdersExample.Criteria;
+
+public class Index {
+
+	@Test
+	public void test_main()throws IOException, XMLParserException, InvalidConfigurationException, SQLException, InterruptedException {
+		List<String> warnings = new ArrayList<String>();
+		boolean overwrite = true;
+		// 指定逆向工程配置文件
+		File configFile = new File("MybatisGenerator.xml");
+		ConfigurationParser cp = new ConfigurationParser(warnings);
+		Configuration config = cp.parseConfiguration(configFile);
+		DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+		MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+		myBatisGenerator.generate(null);
+
+		System.out.println("ok");
+	}
+
+	/*
+	 * 简单查询
+	 * */
+	@Test
+	public void test_select() throws Exception {
+		InputStream inputs = Resources.getResourceAsStream("mybatis_config.xml");
+		SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(inputs);
+		SqlSession session = ssf.openSession();
+		OrdersMapper ordersmapper=session.getMapper(OrdersMapper.class);
+		
+		Orders orders = ordersmapper.selectByPrimaryKey(80);
+		System.out.println(orders);
+	}
+
+	
+	/** 复杂查询
+	 * @throws Exception
+	 */
+	@Test
+	public void test_selectlike() throws Exception {
+		InputStream inputs = Resources.getResourceAsStream("mybatis_config.xml");
+		SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(inputs);
+		SqlSession session = ssf.openSession(); 
+		OrdersMapper ordersmapper=session.getMapper(OrdersMapper.class);
+		
+		/* select * from orders where name like '%b%'
+		 * 
+		 * OrdersExample : 用于封装查询条件的example，例子.
+		 * Criteria : 在 Criteria对象中 拼写查询条件
+		 * */
+		OrdersExample oe=new OrdersExample();
+		Criteria criteria = oe.createCriteria();
+		criteria.andNameLike("%a%");       // where name like '%b%'
+		
+		List<Orders> orders = ordersmapper.selectByExample(oe);  //通过封装查询条件的example，来查询数据。
+		System.out.println(orders);
+		
+		
+	}
+}
+
+```
+
+<h3>5. 运行截图：</h3>
+
+<font color="red">
+注意：
+
+①：mybatis_config.xml 是测试用的.不是自动生成的。
+
+②：index.java 是test类。
+
+③：com.dao,com.model,com.mapper 需要自己创建，里面的代码自动生成的。
+
+④：com.model包中的XxxExample类是用于复杂查询使用的，在测试方法中有说明。
+</font>
+
+
+![24.png](../img/mybatis_img/24.png)
