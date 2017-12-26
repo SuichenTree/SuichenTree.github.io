@@ -2233,7 +2233,8 @@ mysql-connector-java-5.1.42-bin.jar
 <br/>
 
 <h3>2. 创建数据表（orders表 ， goods表）：</h3>
-![23-png](../img/mybatis_img/23.png)
+
+![24.png](../img/mybatis_img/23.png)
 
 <br/>
 
