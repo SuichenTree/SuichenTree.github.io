@@ -216,7 +216,15 @@ s.substring(0, 5); // 从索引0开始到5（不包括5），返回'hello'
 s.substring(7); // 从索引7开始到结束，返回'world'
 ```
 
+#### 4.5 常量：
+ES6标准引入了新的关键字const来定义常量：
+```js
+//通常用全部大写的变量来表示“这是一个常量，不要修改它的值”
+const PI = 3.14;
+PI = 3; // 某些浏览器不报错，但是无效果！
+PI; // 3.14
 
+```
 
 #### 5. 变量：
 定义变量使用关键字var,语法如下：
@@ -607,6 +615,27 @@ s; // Set {1, 2}
 ```
 
 
+#### 10.iterable:
+遍历Array可以采用下标循环，遍历Map和Set就无法使用下标。ES6标准引入了新的iterable类型，Array、Map和Set都属于iterable类型。
+==具有iterable类型的集合可以通过新的for ... of循环来遍历。==
+
+用for ... of循环遍历集合，用法如下：
+```js
+var a = ['A', 'B', 'C'];
+var s = new Set(['A', 'B', 'C']);
+var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
+for (var x of a) { // 遍历Array
+    console.log(x);
+}
+for (var x of s) { // 遍历Set
+    console.log(x);
+}
+for (var x of m) { // 遍历Map
+    console.log(x[0] + '=' + x[1]);
+}
+
+```
+
 
 ### 3.函数：
 函数是完成某个特定功能的一组语句。把完成特定功能的代码块放到一个函数里，直接调用这个函数，就省重复输入大量代码的麻烦。
@@ -702,3 +731,147 @@ foo();     //x in foo() = 1 ，x in bar() = A
 ```
 
 
+#### 3.全局对象window：
+==不在任何函数内定义的变量就具有全局作用域。==
+实际上，JavaScript默认有一个全局对象window，全局作用域的变量实际上被绑定到window的一个属性：
+```js
+var course = 'Learn JavaScript';
+alert(course);             // 'Learn JavaScript'
+alert(window.course);      // 'Learn JavaScript'
+//因此，直接访问全局变量course和访问window.course是完全一样的。
+
+function foo() {
+    alert('foo');
+}
+
+foo(); // 直接调用foo()
+window.foo(); // 通过window.foo()调用
+
+```
+
+<font color="red">JavaScript实际上只有一个全局作用域。任何变量（函数也视为变量），如果没有在当前函数作用域中找到，就会继续往上查找，最后如果在全局作用域中也没有找到，则报ReferenceError错误。</font>
+
+
+#### 4.命名空间
+全局变量都会绑定到window上，不同的JavaScript文件如果使用了相同的全局变量，或者定义了相同命名空间的顶层函数，都会造成命名冲突，并且很难被发现。
+
+<font color="red">减少冲突的一个方法是把自己的所有变量和函数全部绑定到一个全局变量中。</font>
+例如：
+```js
+// 唯一的全局变量MYAPP:   
+var MYAPP = {};
+
+// 其他变量:
+MYAPP.name = 'myapp';
+MYAPP.version = 1.0;
+
+// 其他函数:
+MYAPP.foo = function () {
+    return 'foo';
+};
+
+//把自己的代码全部放入唯一的命名空间MYAPP中，会大大减少全局变量冲突的可能。
+//许多著名的JavaScript库都是这么干的：jQuery，YUI，underscore等等。
+```
+
+
+### 4.方法：
+在一个对象中绑定函数，称为这个对象的方法。
+
+对象的定义是这样的：
+```js
+var xiaoming = {
+    name: '小明',
+    birth: 1990
+};
+
+//写个age()方法，返回xiaoming的年龄：
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: function () {
+        var y = new Date().getFullYear();
+        return y - this.birth;
+    }
+};
+ 
+xiaoming.age;    // function xiaoming.age()
+xiaoming.age(); // 今年调用是25,明年调用就变成26了
+
+```
+**注意：**
+this:它是一个特殊变量，它始终指向当前对象，也就是xiaoming这个变量。所以，this.birth可以拿到xiaoming的birth属性.
+
+
+#### 1. 如果把对象的方法写在对象外面
+```js
+function getAge() {        
+    var y = new Date().getFullYear();
+    return y - this.birth;
+}
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: getAge               
+};
+
+xiaoming.age(); // 25, 正常结果
+getAge(); // NaN     
+
+
+/*
+getAge(); 的结果为什么是 NaN
+
+1. 如果以对象的方法形式调用，比如xiaoming.age()，该函数的this指向被调用的对象，也就是xiaoming，这是符合我们预期的。
+
+2. 如果单独调用函数，比如getAge()，此时，该函数的this指向全局对象，也就是window。
+*/
+  
+```
+
+
+#### 2. 如果在对象的方法里面定义函数：
+```js
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: function () {
+        function getAgeFromBirth() {      //在方法的里面定义函数
+            var y = new Date().getFullYear();
+            return y - this.birth;
+        }
+        return getAgeFromBirth();
+    }
+};
+
+xiaoming.age(); // Uncaught TypeError: Cannot read property 'birth' of undefined
+/*
+
+为什么是这个结果：
+
+ 原因是this指针只在age方法的函数内指向xiaoming，在方法内部定义的函数，this又指向undefined或window了！
+
+*/
+
+
+//修复的办法也不是没有，我们用一个that变量首先捕获this：
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: function () {
+        var that = this; // 在方法内部一开始就捕获this
+        function getAgeFromBirth() {
+            var y = new Date().getFullYear();
+            return y - that.birth; // 用that而不是this
+        }
+        return getAgeFromBirth();
+    }
+};
+
+xiaoming.age(); // 25
+
+//用var that = this;，你就可以放心地在方法内部定义其他函数，而不是把所有语句都堆到一个方法中。
+```
