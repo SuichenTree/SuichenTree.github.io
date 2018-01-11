@@ -729,7 +729,7 @@ public class SecondController {
 ```
 
 
-### 9.springmvc可以使用bean对象绑定方法形参：
+### 12.springmvc可以使用bean对象绑定方法形参：
 &nbsp;&nbsp;SpringMVC会按请求参数名与bean对象的属性名进行自动匹配,相当与自动填充该bean对象。
 
 ```java
@@ -776,7 +776,7 @@ birth:<input type="Date" name="birth"/>
 ```
 
 
-### 10.请求处理方法可以支持多种数据类型的参数：
+### 13.请求处理方法可以支持多种数据类型的参数：
 
 &nbsp;&nbsp;**每个请求方法可以有多个不同类型的参数**
 
@@ -808,7 +808,7 @@ birth:<input type="Date" name="birth"/>
 ```
 
 
-### 11.ModelAndView(模型和视图数据类型)& Model & ModelMap：
+### 14.ModelAndView(模型和视图数据类型)& Model & ModelMap：
 <font color="red">在springmvc框架中，Controller控制器执行业务逻辑，用于产生模型数据(Model),而视图（View）用于渲染模型数据。</font>
 
 index.jsp:
@@ -870,6 +870,317 @@ hello.jsp:
 ```
 
 <br/>
+
+
+## Springmvc的数据转换，格式化：
+
+### 1. 使用Converter<S,T>接口转换数据（支持任意类型之间相互转换，例如：String -> Date）：
+<font color="red">JSP页面的表单控件的转换的数据类型为String</font>
+
+```java
+package com.entity;
+
+import java.util.Date;
+
+public class User {
+	private Integer id;
+	private String name;
+	private Date time;
+	public User() {}
+	//省略get/set/toString方法
+}
+
+```
+
+index.jsp:
+```html
+...
+<form action="login" method="post">
+id  <input type="text" name="id"/>
+name：<input type="text" name="name"/>
+time：   <input type="Date" name="time"/> <!--这里的type="Date"，但传给服务器的信息还是String类型-->
+<input type="submit" value="submit"/>
+</form>
+...
+```
+
+
+```java
+@Controller
+public class SecondController {
+		@RequestMapping(value="/login")
+		public String login(User user) {     // 由于User的time为Date类型，而表单传来的time为String类型，会报错
+			System.out.println("User : "+user);
+			return "hello";
+		}
+}
+
+```
+
+<h4>①：编写自定义的数据转换器(实现Converter<S.T>接口)：</h4>
+```java
+public class StringDateConverter implements Converter<String,Date>{
+	private String datepattern="yyyy-MM-dd";     //日期的模板格式，会把yyyy-MM-dd 这种形式的字符串转换为DATE类型
+	public String getDatepattern() {             
+		return datepattern;
+	}
+	public void setDatepattern(String datepattern) {
+		this.datepattern = datepattern;
+	}
+
+	@Override
+	public Date convert(String date) {
+		SimpleDateFormat simpledateformat=new SimpleDateFormat(datepattern);    //把yyyy-MM-dd 这种形式的字符串转换为DATE类型
+		try {
+			return simpledateformat.parse(date);                                
+		} catch (ParseException e) {
+			System.out.println("=================日期转换失败");
+			return null;
+		}      
+	}
+}
+
+```
+
+
+<h4>②：使自定义的数据转换器生效,在springmvc_config.xml 添加以下代码：</h4>
+```xml
+    <!-- 装配自定义的conversionService  -->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+	<bean id="conversionService"
+		class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.other.StringDateConverter" />
+			</list>
+		</property>
+	</bean>
+```
+
+
+### 2. 数据格式化（只支持String->其他类型对象，例如：String-> Date）：
+==Spring提供两个可以用于格式化数字、日期和时间的注解@NumberFormat和@DateTimeFormat，这两个标签可以用于bean的属性或方法参数上==。
+
+<h4>①：使用注解@NumberFormat和@DateTimeFormat</h4>
+```java
+public class User {
+	@NumberFormat(style=Style.NUMBER,pattern="#,###")  //正常数字类型 ，把String类型—> Integer类型
+	private Integer id;
+	private String name;
+	@DateTimeFormat(pattern="yyyy-MM-dd")   //日期类型，String-> Date
+	private Date time;
+	public User() {}
+	
+	//省略get/set/toString方法
+}
+
+```
+
+<h4>②：装配格式化转换器</h4>
+```xml
+    <mvc:annotation-driven/>
+```
+
+<h4>
+ 从表单传过来的String类型数据，会被@NumberFormat和@DateTimeFormat注解进行格式化，然后绑定到bean对象的属性上.
+</h4>
+
+
+
+## SpringMVC 的文件上传与下载：
+<font color="red">例子：上传图片到D盘中，下载D盘的图片。</font>
+
+### 1.文件上传(上传图片到D盘中)：
+<font color="red">文件也可以成为某个bean的属性，例如：用户头像image文件</font>
+
+①：导入 ==commons-fileupload-1.3.3.jar , commons-io-2.6.jar== 到类路径中
+
+②：编写文件上传表单与处理方法
+index.jsp:
+```html
+<form action="upload" enctype="multipart/form-data"   method="post">
+文件描述信息：
+<input type="text" name="file_message"/>
+请选择文件：
+<input type="file" name="file"/>
+<input type="submit" value="上传"/>
+</form>
+
+```
+
+```java
+@Controller
+public class SecondController {
+	
+		@RequestMapping(value = "/upload")
+	    public String updateThumb(@RequestParam("file_message") String name,
+	            @RequestParam("file") MultipartFile file)
+	            throws IllegalStateException, IOException {
+	        if (!file.isEmpty()) {                   //判断文件是否为空
+	            file.transferTo(new File("d:/"       //把文件保存在指定路径，文件名为表单传过来的文件信息
+	                    + name
+	                    + file.getOriginalFilename().substring(
+	                            file.getOriginalFilename().lastIndexOf("."))));
+	        	return "hello";
+	        } else {
+	        	return "hello";
+	        }
+	    }
+}
+```
+
+③：开启spring的文件上传功能(在springmvc_config.xml增加如下代码)：
+```xml
+ <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"></property>   <!-- 请求的编码方式，必须与jsp的编码方式一致 -->
+        <property name="maxUploadSize" value="5242880"></property>   <!-- 上传文件大小上限，单位为字节 -->
+</bean>
+```
+
+
+### 2.文件下载(下载D盘的图片)：
+文件下载比较简单，直接在页面给出了一个超链接，该链接href的属性等于要下载文件的文件名，就可以实现文件下载了。
+SpringMVC提供了一个ResponseEntity类型，使用它可以很方便地定义返回的HttpHeaders和HttpStatus。
+
+```html
+<form action="download">
+name:<input type="text" name="name"/>
+<input type="submit" value="下载"/>
+</form>
+```
+
+```java
+@RequestMapping(value="/download")
+	public ResponseEntity<byte[]> download(HttpServletRequest request,
+			@RequestParam("name") String name,
+			Model model)throws Exception {
+	//下载文件路径
+	String path = request.getServletContext().getRealPath("D:/");
+	File file = new File("D:/" + File.separator + name +".jpg");
+	HttpHeaders headers = new HttpHeaders();  
+	//下载显示的文件名，解决中文名称乱码问题  
+	String downloadFielName = new String(name.getBytes("UTF-8"),"iso-8859-1");
+	//通知浏览器以attachment（下载方式）打开图片
+	headers.setContentDispositionFormData("attachment", downloadFielName); 
+	//application/octet-stream ： 二进制流数据（最常见的文件下载）。
+	headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),    
+			headers, HttpStatus.CREATED);  
+	}
+```
+
+
+## SpringMVC 拦截器:
+它的主要作用是拦截用户的请求并进行相应的处理。比如通过它来进行==权限验证，或者是来判断用户是否登陆==，或者是像12306 那样子判断当前时间是否是购票时间。
+
+
+<font color="red">SpringMVC 中的Interceptor 拦截请求是通过HandlerInterceptor接口来实现的。</font>
+
+
+**例子：输入admin，才能登录，否则一直跳转登录页面：**
+
+```html
+<form action="login" method="post">
+name:<input type="text" name="name"/>
+<input type="submit" value="submit"/>
+</form>
+```
+
+
+```java
+@RequestMapping(value="/login")
+		public String login(User user,HttpSession session) {
+			System.out.println("这是 login 的请求处理方法");
+			System.out.println(user);
+			session.setAttribute("user", user);       //把user加入到session中
+			return "hello";
+}
+```
+
+**①：编写拦截器，实现HandlerInterceptor接口：**
+```java
+public class SpringMVCInterceptor implements HandlerInterceptor{
+
+   /** 
+     * preHandle方法是进行处理器拦截用的，顾名思义，该方法将在Controller处理之前进行调用.
+     * 
+     * SpringMVC中的Interceptor拦截器是链式的，可以同时存在 多个Interceptor，
+     * 然后SpringMVC会根据声明的前后顺序一个接一个的执行，而且所有的Interceptor中的preHandle方法都会在 Controller方法调用之前调用。
+     * 
+     * SpringMVC的这种Interceptor链式结构也是可以进行中断的，这种中断方式是令preHandle的返 
+     * 回值为false，当preHandle的返回值为false的时候整个请求就结束了。 
+     */  
+    @Override  
+    public boolean preHandle(HttpServletRequest request,  
+            HttpServletResponse response, Object handler) throws Exception {  
+    	System.out.println("拦截器的  preHandle  ----->  ");
+//    	return true;           //当返回之为true ，表示这里的拦截放行， 为false表示已经拦截
+    	
+    	String name =request.getParameter("name");
+    	if(!name.equals("admin")) {
+    		System.out.println("name: "+name);
+    		System.out.println(" name 值 不为 admin，重新回到index.jsp  ----->  ");
+    		request.getRequestDispatcher("index.jsp").forward(request, response);
+    		return false;
+    	}else {
+    		System.out.println("name: "+name);
+    		System.out.println(" name 值为 admin，成功登录  ----->  ");
+    		return true;
+    	}
+    	
+    	
+    }  
+      
+    /** 
+     * 这个方法只会在当前这个Interceptor的preHandle方法返回值为true的时候才会执行。
+     * 
+     * postHandle是进行处理器拦截用的，它的执行时间是在处理器进行处理之后，也就是在Controller的方法调用之后执行，
+     * 但是它会在DispatcherServlet进行视图的渲染之前执行，也就是说在这个方法中你可以对ModelAndView进行操 
+     * 作。
+     * 
+     * 这个方法的链式结构跟正常访问的方向是相反的，也就是说先声明的Interceptor拦截器该方法反而会后调用，
+     * 
+     */  
+    @Override  
+    public void postHandle(HttpServletRequest request,  
+            HttpServletResponse response, Object handler,  
+            ModelAndView modelAndView) throws Exception {  
+       System.out.println("拦截器的   postHandle   -------------->");
+          
+    }  
+  
+    /** 
+     * 该方法也是需要当前对应的Interceptor的preHandle方法的返回值为true时才会执行。该方法将在整个请求完成之后，也就是DispatcherServlet渲染了视图执行， 
+     * 这个方法的主要作用是用于清理资源的，当然这个方法也只能在当前这个Interceptor的preHandle方法的返回值为true时才会执行。 
+     */  
+    @Override  
+    public void afterCompletion(HttpServletRequest request,  
+            HttpServletResponse response, Object handler, Exception ex)  
+    throws Exception {  
+       System.out.println("拦截器的   afterCompletion ----------->");
+          
+    }  
+
+}
+```
+
+
+**②：在springmvc上下文中配置拦截器：**
+springmvc——config.xml:
+```xml
+  <!-- 自定义拦截链配置 -->  
+    <mvc:interceptors>  
+        <mvc:interceptor>  
+            <mvc:mapping path="/*"/>    <!-- 拦截所有请求 -->
+            <bean class="com.other.SpringMVCInterceptor"></bean>  
+        </mvc:interceptor>  
+    </mvc:interceptors>  
+    
+```
+
+
+![6.png](../img/springmvc_img/6.png)
+
 
 
 

@@ -5,7 +5,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.1\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.2\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
       
       
       
@@ -237,11 +237,24 @@ code.language-yaml {
 <li><a href="#9httpmessagecovertert-%E6%8E%A5%E5%8F%A3">9.HttpMessageCoverter<T> 接口(★★★)：</T></a></li>
 <li><a href="#10requestbody%E6%B3%A8%E8%A7%A3%E4%B8%BB%E8%A6%81%E7%94%A8%E4%BA%8E%E5%A4%84%E7%90%86json%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">10.@RequestBody注解(主要用于处理json格式数据，并转换为对应的数据类型)：</a></li>
 <li><a href="#11%E8%87%AA%E5%AE%9A%E4%B9%89httpmessagecoverter%E6%8E%A5%E5%8F%97json%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%99%E9%87%8C%E4%B9%9F%E9%9C%80%E8%A6%81%E5%9C%A8webxml%E4%B8%AD%E6%94%BE%E8%A1%8Cjs%E6%96%87%E4%BB%B6">11.自定义HttpMessageCoverter接受JSON格式的数据(这里也需要在web.xml中放行js文件)：</a></li>
-<li><a href="#9springmvc%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8bean%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E5%BD%A2%E5%8F%82">9.springmvc可以使用bean对象绑定方法形参：</a></li>
-<li><a href="#10%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0">10.请求处理方法可以支持多种数据类型的参数：</a></li>
-<li><a href="#11modelandview%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-model-modelmap">11.ModelAndView(模型和视图数据类型)&amp; Model &amp; ModelMap：</a></li>
+<li><a href="#12springmvc%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8bean%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E5%BD%A2%E5%8F%82">12.springmvc可以使用bean对象绑定方法形参：</a></li>
+<li><a href="#13%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0">13.请求处理方法可以支持多种数据类型的参数：</a></li>
+<li><a href="#14modelandview%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-model-modelmap">14.ModelAndView(模型和视图数据类型)&amp; Model &amp; ModelMap：</a></li>
 </ul>
 </li>
+<li><a href="#springmvc%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E6%A0%BC%E5%BC%8F%E5%8C%96">Springmvc的数据转换，格式化：</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8converterst%E6%8E%A5%E5%8F%A3%E8%BD%AC%E6%8D%A2%E6%95%B0%E6%8D%AE%E6%94%AF%E6%8C%81%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2%E4%BE%8B%E5%A6%82string-date">1. 使用Converter&lt;S,T&gt;接口转换数据（支持任意类型之间相互转换，例如：String -&gt; Date）：</a></li>
+<li><a href="#2-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%AA%E6%94%AF%E6%8C%81string-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%BE%8B%E5%A6%82string-date">2. 数据格式化（只支持String-&gt;其他类型对象，例如：String-&gt; Date）：</a></li>
+</ul>
+</li>
+<li><a href="#springmvc-%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD">SpringMVC 的文件上传与下载：</a>
+<ul>
+<li><a href="#1%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E5%88%B0d%E7%9B%98%E4%B8%AD">1.文件上传(上传图片到D盘中)：</a></li>
+<li><a href="#2%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E4%B8%8B%E8%BD%BDd%E7%9B%98%E7%9A%84%E5%9B%BE%E7%89%87">2.文件下载(下载D盘的图片)：</a></li>
+</ul>
+</li>
+<li><a href="#springmvc-%E6%8B%A6%E6%88%AA%E5%99%A8">SpringMVC 拦截器:</a></li>
 <li><a href="#rest%E9%A3%8E%E6%A0%BC%E5%85%A8%E7%A7%B0resource-representational-state-transfer%E8%B5%84%E6%BA%90%E8%A1%A8%E7%8E%B0%E5%B1%82%E7%8A%B6%E6%80%81%E4%BC%A0%E9%80%92">Rest风格（全称：Resource Representational State Transfer，资源表现层状态传递）：</a></li>
 </ul>
 </li>
@@ -880,7 +893,7 @@ jackson-databind-2.9.0.jar</p>
 		<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </pre>
-<h3 class="mume-header" id="9springmvc%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8bean%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E5%BD%A2%E5%8F%82">9.springmvc可以使用bean对象绑定方法形参：</h3>
+<h3 class="mume-header" id="12springmvc%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8bean%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E5%BD%A2%E5%8F%82">12.springmvc可以使用bean对象绑定方法形参：</h3>
 
 <p>  SpringMVC会按请求参数名与bean对象的属性名进行自动匹配,相当与自动填充该bean对象。</p>
 <pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
@@ -920,7 +933,7 @@ birth:<span class="token tag"><span class="token tag"><span class="token punctua
 	<span class="token punctuation">}</span>
 
 </pre>
-<h3 class="mume-header" id="10%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0">10.请求处理方法可以支持多种数据类型的参数：</h3>
+<h3 class="mume-header" id="13%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0">13.请求处理方法可以支持多种数据类型的参数：</h3>
 
 <p>  <strong>每个请求方法可以有多个不同类型的参数</strong></p>
 <pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ServletAPI<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>测试请求处理方法可以支持多种数据类型的参数<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
@@ -946,7 +959,7 @@ birth:<span class="token tag"><span class="token tag"><span class="token punctua
 	<span class="token punctuation">}</span>
 	
 </pre>
-<h3 class="mume-header" id="11modelandview%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-model-modelmap">11.ModelAndView(模型和视图数据类型)&amp; Model &amp; ModelMap：</h3>
+<h3 class="mume-header" id="14modelandview%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-model-modelmap">14.ModelAndView(模型和视图数据类型)&amp; Model &amp; ModelMap：</h3>
 
 <p><font color="red">在springmvc框架中，Controller控制器执行业务逻辑，用于产生模型数据(Model),而视图（View）用于渲染模型数据。</font></p>
 <p>index.jsp:</p>
@@ -1002,12 +1015,275 @@ birth:<span class="token tag"><span class="token tag"><span class="token punctua
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h2</span><span class="token punctuation">></span></span> birth: ${orde.birth }<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h2</span><span class="token punctuation">></span></span>
 </pre>
 <br>
+<h2 class="mume-header" id="springmvc%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E6%A0%BC%E5%BC%8F%E5%8C%96">Springmvc的数据转换，格式化：</h2>
+
+<h3 class="mume-header" id="1-%E4%BD%BF%E7%94%A8converterst%E6%8E%A5%E5%8F%A3%E8%BD%AC%E6%8D%A2%E6%95%B0%E6%8D%AE%E6%94%AF%E6%8C%81%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2%E4%BE%8B%E5%A6%82string-date">1. 使用Converter&lt;S,T&gt;接口转换数据（支持任意类型之间相互转换，例如：String -&gt; Date）：</h3>
+
+<p><font color="red">JSP页面的表单控件的转换的数据类型为String</font></p>
+<pre class="language-java"><span class="token keyword">package</span> com<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Date<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Date time<span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+	<span class="token comment" spellcheck="true">//省略get/set/toString方法</span>
+<span class="token punctuation">}</span>
+
+</pre>
+<p>index.jsp:</p>
+<pre class="language-html">...
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>login<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+id  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+name：<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+time：   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Date<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>time<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span> <span class="token comment" spellcheck="true">&lt;!--这里的type="Date"，但传给服务器的信息还是String类型--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+...
+</pre>
+<pre class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SecondController</span> <span class="token punctuation">{</span>
+		<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/login"</span><span class="token punctuation">)</span>
+		<span class="token keyword">public</span> String <span class="token function">login</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">// 由于User的time为Date类型，而表单传来的time为String类型，会报错</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"User : "</span><span class="token operator">+</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre>
+<h4>①：编写自定义的数据转换器(实现Converter<S.T>接口)：</S.T></h4>
+```java
+public class StringDateConverter implements Converter<String,Date>{
+	private String datepattern="yyyy-MM-dd";     //日期的模板格式，会把yyyy-MM-dd 这种形式的字符串转换为DATE类型
+	public String getDatepattern() {             
+		return datepattern;
+	}
+	public void setDatepattern(String datepattern) {
+		this.datepattern = datepattern;
+	}
+<pre class="language-text">@Override
+public Date convert(String date) {
+	SimpleDateFormat simpledateformat=new SimpleDateFormat(datepattern);    //&#x628A;yyyy-MM-dd &#x8FD9;&#x79CD;&#x5F62;&#x5F0F;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8F6C;&#x6362;&#x4E3A;DATE&#x7C7B;&#x578B;
+	try {
+		return simpledateformat.parse(date);                                
+	} catch (ParseException e) {
+		System.out.println(&quot;=================&#x65E5;&#x671F;&#x8F6C;&#x6362;&#x5931;&#x8D25;&quot;);
+		return null;
+	}      
+}
+</pre>
+<p>}</p>
+<pre class="language-">
+
+&lt;h4&gt;&#x2461;&#xFF1A;&#x4F7F;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x5668;&#x751F;&#x6548;,&#x5728;springmvc_config.xml &#x6DFB;&#x52A0;&#x4EE5;&#x4E0B;&#x4EE3;&#x7801;&#xFF1A;&lt;/h4&gt;
+```xml
+    &lt;!-- &#x88C5;&#x914D;&#x81EA;&#x5B9A;&#x4E49;&#x7684;conversionService  --&gt;
+    &lt;mvc:annotation-driven conversion-service=&quot;conversionService&quot;/&gt;
+	&lt;bean id=&quot;conversionService&quot;
+		class=&quot;org.springframework.context.support.ConversionServiceFactoryBean&quot;&gt;
+		&lt;property name=&quot;converters&quot;&gt;
+			&lt;list&gt;
+				&lt;bean class=&quot;com.other.StringDateConverter&quot; /&gt;
+			&lt;/list&gt;
+		&lt;/property&gt;
+	&lt;/bean&gt;
+</pre>
+<h3 class="mume-header" id="2-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%AA%E6%94%AF%E6%8C%81string-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%BE%8B%E5%A6%82string-date">2. 数据格式化（只支持String-&gt;其他类型对象，例如：String-&gt; Date）：</h3>
+
+<p><mark>Spring提供两个可以用于格式化数字、日期和时间的注解@NumberFormat和@DateTimeFormat，这两个标签可以用于bean的属性或方法参数上</mark>。</p>
+<h4>①：使用注解@NumberFormat和@DateTimeFormat</h4>
+```java
+public class User {
+	@NumberFormat(style=Style.NUMBER,pattern="#,###")  //正常数字类型 ，把String类型—> Integer类型
+	private Integer id;
+	private String name;
+	@DateTimeFormat(pattern="yyyy-MM-dd")   //日期类型，String-> Date
+	private Date time;
+	public User() {}
+<pre class="language-text">//&#x7701;&#x7565;get/set/toString&#x65B9;&#x6CD5;
+</pre>
+<p>}</p>
+<pre class="language-">
+&lt;h4&gt;&#x2461;&#xFF1A;&#x88C5;&#x914D;&#x683C;&#x5F0F;&#x5316;&#x8F6C;&#x6362;&#x5668;&lt;/h4&gt;
+```xml
+    &lt;mvc:annotation-driven/&gt;
+</pre>
+<h4>
+ 从表单传过来的String类型数据，会被@NumberFormat和@DateTimeFormat注解进行格式化，然后绑定到bean对象的属性上.
+</h4>
+<h2 class="mume-header" id="springmvc-%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD">SpringMVC 的文件上传与下载：</h2>
+
+<p><font color="red">例子：上传图片到D盘中，下载D盘的图片。</font></p>
+<h3 class="mume-header" id="1%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E5%88%B0d%E7%9B%98%E4%B8%AD">1.文件上传(上传图片到D盘中)：</h3>
+
+<p><font color="red">文件也可以成为某个bean的属性，例如：用户头像image文件</font></p>
+<p>①：导入 <mark>commons-fileupload-1.3.3.jar , commons-io-2.6.jar</mark> 到类路径中</p>
+<p>②：编写文件上传表单与处理方法<br>
+index.jsp:</p>
+<pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>upload<span class="token punctuation">"</span></span> <span class="token attr-name">enctype</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipart/form-data<span class="token punctuation">"</span></span>   <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+文件描述信息：
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file_message<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+请选择文件：
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>file<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>上传<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+
+</pre>
+<pre class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SecondController</span> <span class="token punctuation">{</span>
+	
+		<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"/upload"</span><span class="token punctuation">)</span>
+	    <span class="token keyword">public</span> String <span class="token function">updateThumb</span><span class="token punctuation">(</span><span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"file_message"</span><span class="token punctuation">)</span> String name<span class="token punctuation">,</span>
+	            <span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"file"</span><span class="token punctuation">)</span> MultipartFile file<span class="token punctuation">)</span>
+	            <span class="token keyword">throws</span> IllegalStateException<span class="token punctuation">,</span> IOException <span class="token punctuation">{</span>
+	        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>file<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>                   <span class="token comment" spellcheck="true">//判断文件是否为空</span>
+	            file<span class="token punctuation">.</span><span class="token function">transferTo</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"d:/"</span>       <span class="token comment" spellcheck="true">//把文件保存在指定路径，文件名为表单传过来的文件信息</span>
+	                    <span class="token operator">+</span> name
+	                    <span class="token operator">+</span> file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>
+	                            file<span class="token punctuation">.</span><span class="token function">getOriginalFilename</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	        	<span class="token keyword">return</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+	        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+	        	<span class="token keyword">return</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+	        <span class="token punctuation">}</span>
+	    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre>
+<p>③：开启spring的文件上传功能(在springmvc_config.xml增加如下代码)：</p>
+<pre class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>multipartResolver<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.web.multipart.commons.CommonsMultipartResolver<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>defaultEncoding<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>   <span class="token comment" spellcheck="true">&lt;!-- 请求的编码方式，必须与jsp的编码方式一致 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>maxUploadSize<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>5242880<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>   <span class="token comment" spellcheck="true">&lt;!-- 上传文件大小上限，单位为字节 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+</pre>
+<h3 class="mume-header" id="2%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E4%B8%8B%E8%BD%BDd%E7%9B%98%E7%9A%84%E5%9B%BE%E7%89%87">2.文件下载(下载D盘的图片)：</h3>
+
+<p>文件下载比较简单，直接在页面给出了一个超链接，该链接href的属性等于要下载文件的文件名，就可以实现文件下载了。<br>
+SpringMVC提供了一个ResponseEntity类型，使用它可以很方便地定义返回的HttpHeaders和HttpStatus。</p>
+<pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>download<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+name:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>下载<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+</pre>
+<pre class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/download"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> ResponseEntity<span class="token operator">&lt;</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token function">download</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span>
+			<span class="token annotation punctuation">@RequestParam</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span> String name<span class="token punctuation">,</span>
+			Model model<span class="token punctuation">)</span><span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+	<span class="token comment" spellcheck="true">//下载文件路径</span>
+	String path <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRealPath</span><span class="token punctuation">(</span><span class="token string">"D:/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	File file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span><span class="token string">"D:/"</span> <span class="token operator">+</span> File<span class="token punctuation">.</span>separator <span class="token operator">+</span> name <span class="token operator">+</span><span class="token string">".jpg"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	HttpHeaders headers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+	<span class="token comment" spellcheck="true">//下载显示的文件名，解决中文名称乱码问题  </span>
+	String downloadFielName <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"iso-8859-1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment" spellcheck="true">//通知浏览器以attachment（下载方式）打开图片</span>
+	headers<span class="token punctuation">.</span><span class="token function">setContentDispositionFormData</span><span class="token punctuation">(</span><span class="token string">"attachment"</span><span class="token punctuation">,</span> downloadFielName<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token comment" spellcheck="true">//application/octet-stream ： 二进制流数据（最常见的文件下载）。</span>
+	headers<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span>MediaType<span class="token punctuation">.</span>APPLICATION_OCTET_STREAM<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ResponseEntity</span><span class="token operator">&lt;</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">(</span>FileUtils<span class="token punctuation">.</span><span class="token function">readFileToByteArray</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">,</span>    
+			headers<span class="token punctuation">,</span> HttpStatus<span class="token punctuation">.</span>CREATED<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+	<span class="token punctuation">}</span>
+</pre>
+<h2 class="mume-header" id="springmvc-%E6%8B%A6%E6%88%AA%E5%99%A8">SpringMVC 拦截器:</h2>
+
+<p>它的主要作用是拦截用户的请求并进行相应的处理。比如通过它来进行<mark>权限验证，或者是来判断用户是否登陆</mark>，或者是像12306 那样子判断当前时间是否是购票时间。</p>
+<p><font color="red">SpringMVC 中的Interceptor 拦截请求是通过HandlerInterceptor接口来实现的。</font></p>
+<p><strong>例子：输入admin，才能登录，否则一直跳转登录页面：</strong></p>
+<pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>login<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+name:<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+</pre>
+<pre class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/login"</span><span class="token punctuation">)</span>
+		<span class="token keyword">public</span> String <span class="token function">login</span><span class="token punctuation">(</span>User user<span class="token punctuation">,</span>HttpSession session<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"这是 login 的请求处理方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			session<span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">"user"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//把user加入到session中</span>
+			<span class="token keyword">return</span> <span class="token string">"hello"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre>
+<p><strong>①：编写拦截器，实现HandlerInterceptor接口：</strong></p>
+<pre class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringMVCInterceptor</span> <span class="token keyword">implements</span> <span class="token class-name">HandlerInterceptor</span><span class="token punctuation">{</span>
+
+   <span class="token comment" spellcheck="true">/** 
+     * preHandle方法是进行处理器拦截用的，顾名思义，该方法将在Controller处理之前进行调用.
+     * 
+     * SpringMVC中的Interceptor拦截器是链式的，可以同时存在 多个Interceptor，
+     * 然后SpringMVC会根据声明的前后顺序一个接一个的执行，而且所有的Interceptor中的preHandle方法都会在 Controller方法调用之前调用。
+     * 
+     * SpringMVC的这种Interceptor链式结构也是可以进行中断的，这种中断方式是令preHandle的返 
+     * 回值为false，当preHandle的返回值为false的时候整个请求就结束了。 
+     */</span>  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">preHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span>  
+            HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>  
+    	System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"拦截器的  preHandle  ----->  "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//    	return true;           //当返回之为true ，表示这里的拦截放行， 为false表示已经拦截</span>
+    	
+    	String name <span class="token operator">=</span>request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"name: "</span><span class="token operator">+</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">" name 值 不为 admin，重新回到index.jsp  ----->  "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    		request<span class="token punctuation">.</span><span class="token function">getRequestDispatcher</span><span class="token punctuation">(</span><span class="token string">"index.jsp"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forward</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+    		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"name: "</span><span class="token operator">+</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">" name 值为 admin，成功登录  ----->  "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    	<span class="token punctuation">}</span>
+    	
+    	
+    <span class="token punctuation">}</span>  
+      
+    <span class="token comment" spellcheck="true">/** 
+     * 这个方法只会在当前这个Interceptor的preHandle方法返回值为true的时候才会执行。
+     * 
+     * postHandle是进行处理器拦截用的，它的执行时间是在处理器进行处理之后，也就是在Controller的方法调用之后执行，
+     * 但是它会在DispatcherServlet进行视图的渲染之前执行，也就是说在这个方法中你可以对ModelAndView进行操 
+     * 作。
+     * 
+     * 这个方法的链式结构跟正常访问的方向是相反的，也就是说先声明的Interceptor拦截器该方法反而会后调用，
+     * 
+     */</span>  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">postHandle</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span>  
+            HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span>  
+            ModelAndView modelAndView<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>  
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"拦截器的   postHandle   -------------->"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          
+    <span class="token punctuation">}</span>  
+  
+    <span class="token comment" spellcheck="true">/** 
+     * 该方法也是需要当前对应的Interceptor的preHandle方法的返回值为true时才会执行。该方法将在整个请求完成之后，也就是DispatcherServlet渲染了视图执行， 
+     * 这个方法的主要作用是用于清理资源的，当然这个方法也只能在当前这个Interceptor的preHandle方法的返回值为true时才会执行。 
+     */</span>  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterCompletion</span><span class="token punctuation">(</span>HttpServletRequest request<span class="token punctuation">,</span>  
+            HttpServletResponse response<span class="token punctuation">,</span> Object handler<span class="token punctuation">,</span> Exception ex<span class="token punctuation">)</span>  
+    <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>  
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"拦截器的   afterCompletion ----------->"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          
+    <span class="token punctuation">}</span>  
+
+<span class="token punctuation">}</span>
+</pre>
+<p><strong>②：在springmvc上下文中配置拦截器：</strong><br>
+springmvc——config.xml:</p>
+<pre class="language-xml">  <span class="token comment" spellcheck="true">&lt;!-- 自定义拦截链配置 --></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>interceptors</span><span class="token punctuation">></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>interceptor</span><span class="token punctuation">></span></span>  
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">mvc:</span>mapping</span> <span class="token attr-name">path</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/*<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>    <span class="token comment" spellcheck="true">&lt;!-- 拦截所有请求 --></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.other.SpringMVCInterceptor<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>  
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>interceptor</span><span class="token punctuation">></span></span>  
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token namespace">mvc:</span>interceptors</span><span class="token punctuation">></span></span>  
+    
+</pre>
+<p><img src="../img/springmvc_img/6.png" alt="6.png"></p>
 <h2 class="mume-header" id="rest%E9%A3%8E%E6%A0%BC%E5%85%A8%E7%A7%B0resource-representational-state-transfer%E8%B5%84%E6%BA%90%E8%A1%A8%E7%8E%B0%E5%B1%82%E7%8A%B6%E6%80%81%E4%BC%A0%E9%80%92">Rest风格（全称：Resource Representational State Transfer，资源表现层状态传递）：</h2>
 
 <p>Resource（资源）： 网络上的任何一种实体都可以称作资源。<font color="red">URL 为每一个资源给定了标识符。</font></p>
 <p>Representational（表现层）：<font color="red"> 把资源呈现出来的形式，叫做该资源的表现层</font>。例如：文本可以用txt,html,json格式表现出来。</p>
 <p>State Transfer(状态转化) ： <font color="red">Http协议中，GET用来获取资源，POST用来新建资源，Delete用来删除资源，Put 用来更新资源</font></p>
-
+</String,Date>
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#springmvc">SpringMVC</a>
@@ -1035,11 +1311,24 @@ birth:<span class="token tag"><span class="token tag"><span class="token punctua
 <li><a href="#9httpmessagecovertert-%E6%8E%A5%E5%8F%A3">9.HttpMessageCoverter<T> 接口(★★★)：</T></a></li>
 <li><a href="#10requestbody%E6%B3%A8%E8%A7%A3%E4%B8%BB%E8%A6%81%E7%94%A8%E4%BA%8E%E5%A4%84%E7%90%86json%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">10.@RequestBody注解(主要用于处理json格式数据，并转换为对应的数据类型)：</a></li>
 <li><a href="#11%E8%87%AA%E5%AE%9A%E4%B9%89httpmessagecoverter%E6%8E%A5%E5%8F%97json%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%99%E9%87%8C%E4%B9%9F%E9%9C%80%E8%A6%81%E5%9C%A8webxml%E4%B8%AD%E6%94%BE%E8%A1%8Cjs%E6%96%87%E4%BB%B6">11.自定义HttpMessageCoverter接受JSON格式的数据(这里也需要在web.xml中放行js文件)：</a></li>
-<li><a href="#9springmvc%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8bean%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E5%BD%A2%E5%8F%82">9.springmvc可以使用bean对象绑定方法形参：</a></li>
-<li><a href="#10%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0">10.请求处理方法可以支持多种数据类型的参数：</a></li>
-<li><a href="#11modelandview%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-model-modelmap">11.ModelAndView(模型和视图数据类型)&amp; Model &amp; ModelMap：</a></li>
+<li><a href="#12springmvc%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8bean%E5%AF%B9%E8%B1%A1%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95%E5%BD%A2%E5%8F%82">12.springmvc可以使用bean对象绑定方法形参：</a></li>
+<li><a href="#13%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%AF%E4%BB%A5%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0">13.请求处理方法可以支持多种数据类型的参数：</a></li>
+<li><a href="#14modelandview%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%A7%86%E5%9B%BE%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-model-modelmap">14.ModelAndView(模型和视图数据类型)&amp; Model &amp; ModelMap：</a></li>
 </ul>
 </li>
+<li><a href="#springmvc%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E6%A0%BC%E5%BC%8F%E5%8C%96">Springmvc的数据转换，格式化：</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8converterst%E6%8E%A5%E5%8F%A3%E8%BD%AC%E6%8D%A2%E6%95%B0%E6%8D%AE%E6%94%AF%E6%8C%81%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2%E4%BE%8B%E5%A6%82string-date">1. 使用Converter&lt;S,T&gt;接口转换数据（支持任意类型之间相互转换，例如：String -&gt; Date）：</a></li>
+<li><a href="#2-%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%8F%AA%E6%94%AF%E6%8C%81string-%E5%85%B6%E4%BB%96%E7%B1%BB%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%BE%8B%E5%A6%82string-date">2. 数据格式化（只支持String-&gt;其他类型对象，例如：String-&gt; Date）：</a></li>
+</ul>
+</li>
+<li><a href="#springmvc-%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD">SpringMVC 的文件上传与下载：</a>
+<ul>
+<li><a href="#1%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E5%88%B0d%E7%9B%98%E4%B8%AD">1.文件上传(上传图片到D盘中)：</a></li>
+<li><a href="#2%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E4%B8%8B%E8%BD%BDd%E7%9B%98%E7%9A%84%E5%9B%BE%E7%89%87">2.文件下载(下载D盘的图片)：</a></li>
+</ul>
+</li>
+<li><a href="#springmvc-%E6%8B%A6%E6%88%AA%E5%99%A8">SpringMVC 拦截器:</a></li>
 <li><a href="#rest%E9%A3%8E%E6%A0%BC%E5%85%A8%E7%A7%B0resource-representational-state-transfer%E8%B5%84%E6%BA%90%E8%A1%A8%E7%8E%B0%E5%B1%82%E7%8A%B6%E6%80%81%E4%BC%A0%E9%80%92">Rest风格（全称：Resource Representational State Transfer，资源表现层状态传递）：</a></li>
 </ul>
 </li>
