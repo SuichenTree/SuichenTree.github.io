@@ -1386,8 +1386,8 @@ applicatinContext.xml
 
 
 ### 2.数据库的建立：
-![数据库截图](../img/spring_img_1.png)
-![数据库截图](../img/spring_img_2.png)
+![数据库截图](../img/spring_img/spring_img_1.png)
+![数据库截图](../img/spring_img/spring_img_2.png)
 
 
 ### 3.编写持久化类（实体类）：
@@ -1990,4 +1990,922 @@ public interface Userdao {
 	
 }
 
+```
+
+
+## SSM( Spring + SpringMvc + Mybatis + Bootstrap 4):
+==该例子实现了对用户User的登录，注册，CRUD,以及分页查询的功能==
+<br/>
+
+<font color="red">注意：该例子使用了 [MyBatis分页插件PageHelper](https://pagehelper.github.io/)</font>
+
+![spring_img_3.png](../img/spring_img/spring_img_3.png)
+
+![spring_img_4.png](../img/spring_img/spring_img_4.png)
+
+
+### 1.jar包的准备：
+> Spring框架的jar 包。
+> Mybatis框架的 jar 包。
+> Mybatis 整合 Spring 中间件的 jar 包（版本最好要1.3.1 或更高版本，低版本会产生不兼容问题）。
+> aspectj 的jar 包（spring的aop 是基于aspectj）。
+> 数据库驱动 jar包，
+> 数据源c3p0 或 dbcp 的jar包。
+> jstl 标签库的jar 包。
+> ==MyBatis分页插件PageHelper 的jar包；pagehelper-5.0.4.jar , jsqlparser-0.9.5.jar==。
+> jackson的jar包（用于ajax使用）：jackson-annotations-2.9.0.jar，jackson-core-2.9.0.jar，jackson-databind-2.9.0.jar
+
+
+### 2.持久化类：
+
+```java
+package com.Entity;
+
+import java.util.Date;
+
+public class User {
+    private Integer id;
+    private String name;
+    private String password;
+
+    public User(){}
+
+   //省略get/set/toString()方法
+}
+
+```
+
+
+### 3.Dao层接口与其对应的Mapper映射文件：
+
+UserMapper.xml:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Dao.UserDao">
+    <!--配置mybatis的mapper映射文件， insert ，delete， update， select, selectAll-->
+    <select id="selectUser" resultType="com.Entity.User" parameterType="com.Entity.User">
+        select * from user where 1=1
+        <if test="id !=null">and id=#{id}</if>
+        <if test="name !=null">and name=#{name}</if>
+    </select>
+
+	<select id="selectLikeUser" resultType="com.Entity.User" parameterType="com.Entity.User">
+        select * from user where 1=1
+        <if test="name !=null">and name like #{name}</if>
+    </select>
+
+    <insert id="insertUser" parameterType="com.Entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test='name != null'>
+                name,
+            </if>
+            <if test='password != null'>
+                password,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test='name != null'>
+                #{name},
+            </if>
+             <if test='password != null'>
+                #{password},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteUser" parameterType="com.Entity.User">
+        delete from user where 1=1
+        <if test="id !=null">and id=#{id}</if>
+    </delete>
+
+    <update id="updateUser" parameterType="com.Entity.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name !=null">name=#{name},</if>
+            <if test="password !=null">password=#{password},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <select id="selectAll" parameterType="com.Entity.User" resultType="com.Entity.User">
+        select * from user
+    </select>
+</mapper>
+```
+
+UserDao.java:
+```java
+package com.Dao;
+import com.Entity.User;
+import java.util.List;
+public interface UserDao {
+    public int insertUser(User user);
+    public int deleteUser(User user);
+    public int updateUser(User user);
+    public User selectUser(User user);
+    public List<User> selectAll();
+    public List<User> selectLikeUser(User user);
+}
+```
+
+
+### 4.Service层接口及其实现类(对Dao层的功能封装)：
+UserService.java:
+```java
+package com.Service;
+
+import java.util.List;
+
+import com.Entity.User;
+
+public interface UserService {
+	
+	public Boolean login(User user);
+	
+	public Boolean Register(User user);
+	
+	public List<User> selectAll();
+	
+	public User select(User user);
+	
+	public int delete(User user);
+	
+	public int update(User user);
+	
+	public int insert(User user);
+	
+	public List<User> selectLikeUser(User user);
+
+}
+```
+
+UserServiceImpl.java:
+```java
+package com.Service;
+
+import com.Dao.UserDao;
+import com.Entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserService {
+    @Autowired      //该注解用于把IOC容器中的bean，拿出来给UserServiceImpl类使用，相当于实例化该bean
+    private UserDao userDao;
+
+    public int insert(User user){
+        return userDao.insertUser(user);
+    }
+    public int delete(User user){
+        return userDao.deleteUser(user);
+    }
+    public int update(User user){
+        return userDao.updateUser(user);
+    }
+    public User select(User user){
+        return userDao.selectUser(user);
+    }
+    public List<User> selectAll(){
+        return userDao.selectAll();
+    }
+    // 通过用户名模糊查询
+    public List<User> selectLikeUser(User user){    
+        return userDao.selectLikeUser(user);
+    }
+	/* 
+	 * 登录
+	 */
+	@Override
+	public Boolean login(User user) {
+		User u = userDao.selectUser(user);
+		
+		if(u!=null) {
+			if(u.getPassword().equals(user.getPassword())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/* 
+	 * 注册
+	 */
+	@Override
+	public Boolean Register(User user) {
+		User u = userDao.selectUser(user);
+		
+		if(u==null) {
+			userDao.insertUser(user);
+			return true;
+		}
+		return false;
+	}
+}
+
+```
+
+### 5.Controller层(对Service层的功能封装)：
+UserController.java:
+```java
+package com.Controller;
+
+import com.Entity.User;
+import com.Service.UserServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
+@RequestMapping(value="/user")
+@Controller
+public class UserController {
+    @Autowired           //该注解用于把IOC容器中的bean，拿出来给UserController类使用，相当于实例化该bean
+    private UserServiceImpl userService;
+   
+    /**登录 
+     * @param user
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/login")
+    public String login(User user,Model model) {
+    	Boolean status = userService.login(user);               //true为登录成功
+
+    	if(status==true) {
+    		model.addAttribute("username",user.getName());      //把用户名放到model中
+        	return "redirect:/user/PageselectAll";              // 重定向到  分页查询方法
+    	}else {
+    		return "redirect:/index.jsp";                       //重定向到index.jsp
+    	}
+    }
+    
+    /**注册
+     * @param user
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/Register")
+    public String Register(User user,Model model) {
+    	Boolean status = userService.Register(user);
+    	
+    	if(status==true) {
+    		model.addAttribute("username",user.getName());
+    		return "redirect:/user/PageselectAll";                       // 重定向到  分页查询方法
+    	}else {
+    		return "redirect:/index.jsp";                                //重定向到index.jsp
+    	}
+    }
+    
+    
+   
+    /**分页查询全部信息，使用pageHelper插件
+     * 
+     *  PageHelper的startPage方法 只对紧跟着的第一个SQL语句起作用
+     *  
+     *  用PageInfo类型对查询结果进行包装
+     *  
+     *  startPage(pn, 5);    pn是 传入到查询的页码数  ，     5 ：表示一页最多显示5条数据
+     *  
+     * @param pageNum  查询的页码数
+     * @return
+     */
+    @RequestMapping(value="/PageselectAll")
+    public String PageSelectAll(@RequestParam(value="pn",defaultValue="1") int pn,Model model){
+    	PageHelper.startPage(pn, 5);                   
+    	List<User> listUser = userService.selectAll();
+    	PageInfo page = new PageInfo(listUser,5);      // listUser 查询结果  ，  5：表示页面 连续显示的页数最多为5个
+    	model.addAttribute("pageInfo", page);          //把分页信息（查询结果，页码数等信息），放到model中
+		return "main";
+    }
+    
+    
+    /** 编辑用户
+     * @param user
+     * @return
+     * @throws JsonProcessingException 
+     */
+    @RequestMapping(value="/edit")
+    @ResponseBody
+    public String edit(User user) throws JsonProcessingException {
+    	User U = userService.select(user);     //获取user 的 id
+    	user.setId(U.getId());  			   // 把id 赋值给参数user
+    	
+    	int a = userService.update(user);
+    	
+    	ObjectMapper mapper = new ObjectMapper();     
+    	String mapJakcson = mapper.writeValueAsString(a);   //把返回值转换为json，否则ajax始终执行error函数
+		return mapJakcson;
+    }
+    
+    /**删除用户
+     * @param user
+     * @return
+     * @throws JsonProcessingException
+     */
+    @RequestMapping(value="/delete")
+    @ResponseBody
+    public String delete(User user) throws JsonProcessingException {
+        User U = userService.select(user);     //获取user 的 id
+    	user.setId(U.getId());  			   // 把id 赋值给参数user
+    	int a = userService.delete(user);
+    	
+    	ObjectMapper mapper = new ObjectMapper();     
+    	String mapJakcson = mapper.writeValueAsString(a);  //把返回值转换为json，否则ajax始终执行error函数
+		return mapJakcson;
+    }
+    
+    
+    /** 增加用户
+     * @param user
+     * @return
+     * @throws JsonProcessingException
+     */
+    @RequestMapping(value="/add")
+    @ResponseBody
+    public String add(User user) throws JsonProcessingException {
+    	int a = userService.insert(user);
+    	ObjectMapper mapper = new ObjectMapper();     
+    	String mapJakcson = mapper.writeValueAsString(a);    //把返回值转换为json，否则ajax始终执行error函数
+		return mapJakcson;
+    }
+    
+    
+    /** 模糊搜索
+     * @param pn
+     * @param user
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/selectLike")
+    public String selectLike(@RequestParam(value="pn",defaultValue="1") int pn,User user,Model model) {
+    	user.setName("%"+user.getName()+"%");        //给查询条件加上通配符%
+    	List<User> selectLikeUser = userService.selectLikeUser(user);
+    	/*
+    	 * 对模糊查询的结果进行分页封装
+    	 * */
+    	PageHelper.startPage(pn, 5);                   
+    	PageInfo page = new PageInfo(selectLikeUser,5);    // listUser 查询结果  ，  5：表示页面 连续显示的页数最多为5个
+    	model.addAttribute("pageInfo", page);        //把分页信息（查询结果，页码数等信息），放到model中
+		return "main";
+    }
+}
+
+```
+
+
+### 6.配置文件与属性文件 ：
+<font color="red">
+db.properties ：数据库的配置属性。
+
+web.xml : 项目启动配置文件
+
+application.xml : spring配置文件
+
+springmvc.xml : springmvc的配置文件
+
+mybatis_config.xml : mybatis的配置文件
+</font>
+
+
+db.properties 
+```
+jdbc.driverClass=com.mysql.jdbc.Driver
+jdbc.jdbcUrl=jdbc:mysql://localhost:3306/idea
+jdbc.user=root
+jdbc.password=root
+```
+
+web.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>shopping_ssm</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- 配置filter过滤器，解决post中文乱码问题 -->
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>      <!-- /*  表示过滤任何请求 -->
+  </filter-mapping>
+
+	<!-- 配置监听器加载spring ，当tomcat启动时，开启spring的IOC容器-->
+   <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+   </listener>
+  
+  <!-- 配置spring的配置文件-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  
+  <!-- 放行静态资源 -->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.css</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.js</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.jpg</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 配置springmvc的前端控制器 -->
+  <servlet>
+    <servlet-name>springDispatcherServlet</servlet-name>
+    <servlet-class>
+				org.springframework.web.servlet.DispatcherServlet
+	</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:springmvc.xml</param-value> <!--     加载springmvc的配置文件 -->
+    </init-param>
+    <load-on-startup>1</load-on-startup>  <!-- 1   表示tomcat容器开启时就加载 前端控制器 -->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springDispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>           <!-- /  表示拦截任何请求 -->
+  </servlet-mapping>
+</web-app>
+```
+
+application.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://mybatis.org/schema/mybatis-spring
+        http://mybatis.org/schema/mybatis-spring.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <!--扫描com及其子包的所有spring注解，并注入ioc容器中-->
+    <context:component-scan base-package="com"/>
+    
+    <!--导入外部配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    
+    <!--配置dbcp数据源-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">  
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+        <property name="url" value="jdbc:mysql://localhost:3306/idea"/>  
+        <property name="username" value="root" />  
+        <property name="password" value="root" />  
+      </bean> 
+        <!-- 通过dbcp数据源，mybatis_config.xml 配置文件，配置SqlsessionFactory -->
+   	 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">  
+	        <!-- 设置数据源, 在该bean中引用id 为 dataSource 的bean -->
+	        <property name="dataSource" ref="dataSource" />  
+	        <!--配置mybatis的核心配置文件-->  
+	        <property name="configLocation" value="classpath:mybatis_config.xml"/>  
+    	</bean>  
+    	<!-- 配置dao层的扫描 -->
+    	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    		<!-- MapperScannerConfigurer 把 Mapper 接口(dao层),并且注入到Ioc容器中 -->
+    		<property name="basePackage" value="com.Dao" />
+    	</bean>
+    
+    <!-- 配置 jdbc的事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 启动事务注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
+```
+
+
+springmvc.xml 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:context="http://www.springframework.org/schema/context"    
+    xmlns:mvc="http://www.springframework.org/schema/mvc"    
+    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd   
+    http://www.springframework.org/schema/tx   
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+    http://www.springframework.org/schema/mvc  
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">  
+  
+    <!-- 自动扫描的包名 ， 若扫描到spring注解的类，这些类被注入到ioc容器中 -->  
+    <context:component-scan base-package="com.Controller"/>  
+  
+    <!-- 默认的注解映射的支持，自动注册DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter 
+       	 该配置的的作用： Spring MVC为@Controller分发请求所必需的。 并且提供了数据绑定支持，读写JSON的支持（默认Jackson）等功能。.
+    -->  
+    <mvc:annotation-driven />  
+  
+    <!-- 视图解析器， 把控制器的方法 返回的值通过   prefix + 返回值  + suffix 的形式，得到响应的jsp页面 -->  
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/WEB-INF/views/"/>  
+        <property name="suffix" value=".jsp"/>  
+    </bean>  
+</beans> 
+```
+
+
+
+mybatis_config.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <!-- 实现 pagehelper 分页插件 -->
+  <plugins>
+    <plugin interceptor="com.github.pagehelper.PageInterceptor">
+        <property name="param1" value="value1"/>
+	</plugin>
+ </plugins>
+    <!-- mappers标签告诉mybatis去哪里找sql（持久化类的）映射文件 -->
+    <mappers>
+        <mapper resource="com\Mapper\UserMapper.xml"/>
+    </mappers>
+</configuration>
+```
+
+
+### 7.jsp页面(使用Bootstrap 4 框架,ajax 异步交互方式) ：
+
+index.jsp :登录/注册 页面
+
+```html
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <title>index.jsp</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-info navbar-dark">
+  <ul class="navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">LOGO</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">Register</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container">
+  <h2>登录</h2>
+  <form action="user/login" method="post">
+    <div class="form-group">
+      <label for="email">username</label>
+      <input type="text" class="form-control" id="name1" name="name" placeholder="Username" required/>
+      <div class="invalid-feedback">格式不正确(/^[a-z0-9_-]{3,16}$/)</div>  
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password</label>
+      <input type="password" class="form-control" id="pwd1" name="password" placeholder="Password" required/>
+      <div class="invalid-feedback">格式不正确(/^[a-z0-9_-]{6,18}$/;)</div>  
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<!-- 注册模态框 -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">注册</h4>
+      </div>
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+			<form action="user/Register" method="post">
+				<div class="form-group">
+					<label for="email">username</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Username" required/>
+				</div>
+				<div class="form-group">
+					<label for="pwd">Password</label>
+				    <input type="password" class="form-control" id="pwd" name="password" placeholder="Password" required/>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+	  </div>
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+```
+
+main.jsp(CRUD,分页查询功能页面):
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+    <!-- 最新的 Bootstrap4 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<title>main2.jsp</title>
+<%
+pageContext.setAttribute("projectRootPath", request.getContextPath());   //获取项目根路径，以/开始，不以/结束
+%>
+
+<script>
+//填充edit模态框
+function fillmodel(obj){
+	var uname=$(obj).parents().children("td").eq(1).text(); 
+	var pwd=$(obj).parents().children("td").eq(2).text(); 
+	document.getElementById("username").value=uname;		
+	document.getElementById("pwd").value=pwd;
+
+}
+
+//edit用户 
+function editUser(){
+	 var uname=document.getElementById("username").value;	
+	 var pwd=document.getElementById("pwd").value;
+	 
+	$.ajax({
+		type:"post",
+		dataType:"json",  
+		data:{"name":uname,"password":pwd},
+		url:"${projectRootPath}/user/edit",		                                                   
+		success: function(result){
+			location.reload();   //刷新页面
+			 
+			if(result != 1){
+				alert("Edit shibai")
+			}
+		},
+		error: function(){				
+			alert("edit ajax error");
+		}
+	});
+}
+
+function deleteUser(obj){
+	var uname=$(obj).parents().children("td").eq(1).text(); 
+	
+	$.ajax({
+		type:"post",
+		dataType:"json",  
+		data:{"name":uname},
+		url:"${projectRootPath}/user/delete",		                                                   
+		success:function(result){  
+			location.reload();   //刷新页面
+			if(result != 1){
+				alert("delete shibai")
+			}
+		},
+		error: function(){				
+			alert("delete ajax error");
+		}
+	});
+}
+
+function addUser(){
+	 var uname=document.getElementById("username2").value;	
+	 var pwd=document.getElementById("pwd2").value;
+	 
+	$.ajax({
+		type:"post",
+		dataType:"json",  
+		data:{"name":uname,"password":pwd},
+		url:"${projectRootPath}/user/add",		                                                   
+		success: function(result){
+			location.reload();   //刷新页面
+			 
+			if(result != 1){
+				alert("add shibai")
+			}
+		},
+		error: function(){				
+			alert("add ajax error");
+		}
+	});
+}
+
+//退出
+function exit(){
+ var a=confirm("是否退出！！！");
+    if(a){
+   	window.location.href="http://localhost:8080/SSM_demo1/index.jsp"; 	
+    }
+}
+</script>
+</head>
+<body>
+
+<div class="container">
+<form class="form-inline" action="${projectRootPath}/user/selectLike" method="get">
+  <label for="Username">Username:</label>
+  <input type="text" class="form-control" id="Username" name="name">
+  <button type="submit" class="btn btn-primary" style="margin-right:100px;">查询用户</button>
+  <button type="button" class="btn btn-primary" style="margin-right:100px;" data-toggle="modal" data-target="#myModal_add">增加用户</button>
+  <button type="button" class="btn btn-primary" onclick="exit();">退出</button>
+</form>
+</div>
+
+<div class="container">
+  <table class="table table-hover table-bordered" id="user_table">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>password</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <!-- ${pageInfo.list} 分页信息中的查询结果集 -->
+    <c:forEach items="${pageInfo.list}" var="plist">
+    	<tr>
+    	<td>${plist.id }</td>
+    	<td>${plist.name }</td>
+	    <td>${plist.password}</td>
+	    <td><a href='#' onclick='fillmodel(this)' data-toggle='modal' data-target='#editModal'>编辑</a></td>
+		<td><a href='#' onclick='deleteUser(this)'>删除</a></td></tr>
+    </c:forEach>
+  </table>
+</div>
+
+<div class="container">
+<div class="row">
+  <div class="col-sm-4">
+  		当前页数：${pageInfo.pageNum } 页 , 总页数 ${pageInfo.pages} 页, 总记录数 ${pageInfo.total} 条
+  </div>
+  <div class="col-sm-8">
+  	<ul class="pagination">
+  	<!-- 连续显示的页数 -->
+  	<li class="page-item"><a class="page-link" href="${projectRootPath}/user/PageselectAll?pn=1">首页</a></li>
+  	
+  	<!-- 
+  	   pageInfo.pageNum ：获取当前页数
+                  上一页 ：就是   当前页数 - 1 。
+                   当 当前页为第一页时（没有上一页），上一页不显示
+  	 -->
+  	<c:if test="${pageInfo.hasPreviousPage}">
+  		<li class="page-item"><a class="page-link" href="${projectRootPath}/user/PageselectAll?pn=${pageInfo.pageNum-1 }">上一页</a></li>
+  	</c:if>
+  	 
+  	<c:forEach items="${pageInfo.navigatepageNums }" var="page_Num">
+  		<!-- 
+  			pageInfo.pageNum :当前页码。
+  			page_Num : 循环输出的页码数。
+  			  判断是否是当前页码，是，页码数高亮显示	
+  		 -->
+  		<c:if test="${pageInfo.pageNum == page_Num  }">
+  			<li class="page-item active"><a class="page-link" href="#">${page_Num }</a></li>
+  		</c:if>
+  		<c:if test="${pageInfo.pageNum != page_Num  }">
+  			<li class="page-item"><a class="page-link" href="${projectRootPath}/user/PageselectAll?pn=${page_Num }">${page_Num }</a></li>
+  		</c:if>
+  	</c:forEach>
+    
+	<!-- 
+	  pageInfo.pageNum ：获取当前页数
+                  上一页 ：就是   当前页数  + 1 。
+      	
+            如果当前页数为最后一页(没有下一页)，则下一页不显示
+	 -->    
+	<c:if test="${pageInfo.hasNextPage}">
+	    <li class="page-item"><a class="page-link" href="${projectRootPath}/user/PageselectAll?pn=${pageInfo.pageNum+1 }">下一页</a></li>
+	</c:if>
+	 
+	<!-- 
+	  pageInfo.pages : pages属性为总页码数
+	 -->
+    <li class="page-item"><a class="page-link" href="${projectRootPath}/user/PageselectAll?pn=${pageInfo.pages}">尾页</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- 编辑用户模态框 -->
+<div class="modal fade" id="editModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+		<div class="form-group">
+			<label for="email">username</label> 
+			<input type="text" class="form-control" id="username" name="name" placeholder="Username" required/>
+		</div>
+		<div class="form-group">
+			<label for="pwd">Password</label>
+			<input type="password" class="form-control" id="pwd" name="password" placeholder="Password" required/>
+		</div>
+	  </div>
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" onclick="editUser()"  class="btn btn-secondary" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 增加用户模态框 -->
+<div class="modal fade" id="myModal_add">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">ADD</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+		<div class="form-group">
+			<label for="email">username</label>
+			<input type="text" class="form-control" id="username2" name="name" placeholder="Username" required/>
+		</div>
+		<div class="form-group">
+			<label for="pwd">Password</label>
+			<input type="password" class="form-control" id="pwd2" name="password" placeholder="Password" required/>
+		</div>
+	  </div>
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" onclick="addUser()"  class="btn btn-secondary" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
 ```
