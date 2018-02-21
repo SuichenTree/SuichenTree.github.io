@@ -23,7 +23,7 @@ JavaScript是世界上最流行的脚本语言，因为你在电脑、手机、�
 </html>
 ```
 
-![2.png](../img/js_img/2.png)
+![2.png](../img/Js_img/2.png)
 
 ```html
 <script type="text/javascript">   //默认的type就是JavaScript，所以不必显式地把type指定为JavaScript。
