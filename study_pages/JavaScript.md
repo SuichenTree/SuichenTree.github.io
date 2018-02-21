@@ -46,13 +46,13 @@ JavaScript是世界上最流行的脚本语言，因为你在电脑、手机、�
 </html>
 ```
 
-![1.png](../img/js_img/1.png)
+![1.png](../img/Js_img/1.png)
 
 把JavaScript代码放入一个单独的.js文件中更利于维护代码，并且多个页面可以各自引用同一份.js文件。
 
 
 3. 补充：
-![3.png](../img/js_img/3.png)
+![3.png](../img/Js_img/3.png)
 
 **注意**: javascript作为一种脚本语言可以放在html页面中任何位置，但是==浏览器解释html时是按先后顺序的，所以前面的script就先被执行。比如进行页面显示初始化的js必须放在head里面，因为初始化都要求提前进行（如给页面body设置css等）；而如果是通过事件调用执行的function那么对位置没什么要求的==。
 
@@ -243,7 +243,7 @@ var t = null; // t的值是null
 > ③:==在JS中区分大小写，如变量mychar与myChar是不一样的，表示是两个变量。==
 > ④：变量虽然也可以不声明，直接使用，但不规范，需要先声明，后使用。
 
-![4.png](../img/js_img/4.png)
+![4.png](../img/Js_img/4.png)
 
 
 #### 6. if语句和 循环 语句。
