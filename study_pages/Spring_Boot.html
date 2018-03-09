@@ -216,12 +216,24 @@ code.language-yaml {
 <ul>
 <li><a href="#1spiringboot%E7%9A%84%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">1.SpiringBoot的快速开始：</a></li>
 <li><a href="#2%E5%BB%BA%E7%AB%8B%E7%BB%9F%E4%B8%80%E7%9A%84%E7%88%B6pom%E6%96%87%E4%BB%B6">2.建立统一的父pom文件:</a></li>
-<li><a href="#3spring-boot-%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81">3.spring boot 项目自动读取配置，更新代码：</a></li>
+<li><a href="#3%E7%83%AD%E9%83%A8%E7%BD%B2spring-boot-%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81">3.热部署(spring boot 项目自动读取配置，更新代码）：</a></li>
 <li><a href="#4spring-boot-%E7%9A%84%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE%E5%85%B6%E4%BD%99%E6%89%80%E6%9C%89%E7%A8%8B%E5%BA%8F%E7%B1%BB%E7%9A%84%E5%8C%85%E9%83%BD%E8%A6%81%E6%94%BE%E5%9C%A8%E4%B8%BB%E7%B1%BB%E5%85%A5%E5%8F%A3%E7%B1%BB%E7%9A%84%E5%AD%90%E5%8C%85%E4%B8%8B">4.Spring Boot 的开发建议（其余所有程序类的包都要放在主类（入口类）的子包下） ★★★★★</a></li>
 <li><a href="#5springboot%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2">5.springboot的项目打包,部署：</a>
 <ul>
 <li><a href="#1%E6%89%93%E5%8C%85">1.打包：</a></li>
 <li><a href="#2%E9%83%A8%E7%BD%B2">2.部署：</a></li>
+</ul>
+</li>
+<li><a href="#6springboot-%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">6.Springboot 访问静态资源：</a></li>
+<li><a href="#7%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8">7.全局捕获异常：</a></li>
+<li><a href="#8%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</a></li>
+<li><a href="#9-springboot-%E6%95%B4%E5%90%88-mybatis">9. SpringBoot 整合 mybatis</a>
+<ul>
+<li><a href="#1%E5%9C%A8pom%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%85%A5mybatismysql%E4%BE%9D%E8%B5%96">1.在pom文件中导入mybatis，mysql依赖：</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">2. 创建数据库：</a></li>
+<li><a href="#3-%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81">3. 编写代码：</a></li>
+<li><a href="#4%E7%BC%96%E5%86%99%E9%A1%B5%E9%9D%A2">4.编写页面：</a></li>
+<li><a href="#5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</a></li>
 </ul>
 </li>
 </ul>
@@ -246,14 +258,17 @@ code.language-yaml {
 </ol>
 <p>添加以下代码到pom.xml文件中：</p>
 <p><img src="../img/springboot_img/1.png" alt="1-png"></p>
-<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token comment" spellcheck="true">&lt;!--装配 父pom.xml--></span>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 引入springboot 父类依赖--></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>parent</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-parent<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.0.0.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>parent</span><span class="token punctuation">></span></span>
 
-<span class="token comment" spellcheck="true">&lt;!--添加sping boot的 jar包依赖--></span>
+
+<span class="token comment" spellcheck="true">&lt;!--添加sping boot的 jar包依赖:
+        该依赖包含spring框架中许多常用的Web 开发依赖.
+--></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
@@ -297,7 +312,46 @@ code.language-yaml {
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-</pre><ol start="4">
+</pre><br>
+<ul>
+<li>@EnableAutoConfiguration 用于自动配置。简单的说，<font color="red">它会根据你的pom配置（实际上应该是根据具体的依赖）来判断这是一个什么应用，并创建相应的环境。</font><br>
+在上面这个例子中，@EnableAutoConfiguration 会判断出这是一个web应用，所以会创建相应的web环境。</li>
+</ul>
+<br>
+<ul>
+<li>
+<p>SpringApplication 则是用于从main方法启动Spring应用的类。默认，它会执行以下步骤：</p>
+<ul>
+<li>
+<ol>
+<li>创建一个合适的ApplicationContext实例 （取决于classpath）。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>注册一个CommandLinePropertySource，以便将命令行参数作为Spring properties。</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>刷新application context，加载所有单例beans。</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>激活所有CommandLineRunner beans。</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>默认，直接使用SpringApplication 的静态方法run()即可。但也可以创建实例，并自行配置需要的设置。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<br>
+<ol start="4">
 <li>运行第一个SpringBoot 程序：</li>
 </ol>
 <p>①：如果使用 STS（spring-tool-suite）开发工具，则可以直接单击右键run as - &gt; spring boot app 启动程序。然后打开浏览器，输入 localhost:8080 来查看。</p>
@@ -340,7 +394,7 @@ code.language-yaml {
   <span class="token comment" spellcheck="true">&lt;!--装配maven的插件--></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>finalName</span><span class="token punctuation">></span></span>parentBoot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>finalName</span><span class="token punctuation">></span></span> 
-    <span class="token comment" spellcheck="true">&lt;!-- 配置java版本 不配置的话默认父类配置的是1.6--></span>
+    <span class="token comment" spellcheck="true">&lt;!--spring boot 打包插件--></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.apache.maven.plugins<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
@@ -415,14 +469,16 @@ code.language-yaml {
 
 
 </pre><p>③：运行子模块的springboot的程序。</p>
-<h2 class="mume-header" id="3spring-boot-%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81">3.spring boot 项目自动读取配置，更新代码：</h2>
+<h2 class="mume-header" id="3%E7%83%AD%E9%83%A8%E7%BD%B2spring-boot-%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81">3.热部署(spring boot 项目自动读取配置，更新代码）：</h2>
 
-<p><font color="red">spring boot 项目自动读取配置是用于解决，当修改代码时，需要不断重启服务器才能读取最新配置,最新更新代码的问题。</font></p>
+<font color="red">
+当我们修改文件和创建文件时，都需要重新启动项目。这样频繁的操作很浪费时间，配置热部署可以让项目自动加载变化的文件，省去的手动操作。
+</font>
 <blockquote>
 <p><img src="../img/springboot_img/5.png" alt="5-png"></p>
 </blockquote>
 <p><strong>这是简单的springboot项目配置标志（不能自动读取配置，更新代码）。</strong></p>
-<p>解决方法：  给子模块Maven项目的pom.xml文件添加两个依赖jar库（在maven仓库中寻找）</p>
+<p>解决方法： <mark>给子模块Maven项目的pom.xml文件添加两个依赖jar库（在maven仓库中寻找)</mark></p>
 <pre data-role="codeBlock" data-info="xml" class="language-xml">
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
@@ -437,7 +493,8 @@ code.language-yaml {
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
 
 </pre><p><img src="../img/springboot_img/6.png" alt="6-png"></p>
-<p><strong>表示该项目变成自动更新状态,当你修改代码时，不需要重新启动。</strong></p>
+<p><strong>表示该项目变成热部署（自动更新状态,当你修改代码时，不需要重新启动。）</strong></p>
+<br>
 <h2 class="mume-header" id="4spring-boot-%E7%9A%84%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE%E5%85%B6%E4%BD%99%E6%89%80%E6%9C%89%E7%A8%8B%E5%BA%8F%E7%B1%BB%E7%9A%84%E5%8C%85%E9%83%BD%E8%A6%81%E6%94%BE%E5%9C%A8%E4%B8%BB%E7%B1%BB%E5%85%A5%E5%8F%A3%E7%B1%BB%E7%9A%84%E5%AD%90%E5%8C%85%E4%B8%8B">4.Spring Boot 的开发建议（其余所有程序类的包都要放在主类（入口类）的子包下） ★★★★★</h2>
 
 <p><font color="red"><h3>Spring 官方建议：其余所有程序类的包都要放在主类（入口类）的子包下，做到主类在主包中，控制器类在控制器子包中等。</h3></font></p>
@@ -500,6 +557,328 @@ code.language-yaml {
 ②：以命令行的形式输入命令<br>
 ③：在浏览器中输入网址。</p>
 <p><img src="../img/springboot_img/11.png" alt="11.png"></p>
+<hr>
+<h2 class="mume-header" id="6springboot-%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">6.Springboot 访问静态资源：</h2>
+
+<p>在web开发中，静态资源的访问是必不可少的，如：图片、js、css 等资源的访问。</p>
+<p>①：Spring Boot 对静态资源映射提供了默认配置</p>
+<p><font color="red">Spring Boot 默认将 /** 所有访问映射到以下目录：</font></p>
+<blockquote>
+<p>classpath:/static<br>
+classpath:/public<br>
+classpath:/resources<br>
+classpath:/META-INF/resources</p>
+</blockquote>
+<p><mark>所以静态资源目录名称需要符合以下规则： static 或 public 等。</mark></p>
+<br>
+<p><img src="../img/springboot_img/12.png" alt="12-png"></p>
+<p><mark>Spring Boot 默认会挨个从 public static 文件里面找是否存在相应的资源，如果有则直接返回。</mark></p>
+<p><img src="../img/springboot_img/13.png" alt="13-png"></p>
+<h2 class="mume-header" id="7%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8">7.全局捕获异常：</h2>
+
+<p>在一个项目中出现的全部异常我们我们都会统一进行处理的，那么如何进行统一进行处理呢？</p>
+<p>①：创建异常处理控制器类 ExceptionController：<br>
+<img src="../img/springboot_img/14.png" alt="14.png"></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//ExceptionController 异常控制器类，处理所有捕获异常后的操作。</span>
+
+<span class="token annotation punctuation">@ControllerAdvice</span>   <span class="token comment" spellcheck="true">//使用spring 面向切面编程的异常通知的原理。作为全局捕获异常的使用注解</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ExceptionController</span> <span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@ExceptionHandler</span><span class="token punctuation">(</span>RuntimeException<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>   <span class="token comment" spellcheck="true">//当拦截指定异常时，执行的方法</span>
+	<span class="token annotation punctuation">@ResponseBody</span>  <span class="token comment" spellcheck="true">//返回json格式的异常信息。如果想要返回给指定的错误页面，不需要加该注解</span>
+	<span class="token keyword">public</span> String <span class="token function">catchExcepetion</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"当你看到这条信息，表示已经出现 RuntimeException 并被捕获。"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+</pre><p>②：在某个控制器方法中制造一个异常：</p>
+<p><img src="../img/springboot_img/15.png" alt="15.png"></p>
+<br>
+<p>③：运行程序，并访问之前书写异常的控制器方法<br>
+<img src="../img/springboot_img/16.png" alt="16.png"></p>
+<h2 class="mume-header" id="8%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</h2>
+
+<p><font color="red"><h3>注意：springboot 不建议使用jsp作为页面格式</h3></font></p>
+<p>Freemarker : 是一款模板引擎： 即一种基于模板和要改变的数据，	并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。</p>
+<p><a href="https://baike.baidu.com/item/freemarker/9489366?fr=aladdin">Freemarker更多信息</a></p>
+<p>①：pom文件添加Freemarker依赖：</p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-freemarker<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.0.0.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><p>②：在 src/main/resources下  创建application.properties文件进行的freemarker的基本配置：</p>
+<p>application.properties:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>##freemarker
+spring.freemarker.cache=false
+spring.freemarker.charset=UTF-8  
+spring.freemarker.check-template-location=true
+spring.freemarker.content-type=text/html
+spring.freemarker.enabled=true
+spring.freemarker.suffix=.ftl
+spring.freemarker.template-loader-path=classpath:/templates
+</code></pre><br>
+<p>③：在src/java/resources目录下创建templates文件夹并创建index.ftl文件：</p>
+<p>index.flt:</p>
+<blockquote>
+<p><code>this is freemarker file</code></p>
+</blockquote>
+<p><font color="red"><h4>注意：springboot 对于模板引擎默认的配置路径为：src/java/resources/templates</h4></font></p>
+<p>④：编写控制器方法去访问freemarker模板页面：</p>
+<p><img src="../img/springboot_img/17.png" alt="17.png"><br>
+<img src="../img/springboot_img/18.png" alt="18.png"></p>
+<p><mark>若templates文件中没有与返回值相同的页面，则报404错误。</mark></p>
+<p><font color="red"><h1>PS:</h1></font></p>
+<p><img src="../img/springboot_img/19.png" alt="19-png"></p>
+<br>
+<p>index.ftl:</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token doctype">&lt;!DOCTYPE>
+&lt;html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>
+       index.flt
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>
+hello , ${username} 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+you age is ${age}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+you address is ${address}  
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+admin1 is ${admin.admin1}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+admin2 is ${admin.admin2}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+
+</pre><p><img src="../img/springboot_img/20.png" alt="20-png"></p>
+<h2 class="mume-header" id="9-springboot-%E6%95%B4%E5%90%88-mybatis">9. SpringBoot 整合 mybatis</h2>
+
+<h3 class="mume-header" id="1%E5%9C%A8pom%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%85%A5mybatismysql%E4%BE%9D%E8%B5%96">1.在pom文件中导入mybatis，mysql依赖：</h3>
+
+<pre data-role="codeBlock" data-info="xml" class="language-xml"> <span class="token comment" spellcheck="true">&lt;!-- 加入 mybatis依赖 --></span>
+	  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.mybatis.spring.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>mybatis-spring-boot-starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.3.1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+	  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>mysql-connector-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><h3 class="mume-header" id="2-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">2. 创建数据库：</h3>
+
+<p><img src="../img/springboot_img/21.png" alt="21-png"></p>
+<h3 class="mume-header" id="3-%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81">3. 编写代码：</h3>
+
+<p>①：在src/main/resources 下创建 application.properties文件。并编写数据源配置：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>## dataSource config
+spring.datasource.url=jdbc:mysql://localhost:3306/idea
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+</code></pre><p>②：编写实体类：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+		
+	<span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String password<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//....省略一部分</span>
+<span class="token punctuation">}</span>
+
+</pre><p>③：编写Mapper接口（Dao层）：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Dao<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Userdao</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(name,password) values(#{name},#{password})"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">" delete from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set name=#{name},password=#{password} where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">updateByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> User <span class="token function">selectByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p>④：编写Service层：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserService</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Autowired</span>     <span class="token comment" spellcheck="true">//获取容器中的dao</span>
+	<span class="token keyword">private</span> Userdao userdao<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> userdao<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> userdao<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">updateByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> userdao<span class="token punctuation">.</span><span class="token function">updateByid</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> User <span class="token function">selectByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> userdao<span class="token punctuation">.</span><span class="token function">selectByid</span><span class="token punctuation">(</span>u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p>⑤：编写Controller层：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserController</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>   <span class="token comment" spellcheck="true">//获取容器中的service</span>
+	<span class="token keyword">private</span> UserService userService<span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">//使项目一运行就是一个页面</span>
+	<span class="token keyword">public</span> String <span class="token function">Index</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"index"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/insertUser"</span><span class="token punctuation">)</span>
+	<span class="token annotation punctuation">@ResponseBody</span>
+	<span class="token keyword">public</span> String <span class="token function">insert</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is insert"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> a<span class="token operator">=</span>userService<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/updateUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">update</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is update User"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> a<span class="token operator">=</span>userService<span class="token punctuation">.</span><span class="token function">updateByid</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/SeleceUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">select</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is select User"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		User a<span class="token operator">=</span>userService<span class="token punctuation">.</span><span class="token function">selectByid</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">!=</span>null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"select :"</span><span class="token operator">+</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/deleteUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">delete</span><span class="token punctuation">(</span>User user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is delete User"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> a<span class="token operator">=</span>userService<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	
+<span class="token punctuation">}</span>
+
+</pre><p>⑥：编写项目入口类（<mark>注意要加@MapperScan注解</mark>）：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@SpringBootApplication</span>   <span class="token comment" spellcheck="true">// 1. 开启springboot程序。 2. 扫描所在的子包，并把注解类，注入到ioc容器中。</span>
+<span class="token annotation punctuation">@MapperScan</span><span class="token punctuation">(</span>basePackages<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">"mvn.parentBoot.child.Dao"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//扫描与mybatis整合时的mapper接口（dao层）</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringbootMain</span> <span class="token punctuation">{</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>SpringbootMain<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/springboot_img/24.png" alt="24-png"></p>
+<h3 class="mume-header" id="4%E7%BC%96%E5%86%99%E9%A1%B5%E9%9D%A2">4.编写页面：</h3>
+
+<blockquote>
+<p>index.ftl:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token doctype">&lt;!DOCTYPE>
+&lt;html></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>
+       index.flt
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>
+
+INSERT USER:
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>insertUser<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+Username : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+Password : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>tijiao<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+
+UPDATE USER
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateUser<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+id : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">tye</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+Username : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+Password : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>tijiao<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+
+SELECT USER
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>SeleceUser<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+id : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">tye</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>tijiao<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">/></span></span>
+
+DELETE USER
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">action</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>deleteUser<span class="token punctuation">"</span></span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>post<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+id : <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">tye</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>tijiao<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+
+</pre><blockquote>
+<p>shibai.ftl:<br>
+<code>this is shibai</code></p>
+</blockquote>
+<blockquote>
+<p>success.ftl:<br>
+<code>this is success</code></p>
+</blockquote>
+<h3 class="mume-header" id="5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</h3>
+
+<p><img src="../img/springboot_img/22.png" alt="22-png"><br>
+<img src="../img/springboot_img/23.png" alt="23-png"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -507,12 +886,24 @@ code.language-yaml {
 <ul>
 <li><a href="#1spiringboot%E7%9A%84%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">1.SpiringBoot的快速开始：</a></li>
 <li><a href="#2%E5%BB%BA%E7%AB%8B%E7%BB%9F%E4%B8%80%E7%9A%84%E7%88%B6pom%E6%96%87%E4%BB%B6">2.建立统一的父pom文件:</a></li>
-<li><a href="#3spring-boot-%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81">3.spring boot 项目自动读取配置，更新代码：</a></li>
+<li><a href="#3%E7%83%AD%E9%83%A8%E7%BD%B2spring-boot-%E9%A1%B9%E7%9B%AE%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81">3.热部署(spring boot 项目自动读取配置，更新代码）：</a></li>
 <li><a href="#4spring-boot-%E7%9A%84%E5%BC%80%E5%8F%91%E5%BB%BA%E8%AE%AE%E5%85%B6%E4%BD%99%E6%89%80%E6%9C%89%E7%A8%8B%E5%BA%8F%E7%B1%BB%E7%9A%84%E5%8C%85%E9%83%BD%E8%A6%81%E6%94%BE%E5%9C%A8%E4%B8%BB%E7%B1%BB%E5%85%A5%E5%8F%A3%E7%B1%BB%E7%9A%84%E5%AD%90%E5%8C%85%E4%B8%8B">4.Spring Boot 的开发建议（其余所有程序类的包都要放在主类（入口类）的子包下） ★★★★★</a></li>
 <li><a href="#5springboot%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2">5.springboot的项目打包,部署：</a>
 <ul>
 <li><a href="#1%E6%89%93%E5%8C%85">1.打包：</a></li>
 <li><a href="#2%E9%83%A8%E7%BD%B2">2.部署：</a></li>
+</ul>
+</li>
+<li><a href="#6springboot-%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">6.Springboot 访问静态资源：</a></li>
+<li><a href="#7%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8">7.全局捕获异常：</a></li>
+<li><a href="#8%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</a></li>
+<li><a href="#9-springboot-%E6%95%B4%E5%90%88-mybatis">9. SpringBoot 整合 mybatis</a>
+<ul>
+<li><a href="#1%E5%9C%A8pom%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%85%A5mybatismysql%E4%BE%9D%E8%B5%96">1.在pom文件中导入mybatis，mysql依赖：</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">2. 创建数据库：</a></li>
+<li><a href="#3-%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81">3. 编写代码：</a></li>
+<li><a href="#4%E7%BC%96%E5%86%99%E9%A1%B5%E9%9D%A2">4.编写页面：</a></li>
+<li><a href="#5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</a></li>
 </ul>
 </li>
 </ul>
