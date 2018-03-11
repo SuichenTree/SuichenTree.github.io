@@ -236,6 +236,7 @@ code.language-yaml {
 <li><a href="#5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</a></li>
 </ul>
 </li>
+<li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
 </ul>
 </li>
 </ul>
@@ -879,6 +880,181 @@ id : <span class="token tag"><span class="token tag"><span class="token punctuat
 
 <p><img src="../img/springboot_img/22.png" alt="22-png"><br>
 <img src="../img/springboot_img/23.png" alt="23-png"></p>
+<h2 class="mume-header" id="10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</h2>
+
+<p>文件结构图：<br>
+<img src="../img/springboot_img/26.png" alt="26-png"></p>
+<p>①：创建数据库：<br>
+<img src="../img/springboot_img/25.png" alt="25-png"></p>
+<p>②：添加springDate JPA 的依赖：</p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token comment" spellcheck="true">&lt;!-- 添加 spring jpa 的依赖 --></span>  
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-data-jpa<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+
+<span class="token comment" spellcheck="true">&lt;!--添加mysql 依赖--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>mysql-connector-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><p>③：增加spring Data JPA 的配置（在application.properties中）：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>## dataSource config
+spring.datasource.url=jdbc:mysql://localhost:3306/idea
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+
+
+### Jpa  config
+spring.jpa.database=mysql
+spring.jpa.show-sql=true
+spring.jpa.hibernate.hbm2ddl-auto=update
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+</code></pre><p>④：编写实体类：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>persistence<span class="token punctuation">.</span>Column<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>persistence<span class="token punctuation">.</span>Entity<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>persistence<span class="token punctuation">.</span>GeneratedValue<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>persistence<span class="token punctuation">.</span>Id<span class="token punctuation">;</span>
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>persistence<span class="token punctuation">.</span>Table<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/*
+ * @Entity注释指名这是一个实体Bean，
+ * @Table注释指定了Entity所要映射带数据库表，其中@Table.name()用来指定映射表的表名。
+ * 如果缺省@Table注释，系统默认采用类名作为映射表的表名。
+ * 
+ * */</span>
+<span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"student"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Entity</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Student</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@GeneratedValue</span>
+	<span class="token annotation punctuation">@Id</span>
+	<span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+	<span class="token annotation punctuation">@Column</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token annotation punctuation">@Column</span>
+	<span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token function">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">// 省略 get/set 方法</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p>⑤：编写dao,Service,Controller层代码：</p>
+<blockquote>
+<p>StudentDao.java:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Dao<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>data<span class="token punctuation">.</span>jpa<span class="token punctuation">.</span>repository<span class="token punctuation">.</span>JpaRepository<span class="token punctuation">;</span>
+<span class="token keyword">import</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>entity<span class="token punctuation">.</span>Student<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">StudentDao</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token operator">&lt;</span>Student<span class="token punctuation">,</span> Integer<span class="token operator">></span><span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// 在springdata jpa 中 dao层接口继承这个方法，该方法里面已经写好了各种操作表的CRUD方法。</span>
+<span class="token punctuation">}</span>
+
+</pre><blockquote>
+<p>StudentService.java</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Service<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Service</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentService</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Autowired</span>
+	<span class="token keyword">private</span> StudentDao studao<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> Student <span class="token function">insert</span><span class="token punctuation">(</span>Student stu<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Student stu1 <span class="token operator">=</span> studao<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//stu1是该数据在表中的最新数据</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>stu1 <span class="token operator">+</span> <span class="token string">"this is StudentService insert()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> stu1<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> Student <span class="token function">update</span><span class="token punctuation">(</span>Student stu<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Student stu1 <span class="token operator">=</span> studao<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>    
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>stu1 <span class="token operator">+</span> <span class="token string">"this is StudentService update()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> stu1<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		studao<span class="token punctuation">.</span><span class="token function">deleteById</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is StudentService deleteById()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> Object <span class="token function">select</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Object stu <span class="token operator">=</span> studao<span class="token punctuation">.</span><span class="token function">findById</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> stu<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre><blockquote>
+<p>StudentController.java:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StudentController</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Autowired</span>
+	<span class="token keyword">private</span> StudentService studentService<span class="token punctuation">;</span>
+	<span class="token comment" spellcheck="true">// 由于 JPA 是通过对象的变化，来改变对数据库的数据。</span>
+	<span class="token comment" spellcheck="true">// 所有 新增数据 与 更新数据 在本质上是一样的。</span>
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/insertStu"</span><span class="token punctuation">)</span>
+	<span class="token annotation punctuation">@ResponseBody</span>
+	<span class="token keyword">public</span> String <span class="token function">insertStu</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is StudentController insertStu()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		Student student<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		student<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"asdadsadsadsa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		student<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">88</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		Student s <span class="token operator">=</span> studentService<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">==</span>null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/updateStu"</span><span class="token punctuation">)</span>
+	<span class="token annotation punctuation">@ResponseBody</span>
+	<span class="token keyword">public</span> String <span class="token function">updateStu</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is StudentController updateStu()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		Student student<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		student<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		student<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"asdadsadsadsa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		student<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">88</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		Student s <span class="token operator">=</span> studentService<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token operator">==</span>null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/deleteStu"</span><span class="token punctuation">)</span>
+	<span class="token annotation punctuation">@ResponseBody</span>
+	<span class="token keyword">public</span> String <span class="token function">deleteStu</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is StudentController deleteStu()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		studentService<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/selectStu"</span><span class="token punctuation">)</span>
+	<span class="token annotation punctuation">@ResponseBody</span>
+	<span class="token keyword">public</span> String <span class="token function">selectStu</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is StudentController selectStu()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Object stu <span class="token operator">=</span> studentService<span class="token punctuation">.</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"selectStu return is "</span><span class="token operator">+</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre><p>⑥：运行程序：</p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -906,6 +1082,7 @@ id : <span class="token tag"><span class="token tag"><span class="token punctuat
 <li><a href="#5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</a></li>
 </ul>
 </li>
+<li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
 </ul>
 </li>
 </ul>

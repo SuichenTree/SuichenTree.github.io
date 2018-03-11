@@ -758,3 +758,197 @@ id : <input tye="text" name="id"/>
 ### 5.运行程序：
 ![22-png](../img/springboot_img/22.png)
 ![23-png](../img/springboot_img/23.png)
+
+
+## 10.SpringBoot 整合 springData Jpa :
+文件结构图：
+![26-png](../img/springboot_img/26.png)
+
+①：创建数据库：
+![25-png](../img/springboot_img/25.png)
+
+②：添加springDate JPA 的依赖：
+```xml
+<!-- 添加 spring jpa 的依赖 -->  
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>
+
+<!--添加mysql 依赖-->
+    <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+```
+
+③：增加spring Data JPA 的配置（在application.properties中）：
+
+```
+## dataSource config
+spring.datasource.url=jdbc:mysql://localhost:3306/idea
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+
+
+### Jpa  config
+spring.jpa.database=mysql
+spring.jpa.show-sql=true
+spring.jpa.hibernate.hbm2ddl-auto=update
+spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+```
+
+④：编写实体类：
+```java
+package mvn.parentBoot.child.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+/*
+ * @Entity注释指名这是一个实体Bean，
+ * @Table注释指定了Entity所要映射带数据库表，其中@Table.name()用来指定映射表的表名。
+ * 如果缺省@Table注释，系统默认采用类名作为映射表的表名。
+ * 
+ * */
+@Table(name="student")
+@Entity
+public class Student {
+	@GeneratedValue
+	@Id
+	private Integer id;
+	@Column
+	private String name;
+	@Column
+	private Integer age;
+	
+	public Student() {}
+
+	// 省略 get/set 方法
+	
+}
+
+```
+
+
+⑤：编写dao,Service,Controller层代码：
+
+> StudentDao.java:
+```java
+package mvn.parentBoot.child.Dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import mvn.parentBoot.child.entity.Student;
+public interface StudentDao extends JpaRepository<Student, Integer>{
+		// 在springdata jpa 中 dao层接口继承这个方法，该方法里面已经写好了各种操作表的CRUD方法。
+}
+
+```
+
+> StudentService.java
+```java
+package mvn.parentBoot.child.Service;
+
+@Service
+public class StudentService {
+	@Autowired
+	private StudentDao studao;
+
+	public Student insert(Student stu) {
+		Student stu1 = studao.save(stu);    //stu1是该数据在表中的最新数据
+		System.out.println(stu1 + "this is StudentService insert()");
+		return stu1;
+	}
+	
+	public Student update(Student stu) {
+		Student stu1 = studao.save(stu);    
+		System.out.println(stu1 + "this is StudentService update()");
+		return stu1;
+	}
+	
+	public void delete(Integer id) {
+		studao.deleteById(id);
+		System.out.println("this is StudentService deleteById()");
+	}
+	
+	public Object select(Integer id) {
+		Object stu = studao.findById(id);
+		return stu;
+	}
+}
+
+```
+
+>StudentController.java:
+```java
+package mvn.parentBoot.child.Controller;
+
+@Controller
+public class StudentController {
+	@Autowired
+	private StudentService studentService;
+	// 由于 JPA 是通过对象的变化，来改变对数据库的数据。
+	// 所有 新增数据 与 更新数据 在本质上是一样的。
+	@RequestMapping("/insertStu")
+	@ResponseBody
+	public String insertStu() {
+		System.out.println("this is StudentController insertStu()");
+		
+		Student student=new Student();
+		student.setName("asdadsadsadsa");
+		student.setAge(88);
+		
+		Student s = studentService.insert(student);
+		if(s==null) {
+			return "shibai";
+		}else {
+			return "success";
+		}
+	}
+	
+	@RequestMapping("/updateStu")
+	@ResponseBody
+	public String updateStu() {
+		System.out.println("this is StudentController updateStu()");
+		
+		Student student=new Student();
+		student.setId(2);
+		student.setName("asdadsadsadsa");
+		student.setAge(88);
+		
+		Student s = studentService.update(student);
+		if(s==null) {
+			return "shibai";
+		}else {
+			return "success";
+		}
+	}
+	
+	@RequestMapping("/deleteStu")
+	@ResponseBody
+	public String deleteStu() {
+		System.out.println("this is StudentController deleteStu()");
+		studentService.delete(1);
+		return "success";
+	}
+	
+	@RequestMapping("/selectStu")
+	@ResponseBody
+	public String selectStu() {
+		System.out.println("this is StudentController selectStu()");
+		Object stu = studentService.select(2);
+		System.out.println("selectStu return is "+stu);
+		return "success";
+	}
+}
+
+```
+
+
+⑥：运行程序：
