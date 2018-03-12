@@ -950,5 +950,272 @@ public class StudentController {
 
 ```
 
+⑥：运行程序。
 
-⑥：运行程序：
+
+
+## 11.springBoot 配置多数据源(使用Mybatis)：
+
+①：模拟两个数据源：
+![27-png](../img/springboot_img/27.png)
+
+
+②：多数据源的配置:
+```
+#=====================multiple database config============================
+#first
+first.spring.datasource.jdbcUrl=jdbc:mysql://localhost/test1
+first.spring.datasource.username=root
+first.spring.datasource.password=root
+first.spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+
+#second
+second.spring.datasource.jdbcUrl=jdbc:mysql://localhost/test2
+second.spring.datasource.username=root
+second.spring.datasource.password=root
+second.spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+```
+
+
+③：<font color="red">建立一个子包，为数据库创建SqlSessionFactory等对象并注入到spring的IOC容器中：</font>
+
+![28-png](../img/springboot_img/28.png)
+
+![30-png](../img/springboot_img/30.png)
+
+firstDBconfig.java:
+```java
+package mvn.parentBoot.child.dbconfig;
+
+//@Configuration 注解:表明类的信息 会注入到ioc容器中.
+//@MapperScan注解就是指明了扫描test1数据库的dao层，并且给dao层注入指定的SqlSessionTemplate。所有@Bean都需要按照命名指定正确。
+
+@Configuration
+@MapperScan(basePackages = "mvn.parentBoot.child.test1_Dao", sqlSessionTemplateRef  = "test1_SqlSessionTemplate")
+public class firstDBconfig {
+
+	//1. 创建 test1数据库的DataSource
+    @Bean(name = "test1_DataSource")
+    @ConfigurationProperties(prefix = "first.spring.datasource")
+    @Primary
+    public DataSource testDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    // 2. 创建test1数据库的SqlSessionFactory
+    @Bean(name = "test1_SqlSessionFactory")
+    @Primary
+    public SqlSessionFactory testSqlSessionFactory(@Qualifier("test1_DataSource") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        
+        //当用xml的方式配置mybatis时,指明mapper配置文件的位置
+       //bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));
+        return bean.getObject();
+    }
+
+    // 3. 创建test1数据库的事务管理
+    @Bean(name = "test1_TransactionManager")
+    @Primary
+    public DataSourceTransactionManager testTransactionManager(@Qualifier("test1_DataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    // 4. 把DataSource,SqlSessionFactory 封装到test1数据库的SqlSessionTemplate
+    @Bean(name = "test1_SqlSessionTemplate")
+    @Primary
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("test1_SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
+
+}
+```
+
+```java
+package mvn.parentBoot.child.dbconfig;
+//@Configuration 注解:表明类的信息 会注入到ioc容器中.
+//@MapperScan注解就是指明了扫描test2数据库的dao层，并且给dao层注入指定的SqlSessionTemplate。所有@Bean都需要按照命名指定正确。
+
+@Configuration
+@MapperScan(basePackages = "mvn.parentBoot.child.test2_Dao", sqlSessionTemplateRef  = "test2_SqlSessionTemplate")
+public class secondDBconfig {
+
+	//1. 创建 test1数据库的DataSource
+    @Bean(name = "test2_DataSource")
+    @ConfigurationProperties(prefix = "second.spring.datasource")
+    public DataSource testDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    // 2. 创建test1数据库的SqlSessionFactory
+    @Bean(name = "test2_SqlSessionFactory")
+    public SqlSessionFactory testSqlSessionFactory(@Qualifier("test2_DataSource") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        //当用xml的方式配置mybatis时,指明mapper配置文件的位置
+      //bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));
+        return bean.getObject();
+    }
+
+    // 3. 创建test1数据库的事务管理
+    @Bean(name = "test2_TransactionManager")
+    public DataSourceTransactionManager testTransactionManager(@Qualifier("test2_DataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    // 4. 把DataSource,SqlSessionFactory 封装到test2数据库的SqlSessionTemplate
+    @Bean(name = "test2_SqlSessionTemplate")
+    public SqlSessionTemplate testSqlSessionTemplate(@Qualifier("test2_SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
+
+}
+```
+
+
+④：<font color="red">建立子包，存放为每一个数据源创建的dao层（几个数据源就有几个dao层）</font>
+
+![29-png](../img/springboot_img/29.png)
+
+test1_Userdao.java:
+```java
+package mvn.parentBoot.child.test1_Dao;
+
+public interface test1_Userdao {
+	
+	@Insert("insert into user(name,password) values(#{name},#{password})")
+	public int insert(User u);
+	
+	@Delete(" delete from user where id=#{id}")
+	public int delete(User u);
+	
+	@Update("update user set name=#{name},password=#{password} where id=#{id}")
+	public int updateByid(User u);
+	
+	@Select("select * from user where id=#{id}")
+	public User selectByid(User u);
+	
+}
+
+```
+
+test2_Userdao.java:
+```java
+package mvn.parentBoot.child.test2_Dao;
+
+public interface test2_Userdao {
+	
+	@Insert("insert into user(name,password) values(#{name},#{password})")
+	public int insert(User u);
+	
+	@Delete(" delete from user where id=#{id}")
+	public int delete(User u);
+	
+	@Update("update user set name=#{name},password=#{password} where id=#{id}")
+	public int updateByid(User u);
+	
+	@Select("select * from user where id=#{id}")
+	public User selectByid(User u);
+	
+}
+
+```
+
+
+⑤：可以跳过Service层，直接编写Controller层：
+UserController.java:
+```java
+package mvn.parentBoot.child.Controller;
+
+@Controller
+public class UserController {
+	
+	@Autowired   //获取容器中的service
+	private UserService userService;
+	
+	@Autowired
+	private test1_Userdao test1userDao;
+	
+	@Autowired
+	private test2_Userdao test2userDao;
+	
+	@RequestMapping("/")
+	public String Index() {
+		return "index";
+	}
+	
+	
+	@RequestMapping("/test1_insertUser")
+	@ResponseBody
+	public String test1_insertUser() {
+		System.out.println("this is test1_insertUser");
+		User user=new User();
+		user.setName("xiaohua");
+		user.setPassword("qwe");
+		
+		int a=test1userDao.insert(user);
+		if(a==1) {
+			return "success";
+		}else {
+			return "shibai";
+		}
+		
+	}
+	
+	@RequestMapping(value="/test1_updateUser")
+	public String test1_updateUser() {
+		System.out.println("this is test1_updateUser");
+		User user=new User();
+		user.setId(13);
+		user.setName("xiaouhuahuahua");
+		user.setPassword("qweqweqwe");
+		
+		int a=test1userDao.updateByid(user);
+		if(a==1) {
+			return "success";
+		}else {
+			return "shibai";
+		}
+	}
+	
+	@RequestMapping(value="/test1_selectUser")
+	public String test1_selectUser() {
+		System.out.println("this is test1_selectUser");
+		User user=new User();
+		user.setId(13);
+		
+		User a=test1userDao.selectByid(user);
+		if(a!=null) {
+			System.out.println("select :"+a);
+			return "success";
+		}else {
+			return "shibai";
+		}
+	}
+	
+	@RequestMapping(value="/test1_deleteUser")
+	public String test1_deleteUser() {
+		System.out.println("this is test1_deleteUser");
+		User user=new User();
+		user.setId(13);
+		
+		int a=test1userDao.delete(user);
+		if(a==1) {
+			return "success";
+		}else {
+			return "shibai";
+		}
+	}
+}
+
+```
+
+⑥：<font color="red">运行程序：执行test1数据源的dao层，就相当于操作test1数据库。</font>
+
+<h1><font color="red">ps:</font></h1>
+
+![33-png](../img/springboot_img/33.png)
+![31-png](../img/springboot_img/31.png)
+![32-png](../img/springboot_img/32.png)

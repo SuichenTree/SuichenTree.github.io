@@ -237,6 +237,7 @@ code.language-yaml {
 </ul>
 </li>
 <li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
+<li><a href="#11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</a></li>
 </ul>
 </li>
 </ul>
@@ -1054,7 +1055,242 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialec
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-</pre><p>⑥：运行程序：</p>
+</pre><p>⑥：运行程序。</p>
+<h2 class="mume-header" id="11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</h2>
+
+<p>①：模拟两个数据源：<br>
+<img src="../img/springboot_img/27.png" alt="27-png"></p>
+<p>②：多数据源的配置:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>#=====================multiple database config============================
+#first
+first.spring.datasource.jdbcUrl=jdbc:mysql://localhost/test1
+first.spring.datasource.username=root
+first.spring.datasource.password=root
+first.spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+
+#second
+second.spring.datasource.jdbcUrl=jdbc:mysql://localhost/test2
+second.spring.datasource.username=root
+second.spring.datasource.password=root
+second.spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+</code></pre><p>③：<font color="red">建立一个子包，为数据库创建SqlSessionFactory等对象并注入到spring的IOC容器中：</font></p>
+<p><img src="../img/springboot_img/28.png" alt="28-png"></p>
+<p><img src="../img/springboot_img/30.png" alt="30-png"></p>
+<p>firstDBconfig.java:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>dbconfig<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//@Configuration 注解:表明类的信息 会注入到ioc容器中.</span>
+<span class="token comment" spellcheck="true">//@MapperScan注解就是指明了扫描test1数据库的dao层，并且给dao层注入指定的SqlSessionTemplate。所有@Bean都需要按照命名指定正确。</span>
+
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@MapperScan</span><span class="token punctuation">(</span>basePackages <span class="token operator">=</span> <span class="token string">"mvn.parentBoot.child.test1_Dao"</span><span class="token punctuation">,</span> sqlSessionTemplateRef  <span class="token operator">=</span> <span class="token string">"test1_SqlSessionTemplate"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">firstDBconfig</span> <span class="token punctuation">{</span>
+
+	<span class="token comment" spellcheck="true">//1. 创建 test1数据库的DataSource</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test1_DataSource"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"first.spring.datasource"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Primary</span>
+    <span class="token keyword">public</span> DataSource <span class="token function">testDataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> DataSourceBuilder<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 2. 创建test1数据库的SqlSessionFactory</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test1_SqlSessionFactory"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Primary</span>
+    <span class="token keyword">public</span> SqlSessionFactory <span class="token function">testSqlSessionFactory</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"test1_DataSource"</span><span class="token punctuation">)</span> DataSource dataSource<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        SqlSessionFactoryBean bean <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bean<span class="token punctuation">.</span><span class="token function">setDataSource</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment" spellcheck="true">//当用xml的方式配置mybatis时,指明mapper配置文件的位置</span>
+       <span class="token comment" spellcheck="true">//bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));</span>
+        <span class="token keyword">return</span> bean<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 3. 创建test1数据库的事务管理</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test1_TransactionManager"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Primary</span>
+    <span class="token keyword">public</span> DataSourceTransactionManager <span class="token function">testTransactionManager</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"test1_DataSource"</span><span class="token punctuation">)</span> DataSource dataSource<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DataSourceTransactionManager</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 4. 把DataSource,SqlSessionFactory 封装到test1数据库的SqlSessionTemplate</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test1_SqlSessionTemplate"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Primary</span>
+    <span class="token keyword">public</span> SqlSessionTemplate <span class="token function">testSqlSessionTemplate</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"test1_SqlSessionFactory"</span><span class="token punctuation">)</span> SqlSessionFactory sqlSessionFactory<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionTemplate</span><span class="token punctuation">(</span>sqlSessionFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>dbconfig<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//@Configuration 注解:表明类的信息 会注入到ioc容器中.</span>
+<span class="token comment" spellcheck="true">//@MapperScan注解就是指明了扫描test2数据库的dao层，并且给dao层注入指定的SqlSessionTemplate。所有@Bean都需要按照命名指定正确。</span>
+
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@MapperScan</span><span class="token punctuation">(</span>basePackages <span class="token operator">=</span> <span class="token string">"mvn.parentBoot.child.test2_Dao"</span><span class="token punctuation">,</span> sqlSessionTemplateRef  <span class="token operator">=</span> <span class="token string">"test2_SqlSessionTemplate"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">secondDBconfig</span> <span class="token punctuation">{</span>
+
+	<span class="token comment" spellcheck="true">//1. 创建 test1数据库的DataSource</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test2_DataSource"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix <span class="token operator">=</span> <span class="token string">"second.spring.datasource"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> DataSource <span class="token function">testDataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> DataSourceBuilder<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 2. 创建test1数据库的SqlSessionFactory</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test2_SqlSessionFactory"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> SqlSessionFactory <span class="token function">testSqlSessionFactory</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"test2_DataSource"</span><span class="token punctuation">)</span> DataSource dataSource<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        SqlSessionFactoryBean bean <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bean<span class="token punctuation">.</span><span class="token function">setDataSource</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//当用xml的方式配置mybatis时,指明mapper配置文件的位置</span>
+      <span class="token comment" spellcheck="true">//bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/test1/*.xml"));</span>
+        <span class="token keyword">return</span> bean<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 3. 创建test1数据库的事务管理</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test2_TransactionManager"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> DataSourceTransactionManager <span class="token function">testTransactionManager</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"test2_DataSource"</span><span class="token punctuation">)</span> DataSource dataSource<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DataSourceTransactionManager</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 4. 把DataSource,SqlSessionFactory 封装到test2数据库的SqlSessionTemplate</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"test2_SqlSessionTemplate"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> SqlSessionTemplate <span class="token function">testSqlSessionTemplate</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span><span class="token string">"test2_SqlSessionFactory"</span><span class="token punctuation">)</span> SqlSessionFactory sqlSessionFactory<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionTemplate</span><span class="token punctuation">(</span>sqlSessionFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre><p>④：<font color="red">建立子包，存放为每一个数据源创建的dao层（几个数据源就有几个dao层）</font></p>
+<p><img src="../img/springboot_img/29.png" alt="29-png"></p>
+<p>test1_Userdao.java:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>test1_Dao<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">test1_Userdao</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(name,password) values(#{name},#{password})"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">" delete from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set name=#{name},password=#{password} where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">updateByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> User <span class="token function">selectByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p>test2_Userdao.java:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>test2_Dao<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">test2_Userdao</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(name,password) values(#{name},#{password})"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">" delete from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">delete</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set name=#{name},password=#{password} where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">updateByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where id=#{id}"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> User <span class="token function">selectByid</span><span class="token punctuation">(</span>User u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p>⑤：可以跳过Service层，直接编写Controller层：<br>
+UserController.java:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserController</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>   <span class="token comment" spellcheck="true">//获取容器中的service</span>
+	<span class="token keyword">private</span> UserService userService<span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>
+	<span class="token keyword">private</span> test1_Userdao test1userDao<span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>
+	<span class="token keyword">private</span> test2_Userdao test2userDao<span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">Index</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"index"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/test1_insertUser"</span><span class="token punctuation">)</span>
+	<span class="token annotation punctuation">@ResponseBody</span>
+	<span class="token keyword">public</span> String <span class="token function">test1_insertUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is test1_insertUser"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		User user<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"xiaohua"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"qwe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">int</span> a<span class="token operator">=</span>test1userDao<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test1_updateUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">test1_updateUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is test1_updateUser"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		User user<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"xiaouhuahuahua"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"qweqweqwe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">int</span> a<span class="token operator">=</span>test1userDao<span class="token punctuation">.</span><span class="token function">updateByid</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test1_selectUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">test1_selectUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is test1_selectUser"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		User user<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		User a<span class="token operator">=</span>test1userDao<span class="token punctuation">.</span><span class="token function">selectByid</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">!=</span>null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"select :"</span><span class="token operator">+</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test1_deleteUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">test1_deleteUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is test1_deleteUser"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		User user<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		user<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">int</span> a<span class="token operator">=</span>test1userDao<span class="token punctuation">.</span><span class="token function">delete</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> <span class="token string">"shibai"</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre><p>⑥：<font color="red">运行程序：执行test1数据源的dao层，就相当于操作test1数据库。</font></p>
+<h1><font color="red">ps:</font></h1>
+<p><img src="../img/springboot_img/33.png" alt="33-png"><br>
+<img src="../img/springboot_img/31.png" alt="31-png"><br>
+<img src="../img/springboot_img/32.png" alt="32-png"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1083,6 +1319,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialec
 </ul>
 </li>
 <li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
+<li><a href="#11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</a></li>
 </ul>
 </li>
 </ul>
