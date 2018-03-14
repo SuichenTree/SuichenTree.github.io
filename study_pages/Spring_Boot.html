@@ -245,6 +245,11 @@ code.language-yaml {
 <li><a href="#2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</a></li>
 </ul>
 </li>
+<li><a href="#14springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">14.SpringBoot AOP的使用：</a>
+<ul>
+<li><a href="#1spring-boot%E4%B8%AD%E4%BD%BF%E7%94%A8aop%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86web%E8%AF%B7%E6%B1%82%E6%97%A5%E5%BF%97">1.Spring Boot中使用AOP统一处理Web请求日志:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1306,10 +1311,10 @@ UserController.java:</p>
 <h2 class="mume-header" id="13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</h2>
 
 <p>默认情况下，Spring Boot会用 Logback日志框架来记录日志，并把INFO级别输出到控制台。<br>
-<font color="red">SpringBoot 框架，默认使用的日志框架为 logback。<br>
-当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。<br>
+<font color="red">SpringBoot 框架，默认使用的日志框架为 logback。当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。<br>
 </font></p>
 <p><img src="../img/springboot_img/35.png" alt="35"></p>
+<br>
 <h3 class="mume-header" id="1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</h3>
 
 <h3>日志级别从低到高分为：</h3>
@@ -1323,7 +1328,7 @@ UserController.java:</p>
 <img src="../img/springboot_img/37.png" alt="37-png"></p>
 <h3 class="mume-header" id="2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</h3>
 
-<p><font color="red">通过对application.properties文件进行修改，来对Logback进行配置。<font></font></font></p>
+<p><font color="red">通过对application.properties文件进行修改，来对Logback进行配置。</font></p>
 <blockquote>
 <p>application.properties</p>
 </blockquote>
@@ -1332,14 +1337,17 @@ logging.file=log.log
 logging.level.mvn.parentBoot.child.Controller = debug   
 </code></pre><p><img src="../img/springboot_img/38.png" alt="38-png"><br>
 <img src="../img/springboot_img/39.png" alt="39-png"></p>
-<h2>14.SpringBoot 使用 AOP ：</h2>
-<h3>1.Spring Boot中使用AOP统一处理Web请求日志:</h3>
+<br>
+<h2 class="mume-header" id="14springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">14.SpringBoot AOP的使用：</h2>
+
+<h3 class="mume-header" id="1spring-boot%E4%B8%AD%E4%BD%BF%E7%94%A8aop%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86web%E8%AF%B7%E6%B1%82%E6%97%A5%E5%BF%97">1.Spring Boot中使用AOP统一处理Web请求日志:</h3>
+
 <p>①：引入AOP依赖</p>
 <pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-aop<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
-</pre><p>②：创建切面类（<font color="red">把控制器方法作为切入点</font>）：</p>
+</pre><p>②：创建切面类（<font color="red">把控制器方法作为切入点</font>）</p>
 <pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>AOP<span class="token punctuation">;</span>
 
 <span class="token annotation punctuation">@Aspect</span>    <span class="token comment" spellcheck="true">//使用@Aspect注解将一个java类定义为切面类</span>
@@ -1409,6 +1417,11 @@ logging.level.mvn.parentBoot.child.Controller = debug
 <ul>
 <li><a href="#1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</a></li>
 <li><a href="#2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</a></li>
+</ul>
+</li>
+<li><a href="#14springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">14.SpringBoot AOP的使用：</a>
+<ul>
+<li><a href="#1spring-boot%E4%B8%AD%E4%BD%BF%E7%94%A8aop%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86web%E8%AF%B7%E6%B1%82%E6%97%A5%E5%BF%97">1.Spring Boot中使用AOP统一处理Web请求日志:</a></li>
 </ul>
 </li>
 </ul>

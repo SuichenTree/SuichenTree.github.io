@@ -1234,12 +1234,12 @@ Spring Boot 使用事务非常简单，在访问数据库的Service层方法上�
 
 ## 13.SpringBoot 日志：
 默认情况下，Spring Boot会用 Logback日志框架来记录日志，并把INFO级别输出到控制台。
-<font color="red">SpringBoot 框架，默认使用的日志框架为 logback。
-当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。
+<font color="red">SpringBoot 框架，默认使用的日志框架为 logback。当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。
 </font>
 
 ![35](../img/springboot_img/35.png)
 
+<br/>
 
 ### 1.打印日志：
 
@@ -1260,7 +1260,7 @@ Spring Boot 使用事务非常简单，在访问数据库的Service层方法上�
 
 ### 2.日志文件：
 
-<font color="red">通过对application.properties文件进行修改，来对Logback进行配置。<font>
+<font color="red">通过对application.properties文件进行修改，来对Logback进行配置。</font>
 
 > application.properties
 ```
@@ -1273,11 +1273,13 @@ logging.level.mvn.parentBoot.child.Controller = debug
 ![39-png](../img/springboot_img/39.png)
 
 
+<br/>
 
-## 14.SpringBoot 使用 AOP ：
+
+
+## 14.SpringBoot AOP的使用：
 
 ### 1.Spring Boot中使用AOP统一处理Web请求日志:
-
 ①：引入AOP依赖
 ```xml
 <dependency>
@@ -1286,11 +1288,7 @@ logging.level.mvn.parentBoot.child.Controller = debug
 </dependency>
 ```
 
-②：创建切面类（<font color="red">把控制器方法作为切入点</font>）：
-
-
-
-
+②：创建切面类（<font color="red">把控制器方法作为切入点</font>）
 ```java
 package mvn.parentBoot.child.AOP;
 
