@@ -238,6 +238,13 @@ code.language-yaml {
 </li>
 <li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
 <li><a href="#11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</a></li>
+<li><a href="#12springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">12.SpringBoot 的事务(使用了Mybatis):</a></li>
+<li><a href="#13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</a>
+<ul>
+<li><a href="#1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</a></li>
+<li><a href="#2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1291,6 +1298,83 @@ UserController.java:</p>
 <p><img src="../img/springboot_img/33.png" alt="33-png"><br>
 <img src="../img/springboot_img/31.png" alt="31-png"><br>
 <img src="../img/springboot_img/32.png" alt="32-png"></p>
+<h2 class="mume-header" id="12springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">12.SpringBoot 的事务(使用了Mybatis):</h2>
+
+<p>Spring Boot 使用事务非常简单，在访问数据库的Service层方法上添加注解 @Transactional 便可。</p>
+<p><font color="red">因为在springboot中已经默认对jpa、jdbc、mybatis开启了事务，引入它们依赖的时候，事物就默认开启。当然，如果你需要用其他的orm，比如beatlsql，就需要自己配置相关的事物管理器。</font></p>
+<p><img src="../img/springboot_img/34.png" alt="34-png"></p>
+<h2 class="mume-header" id="13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</h2>
+
+<p>默认情况下，Spring Boot会用 Logback日志框架来记录日志，并把INFO级别输出到控制台。<br>
+<font color="red">SpringBoot 框架，默认使用的日志框架为 logback。<br>
+当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。<br>
+</font></p>
+<p><img src="../img/springboot_img/35.png" alt="35"></p>
+<h3 class="mume-header" id="1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</h3>
+
+<h3>日志级别从低到高分为：</h3>
+<blockquote>
+<p>TRACE &lt; DEBUG &lt; INFO &lt; WARN &lt; ERROR &lt; FATAL。</p>
+</blockquote>
+<p>如果设置为 WARN ，则低于 WARN 的信息都不会输出。<br>
+<font color="red">Spring Boot中默认配置ERROR、WARN和INFO级别的日志输出到控制台。 </font></p>
+<p><img src="../img/springboot_img/36.png" alt="36-png"></p>
+<p>执行该方法：<br>
+<img src="../img/springboot_img/37.png" alt="37-png"></p>
+<h3 class="mume-header" id="2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</h3>
+
+<p><font color="red">通过对application.properties文件进行修改，来对Logback进行配置。<font></font></font></p>
+<blockquote>
+<p>application.properties</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="" class="language-"><code># LOG:
+logging.file=log.log    
+logging.level.mvn.parentBoot.child.Controller = debug   
+</code></pre><p><img src="../img/springboot_img/38.png" alt="38-png"><br>
+<img src="../img/springboot_img/39.png" alt="39-png"></p>
+<h2>14.SpringBoot 使用 AOP ：</h2>
+<h3>1.Spring Boot中使用AOP统一处理Web请求日志:</h3>
+<p>①：引入AOP依赖</p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-aop<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><p>②：创建切面类（<font color="red">把控制器方法作为切入点</font>）：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>AOP<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Aspect</span>    <span class="token comment" spellcheck="true">//使用@Aspect注解将一个java类定义为切面类</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">aopTest</span> <span class="token punctuation">{</span>
+	 <span class="token keyword">private</span> Logger logger <span class="token operator">=</span> LoggerFactory<span class="token punctuation">.</span><span class="token function">getLogger</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	 
+	    <span class="token comment" spellcheck="true">////使用@Pointcut定义一个切入点，可以是一个规则表达式,这里时匹配 UserController类的所有方法。</span>
+	    <span class="token annotation punctuation">@Pointcut</span><span class="token punctuation">(</span><span class="token string">"execution(public * mvn.parentBoot.child.Controller.UserController.*(..))"</span><span class="token punctuation">)</span>   
+
+	    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">webLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	    	System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is webLog()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token punctuation">}</span>
+
+
+	    <span class="token annotation punctuation">@Before</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"webLog()"</span><span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">//使用@Before在切入点开始处切入内容</span>
+	    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doBefore</span><span class="token punctuation">(</span>JoinPoint joinPoint<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	        <span class="token comment" spellcheck="true">// 接收到请求，记录请求内容</span>
+	        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">" this is doBefore()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token punctuation">}</span>
+
+	    <span class="token comment" spellcheck="true">//使用@AfterReturning在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）</span>
+	    <span class="token annotation punctuation">@AfterReturning</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"webLog()"</span><span class="token punctuation">)</span>
+	    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doAfterReturning</span><span class="token punctuation">(</span>JoinPoint joinPoint<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	        <span class="token comment" spellcheck="true">// 处理完请求，返回内容</span>
+	        logger<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"this is doAfterReturning()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	    <span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p>③：运行程序，执行作为切入点的控制器方法：<br>
+<img src="../img/springboot_img/40.png" alt="40-png"></p>
+<p>④：总结：</p>
+<p><img src="../img/springboot_img/41.png" alt="41-png"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1320,6 +1404,13 @@ UserController.java:</p>
 </li>
 <li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
 <li><a href="#11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</a></li>
+<li><a href="#12springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">12.SpringBoot 的事务(使用了Mybatis):</a></li>
+<li><a href="#13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</a>
+<ul>
+<li><a href="#1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</a></li>
+<li><a href="#2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

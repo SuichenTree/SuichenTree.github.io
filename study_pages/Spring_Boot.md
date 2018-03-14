@@ -1219,3 +1219,116 @@ public class UserController {
 ![33-png](../img/springboot_img/33.png)
 ![31-png](../img/springboot_img/31.png)
 ![32-png](../img/springboot_img/32.png)
+
+
+
+## 12.SpringBoot 的事务(使用了Mybatis):
+Spring Boot 使用事务非常简单，在访问数据库的Service层方法上添加注解 @Transactional 便可。
+
+<font color="red">因为在springboot中已经默认对jpa、jdbc、mybatis开启了事务，引入它们依赖的时候，事物就默认开启。当然，如果你需要用其他的orm，比如beatlsql，就需要自己配置相关的事物管理器。</font>
+
+
+![34-png](../img/springboot_img/34.png)
+
+
+
+## 13.SpringBoot 日志：
+默认情况下，Spring Boot会用 Logback日志框架来记录日志，并把INFO级别输出到控制台。
+<font color="red">SpringBoot 框架，默认使用的日志框架为 logback。
+当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。
+</font>
+
+![35](../img/springboot_img/35.png)
+
+
+### 1.打印日志：
+
+<h3>日志级别从低到高分为：</h3>
+
+> TRACE < DEBUG < INFO < WARN < ERROR < FATAL。
+
+如果设置为 WARN ，则低于 WARN 的信息都不会输出。 
+<font color="red">Spring Boot中默认配置ERROR、WARN和INFO级别的日志输出到控制台。 </font>
+
+
+![36-png](../img/springboot_img/36.png)
+
+执行该方法：
+![37-png](../img/springboot_img/37.png)
+
+
+
+### 2.日志文件：
+
+<font color="red">通过对application.properties文件进行修改，来对Logback进行配置。<font>
+
+> application.properties
+```
+# LOG:
+logging.file=log.log    
+logging.level.mvn.parentBoot.child.Controller = debug   
+```
+
+![38-png](../img/springboot_img/38.png)
+![39-png](../img/springboot_img/39.png)
+
+
+
+## 14.SpringBoot 使用 AOP ：
+
+### 1.Spring Boot中使用AOP统一处理Web请求日志:
+
+①：引入AOP依赖
+```xml
+<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+```
+
+②：创建切面类（<font color="red">把控制器方法作为切入点</font>）：
+
+
+
+
+```java
+package mvn.parentBoot.child.AOP;
+
+@Aspect    //使用@Aspect注解将一个java类定义为切面类
+@Component
+public class aopTest {
+	 private Logger logger = LoggerFactory.getLogger(this.getClass());
+	 
+	    ////使用@Pointcut定义一个切入点，可以是一个规则表达式,这里时匹配 UserController类的所有方法。
+	    @Pointcut("execution(public * mvn.parentBoot.child.Controller.UserController.*(..))")   
+
+	    public void webLog() {
+	    	System.out.println("this is webLog()");
+	    }
+
+
+	    @Before(value="webLog()")        //使用@Before在切入点开始处切入内容
+	    public void doBefore(JoinPoint joinPoint) {
+	        // 接收到请求，记录请求内容
+	        logger.info(" this is doBefore()");
+	    }
+
+	    //使用@AfterReturning在切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）
+	    @AfterReturning(value="webLog()")
+	    public void doAfterReturning(JoinPoint joinPoint) {
+	        // 处理完请求，返回内容
+	        logger.info("this is doAfterReturning()");
+
+	    }
+	
+}
+
+```
+
+
+③：运行程序，执行作为切入点的控制器方法：
+![40-png](../img/springboot_img/40.png)
+
+④：总结：
+
+![41-png](../img/springboot_img/41.png)
