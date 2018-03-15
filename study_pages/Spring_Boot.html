@@ -226,8 +226,15 @@ code.language-yaml {
 </li>
 <li><a href="#6springboot-%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">6.Springboot 访问静态资源：</a></li>
 <li><a href="#7%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8">7.全局捕获异常：</a></li>
-<li><a href="#8%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</a></li>
-<li><a href="#9-springboot-%E6%95%B4%E5%90%88-mybatis">9. SpringBoot 整合 mybatis</a>
+<li><a href="#8springboot-%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%9C%89%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8Bproperties-%E5%92%8C-yml">8.Springboot 核心配置文件(有两种类型：.properties 和 .yml)：</a>
+<ul>
+<li><a href="#1applicationproperties%E4%B8%8Eapplicationyml%E7%9A%84%E5%8C%BA%E5%88%AB">1.application.properties与application.yml的区别：</a></li>
+<li><a href="#2-%E8%AF%BB%E5%8F%96%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF">2. 读取核心配置文件信息：</a></li>
+<li><a href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">3. 自定义配置文件：</a></li>
+</ul>
+</li>
+<li><a href="#9%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">9.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</a></li>
+<li><a href="#10-springboot-%E6%95%B4%E5%90%88-mybatis">10. SpringBoot 整合 mybatis</a>
 <ul>
 <li><a href="#1%E5%9C%A8pom%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%85%A5mybatismysql%E4%BE%9D%E8%B5%96">1.在pom文件中导入mybatis，mysql依赖：</a></li>
 <li><a href="#2-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">2. 创建数据库：</a></li>
@@ -236,20 +243,21 @@ code.language-yaml {
 <li><a href="#5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</a></li>
 </ul>
 </li>
-<li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
-<li><a href="#11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</a></li>
-<li><a href="#12springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">12.SpringBoot 的事务(使用了Mybatis):</a></li>
-<li><a href="#13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</a>
+<li><a href="#11springboot-%E6%95%B4%E5%90%88-springdata-jpa">11.SpringBoot 整合 springData Jpa :</a></li>
+<li><a href="#12springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">12.springBoot 配置多数据源(使用Mybatis)：</a></li>
+<li><a href="#13springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">13.SpringBoot 的事务(使用了Mybatis):</a></li>
+<li><a href="#14springboot-%E6%97%A5%E5%BF%97">14.SpringBoot 日志：</a>
 <ul>
 <li><a href="#1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</a></li>
 <li><a href="#2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</a></li>
 </ul>
 </li>
-<li><a href="#14springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">14.SpringBoot AOP的使用：</a>
+<li><a href="#15springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">15.SpringBoot AOP的使用：</a>
 <ul>
 <li><a href="#1spring-boot%E4%B8%AD%E4%BD%BF%E7%94%A8aop%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86web%E8%AF%B7%E6%B1%82%E6%97%A5%E5%BF%97">1.Spring Boot中使用AOP统一处理Web请求日志:</a></li>
 </ul>
 </li>
+<li><a href="#16springboot-%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8">16.Springboot 实现异步调用：</a></li>
 </ul>
 </li>
 </ul>
@@ -613,7 +621,150 @@ classpath:/META-INF/resources</p>
 <br>
 <p>③：运行程序，并访问之前书写异常的控制器方法<br>
 <img src="../img/springboot_img/16.png" alt="16.png"></p>
-<h2 class="mume-header" id="8%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</h2>
+<h2 class="mume-header" id="8springboot-%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%9C%89%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8Bproperties-%E5%92%8C-yml">8.Springboot 核心配置文件(有两种类型：.properties 和 .yml)：</h2>
+
+<h3 class="mume-header" id="1applicationproperties%E4%B8%8Eapplicationyml%E7%9A%84%E5%8C%BA%E5%88%AB">1.application.properties与application.yml的区别：</h3>
+
+<p>在 springboot 中，有两种配置文件，一种是application.properties,另一种是application.yml,两种都可以配置spring boot 项目中的一些变量的定义，参数的设置等。</p>
+<blockquote>
+<p><font color="red">①：application.properties 配置文件在写的时候要写完整:</font></p>
+</blockquote>
+<pre data-role="codeBlock" data-info="" class="language-"><code>spring.profiles.active=dev
+spring.datasource.data-username=root
+spring.datasource.data-password=root
+</code></pre><blockquote>
+<p><font color="red">②：yml文件中配置写法层次感强：</font></p>
+</blockquote>
+<pre data-role="codeBlock" data-info="" class="language-"><code>spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test
+    username: root
+    password: root
+</code></pre><p><img src="../img/springboot_img/45.png" alt="45"></p>
+<h3 class="mume-header" id="2-%E8%AF%BB%E5%8F%96%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF">2. 读取核心配置文件信息：</h3>
+
+<p><font color="red">SpringBoot框架的核心配置文件是指在 src/main/resources目录下的application.properties或application.yml配置文件.</font></p>
+<h4>读取配置文件信息的方法有两种：</h4>
+<p>配置文件：</p>
+<blockquote>
+<p>application.properties</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="" class="language-"><code># key-value:
+username=xiaoming
+pwd=1231
+</code></pre><p>①：使用@Value方式（常用）：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloController</span> <span class="token punctuation">{</span>
+
+<span class="token comment" spellcheck="true">//@Value的${}中包含的是核心配置文件中的键名,该注解把配置信息的值绑定到变量上。</span>
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${username}"</span><span class="token punctuation">)</span> 
+    <span class="token keyword">private</span> String um<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Value</span><span class="token punctuation">(</span><span class="token string">"${pwd}"</span><span class="token punctuation">)</span> 
+    <span class="token keyword">private</span> String pd<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"username is "</span><span class="token operator">+</span>um<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"password is "</span><span class="token operator">+</span>pd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>②：用Environment方式</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloController</span> <span class="token punctuation">{</span>
+
+	<span class="token comment" spellcheck="true">//相当与向ioc容器中注入配置文件对象</span>
+	<span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> Environment env<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test2"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    
+	<span class="token comment" spellcheck="true">//env.getProperty("username"); 获得配置文件中的key 为username的值</span>
+	System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"username is "</span><span class="token operator">+</span>env<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"username is "</span><span class="token operator">+</span>env<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"pwd"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><mark>注意：这种方式是依赖注入Evnironment来完成，在创建的成员变量private Environment env上加上@Autowired注解即可完成依赖注入，然后使用env.getProperty(&quot;键名&quot;)即可读取出对应的值</mark>。</p>
+<h3 class="mume-header" id="3-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">3. 自定义配置文件：</h3>
+
+<h3>PS：</h3>
+<p><mark>注意:配置文件中的字符串不要有下划线.配置中key不能带下划线,value可以.</mark></p>
+<blockquote>
+<p>错误的.不能读取的例子:<br>
+mySet .ABAP_AS_POOLED      =  ABAP_AS_WITH_POOL</p>
+</blockquote>
+<blockquote>
+<p>不要带下划线,正确的例子<br>
+mySet.ABAPASPOOLED      =  ABAP_AS_WITH_POOL</p>
+</blockquote>
+<p>在实际项目开发中，会选择自定义配置文件来放一些自定义信息。</p>
+<p><font color="red">①：在resources/config目录下创建配置文件myconfig.properties</font></p>
+<blockquote>
+<p>myconfig.properties</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="" class="language-"><code>web.name=suichen
+web.version=V 1.0
+web.author=qwe
+</code></pre><p><font color="red">②：创建与自定义配置文件互相映射的实体类：</font></p>
+<blockquote>
+<p>myConfig.java</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> mvn<span class="token punctuation">.</span>parentBoot<span class="token punctuation">.</span>child<span class="token punctuation">.</span>entity<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/*
+ * 
+ 在@ConfigurationProperties注解中：
+		prefix：指定配置文件中键名称的前缀（我这里配置文件中所有键名都是以web.开头）
+		
+使用@Component是让该类能够在其他地方被依赖使用，即使用@Autowired注释来创建实例。
+
+@PropertySource注解可以从自定义的properties文件中，获取对应的key-value值，将其赋予变量；
+ * 
+ * */</span>
+<span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@ConfigurationProperties</span><span class="token punctuation">(</span>prefix<span class="token operator">=</span><span class="token string">"web"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@PropertySource</span><span class="token punctuation">(</span><span class="token string">"classpath:config/myconfig.properties"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">myConfig</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//与自定义配置文件的映射实体类</span>
+	<span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String version<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String author<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token function">myConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">//省略get/set方法</span>
+	
+<span class="token punctuation">}</span>
+
+</pre><p><font color="red">③：测试：</font></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@Controller</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloController</span> <span class="token punctuation">{</span>
+
+	<span class="token comment" spellcheck="true">// 获取ioc 容器中的自定义配置文件的映射实体类</span>
+	<span class="token annotation punctuation">@Autowired</span>
+	<span class="token keyword">private</span> myConfig mc<span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test_myconfig"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">test_myconfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"name is "</span><span class="token operator">+</span>mc<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"version is "</span><span class="token operator">+</span>mc<span class="token punctuation">.</span><span class="token function">getVersion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"author is "</span><span class="token operator">+</span>mc<span class="token punctuation">.</span><span class="token function">getAuthor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><font color="red">④：截图：</font></p>
+<p><img src="../img/springboot_img/44.png" alt="44"></p>
+<h2 class="mume-header" id="9%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">9.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</h2>
 
 <p><font color="red"><h3>注意：springboot 不建议使用jsp作为页面格式</h3></font></p>
 <p>Freemarker : 是一款模板引擎： 即一种基于模板和要改变的数据，	并用来生成输出文本（HTML网页、电子邮件、配置文件、源代码等）的通用工具。</p>
@@ -671,7 +822,7 @@ admin2 is ${admin.admin2}
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
 
 </pre><p><img src="../img/springboot_img/20.png" alt="20-png"></p>
-<h2 class="mume-header" id="9-springboot-%E6%95%B4%E5%90%88-mybatis">9. SpringBoot 整合 mybatis</h2>
+<h2 class="mume-header" id="10-springboot-%E6%95%B4%E5%90%88-mybatis">10. SpringBoot 整合 mybatis</h2>
 
 <h3 class="mume-header" id="1%E5%9C%A8pom%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%85%A5mybatismysql%E4%BE%9D%E8%B5%96">1.在pom文件中导入mybatis，mysql依赖：</h3>
 
@@ -893,7 +1044,7 @@ id : <span class="token tag"><span class="token tag"><span class="token punctuat
 
 <p><img src="../img/springboot_img/22.png" alt="22-png"><br>
 <img src="../img/springboot_img/23.png" alt="23-png"></p>
-<h2 class="mume-header" id="10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</h2>
+<h2 class="mume-header" id="11springboot-%E6%95%B4%E5%90%88-springdata-jpa">11.SpringBoot 整合 springData Jpa :</h2>
 
 <p>文件结构图：<br>
 <img src="../img/springboot_img/26.png" alt="26-png"></p>
@@ -1068,7 +1219,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialec
 <span class="token punctuation">}</span>
 
 </pre><p>⑥：运行程序。</p>
-<h2 class="mume-header" id="11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</h2>
+<h2 class="mume-header" id="12springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">12.springBoot 配置多数据源(使用Mybatis)：</h2>
 
 <p>①：模拟两个数据源：<br>
 <img src="../img/springboot_img/27.png" alt="27-png"></p>
@@ -1303,12 +1454,12 @@ UserController.java:</p>
 <p><img src="../img/springboot_img/33.png" alt="33-png"><br>
 <img src="../img/springboot_img/31.png" alt="31-png"><br>
 <img src="../img/springboot_img/32.png" alt="32-png"></p>
-<h2 class="mume-header" id="12springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">12.SpringBoot 的事务(使用了Mybatis):</h2>
+<h2 class="mume-header" id="13springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">13.SpringBoot 的事务(使用了Mybatis):</h2>
 
 <p>Spring Boot 使用事务非常简单，在访问数据库的Service层方法上添加注解 @Transactional 便可。</p>
 <p><font color="red">因为在springboot中已经默认对jpa、jdbc、mybatis开启了事务，引入它们依赖的时候，事物就默认开启。当然，如果你需要用其他的orm，比如beatlsql，就需要自己配置相关的事物管理器。</font></p>
 <p><img src="../img/springboot_img/34.png" alt="34-png"></p>
-<h2 class="mume-header" id="13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</h2>
+<h2 class="mume-header" id="14springboot-%E6%97%A5%E5%BF%97">14.SpringBoot 日志：</h2>
 
 <p>默认情况下，Spring Boot会用 Logback日志框架来记录日志，并把INFO级别输出到控制台。<br>
 <font color="red">SpringBoot 框架，默认使用的日志框架为 logback。当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。<br>
@@ -1338,7 +1489,7 @@ logging.level.mvn.parentBoot.child.Controller = debug
 </code></pre><p><img src="../img/springboot_img/38.png" alt="38-png"><br>
 <img src="../img/springboot_img/39.png" alt="39-png"></p>
 <br>
-<h2 class="mume-header" id="14springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">14.SpringBoot AOP的使用：</h2>
+<h2 class="mume-header" id="15springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">15.SpringBoot AOP的使用：</h2>
 
 <h3 class="mume-header" id="1spring-boot%E4%B8%AD%E4%BD%BF%E7%94%A8aop%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86web%E8%AF%B7%E6%B1%82%E6%97%A5%E5%BF%97">1.Spring Boot中使用AOP统一处理Web请求日志:</h3>
 
@@ -1383,6 +1534,44 @@ logging.level.mvn.parentBoot.child.Controller = debug
 <img src="../img/springboot_img/40.png" alt="40-png"></p>
 <p>④：总结：</p>
 <p><img src="../img/springboot_img/41.png" alt="41-png"></p>
+<h2 class="mume-header" id="16springboot-%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8">16.Springboot 实现异步调用：</h2>
+
+<p>异步调用是相对于同步调用而言的，<mark>同步调用是指程序按预定顺序一步步执行，每一步必须等到上一步执行完后才能执行，异步调用则无需等待上一步程序执行完即可执行。</mark></p>
+<p>如何实现异步调用？</p>
+<p><font color="red">多线程就是一种实现异步调用的方式。</font></p>
+<h3>异步调用例子（注意：测试方法与被异步调用的方法不在一个类上）：</h3>
+<ol>
+<li>在Controller层中，编写测试异步调用的控制器方法：</li>
+</ol>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/test_Async"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">test_Async</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is test_Async up"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		userService<span class="token punctuation">.</span><span class="token function">test_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is test_Async down"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token string">"success"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><ol start="2">
+<li>在Service层中，编写需要被异步调用的方法：</li>
+</ol>
+<pre data-role="codeBlock" data-info="java" class="language-java">    <span class="token annotation punctuation">@Async</span>     <span class="token comment" spellcheck="true">//添加异步调用注解，当运行该方法时异步调用，相当与开启一个新线程来运行该方法.</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">" this is test-1 up"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">3</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">" this is test-1 dowm"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+</pre><ol start="3">
+<li>给Springboot 程序入口类添加开启异步调用注解：</li>
+</ol>
+<p><img src="../img/springboot_img/43.png" alt="43-png"></p>
+<ol start="4">
+<li>运行程序：</li>
+</ol>
+<p><img src="../img/springboot_img/42.png" alt="42-png"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -1400,8 +1589,15 @@ logging.level.mvn.parentBoot.child.Controller = debug
 </li>
 <li><a href="#6springboot-%E8%AE%BF%E9%97%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">6.Springboot 访问静态资源：</a></li>
 <li><a href="#7%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8">7.全局捕获异常：</a></li>
-<li><a href="#8%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</a></li>
-<li><a href="#9-springboot-%E6%95%B4%E5%90%88-mybatis">9. SpringBoot 整合 mybatis</a>
+<li><a href="#8springboot-%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%9C%89%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8Bproperties-%E5%92%8C-yml">8.Springboot 核心配置文件(有两种类型：.properties 和 .yml)：</a>
+<ul>
+<li><a href="#1applicationproperties%E4%B8%8Eapplicationyml%E7%9A%84%E5%8C%BA%E5%88%AB">1.application.properties与application.yml的区别：</a></li>
+<li><a href="#2-%E8%AF%BB%E5%8F%96%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF">2. 读取核心配置文件信息：</a></li>
+<li><a href="#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">3. 自定义配置文件：</a></li>
+</ul>
+</li>
+<li><a href="#9%E6%95%B4%E5%90%88freemarker%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E6%9D%A5%E6%B8%B2%E6%9F%93web%E8%A7%86%E5%9B%BE-%E6%B3%A8%E6%84%8Fspringboot-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8jsp%E4%BD%9C%E4%B8%BAweb%E8%A7%86%E5%9B%BE">9.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):</a></li>
+<li><a href="#10-springboot-%E6%95%B4%E5%90%88-mybatis">10. SpringBoot 整合 mybatis</a>
 <ul>
 <li><a href="#1%E5%9C%A8pom%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%85%A5mybatismysql%E4%BE%9D%E8%B5%96">1.在pom文件中导入mybatis，mysql依赖：</a></li>
 <li><a href="#2-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">2. 创建数据库：</a></li>
@@ -1410,20 +1606,21 @@ logging.level.mvn.parentBoot.child.Controller = debug
 <li><a href="#5%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">5.运行程序：</a></li>
 </ul>
 </li>
-<li><a href="#10springboot-%E6%95%B4%E5%90%88-springdata-jpa">10.SpringBoot 整合 springData Jpa :</a></li>
-<li><a href="#11springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">11.springBoot 配置多数据源(使用Mybatis)：</a></li>
-<li><a href="#12springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">12.SpringBoot 的事务(使用了Mybatis):</a></li>
-<li><a href="#13springboot-%E6%97%A5%E5%BF%97">13.SpringBoot 日志：</a>
+<li><a href="#11springboot-%E6%95%B4%E5%90%88-springdata-jpa">11.SpringBoot 整合 springData Jpa :</a></li>
+<li><a href="#12springboot-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BD%BF%E7%94%A8mybatis">12.springBoot 配置多数据源(使用Mybatis)：</a></li>
+<li><a href="#13springboot-%E7%9A%84%E4%BA%8B%E5%8A%A1%E4%BD%BF%E7%94%A8%E4%BA%86mybatis">13.SpringBoot 的事务(使用了Mybatis):</a></li>
+<li><a href="#14springboot-%E6%97%A5%E5%BF%97">14.SpringBoot 日志：</a>
 <ul>
 <li><a href="#1%E6%89%93%E5%8D%B0%E6%97%A5%E5%BF%97">1.打印日志：</a></li>
 <li><a href="#2%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">2.日志文件：</a></li>
 </ul>
 </li>
-<li><a href="#14springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">14.SpringBoot AOP的使用：</a>
+<li><a href="#15springboot-aop%E7%9A%84%E4%BD%BF%E7%94%A8">15.SpringBoot AOP的使用：</a>
 <ul>
 <li><a href="#1spring-boot%E4%B8%AD%E4%BD%BF%E7%94%A8aop%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86web%E8%AF%B7%E6%B1%82%E6%97%A5%E5%BF%97">1.Spring Boot中使用AOP统一处理Web请求日志:</a></li>
 </ul>
 </li>
+<li><a href="#16springboot-%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8">16.Springboot 实现异步调用：</a></li>
 </ul>
 </li>
 </ul>

@@ -421,7 +421,186 @@ public class ExceptionController {
 
 
 
-## 8.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):
+## 8.Springboot 核心配置文件(有两种类型：.properties 和 .yml)：
+
+### 1.application.properties与application.yml的区别：
+在 springboot 中，有两种配置文件，一种是application.properties,另一种是application.yml,两种都可以配置spring boot 项目中的一些变量的定义，参数的设置等。
+
+> <font color="red">①：application.properties 配置文件在写的时候要写完整:</font>
+```
+spring.profiles.active=dev
+spring.datasource.data-username=root
+spring.datasource.data-password=root
+```
+
+
+> <font color="red">②：yml文件中配置写法层次感强：</font>
+```
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test
+    username: root
+    password: root
+```
+
+![45](../img/springboot_img/45.png)
+
+
+### 2. 读取核心配置文件信息：
+
+<font color="red">SpringBoot框架的核心配置文件是指在 src/main/resources目录下的application.properties或application.yml配置文件.</font>
+
+<h4>读取配置文件信息的方法有两种：</h4>
+
+配置文件：
+> application.properties
+```
+# key-value:
+username=xiaoming
+pwd=1231
+```
+
+①：使用@Value方式（常用）：
+
+```java
+@Controller
+public class HelloController {
+
+//@Value的${}中包含的是核心配置文件中的键名,该注解把配置信息的值绑定到变量上。
+    @Value("${username}") 
+    private String um;
+
+    @Value("${pwd}") 
+    private String pd;
+
+    @RequestMapping(value="/test")
+    public String test() {
+		System.out.println("username is "+um);
+		System.out.println("password is "+pd);
+		return "success";
+    }
+}
+```
+
+
+②：用Environment方式
+```java
+@Controller
+public class HelloController {
+
+	//相当与向ioc容器中注入配置文件对象
+	@Autowired
+    private Environment env;
+
+    @RequestMapping(value="/test2")
+	public String test2() {
+    
+	//env.getProperty("username"); 获得配置文件中的key 为username的值
+	System.out.println("username is "+env.getProperty("username"));
+
+    System.out.println("username is "+env.getProperty("pwd"));
+
+	return "success";
+
+	}
+}
+```
+
+==注意：这种方式是依赖注入Evnironment来完成，在创建的成员变量private Environment env上加上@Autowired注解即可完成依赖注入，然后使用env.getProperty("键名")即可读取出对应的值==。
+
+
+
+### 3. 自定义配置文件：
+
+<h3>PS：</h3>
+
+==注意:配置文件中的字符串不要有下划线.配置中key不能带下划线,value可以.==
+
+
+> 错误的.不能读取的例子:
+mySet .ABAP_AS_POOLED      =  ABAP_AS_WITH_POOL
+
+>不要带下划线,正确的例子
+mySet.ABAPASPOOLED      =  ABAP_AS_WITH_POOL
+
+在实际项目开发中，会选择自定义配置文件来放一些自定义信息。
+
+<font color="red">①：在resources/config目录下创建配置文件myconfig.properties</font>
+
+> myconfig.properties
+```
+web.name=suichen
+web.version=V 1.0
+web.author=qwe
+```
+
+
+<font color="red">②：创建与自定义配置文件互相映射的实体类：</font>
+
+> myConfig.java
+```java
+package mvn.parentBoot.child.entity;
+/*
+ * 
+ 在@ConfigurationProperties注解中：
+		prefix：指定配置文件中键名称的前缀（我这里配置文件中所有键名都是以web.开头）
+		
+使用@Component是让该类能够在其他地方被依赖使用，即使用@Autowired注释来创建实例。
+
+@PropertySource注解可以从自定义的properties文件中，获取对应的key-value值，将其赋予变量；
+ * 
+ * */
+@Component
+@ConfigurationProperties(prefix="web")
+@PropertySource("classpath:config/myconfig.properties")
+public class myConfig {
+    //与自定义配置文件的映射实体类
+	private String name;
+	private String version;
+	private String author;
+	
+	public myConfig() {}
+
+	//省略get/set方法
+	
+}
+
+```
+
+<font color="red">③：测试：</font>
+```java
+@Controller
+public class HelloController {
+
+	// 获取ioc 容器中的自定义配置文件的映射实体类
+	@Autowired
+	private myConfig mc;
+	
+	@RequestMapping(value="/test_myconfig")
+	public String test_myconfig() {
+		System.out.println("name is "+mc.getName());
+		System.out.println("version is "+mc.getVersion());
+		System.out.println("author is "+mc.getAuthor());
+		
+		return "success";
+		
+	}
+}
+```
+
+
+<font color="red">④：截图：</font>
+
+![44](../img/springboot_img/44.png)
+
+
+
+
+
+## 9.整合Freemarker模板引擎用来渲染web视图  (注意：springboot 不建议使用jsp作为web视图):
 
 <font color="red"><h3>注意：springboot 不建议使用jsp作为页面格式</h3></font>
 
@@ -505,7 +684,7 @@ admin2 is ${admin.admin2}
 ![20-png](../img/springboot_img/20.png)
 
 
-## 9. SpringBoot 整合 mybatis
+## 10. SpringBoot 整合 mybatis
 
 ### 1.在pom文件中导入mybatis，mysql依赖：
 
@@ -760,7 +939,7 @@ id : <input tye="text" name="id"/>
 ![23-png](../img/springboot_img/23.png)
 
 
-## 10.SpringBoot 整合 springData Jpa :
+## 11.SpringBoot 整合 springData Jpa :
 文件结构图：
 ![26-png](../img/springboot_img/26.png)
 
@@ -954,7 +1133,7 @@ public class StudentController {
 
 
 
-## 11.springBoot 配置多数据源(使用Mybatis)：
+## 12.springBoot 配置多数据源(使用Mybatis)：
 
 ①：模拟两个数据源：
 ![27-png](../img/springboot_img/27.png)
@@ -1222,7 +1401,7 @@ public class UserController {
 
 
 
-## 12.SpringBoot 的事务(使用了Mybatis):
+## 13.SpringBoot 的事务(使用了Mybatis):
 Spring Boot 使用事务非常简单，在访问数据库的Service层方法上添加注解 @Transactional 便可。
 
 <font color="red">因为在springboot中已经默认对jpa、jdbc、mybatis开启了事务，引入它们依赖的时候，事物就默认开启。当然，如果你需要用其他的orm，比如beatlsql，就需要自己配置相关的事物管理器。</font>
@@ -1232,7 +1411,7 @@ Spring Boot 使用事务非常简单，在访问数据库的Service层方法上�
 
 
 
-## 13.SpringBoot 日志：
+## 14.SpringBoot 日志：
 默认情况下，Spring Boot会用 Logback日志框架来记录日志，并把INFO级别输出到控制台。
 <font color="red">SpringBoot 框架，默认使用的日志框架为 logback。当我们添加 spring-boot-starter-parent 依赖时，该依赖包含spring-boot-starter-logging 依赖（依赖的内容为logback日志框架）。
 </font>
@@ -1277,7 +1456,7 @@ logging.level.mvn.parentBoot.child.Controller = debug
 
 
 
-## 14.SpringBoot AOP的使用：
+## 15.SpringBoot AOP的使用：
 
 ### 1.Spring Boot中使用AOP统一处理Web请求日志:
 ①：引入AOP依赖
@@ -1330,3 +1509,55 @@ public class aopTest {
 ④：总结：
 
 ![41-png](../img/springboot_img/41.png)
+
+
+
+## 16.Springboot 实现异步调用：
+
+异步调用是相对于同步调用而言的，==同步调用是指程序按预定顺序一步步执行，每一步必须等到上一步执行完后才能执行，异步调用则无需等待上一步程序执行完即可执行。==
+
+如何实现异步调用？
+
+<font color="red">多线程就是一种实现异步调用的方式。</font>
+
+
+<h3>异步调用例子（注意：测试方法与被异步调用的方法不在一个类上）：</h3>
+
+1. 在Controller层中，编写测试异步调用的控制器方法：
+
+```java
+@RequestMapping(value="/test_Async")
+	public String test_Async() {
+		System.out.println("this is test_Async up");
+		
+		userService.test_1();
+		
+		System.out.println("this is test_Async down");
+		return "success";
+}
+```
+
+2. 在Service层中，编写需要被异步调用的方法：
+```java
+    @Async     //添加异步调用注解，当运行该方法时异步调用，相当与开启一个新线程来运行该方法.
+	public void test_1(){
+		System.out.println(" this is test-1 up");
+		for(int i=0;i<3;i++) {
+			System.out.println(i);
+		}
+		System.out.println(" this is test-1 dowm");
+	}
+
+```
+
+
+3. 给Springboot 程序入口类添加开启异步调用注解：
+
+![43-png](../img/springboot_img/43.png)
+
+
+4. 运行程序：
+
+![42-png](../img/springboot_img/42.png)
+
+
