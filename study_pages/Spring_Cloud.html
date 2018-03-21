@@ -5,7 +5,8 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.3\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.4\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
       
       
       
@@ -211,11 +212,71 @@ code.language-yaml {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview   ">
-      <h1 class="mume-header" id="spring-cloud">Spring Cloud</h1>
+      <ul>
+<li><a href="#spring-cloud">Spring Cloud</a>
+<ul>
+<li><a href="#0springcloud-%E4%B8%8Espringboot%E7%9A%84%E5%85%B3%E7%B3%BB">0.Springcloud 与Springboot的关系：</a></li>
+<li><a href="#1springcloud%E5%BB%BA%E7%AB%8B%E5%9F%BA%E7%A1%80%E4%BE%9D%E8%B5%96%E5%88%9B%E5%BB%BAmaven%E7%88%B6pom%E9%A1%B9%E7%9B%AE">1.SpringCloud建立基础依赖（创建Maven父pom项目）：</a></li>
+<li><a href="#2%E6%90%AD%E5%BB%BA%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83eureka%E6%A8%A1%E5%9D%97">2.搭建注册中心eureka模块：</a>
+<ul>
+<li><a href="#1%E4%BB%8B%E7%BB%8D">1.介绍：</a></li>
+<li><a href="#2demo">2.DEMO:</a></li>
+<li><a href="#3%E9%80%9A%E8%BF%87eureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.通过Eureka client 来注册服务到Eureka Server上：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="spring-cloud">Spring Cloud</h1>
 
-<p>Spring Cloud是<mark>一系列框架的有序集合</mark>。它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发，如<font color="red">服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等</font>，都可以用Spring Boot的开发风格做到一键启动和部署。</p>
-<p><strong>PS:SpringCloud 是基于SpringBoot上的</strong></p>
-<h2 class="mume-header" id="1springcloud%E5%BB%BA%E7%AB%8B%E5%9F%BA%E7%A1%80%E4%BE%9D%E8%B5%96%E5%88%9B%E5%BB%BAmaven%E7%9A%84%E7%88%B6pom%E9%A1%B9%E7%9B%AE">1.SpringCloud建立基础依赖（创建Maven的父pom项目）：</h2>
+<p>Spring Cloud是<mark>一系列框架的有序集合，它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发</mark>。它为开发者提供了在<font color="red">分布式系统（配置管理，服务发现，熔断，路由，微代理，控制总线，一次性token，全居琐，leader选举，分布式session，集群状态等）</font>中快速构建的工具，使用Spring Cloud的开发者可以快速的启动服务或构建应用、同时能够快速和云平台资源进行对接。</p>
+<h3>Spring Cloud有许多子项目，分别负责不同的功能：</h3>
+<blockquote>
+<p>Spring Cloud Netflix<br>
+　　是对Netflix开发的一套分布式服务框架的封装，包括服务的发现和注册，负载均衡、断路器、REST客户端、请求路由等。</p>
+</blockquote>
+<blockquote>
+<p>Spring Cloud Config:<br>
+　　将配置信息中央化保存, 配置Spring Cloud Bus可以实现动态修改配置文件</p>
+</blockquote>
+<blockquote>
+<p>Spring Cloud Bus<br>
+　　分布式消息队列，是对Kafka, MQ的封装</p>
+</blockquote>
+<blockquote>
+<p>Spring Cloud Security<br>
+　　对Spring Security的封装，并能配合Netflix使用</p>
+</blockquote>
+<blockquote>
+<p>Spring Cloud Zookeeper<br>
+　　对Zookeeper的封装，使之能配置其它Spring Cloud的子项目使用</p>
+</blockquote>
+<blockquote>
+<p>Spring Cloud Eureka<br>
+是 Spring Cloud Netflix 微服务套件中的一部分，它基于Netflix Eureka 做了二次封装，主要负责完成微服务架构中的服务治理功能。</p>
+</blockquote>
+<hr>
+<h2 class="mume-header" id="0springcloud-%E4%B8%8Espringboot%E7%9A%84%E5%85%B3%E7%B3%BB">0.Springcloud 与Springboot的关系：</h2>
+
+<ol>
+<li>
+<p>Spring boot 是 Spring 的一套快速配置脚手架，可以基于spring boot 快速开发单个微服务，Spring Cloud是一个基于Spring Boot实现的云应用开发工具；</p>
+</li>
+<li>
+<p>Spring boot专注于快速、方便集成的单个个体，Spring Cloud是关注全局的服务治理框架；</p>
+</li>
+<li>
+<p>spring boot使用了默认大于配置的理念，很多集成方案已经帮你选择好了，能不配置就不配置，<mark>Spring Cloud很大的一部分是基于Spring boot来实现,可以不基于Spring boot吗？不可以</mark>。</p>
+</li>
+<li>
+<p>Spring boot可以离开Spring Cloud独立使用开发项目，但是Spring Cloud离不开Spring boot，属于依赖的关系。</p>
+</li>
+</ol>
+<blockquote>
+<p>spring -&gt; spring booot &gt; spring cloud 这样的关系。</p>
+</blockquote>
+<hr>
+<h2 class="mume-header" id="1springcloud%E5%BB%BA%E7%AB%8B%E5%9F%BA%E7%A1%80%E4%BE%9D%E8%B5%96%E5%88%9B%E5%BB%BAmaven%E7%88%B6pom%E9%A1%B9%E7%9B%AE">1.SpringCloud建立基础依赖（创建Maven父pom项目）：</h2>
 
 <p><font color="red">在实际的SpringCloud项目中，我们需要建立统一的父pom文件,来方便对SpringCloud的子项目的公共配置进行统一管理。</font></p>
 <p><mark>一个maven项目（SpringcCloud的基础配置），多个maven module 用于对应不同的子项目</mark></p>
@@ -263,7 +324,13 @@ code.language-yaml {
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span>   
 
 </pre><p>②：基本的spring-boot 和 spring-cloud 的基础依赖就添加好了。</p>
-<h2 class="mume-header" id="2%E6%95%B4%E5%90%88%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83eureka%E6%A8%A1%E5%9D%97">2.整合注册中心eureka模块：</h2>
+<h2 class="mume-header" id="2%E6%90%AD%E5%BB%BA%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83eureka%E6%A8%A1%E5%9D%97">2.搭建注册中心eureka模块：</h2>
+
+<h3 class="mume-header" id="1%E4%BB%8B%E7%BB%8D">1.介绍：</h3>
+
+<p>Eureka包含两个组件：<mark>Eureka Server和Eureka Client。</mark></p>
+<p><img src="../img/springcloud_img/4.png" alt="4"></p>
+<h3 class="mume-header" id="2demo">2.DEMO:</h3>
 
 <p>①：<mark>在上面maven的基础上，新建一个maven module，取名为 springcloud-child-eureka</mark>。</p>
 <p>②：在module的pom文件添加依赖：</p>
@@ -271,12 +338,16 @@ code.language-yaml {
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>    
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-eureka-server<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>    
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>    
-</pre><p>③：创建EurekaServerApplication.class 添加如下内容：</p>
+</pre><blockquote>
+<p><font color="red"><h3>注意： 引入的是xxx-eureka-server 依赖</h3></font></p>
+</blockquote>
+<p>③：创建EurekaServerApplication.class 添加如下内容：</p>
+<p><img src="../img/springcloud_img/5.png" alt="5"></p>
 <blockquote>
 <p>EurekaServerApplication.class:</p>
 </blockquote>
 <pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>  
-<span class="token annotation punctuation">@EnableEurekaServer</span>  
+<span class="token annotation punctuation">@EnableEurekaServer</span>  <span class="token comment" spellcheck="true">//开启eureka服务中心，启动一个服务注册中心提供给其他应用进行对话</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EurekaApplication</span> <span class="token punctuation">{</span>  
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
         SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>EurekaApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>  
@@ -301,19 +372,84 @@ eureka:
 </code></pre><p><img src="../img/springcloud_img/2.png" alt="2"><br>
 ⑤：运行程序，并输入 <a href="http://localhost:8080/%EF%BC%8C%E5%B0%86%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%BB%A5%E4%B8%8B%E7%94%BB%E9%9D%A2%EF%BC%9A">http://localhost:8080/，将会出现以下画面：</a><br>
 <img src="../img/springcloud_img/3.png" alt="3"></p>
+<h3 class="mume-header" id="3%E9%80%9A%E8%BF%87eureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.通过Eureka client 来注册服务到Eureka Server上：</h3>
+
+<hr>
+<p>①：在maven父项目中新建module，取名为eureka-UserClient:</p>
+<h2>★★★★★PS:</h2>
+<font color="red">
+当你在maven项目中创建第二个module模块时，可能会导致父pom文件的改变（例如，maven父项目，两个子module的pom文件都报错，原因是，父pom的maven依赖代码片段消失了，你应该重新添加maven依赖）。此时，你应该修改父pom文件。把它修改之前的模样。
+</font>
+<hr>
+<p>②：在module的pom文件添加依赖：<br>
+<img src="../img/springcloud_img/6.png" alt="6"></p>
+<blockquote>
+<p>pom.xml:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-eureka-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.4.3.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>   
+</pre><p>③：创建UserController类：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">userController</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/getUser"</span><span class="token punctuation">)</span>
+	<span class="token keyword">public</span> String <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"i am a user"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>④：创建application.yml:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/             #eureka&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x7F51;&#x7EDC;&#x5730;&#x5740; 
+spring:
+  application:
+    name: cloud-client    #&#x4E3A;&#x4F60;&#x7684;&#x5F53;&#x524D;&#x9879;&#x76EE;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x8D77;&#x4E2A;&#x540D;&#x5B57;&#xFF0C;&#x8BE5;&#x540D;&#x5B57;&#x6240;&#x4EE3;&#x8868;&#x7684;&#x9879;&#x76EE;&#x5C06;&#x6CE8;&#x518C;&#x5230;eureka&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;
+    
+server:
+  port: 8762   #&#x5F53;&#x524D;&#x9879;&#x76EE;&#x7684;&#x7AEF;&#x53E3;&#x5730;&#x5740;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x8BE5;&#x5730;&#x5740;&#xFF0C;&#x6765;&#x8BBF;&#x95EE;&#x8BE5;&#x9879;&#x76EE;&#xFF0C;&#x6267;&#x884C;&#x8BE5;&#x9879;&#x76EE;&#x7684;&#x529F;&#x80FD;&#x3002;
+</code></pre><p>⑤：创建MainStart.class 添加如下内容：</p>
+<p><img src="../img/springcloud_img/7.png" alt="7"></p>
+<blockquote>
+<p>EurekaServerApplication.class:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@EnableEurekaClient</span>   <span class="token comment" spellcheck="true">//设置该项目入口类为 eureka的client，从而把当前项目注入到eureka server（注册中心）中</span>
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainStart</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>MainStart<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+</pre><p>⑥：<font color="red"><h3>先运行 eureka-server的程序，在运行eureka-client的程序</h3></font></p>
+<p><img src="../img/springcloud_img/8.png" alt="8"><br>
+<img src="../img/springcloud_img/9.png" alt="9"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#spring-cloud">Spring Cloud</a>
 <ul>
-<li><a href="#1springcloud%E5%BB%BA%E7%AB%8B%E5%9F%BA%E7%A1%80%E4%BE%9D%E8%B5%96%E5%88%9B%E5%BB%BAmaven%E7%9A%84%E7%88%B6pom%E9%A1%B9%E7%9B%AE">1.SpringCloud建立基础依赖（创建Maven的父pom项目）：</a></li>
-<li><a href="#2%E6%95%B4%E5%90%88%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83eureka%E6%A8%A1%E5%9D%97">2.整合注册中心eureka模块：</a></li>
+<li><a href="#0springcloud-%E4%B8%8Espringboot%E7%9A%84%E5%85%B3%E7%B3%BB">0.Springcloud 与Springboot的关系：</a></li>
+<li><a href="#1springcloud%E5%BB%BA%E7%AB%8B%E5%9F%BA%E7%A1%80%E4%BE%9D%E8%B5%96%E5%88%9B%E5%BB%BAmaven%E7%88%B6pom%E9%A1%B9%E7%9B%AE">1.SpringCloud建立基础依赖（创建Maven父pom项目）：</a></li>
+<li><a href="#2%E6%90%AD%E5%BB%BA%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83eureka%E6%A8%A1%E5%9D%97">2.搭建注册中心eureka模块：</a>
+<ul>
+<li><a href="#1%E4%BB%8B%E7%BB%8D">1.介绍：</a></li>
+<li><a href="#2demo">2.DEMO:</a></li>
+<li><a href="#3%E9%80%9A%E8%BF%87eureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.通过Eureka client 来注册服务到Eureka Server上：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
       <a id="sidebar-toc-btn">≡</a>
     </body>
+    
     
     
     
