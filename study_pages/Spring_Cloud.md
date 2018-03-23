@@ -1,9 +1,14 @@
 [toc]
 # Spring Cloud
-Spring Cloud是==一系列框架的有序集合，它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发==。它为开发者提供了在<font color="red">分布式系统（配置管理，服务发现，熔断，路由，微代理，控制总线，一次性token，全居琐，leader选举，分布式session，集群状态等）</font>中快速构建的工具，使用Spring Cloud的开发者可以快速的启动服务或构建应用、同时能够快速和云平台资源进行对接。
+Spring Cloud是一个基于Spring Boot实现的云应用开发工具，它为基于JVM的云应用开发中涉及的==配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态管理等操作==提供了一种简单的开发方式。
 
 
-<h3>Spring Cloud有许多子项目，分别负责不同的功能：</h3>
+> 那么什么是“微服务架构”呢？
+> 简单的说，<font color="red">微服务架构就是将一个完整的应用从数据存储开始垂直拆分成多个不同的服务，每个服务都能独立部署、独立维护、独立扩展，服务与服务间通过诸如RESTful API的方式互相调用。</font>
+
+
+
+<h3>Spring Cloud 包含了多个子项目（针对分布式系统中涉及的多个不同开源产品）：</h3>
 
 > Spring Cloud Netflix
 >　　是对Netflix开发的一套分布式服务框架的封装，包括服务的发现和注册，负载均衡、断路器、REST客户端、请求路由等。
@@ -26,6 +31,12 @@ Spring Cloud是==一系列框架的有序集合，它利用Spring Boot的开发�
 
 >Spring Cloud Eureka
 > 是 Spring Cloud Netflix 微服务套件中的一部分，它基于Netflix Eureka 做了二次封装，主要负责完成微服务架构中的服务治理功能。
+
+> .........
+
+
+
+
 
 ---
 
@@ -166,7 +177,7 @@ eureka:
 ![3](../img/springcloud_img/3.png)
 
 
-### 3.通过Eureka client 来注册服务到Eureka Server上：
+### 3.把Eureka client 来注册服务到Eureka Server上：
 ---
 
 ①：在maven父项目中新建module，取名为eureka-UserClient:
@@ -240,7 +251,190 @@ public class MainStart {
 ```
 
 
-⑥：<font color="red"><h3>先运行 eureka-server的程序，在运行eureka-client的程序</h3></font>
+⑥：<font color="red"><h3>先运行 eureka-server的程序，在运行eureka-Userclient的程序</h3></font>
 
 ![8](../img/springcloud_img/8.png)
 ![9](../img/springcloud_img/9.png)
+
+
+### 4.注册中心的服务之间的调用（使用RestTemplate类）：
+
+![13](../img/springcloud_img/13.png)
+
+
+①：之前在上面的demo中建立了eureka-UserClient微服务节点，现在在新建立一个微服务节点eureka-AdminClient去调用它。
+
+②：在module的pom文件添加依赖：
+> pom.xml:
+```xml
+<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		<version>1.4.3.RELEASE</version>
+</dependency>   
+```
+
+
+③：创建application.yml:
+```
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/             #eureka注册中心的网络地址 
+spring:
+  application:
+    name: eureka-Adminclient    #为你的当前项目的微服务起个名字，该名字所代表的项目将注册到eureka注册中心
+    
+server:
+  port: 8763   #当前项目的端口地址，可通过该地址，来访问该项目，执行该项目的功能。
+```
+
+
+④：编写控制器类
+```java
+package org.eureka.AdminClient.Controller;
+
+@RestController
+public class adminController {
+    
+	@Bean
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
+	}
+	
+	@Autowired
+    RestTemplate restTemplate;
+
+    @RequestMapping("/adminClient_getUser")
+    public String excuteUserClient_getUser() {
+    	return restTemplate.getForObject("http://localhost:8762/getUser", String.class);
+    }
+    
+}
+```
+
+![10](../img/springcloud_img/10.png)
+
+
+
+⑤：创建入口类：
+
+> startMain.class:
+```java
+package org.eureka.AdminClient;
+
+@SpringBootApplication
+@EnableEurekaClient   //开启服务注册
+public class startMain {
+	
+	public static void main(String[] args) {
+		SpringApplication.run(startMain.class, args);
+	}
+
+}
+
+```
+
+⑥：<font color="red"><h3>先运行 eureka-server的程序，下面运行eureka-Userclient或eureka-AdminClient</h3></font>
+
+![11](../img/springcloud_img/11.png)
+![12](../img/springcloud_img/12.png)
+
+
+---
+
+## 3.Spring Cloud Ribbon 实现服务调用与客户端负载均衡:
+
+
+<h2><font color="red">什么是负载均衡？:</font></h2>
+
+分布式就是利用大量计算机节点完成单个计算机无法完成的计算、存储服务，既然有大量计算机节点，那么均衡的调度就非常重要。
+
+负载均衡的意义在于，让所有节点以最小的代价、最好的状态对外提供服务，这样系统吞吐量最大，性能更高，对于用户而言请求的时间也更小。而且，负载均衡增强了系统的可靠性，最大化降低了单个节点过载、甚至crash的概率。不难想象，如果一个系统绝大部分请求都落在同一个节点上，那么这些请求响应时间都很慢，而且万一节点降级或者崩溃，那么所有请求又会转移到下一个节点，造成雪崩。
+
+
+---
+
+==Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具==。它是一个基于HTTP和TCP的客户端负载均衡器。它可以通过在客户端中配置ribbonServerList来设置服务端列表去轮询访问以达到均衡负载的作用。
+
+ > 当Ribbon与Eureka联合使用时，ribbonServerList会被DiscoveryEnabledNIWSServerList重写，扩展成从Eureka注册中心中获取服务实例列表。
+
+
+### 1.根据上面的2-4的demo实现服务调用：
+
+①：根据上面的例子，在服务消费者（eureka-AdminClient）的pom文件中添加 ribbon依赖：
+
+```xml
+<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-ribbon</artifactId>
+	    <version>1.4.3.RELEASE</version>
+</dependency>
+```
+
+
+②：在RestTemplate类上增加@LoadBalanced注解并修改Controller代码：
+```java
+package org.eureka.AdminClient.Controller;
+
+@RestController
+public class adminController {
+    
+	@Bean
+	@LoadBalanced
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
+	}
+	
+	@Autowired
+    RestTemplate restTemplate;
+
+    @RequestMapping("/adminClient_getUser")
+    public String excuteUserClient_getUser() {
+    	return restTemplate.getForObject("http://eureka-Userclient/getUser", String.class);
+    }
+    
+    @RequestMapping("/aa")
+    public String aa() {
+    	return "aa";
+    }
+    
+}
+
+```
+
+![14](../img/springcloud_img/14.png)
+
+
+③：ok,修改完毕，运行程序,与2-4效果一摸一样。
+
+
+
+## 4.Spring Cloud Feign 对eureka-client服务的定义和调用：
+
+Spring Cloud Feign是一套基于Netflix Feign实现的声明式服务调用客户端。它使得编写Web服务客户端变得更加简单。我们只需要通过创建接口并用注解来配置它既可完成对Web服务接口的绑定。它具备可插拔的注解支持，包括Feign注解、JAX-RS注解。它也支持可插拔的编码器和解码器。Spring Cloud Feign还扩展了对Spring MVC注解的支持，==同时还整合了Ribbon和Eureka来提供均衡负载的HTTP客户端实现。==
+
+
+①：根据上面的2-4的demo，在服务消费者（eureka-AdminClient）的pom文件中添加Feign依赖：
+```xml
+<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-feign</artifactId>
+	    <version>1.4.3.RELEASE</version>
+</dependency>
+```
+
+
+②：修改主类（运行类），添加@EnableFeignClients注解：
+```java
+@EnableFeignClients         //添加Feign注解
+@SpringBootApplication
+@EnableEurekaClient         //开启服务注册
+public class startMain {
+	
+	public static void main(String[] args) {
+		SpringApplication.run(startMain.class, args);
+	}
+
+}
+```

@@ -221,16 +221,27 @@ code.language-yaml {
 <ul>
 <li><a href="#1%E4%BB%8B%E7%BB%8D">1.介绍：</a></li>
 <li><a href="#2demo">2.DEMO:</a></li>
-<li><a href="#3%E9%80%9A%E8%BF%87eureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.通过Eureka client 来注册服务到Eureka Server上：</a></li>
+<li><a href="#3%E6%8A%8Aeureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.把Eureka client 来注册服务到Eureka Server上：</a></li>
+<li><a href="#4%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B0%83%E7%94%A8%E4%BD%BF%E7%94%A8resttemplate%E7%B1%BB">4.注册中心的服务之间的调用（使用RestTemplate类）：</a></li>
 </ul>
 </li>
+<li><a href="#3spring-cloud-ribbon-%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">3.Spring Cloud Ribbon 实现服务调用与客户端负载均衡:</a>
+<ul>
+<li><a href="#1%E6%A0%B9%E6%8D%AE%E4%B8%8A%E9%9D%A2%E7%9A%842-4%E7%9A%84demo%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8">1.根据上面的2-4的demo实现服务调用：</a></li>
+</ul>
+</li>
+<li><a href="#4spring-cloud-feign-%E5%AF%B9eureka-client%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">4.Spring Cloud Feign 对eureka-client服务的定义和调用：</a></li>
 </ul>
 </li>
 </ul>
 <h1 class="mume-header" id="spring-cloud">Spring Cloud</h1>
 
-<p>Spring Cloud是<mark>一系列框架的有序集合，它利用Spring Boot的开发便利性巧妙地简化了分布式系统基础设施的开发</mark>。它为开发者提供了在<font color="red">分布式系统（配置管理，服务发现，熔断，路由，微代理，控制总线，一次性token，全居琐，leader选举，分布式session，集群状态等）</font>中快速构建的工具，使用Spring Cloud的开发者可以快速的启动服务或构建应用、同时能够快速和云平台资源进行对接。</p>
-<h3>Spring Cloud有许多子项目，分别负责不同的功能：</h3>
+<p>Spring Cloud是一个基于Spring Boot实现的云应用开发工具，它为基于JVM的云应用开发中涉及的<mark>配置管理、服务发现、断路器、智能路由、微代理、控制总线、全局锁、决策竞选、分布式会话和集群状态管理等操作</mark>提供了一种简单的开发方式。</p>
+<blockquote>
+<p>那么什么是“微服务架构”呢？<br>
+简单的说，<font color="red">微服务架构就是将一个完整的应用从数据存储开始垂直拆分成多个不同的服务，每个服务都能独立部署、独立维护、独立扩展，服务与服务间通过诸如RESTful API的方式互相调用。</font></p>
+</blockquote>
+<h3>Spring Cloud 包含了多个子项目（针对分布式系统中涉及的多个不同开源产品）：</h3>
 <blockquote>
 <p>Spring Cloud Netflix<br>
 　　是对Netflix开发的一套分布式服务框架的封装，包括服务的发现和注册，负载均衡、断路器、REST客户端、请求路由等。</p>
@@ -254,6 +265,9 @@ code.language-yaml {
 <blockquote>
 <p>Spring Cloud Eureka<br>
 是 Spring Cloud Netflix 微服务套件中的一部分，它基于Netflix Eureka 做了二次封装，主要负责完成微服务架构中的服务治理功能。</p>
+</blockquote>
+<blockquote>
+<p>.........</p>
 </blockquote>
 <hr>
 <h2 class="mume-header" id="0springcloud-%E4%B8%8Espringboot%E7%9A%84%E5%85%B3%E7%B3%BB">0.Springcloud 与Springboot的关系：</h2>
@@ -372,7 +386,7 @@ eureka:
 </code></pre><p><img src="../img/springcloud_img/2.png" alt="2"><br>
 ⑤：运行程序，并输入 <a href="http://localhost:8080/%EF%BC%8C%E5%B0%86%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%BB%A5%E4%B8%8B%E7%94%BB%E9%9D%A2%EF%BC%9A">http://localhost:8080/，将会出现以下画面：</a><br>
 <img src="../img/springcloud_img/3.png" alt="3"></p>
-<h3 class="mume-header" id="3%E9%80%9A%E8%BF%87eureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.通过Eureka client 来注册服务到Eureka Server上：</h3>
+<h3 class="mume-header" id="3%E6%8A%8Aeureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.把Eureka client 来注册服务到Eureka Server上：</h3>
 
 <hr>
 <p>①：在maven父项目中新建module，取名为eureka-UserClient:</p>
@@ -426,10 +440,142 @@ server:
 
 <span class="token punctuation">}</span>
 
-</pre><p>⑥：<font color="red"><h3>先运行 eureka-server的程序，在运行eureka-client的程序</h3></font></p>
+</pre><p>⑥：<font color="red"><h3>先运行 eureka-server的程序，在运行eureka-Userclient的程序</h3></font></p>
 <p><img src="../img/springcloud_img/8.png" alt="8"><br>
 <img src="../img/springcloud_img/9.png" alt="9"></p>
+<h3 class="mume-header" id="4%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B0%83%E7%94%A8%E4%BD%BF%E7%94%A8resttemplate%E7%B1%BB">4.注册中心的服务之间的调用（使用RestTemplate类）：</h3>
 
+<p><img src="../img/springcloud_img/13.png" alt="13"></p>
+<p>①：之前在上面的demo中建立了eureka-UserClient微服务节点，现在在新建立一个微服务节点eureka-AdminClient去调用它。</p>
+<p>②：在module的pom文件添加依赖：</p>
+<blockquote>
+<p>pom.xml:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-eureka-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.4.3.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>   
+</pre><p>③：创建application.yml:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/             #eureka&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x7F51;&#x7EDC;&#x5730;&#x5740; 
+spring:
+  application:
+    name: eureka-Adminclient    #&#x4E3A;&#x4F60;&#x7684;&#x5F53;&#x524D;&#x9879;&#x76EE;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x8D77;&#x4E2A;&#x540D;&#x5B57;&#xFF0C;&#x8BE5;&#x540D;&#x5B57;&#x6240;&#x4EE3;&#x8868;&#x7684;&#x9879;&#x76EE;&#x5C06;&#x6CE8;&#x518C;&#x5230;eureka&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;
+    
+server:
+  port: 8763   #&#x5F53;&#x524D;&#x9879;&#x76EE;&#x7684;&#x7AEF;&#x53E3;&#x5730;&#x5740;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x8BE5;&#x5730;&#x5740;&#xFF0C;&#x6765;&#x8BBF;&#x95EE;&#x8BE5;&#x9879;&#x76EE;&#xFF0C;&#x6267;&#x884C;&#x8BE5;&#x9879;&#x76EE;&#x7684;&#x529F;&#x80FD;&#x3002;
+</code></pre><p>④：编写控制器类</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">adminController</span> <span class="token punctuation">{</span>
+    
+	<span class="token annotation punctuation">@Bean</span>
+	<span class="token keyword">public</span> RestTemplate <span class="token function">restTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">RestTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>
+    RestTemplate restTemplate<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/adminClient_getUser"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">excuteUserClient_getUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> restTemplate<span class="token punctuation">.</span><span class="token function">getForObject</span><span class="token punctuation">(</span><span class="token string">"http://localhost:8762/getUser"</span><span class="token punctuation">,</span> String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/springcloud_img/10.png" alt="10"></p>
+<p>⑤：创建入口类：</p>
+<blockquote>
+<p>startMain.class:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableEurekaClient</span>   <span class="token comment" spellcheck="true">//开启服务注册</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">startMain</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>startMain<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+</pre><p>⑥：<font color="red"><h3>先运行 eureka-server的程序，下面运行eureka-Userclient或eureka-AdminClient</h3></font></p>
+<p><img src="../img/springcloud_img/11.png" alt="11"><br>
+<img src="../img/springcloud_img/12.png" alt="12"></p>
+<hr>
+<h2 class="mume-header" id="3spring-cloud-ribbon-%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">3.Spring Cloud Ribbon 实现服务调用与客户端负载均衡:</h2>
+
+<h2><font color="red">什么是负载均衡？:</font></h2>
+<p>分布式就是利用大量计算机节点完成单个计算机无法完成的计算、存储服务，既然有大量计算机节点，那么均衡的调度就非常重要。</p>
+<p>负载均衡的意义在于，让所有节点以最小的代价、最好的状态对外提供服务，这样系统吞吐量最大，性能更高，对于用户而言请求的时间也更小。而且，负载均衡增强了系统的可靠性，最大化降低了单个节点过载、甚至crash的概率。不难想象，如果一个系统绝大部分请求都落在同一个节点上，那么这些请求响应时间都很慢，而且万一节点降级或者崩溃，那么所有请求又会转移到下一个节点，造成雪崩。</p>
+<hr>
+<p><mark>Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具</mark>。它是一个基于HTTP和TCP的客户端负载均衡器。它可以通过在客户端中配置ribbonServerList来设置服务端列表去轮询访问以达到均衡负载的作用。</p>
+<blockquote>
+<p>当Ribbon与Eureka联合使用时，ribbonServerList会被DiscoveryEnabledNIWSServerList重写，扩展成从Eureka注册中心中获取服务实例列表。</p>
+</blockquote>
+<h3 class="mume-header" id="1%E6%A0%B9%E6%8D%AE%E4%B8%8A%E9%9D%A2%E7%9A%842-4%E7%9A%84demo%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8">1.根据上面的2-4的demo实现服务调用：</h3>
+
+<p>①：根据上面的例子，在服务消费者（eureka-AdminClient）的pom文件中添加 ribbon依赖：</p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-ribbon<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.4.3.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><p>②：在RestTemplate类上增加@LoadBalanced注解并修改Controller代码：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">adminController</span> <span class="token punctuation">{</span>
+    
+	<span class="token annotation punctuation">@Bean</span>
+	<span class="token annotation punctuation">@LoadBalanced</span>
+	<span class="token keyword">public</span> RestTemplate <span class="token function">restTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">RestTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>
+    RestTemplate restTemplate<span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/adminClient_getUser"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">excuteUserClient_getUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> restTemplate<span class="token punctuation">.</span><span class="token function">getForObject</span><span class="token punctuation">(</span><span class="token string">"http://eureka-Userclient/getUser"</span><span class="token punctuation">,</span> String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/aa"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">aa</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> <span class="token string">"aa"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+<span class="token punctuation">}</span>
+
+</pre><p><img src="../img/springcloud_img/14.png" alt="14"></p>
+<p>③：ok,修改完毕，运行程序,与2-4效果一摸一样。</p>
+<h2 class="mume-header" id="4spring-cloud-feign-%E5%AF%B9eureka-client%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">4.Spring Cloud Feign 对eureka-client服务的定义和调用：</h2>
+
+<p>Spring Cloud Feign是一套基于Netflix Feign实现的声明式服务调用客户端。它使得编写Web服务客户端变得更加简单。我们只需要通过创建接口并用注解来配置它既可完成对Web服务接口的绑定。它具备可插拔的注解支持，包括Feign注解、JAX-RS注解。它也支持可插拔的编码器和解码器。Spring Cloud Feign还扩展了对Spring MVC注解的支持，<mark>同时还整合了Ribbon和Eureka来提供均衡负载的HTTP客户端实现。</mark></p>
+<p>①：根据上面的2-4的demo，在服务消费者（eureka-AdminClient）的pom文件中添加Feign依赖：</p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-feign<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+	    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.4.3.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><p>②：修改主类（运行类），添加@EnableFeignClients注解：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token annotation punctuation">@EnableFeignClients</span>         <span class="token comment" spellcheck="true">//添加Feign注解</span>
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableEurekaClient</span>         <span class="token comment" spellcheck="true">//开启服务注册</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">startMain</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>startMain<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre>
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#spring-cloud">Spring Cloud</a>
@@ -440,9 +586,16 @@ server:
 <ul>
 <li><a href="#1%E4%BB%8B%E7%BB%8D">1.介绍：</a></li>
 <li><a href="#2demo">2.DEMO:</a></li>
-<li><a href="#3%E9%80%9A%E8%BF%87eureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.通过Eureka client 来注册服务到Eureka Server上：</a></li>
+<li><a href="#3%E6%8A%8Aeureka-client-%E6%9D%A5%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1%E5%88%B0eureka-server%E4%B8%8A">3.把Eureka client 来注册服务到Eureka Server上：</a></li>
+<li><a href="#4%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B0%83%E7%94%A8%E4%BD%BF%E7%94%A8resttemplate%E7%B1%BB">4.注册中心的服务之间的调用（使用RestTemplate类）：</a></li>
 </ul>
 </li>
+<li><a href="#3spring-cloud-ribbon-%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8%E4%B8%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">3.Spring Cloud Ribbon 实现服务调用与客户端负载均衡:</a>
+<ul>
+<li><a href="#1%E6%A0%B9%E6%8D%AE%E4%B8%8A%E9%9D%A2%E7%9A%842-4%E7%9A%84demo%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8">1.根据上面的2-4的demo实现服务调用：</a></li>
+</ul>
+</li>
+<li><a href="#4spring-cloud-feign-%E5%AF%B9eureka-client%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">4.Spring Cloud Feign 对eureka-client服务的定义和调用：</a></li>
 </ul>
 </li>
 </ul>
