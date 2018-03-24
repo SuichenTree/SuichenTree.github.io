@@ -409,6 +409,7 @@ public class adminController {
 ③：ok,修改完毕，运行程序,与2-4效果一摸一样。
 
 
+---
 
 ## 4.Spring Cloud Feign 对eureka-client服务的定义和调用：
 
@@ -438,3 +439,49 @@ public class startMain {
 
 }
 ```
+
+③：在服务消费者工程中创建一个Feign的客户端接口.
+> FeClient.java
+```java
+package org.eureka.AdminClient.Controller;
+
+@FeignClient("eureka-UserClient")       //该注解指明被调用的服务名称
+public interface FeClient {
+
+    @GetMapping(value="/sayhello")          //该注解指明被调用的服务的那个映射名称
+    String get_UserClient_sayhello();
+
+}
+```
+
+![15](../img/springcloud_img/15.png)
+
+
+④：修改Controller
+```java
+package org.eureka.AdminClient.Controller;
+
+@RestController
+public class adminController {
+	
+	@Autowired
+	FeClient fec;         //获取该接口的实例化对象
+   
+    @RequestMapping("/Fegin_getUser")
+    public String Fegin_getUser() {
+    	return fec.get_UserClient_sayhello();     
+    	// 调用该接口的某个方法，相当与调用某个微服务节点的某个映射
+    }
+ 
+}
+
+```
+
+
+⑤：运行程序。
+![16](../img/springcloud_img/16.png)
+![17](../img/springcloud_img/17.png)
+
+
+
+==通过@FeignClient修饰的接口来统一需要进行调用的的微服务接口。而在具体使用的时候就跟调用本地方法一点的进行调用即可。由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能。==

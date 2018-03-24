@@ -555,6 +555,7 @@ server:
 
 </pre><p><img src="../img/springcloud_img/14.png" alt="14"></p>
 <p>③：ok,修改完毕，运行程序,与2-4效果一摸一样。</p>
+<hr>
 <h2 class="mume-header" id="4spring-cloud-feign-%E5%AF%B9eureka-client%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">4.Spring Cloud Feign 对eureka-client服务的定义和调用：</h2>
 
 <p>Spring Cloud Feign是一套基于Netflix Feign实现的声明式服务调用客户端。它使得编写Web服务客户端变得更加简单。我们只需要通过创建接口并用注解来配置它既可完成对Web服务接口的绑定。它具备可插拔的注解支持，包括Feign注解、JAX-RS注解。它也支持可插拔的编码器和解码器。Spring Cloud Feign还扩展了对Spring MVC注解的支持，<mark>同时还整合了Ribbon和Eureka来提供均衡负载的HTTP客户端实现。</mark></p>
@@ -575,7 +576,42 @@ server:
 	<span class="token punctuation">}</span>
 
 <span class="token punctuation">}</span>
-</pre>
+</pre><p>③：在服务消费者工程中创建一个Feign的客户端接口.</p>
+<blockquote>
+<p>FeClient.java</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@FeignClient</span><span class="token punctuation">(</span><span class="token string">"eureka-UserClient"</span><span class="token punctuation">)</span>       <span class="token comment" spellcheck="true">//该注解指明被调用的服务名称</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FeClient</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/sayhello"</span><span class="token punctuation">)</span>          <span class="token comment" spellcheck="true">//该注解指明被调用的服务的那个映射名称</span>
+    String <span class="token function">get_UserClient_sayhello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/springcloud_img/15.png" alt="15"></p>
+<p>④：修改Controller</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@RestController</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">adminController</span> <span class="token punctuation">{</span>
+	
+	<span class="token annotation punctuation">@Autowired</span>
+	FeClient fec<span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//获取该接口的实例化对象</span>
+   
+    <span class="token annotation punctuation">@RequestMapping</span><span class="token punctuation">(</span><span class="token string">"/Fegin_getUser"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> String <span class="token function">Fegin_getUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    	<span class="token keyword">return</span> fec<span class="token punctuation">.</span><span class="token function">get_UserClient_sayhello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     
+    	<span class="token comment" spellcheck="true">// 调用该接口的某个方法，相当与调用某个微服务节点的某个映射</span>
+    <span class="token punctuation">}</span>
+ 
+<span class="token punctuation">}</span>
+
+</pre><p>⑤：运行程序。<br>
+<img src="../img/springcloud_img/16.png" alt="16"><br>
+<img src="../img/springcloud_img/17.png" alt="17"></p>
+<p><mark>通过@FeignClient修饰的接口来统一需要进行调用的的微服务接口。而在具体使用的时候就跟调用本地方法一点的进行调用即可。由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能。</mark></p>
+
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#spring-cloud">Spring Cloud</a>
