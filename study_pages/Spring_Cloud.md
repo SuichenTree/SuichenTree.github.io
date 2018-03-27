@@ -485,3 +485,310 @@ public class adminController {
 
 
 ==通过@FeignClient修饰的接口来统一需要进行调用的的微服务接口。而在具体使用的时候就跟调用本地方法一点的进行调用即可。由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能。==
+
+
+---
+
+
+## 5.Spring Cloud Zuul 服务网关：
+
+Spring Cloud Zuul路由是微服务架构的不可或缺的一部分，提供动态路由，监控，弹性，安全等的边缘服务。Zuul是Netflix出品的一个基于JVM路由和服务端的负载均衡器。
+
+<h2>服务网关:</h2>
+
+> ==在微服务架构中，后端服务往往不直接开放给调用端，而是通过一个API网关根据请求的url，路由到相应的服务==。当添加API网关后，在第三方调用端和服务提供方之间就创建了一面墙，这面墙直接与调用方通信进行权限控制，后将请求均衡分发给后台服务端。
+
+![18](../img/springcloud_img/18.png)
+
+
+
+### 1.简单使用：
+
+①：创建子项目模块（Maven Module）添加依赖：
+```xml
+<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		<version>1.4.3.RELEASE</version>
+    </dependency> 
+    <!-- 这个依赖是把zuul，注册到注册中心区 -->
+    
+	<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-zuul</artifactId>
+		    <version>1.4.3.RELEASE</version>
+	</dependency>
+```
+
+
+②：添加配置文件：
+```
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/          
+spring:
+  application:
+    name: sc-zuul    
+    
+server:
+  port: 8769   
+  
+
+zuul:
+  routes:
+    api-userClient:    # api-userClient只是给路由一个名称，可以随便命名
+     path: /userClient/**      # path:表示拦截/userClient/下的所有请求. 
+     serviceId: eureka-Userclient   
+     # serviceId:表示服务的id名称（每个注册中心的服务节点都由一个serviceId,在不同的yml文件中写有）
+     
+     # 这里表示api-userClient 路由，当碰到/userClient/这个路径时，不管后面接上什么路径，
+     # 都会调转 访问到 eureka-Userclient 这个服务节点的路径 
+     # 直接说：访问/userClient/** 路径时，直接重定向到http://eureka-Userclient/**
+     
+  routes:
+    api-adminClient:    
+     path: /adminClient/**      
+     serviceId: eureka-Adminclient   
+
+```
+
+
+③：启动类：
+```java
+package org.sc.zuul;
+
+@SpringBootApplication
+@EnableZuulProxy       //开启zuul功能
+@EnableEurekaClient    //注册到注册中心
+public class startMain {
+	
+	public static void main(String[] args) {
+		SpringApplication.run(startMain.class, args);
+	}
+
+}
+```
+
+④：运行程序：
+![19](../img/springcloud_img/19.png)
+
+![20](../img/springcloud_img/20.png)
+
+
+
+### 2.zuul的过滤器功能：
+
+> 为了实现对客户端请求的安全校验和权限控制，最简单和粗暴的方法就是为每个微服务应用都实现一套用于校验签名和鉴别权限的过滤器或拦截器。
+
+>最好的方法是，==在网关中完成校验和过滤，微服务应用端就可以去除各种复杂的过滤器和拦截器了==，这使得微服务应用的接口开发和测试复杂度也得到了相应的降低。
+
+> 为了在API网关中实现对客户端请求的校验，我们将需要使用到Spring Cloud Zuul的另外一个核心功能：==过滤器==。
+
+
+> Zuul允许开发者在API网关上通过定义过滤器来实现对请求的拦截与过滤，实现的方法非常简单，我们只==需要继承ZuulFilter抽象类并实现它定义的四个抽象函数就可以完成对请求的拦截和过滤了==。
+
+
+
+<font color="red">Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR”</font>
+![21](../img/springcloud_img/21.png)
+
+![22](../img/springcloud_img/22.png)
+
+
+<h2>PS:</h2>
+禁用指定的Filter
+
+可以在application.yml中配置需要禁用的filter，格式：
+```
+zuul:
+	FormBodyWrapperFilter:   # 过滤器名字
+		pre:                 # 过滤器类型 pre 为前置过滤器。
+			disable: true
+```
+
+
+<h2>DEMO(pre，前置过滤器的例子):</h2>
+
+> 定义了一个简单的Zuul过滤器，它实现了==在请求被路由之前==检查HttpServletRequest中是否有accessToken参数，若有就进行路由，若没有就拒绝访问，返回401 Unauthorized错误。
+
+①：编写过滤器类：
+```java
+package org.sc.zuul;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
+import com.netflix.zuul.exception.ZuulException;
+
+public class AccessFilter extends ZuulFilter {
+
+	@Override
+    public String filterType() {
+        return "pre";   //设置filter的类型，有pre、route、post、error四种，pre表示前置过滤器，会在请求被路由之前执行。
+    }
+
+    @Override
+    public int filterOrder() {
+        return 0;      //定义filter的优先级，数字越小表示优先级越高，越先执行。
+                       //当请求在一个阶段中存在多个过滤器时，需要根据该方法返回的值来依次执行
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true;    //表示是否需要执行该filter，true表示执行，false表示不执行
+    }
+
+    @Override
+    public Object run() {
+        RequestContext ctx = RequestContext.getCurrentContext();  //获取当前上下文内容
+        HttpServletRequest request = ctx.getRequest();            //获取上下文的请求内容
+
+        Object accessToken = request.getParameter("token");  //获取请求的token
+        if(accessToken == null) {
+        	System.out.println("access token is empty");
+            ctx.setSendZuulResponse(false);                  //令zuul过滤该请求，不对其进行路由
+            ctx.setResponseStatusCode(401);                  //设置了其返回的错误码
+                 //也可以通过ctx.setResponseBody(body)对返回body内容进行编辑。
+            
+            return null;
+        }
+        System.out.println("access token is ok"+accessToken);
+        return null;
+    }
+
+}
+
+```
+
+
+②：把过滤器类注入到容器中(可以写在启动类上)：
+```java
+	@Bean  
+    public AccessFilter accessFilter() {   //把过滤器类注入到容器中
+        return new AccessFilter(); 
+    }
+	
+```
+
+
+③：运行程序：
+![23](../img/springcloud_img/23.png)
+![24](../img/springcloud_img/24.png)
+
+
+![25](../img/springcloud_img/25.png)
+![26](../img/springcloud_img/26.png)
+
+
+<br/>
+
+==ps:此外可以根据自己的需要在服务网关上定义一些与业务无关的通用逻辑实现对请求的过滤和拦截，比如：签名校验、权限校验、请求限流等功能。==
+
+
+### 3.其他过滤器样例（与上面的demo相同）：
+
+> 第二个前置过滤器 SecondFilter：
+```java
+public class SecondFilter extends ZuulFilter {  
+  
+    @Override  
+    public String filterType() {  
+        //前置过滤器  
+        return "pre";  
+    }  
+  
+    @Override  
+    public int filterOrder() {  
+        //优先级，数字越大，优先级越低  
+        return 1;  
+    }  
+  
+    @Override  
+    public boolean shouldFilter() {  
+        //是否执行该过滤器，true代表需要过滤  
+        return true;  
+    }  
+  
+    @Override  
+    public Object run() {  
+        RequestContext ctx = RequestContext.getCurrentContext();  
+        HttpServletRequest request = ctx.getRequest();  
+
+        System.out.println("second过滤器");
+        return null;  
+  
+    }  
+  
+}  
+```
+
+
+> 后置过滤器 PostFilter:
+```java
+public class PostFilter extends ZuulFilter {  
+  
+    @Override  
+    public String filterType() {  
+        return "post";  
+    }  
+  
+    @Override  
+    public int filterOrder() {  
+        return 0;  
+    }  
+  
+    @Override  
+    public boolean shouldFilter() {  
+        return true;  
+    }  
+  
+    @Override  
+    public Object run() {  
+        RequestContext ctx = RequestContext.getCurrentContext();  
+        System.out.println("进行 后置过滤器 PostFilter----");
+        System.out.println(ctx.getResponseBody());  
+  
+        ctx.setResponseBody("post后置数据 ------");  
+        return null;  
+  
+    }  
+  
+}  
+```
+
+
+> 异常(错误)过滤器
+```java
+public class ErrorFilter extends ZuulFilter {  
+
+    @Override  
+    public String filterType() {  
+        return "error";  
+    }  
+  
+    @Override  
+    public int filterOrder() {  
+        return 0;  
+    }  
+  
+    @Override  
+    public boolean shouldFilter() {  
+        return true;  
+    }  
+  
+    @Override  
+    public Object run() {  
+        RequestContext ctx = RequestContext.getCurrentContext();  
+  
+        System.out.println("进行 异常过滤器 ErrorFilter----"); 
+        System.out.println(ctx.getResponseBody());  
+  
+        int i = 1 / 0; 
+        ctx.setResponseBody("出现异常");  
+        return null;  
+    }  
+  
+}  
+```

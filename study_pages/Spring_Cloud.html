@@ -231,6 +231,13 @@ code.language-yaml {
 </ul>
 </li>
 <li><a href="#4spring-cloud-feign-%E5%AF%B9eureka-client%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">4.Spring Cloud Feign 对eureka-client服务的定义和调用：</a></li>
+<li><a href="#5spring-cloud-zuul-%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3">5.Spring Cloud Zuul 服务网关：</a>
+<ul>
+<li><a href="#1%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">1.简单使用：</a></li>
+<li><a href="#2zuul%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8A%9F%E8%83%BD">2.zuul的过滤器功能：</a></li>
+<li><a href="#3%E5%85%B6%E4%BB%96%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%B7%E4%BE%8B%E4%B8%8E%E4%B8%8A%E9%9D%A2%E7%9A%84demo%E7%9B%B8%E5%90%8C">3.其他过滤器样例（与上面的demo相同）：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -611,7 +618,265 @@ server:
 <img src="../img/springcloud_img/16.png" alt="16"><br>
 <img src="../img/springcloud_img/17.png" alt="17"></p>
 <p><mark>通过@FeignClient修饰的接口来统一需要进行调用的的微服务接口。而在具体使用的时候就跟调用本地方法一点的进行调用即可。由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能。</mark></p>
+<hr>
+<h2 class="mume-header" id="5spring-cloud-zuul-%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3">5.Spring Cloud Zuul 服务网关：</h2>
 
+<p>Spring Cloud Zuul路由是微服务架构的不可或缺的一部分，提供动态路由，监控，弹性，安全等的边缘服务。Zuul是Netflix出品的一个基于JVM路由和服务端的负载均衡器。</p>
+<h2>服务网关:</h2>
+<blockquote>
+<p><mark>在微服务架构中，后端服务往往不直接开放给调用端，而是通过一个API网关根据请求的url，路由到相应的服务</mark>。当添加API网关后，在第三方调用端和服务提供方之间就创建了一面墙，这面墙直接与调用方通信进行权限控制，后将请求均衡分发给后台服务端。</p>
+</blockquote>
+<p><img src="../img/springcloud_img/18.png" alt="18"></p>
+<h3 class="mume-header" id="1%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">1.简单使用：</h3>
+
+<p>①：创建子项目模块（Maven Module）添加依赖：</p>
+<pre data-role="codeBlock" data-info="xml" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-eureka-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.4.3.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span> 
+    <span class="token comment" spellcheck="true">&lt;!-- 这个依赖是把zuul，注册到注册中心区 --></span>
+    
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-zuul<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+		    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.4.3.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</pre><p>②：添加配置文件：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/          
+spring:
+  application:
+    name: sc-zuul    
+    
+server:
+  port: 8769   
+  
+
+zuul:
+  routes:
+    api-userClient:    # api-userClient&#x53EA;&#x662F;&#x7ED9;&#x8DEF;&#x7531;&#x4E00;&#x4E2A;&#x540D;&#x79F0;&#xFF0C;&#x53EF;&#x4EE5;&#x968F;&#x4FBF;&#x547D;&#x540D;
+     path: /userClient/**      # path:&#x8868;&#x793A;&#x62E6;&#x622A;/userClient/&#x4E0B;&#x7684;&#x6240;&#x6709;&#x8BF7;&#x6C42;. 
+     serviceId: eureka-Userclient   
+     # serviceId:&#x8868;&#x793A;&#x670D;&#x52A1;&#x7684;id&#x540D;&#x79F0;&#xFF08;&#x6BCF;&#x4E2A;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x7684;&#x670D;&#x52A1;&#x8282;&#x70B9;&#x90FD;&#x7531;&#x4E00;&#x4E2A;serviceId,&#x5728;&#x4E0D;&#x540C;&#x7684;yml&#x6587;&#x4EF6;&#x4E2D;&#x5199;&#x6709;&#xFF09;
+     
+     # &#x8FD9;&#x91CC;&#x8868;&#x793A;api-userClient &#x8DEF;&#x7531;&#xFF0C;&#x5F53;&#x78B0;&#x5230;/userClient/&#x8FD9;&#x4E2A;&#x8DEF;&#x5F84;&#x65F6;&#xFF0C;&#x4E0D;&#x7BA1;&#x540E;&#x9762;&#x63A5;&#x4E0A;&#x4EC0;&#x4E48;&#x8DEF;&#x5F84;&#xFF0C;
+     # &#x90FD;&#x4F1A;&#x8C03;&#x8F6C; &#x8BBF;&#x95EE;&#x5230; eureka-Userclient &#x8FD9;&#x4E2A;&#x670D;&#x52A1;&#x8282;&#x70B9;&#x7684;&#x8DEF;&#x5F84; 
+     # &#x76F4;&#x63A5;&#x8BF4;&#xFF1A;&#x8BBF;&#x95EE;/userClient/** &#x8DEF;&#x5F84;&#x65F6;&#xFF0C;&#x76F4;&#x63A5;&#x91CD;&#x5B9A;&#x5411;&#x5230;http://eureka-Userclient/**
+     
+  routes:
+    api-adminClient:    
+     path: /adminClient/**      
+     serviceId: eureka-Adminclient   
+
+</code></pre><p>③：启动类：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>sc<span class="token punctuation">.</span>zuul<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableZuulProxy</span>       <span class="token comment" spellcheck="true">//开启zuul功能</span>
+<span class="token annotation punctuation">@EnableEurekaClient</span>    <span class="token comment" spellcheck="true">//注册到注册中心</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">startMain</span> <span class="token punctuation">{</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>startMain<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</pre><p>④：运行程序：<br>
+<img src="../img/springcloud_img/19.png" alt="19"></p>
+<p><img src="../img/springcloud_img/20.png" alt="20"></p>
+<h3 class="mume-header" id="2zuul%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8A%9F%E8%83%BD">2.zuul的过滤器功能：</h3>
+
+<blockquote>
+<p>为了实现对客户端请求的安全校验和权限控制，最简单和粗暴的方法就是为每个微服务应用都实现一套用于校验签名和鉴别权限的过滤器或拦截器。</p>
+</blockquote>
+<blockquote>
+<p>最好的方法是，<mark>在网关中完成校验和过滤，微服务应用端就可以去除各种复杂的过滤器和拦截器了</mark>，这使得微服务应用的接口开发和测试复杂度也得到了相应的降低。</p>
+</blockquote>
+<blockquote>
+<p>为了在API网关中实现对客户端请求的校验，我们将需要使用到Spring Cloud Zuul的另外一个核心功能：<mark>过滤器</mark>。</p>
+</blockquote>
+<blockquote>
+<p>Zuul允许开发者在API网关上通过定义过滤器来实现对请求的拦截与过滤，实现的方法非常简单，我们只<mark>需要继承ZuulFilter抽象类并实现它定义的四个抽象函数就可以完成对请求的拦截和过滤了</mark>。</p>
+</blockquote>
+<p><font color="red">Filter是Zuul的核心，用来实现对外服务的控制。Filter的生命周期有4个，分别是“PRE”、“ROUTING”、“POST”、“ERROR”</font><br>
+<img src="../img/springcloud_img/21.png" alt="21"></p>
+<p><img src="../img/springcloud_img/22.png" alt="22"></p>
+<h2>PS:</h2>
+禁用指定的Filter
+<p>可以在application.yml中配置需要禁用的filter，格式：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>zuul:
+	FormBodyWrapperFilter:   # &#x8FC7;&#x6EE4;&#x5668;&#x540D;&#x5B57;
+		pre:                 # &#x8FC7;&#x6EE4;&#x5668;&#x7C7B;&#x578B; pre &#x4E3A;&#x524D;&#x7F6E;&#x8FC7;&#x6EE4;&#x5668;&#x3002;
+			disable: true
+</code></pre><h2>DEMO(pre，前置过滤器的例子):</h2>
+<blockquote>
+<p>定义了一个简单的Zuul过滤器，它实现了<mark>在请求被路由之前</mark>检查HttpServletRequest中是否有accessToken参数，若有就进行路由，若没有就拒绝访问，返回401 Unauthorized错误。</p>
+</blockquote>
+<p>①：编写过滤器类：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>sc<span class="token punctuation">.</span>zuul<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span>HttpServletRequest<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>netflix<span class="token punctuation">.</span>zuul<span class="token punctuation">.</span>ZuulFilter<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>netflix<span class="token punctuation">.</span>zuul<span class="token punctuation">.</span>context<span class="token punctuation">.</span>RequestContext<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>netflix<span class="token punctuation">.</span>zuul<span class="token punctuation">.</span>exception<span class="token punctuation">.</span>ZuulException<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AccessFilter</span> <span class="token keyword">extends</span> <span class="token class-name">ZuulFilter</span> <span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">filterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"pre"</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//设置filter的类型，有pre、route、post、error四种，pre表示前置过滤器，会在请求被路由之前执行。</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">filterOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//定义filter的优先级，数字越小表示优先级越高，越先执行。</span>
+                       <span class="token comment" spellcheck="true">//当请求在一个阶段中存在多个过滤器时，需要根据该方法返回的值来依次执行</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">shouldFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//表示是否需要执行该filter，true表示执行，false表示不执行</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Object <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        RequestContext ctx <span class="token operator">=</span> RequestContext<span class="token punctuation">.</span><span class="token function">getCurrentContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//获取当前上下文内容</span>
+        HttpServletRequest request <span class="token operator">=</span> ctx<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//获取上下文的请求内容</span>
+
+        Object accessToken <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"token"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//获取请求的token</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>accessToken <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        	System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"access token is empty"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            ctx<span class="token punctuation">.</span><span class="token function">setSendZuulResponse</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//令zuul过滤该请求，不对其进行路由</span>
+            ctx<span class="token punctuation">.</span><span class="token function">setResponseStatusCode</span><span class="token punctuation">(</span><span class="token number">401</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment" spellcheck="true">//设置了其返回的错误码</span>
+                 <span class="token comment" spellcheck="true">//也可以通过ctx.setResponseBody(body)对返回body内容进行编辑。</span>
+            
+            <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"access token is ok"</span><span class="token operator">+</span>accessToken<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+</pre><p>②：把过滤器类注入到容器中(可以写在启动类上)：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java">	<span class="token annotation punctuation">@Bean</span>  
+    <span class="token keyword">public</span> AccessFilter <span class="token function">accessFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//把过滤器类注入到容器中</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">AccessFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span>
+	
+</pre><p>③：运行程序：<br>
+<img src="../img/springcloud_img/23.png" alt="23"><br>
+<img src="../img/springcloud_img/24.png" alt="24"></p>
+<p><img src="../img/springcloud_img/25.png" alt="25"><br>
+<img src="../img/springcloud_img/26.png" alt="26"></p>
+<br>
+<p><mark>ps:此外可以根据自己的需要在服务网关上定义一些与业务无关的通用逻辑实现对请求的过滤和拦截，比如：签名校验、权限校验、请求限流等功能。</mark></p>
+<h3 class="mume-header" id="3%E5%85%B6%E4%BB%96%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%B7%E4%BE%8B%E4%B8%8E%E4%B8%8A%E9%9D%A2%E7%9A%84demo%E7%9B%B8%E5%90%8C">3.其他过滤器样例（与上面的demo相同）：</h3>
+
+<blockquote>
+<p>第二个前置过滤器 SecondFilter：</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SecondFilter</span> <span class="token keyword">extends</span> <span class="token class-name">ZuulFilter</span> <span class="token punctuation">{</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> String <span class="token function">filterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment" spellcheck="true">//前置过滤器  </span>
+        <span class="token keyword">return</span> <span class="token string">"pre"</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">filterOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment" spellcheck="true">//优先级，数字越大，优先级越低  </span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">shouldFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment" spellcheck="true">//是否执行该过滤器，true代表需要过滤  </span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> Object <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        RequestContext ctx <span class="token operator">=</span> RequestContext<span class="token punctuation">.</span><span class="token function">getCurrentContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        HttpServletRequest request <span class="token operator">=</span> ctx<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"second过滤器"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>  
+  
+    <span class="token punctuation">}</span>  
+  
+<span class="token punctuation">}</span>  
+</pre><blockquote>
+<p>后置过滤器 PostFilter:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PostFilter</span> <span class="token keyword">extends</span> <span class="token class-name">ZuulFilter</span> <span class="token punctuation">{</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> String <span class="token function">filterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> <span class="token string">"post"</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">filterOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">shouldFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> Object <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        RequestContext ctx <span class="token operator">=</span> RequestContext<span class="token punctuation">.</span><span class="token function">getCurrentContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"进行 后置过滤器 PostFilter----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ctx<span class="token punctuation">.</span><span class="token function">getResponseBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+        ctx<span class="token punctuation">.</span><span class="token function">setResponseBody</span><span class="token punctuation">(</span><span class="token string">"post后置数据 ------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>  
+  
+    <span class="token punctuation">}</span>  
+  
+<span class="token punctuation">}</span>  
+</pre><blockquote>
+<p>异常(错误)过滤器</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ErrorFilter</span> <span class="token keyword">extends</span> <span class="token class-name">ZuulFilter</span> <span class="token punctuation">{</span>  
+
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> String <span class="token function">filterType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> <span class="token string">"error"</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">filterOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">shouldFilter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+    <span class="token annotation punctuation">@Override</span>  
+    <span class="token keyword">public</span> Object <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        RequestContext ctx <span class="token operator">=</span> RequestContext<span class="token punctuation">.</span><span class="token function">getCurrentContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"进行 异常过滤器 ErrorFilter----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ctx<span class="token punctuation">.</span><span class="token function">getResponseBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+  
+        <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">/</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+        ctx<span class="token punctuation">.</span><span class="token function">setResponseBody</span><span class="token punctuation">(</span><span class="token string">"出现异常"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+  
+<span class="token punctuation">}</span>  
+</pre>
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#spring-cloud">Spring Cloud</a>
@@ -632,6 +897,13 @@ server:
 </ul>
 </li>
 <li><a href="#4spring-cloud-feign-%E5%AF%B9eureka-client%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E8%B0%83%E7%94%A8">4.Spring Cloud Feign 对eureka-client服务的定义和调用：</a></li>
+<li><a href="#5spring-cloud-zuul-%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3">5.Spring Cloud Zuul 服务网关：</a>
+<ul>
+<li><a href="#1%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">1.简单使用：</a></li>
+<li><a href="#2zuul%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8A%9F%E8%83%BD">2.zuul的过滤器功能：</a></li>
+<li><a href="#3%E5%85%B6%E4%BB%96%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%B7%E4%BE%8B%E4%B8%8E%E4%B8%8A%E9%9D%A2%E7%9A%84demo%E7%9B%B8%E5%90%8C">3.其他过滤器样例（与上面的demo相同）：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
