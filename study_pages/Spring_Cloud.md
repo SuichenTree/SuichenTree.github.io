@@ -792,3 +792,87 @@ public class ErrorFilter extends ZuulFilter {
   
 }  
 ```
+
+
+## 6. Spring Cloud Hystrix
+
+推荐链接：[纯洁的微笑-Spring Cloud Hystrix](http://www.ityouknow.com/springcloud/2017/05/16/springcloud-hystrix.html)
+
+
+==在微服务架构中通常会有多个服务层互相调用，基础服务的故障可能会导致其他服务的故障，进而造成整个系统不可用的情况，这种现象被称为服务雪崩效应。==
+
+
+<h2>雪崩效应:</h2>
+
+![27](../img/springcloud_img/27.png)
+
+
+<h2>Hystrix特性</h2>
+
+> 1.断路器机制
+ Hystrix的断路器就像我们家庭电路中的保险丝, 一旦后端服务(==服务生产者==)不可用, 断路器会直接切断请求链, 避免发送大量无效请求影响系统吞吐量, 并且断路器有自我检测并恢复的能力.
+
+> 2.Fallback
+Fallback相当于是降级操作. 对于查询操作, 我们可以实现一个fallback方法, 当请求后端服务出现异常的时候, 可以使用fallback方法返回的值. fallback方法的返回值一般是设置的默认值或者来自缓存.
+
+
+
+### 1.在Feign中使用Hystrix断路器机制(对4中的fegin使用的eureka-AdminClient项目为基础)：
+
+<h3><font color="red">Feign是自带Hystrix断路器的。</red></h3>
+
+①：在application.yml 中添加以下：
+```
+feign:
+   hystrix:
+     enabled: true     #Feign中已经依赖了Hystrix,只需要开启断路器
+```
+
+
+②：编写当服务生产者不可用时的回调方法：
+```java
+package org.eureka.AdminClient.Controller;
+
+@Component
+public class adminHystrix implements FeClient {
+
+	@Override
+	public String get_UserClient_sayhello() {
+		return "this is method shibai ";
+	}
+
+}
+
+```
+
+![28](../img/springcloud_img/28.png)
+
+
+③：在Fegin服务调用接口中添加fallback属性：
+```java
+package org.eureka.AdminClient.Controller;
+
+@FeignClient(name="eureka-UserClient",fallback = adminHystrix.class)  
+public interface FeClient {
+
+    @GetMapping(value="/sayhello")          //该注解指明被调用的服务的那个映射名称
+    String get_UserClient_sayhello();
+
+}
+
+```
+
+![29](../img/springcloud_img/29.png)
+
+
+
+④：运行程序，测试：
+
+![30](../img/springcloud_img/30.png)
+![31](../img/springcloud_img/31.png)
+
+
+
+### 2. Hystrix Dashboard(Hystrix 仪表盘)：
+
+待续；

@@ -238,6 +238,12 @@ code.language-yaml {
 <li><a href="#3%E5%85%B6%E4%BB%96%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%B7%E4%BE%8B%E4%B8%8E%E4%B8%8A%E9%9D%A2%E7%9A%84demo%E7%9B%B8%E5%90%8C">3.其他过滤器样例（与上面的demo相同）：</a></li>
 </ul>
 </li>
+<li><a href="#6-spring-cloud-hystrix">6. Spring Cloud Hystrix</a>
+<ul>
+<li><a href="#1%E5%9C%A8feign%E4%B8%AD%E4%BD%BF%E7%94%A8hystrix%E6%96%AD%E8%B7%AF%E5%99%A8%E6%9C%BA%E5%88%B6%E5%AF%B94%E4%B8%AD%E7%9A%84fegin%E4%BD%BF%E7%94%A8%E7%9A%84eureka-adminclient%E9%A1%B9%E7%9B%AE%E4%B8%BA%E5%9F%BA%E7%A1%80">1.在Feign中使用Hystrix断路器机制(对4中的fegin使用的eureka-AdminClient项目为基础)：</a></li>
+<li><a href="#2-hystrix-dashboardhystrix-%E4%BB%AA%E8%A1%A8%E7%9B%98">2. Hystrix Dashboard(Hystrix 仪表盘)：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -876,7 +882,61 @@ zuul:
     <span class="token punctuation">}</span>  
   
 <span class="token punctuation">}</span>  
-</pre>
+</pre><h2 class="mume-header" id="6-spring-cloud-hystrix">6. Spring Cloud Hystrix</h2>
+
+<p>推荐链接：<a href="http://www.ityouknow.com/springcloud/2017/05/16/springcloud-hystrix.html">纯洁的微笑-Spring Cloud Hystrix</a></p>
+<p><mark>在微服务架构中通常会有多个服务层互相调用，基础服务的故障可能会导致其他服务的故障，进而造成整个系统不可用的情况，这种现象被称为服务雪崩效应。</mark></p>
+<h2>雪崩效应:</h2>
+<p><img src="../img/springcloud_img/27.png" alt="27"></p>
+<h2>Hystrix特性</h2>
+<blockquote>
+<p>1.断路器机制<br>
+Hystrix的断路器就像我们家庭电路中的保险丝, 一旦后端服务(<mark>服务生产者</mark>)不可用, 断路器会直接切断请求链, 避免发送大量无效请求影响系统吞吐量, 并且断路器有自我检测并恢复的能力.</p>
+</blockquote>
+<blockquote>
+<p>2.Fallback<br>
+Fallback相当于是降级操作. 对于查询操作, 我们可以实现一个fallback方法, 当请求后端服务出现异常的时候, 可以使用fallback方法返回的值. fallback方法的返回值一般是设置的默认值或者来自缓存.</p>
+</blockquote>
+<h3 class="mume-header" id="1%E5%9C%A8feign%E4%B8%AD%E4%BD%BF%E7%94%A8hystrix%E6%96%AD%E8%B7%AF%E5%99%A8%E6%9C%BA%E5%88%B6%E5%AF%B94%E4%B8%AD%E7%9A%84fegin%E4%BD%BF%E7%94%A8%E7%9A%84eureka-adminclient%E9%A1%B9%E7%9B%AE%E4%B8%BA%E5%9F%BA%E7%A1%80">1.在Feign中使用Hystrix断路器机制(对4中的fegin使用的eureka-AdminClient项目为基础)：</h3>
+
+<h3><font color="red">Feign是自带Hystrix断路器的。</font></h3>
+<p>①：在application.yml 中添加以下：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>feign:
+   hystrix:
+     enabled: true     #Feign&#x4E2D;&#x5DF2;&#x7ECF;&#x4F9D;&#x8D56;&#x4E86;Hystrix,&#x53EA;&#x9700;&#x8981;&#x5F00;&#x542F;&#x65AD;&#x8DEF;&#x5668;
+</code></pre><p>②：编写当服务生产者不可用时的回调方法：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">adminHystrix</span> <span class="token keyword">implements</span> <span class="token class-name">FeClient</span> <span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">get_UserClient_sayhello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"this is method shibai "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+</pre><p><img src="../img/springcloud_img/28.png" alt="28"></p>
+<p>③：在Fegin服务调用接口中添加fallback属性：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> org<span class="token punctuation">.</span>eureka<span class="token punctuation">.</span>AdminClient<span class="token punctuation">.</span>Controller<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@FeignClient</span><span class="token punctuation">(</span>name<span class="token operator">=</span><span class="token string">"eureka-UserClient"</span><span class="token punctuation">,</span>fallback <span class="token operator">=</span> adminHystrix<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>  
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">FeClient</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span>value<span class="token operator">=</span><span class="token string">"/sayhello"</span><span class="token punctuation">)</span>          <span class="token comment" spellcheck="true">//该注解指明被调用的服务的那个映射名称</span>
+    String <span class="token function">get_UserClient_sayhello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+</pre><p><img src="../img/springcloud_img/29.png" alt="29"></p>
+<p>④：运行程序，测试：</p>
+<p><img src="../img/springcloud_img/30.png" alt="30"><br>
+<img src="../img/springcloud_img/31.png" alt="31"></p>
+<h3 class="mume-header" id="2-hystrix-dashboardhystrix-%E4%BB%AA%E8%A1%A8%E7%9B%98">2. Hystrix Dashboard(Hystrix 仪表盘)：</h3>
+
+<p>待续；</p>
+
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#spring-cloud">Spring Cloud</a>
@@ -902,6 +962,12 @@ zuul:
 <li><a href="#1%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8">1.简单使用：</a></li>
 <li><a href="#2zuul%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8A%9F%E8%83%BD">2.zuul的过滤器功能：</a></li>
 <li><a href="#3%E5%85%B6%E4%BB%96%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%B7%E4%BE%8B%E4%B8%8E%E4%B8%8A%E9%9D%A2%E7%9A%84demo%E7%9B%B8%E5%90%8C">3.其他过滤器样例（与上面的demo相同）：</a></li>
+</ul>
+</li>
+<li><a href="#6-spring-cloud-hystrix">6. Spring Cloud Hystrix</a>
+<ul>
+<li><a href="#1%E5%9C%A8feign%E4%B8%AD%E4%BD%BF%E7%94%A8hystrix%E6%96%AD%E8%B7%AF%E5%99%A8%E6%9C%BA%E5%88%B6%E5%AF%B94%E4%B8%AD%E7%9A%84fegin%E4%BD%BF%E7%94%A8%E7%9A%84eureka-adminclient%E9%A1%B9%E7%9B%AE%E4%B8%BA%E5%9F%BA%E7%A1%80">1.在Feign中使用Hystrix断路器机制(对4中的fegin使用的eureka-AdminClient项目为基础)：</a></li>
+<li><a href="#2-hystrix-dashboardhystrix-%E4%BB%AA%E8%A1%A8%E7%9B%98">2. Hystrix Dashboard(Hystrix 仪表盘)：</a></li>
 </ul>
 </li>
 </ul>
