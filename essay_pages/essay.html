@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Essay.html</title>
+    
+    <link rel="stylesheet" href="../css/uikit.min.css" />
+    <script src="../jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+    <script>
+
+        //加载不同类的文章目录
+        function ajaxcatalog(obj) {
+            $("#loadajax").load("./" + obj + ".html");
+        }
+
+    </script>
+
+
+    <style>
+        .mb a{border:1px solid gray;}   /*作用使class="md"元素下的所有<a>标签中border*/
+    
+    </style>    
+</head>
+
+<body>
+
+
+     <!--导航栏-->
+     <nav class="uk-navbar" style="margin-bottom:20px;padding-top:10px;padding-bottom:10px;">
+            <a class="uk-navbar-brand" href="../index.html" style="margin-left:40px;"><i class="uk-icon-user"></i>SuiChenTree's Blog</a>
+    
+            <!--导航栏左侧-->
+            <ul class="uk-navbar-nav">
+                <li class="uk-parent" data-uk-dropdown="">
+                    <a href="../study_pages/study.html"><i class="uk-icon-pencil"></i>Study</a>
+                </li>
+    
+                <li class="uk-parent" data-uk-dropdown="">
+                    <a href="../essay_pages/essay.html"><i class="uk-icon-file"></i>Essay</a>
+                    <div class="uk-dropdown uk-dropdown-navbar">
+                        <ul class="uk-nav uk-nav-navbar">
+                            <li class="uk-nav-header">FontEnd</li>
+                            <li><a href="#">html5</a></li>
+                            <li><a href="#">Another </a></li>
+                            <li class="uk-nav-header">BackEnd</li>
+                            <li><a href="#">java</a></li>
+                            <li><a href="#">Another java</a></li>
+                            <li class="uk-nav-divider"></li>
+                            <li><a href="#">other</a></li>
+                        </ul>
+                    </div>
+                </li>
+    
+            </ul>
+    
+            <!--导航栏右侧-->
+            <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav">
+                        <!--data-uk-dropdown="{pos:'bottom-right'}" 下拉菜单的内容右对齐-->
+                        <li class="uk-parent" data-uk-dropdown="{pos:'bottom-right'}">
+                            <a class="uk-button" href="#"><i class="uk-icon-link"></i>Link</a>
+                            <div class="uk-dropdown uk-dropdown-navbar">
+                                     <ul class="uk-nav uk-nav-navbar">
+                                        <li><a href="http://www.runoob.com/" target="_blank">菜鸟教程</a></li>
+                                        <li><a href="https://www.w3cschool.cn/" target="_blank">Bootstrap</a></li>
+                                        <li><a href="http://fontawesome.dashgame.com/" target="_blank" >Font Awesome图标库</a></li>
+                                        <li><a href="https://www.liaoxuefeng.com/" target="_blank">廖雪峰的官方网站</a></li>
+                                    </ul>
+                            </div>
+                        </li>
+                    </ul>
+            </div>
+        </nav>
+
+
+<!--面板组-->
+<div class="uk-grid uk-grid-small">
+
+        <!--面板组左侧内容-->
+        <!--
+                uk-border-rounded : 把元素的边框变为圆角形式。
+                md ：该类选择器，作用使class="md"元素下的所有<a>标签中border
+        -->
+        <div class="uk-width-medium-2-10 mb" style="padding-left:20px;">
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajaxcatalog('java_catalog')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Java</h3>
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajaxcatalog('mysql_catalog')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Data Base</h3>
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxcatalog('javaWeb_catalog')">
+                <h3 class="uk-panel-title uk-panel-box-hover" >Java WEB</h3>
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxcatalog('FrontEnd_catalog')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Front End</h3>
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxcatalog('other_catalog')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Other</h3>
+            </a>
+        </div>
+
+
+        <!--面板组右侧内容-->
+        <div class="uk-width-medium-8-10 uk-border-rounded">
+                <div class="uk-grid uk-grid-small">
+                    <div class="uk-width-medium-1-1 mb" style="padding-left:20px;padding-right:20px;" id="loadajax">
+                        <!--ajax 加载 随笔分类文章目录-->
+                            <div class="uk-border-rounded" style="border:1px solid #1a1a1a;padding: 15px;">                               
+                               <h2>
+                                    <strong> Welcome to read SuiChenTree's Blog \ Essay</strong>
+                                </h2>
+                                <br/>
+                                <h4>
+                                    <strong>CreateDATE：2017/11/29</strong>
+                                </h4>
+                                <br/>
+                                <h4>
+                                    <strong>随笔:</strong>
+                                    <span style="color:red">是记下平时生活中，零散的小知识，没有写在 Study 中的一些知识 或者 解决的一些问题。</span>
+                                </h4>
+                                <br/>
+                            </div> 
+                    </div>
+                </div>
+        </div>
+</div>
+   
+</body>
+
+</html>

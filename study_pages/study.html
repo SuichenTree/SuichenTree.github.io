@@ -1,160 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="../jq/jquery.js"></script>
-    <script type="text/javascript" src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <link rel="stylesheet"  href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
+    <title>Study.html</title>
+
+    <link rel="stylesheet" href="../css/uikit.min.css" />
+    <script src="../jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+
     <!--返回顶部 外部css，js样式-->
     <link rel="stylesheet" href="./css/Go_top.css">
     <script type="text/javascript" src="./js/Go_top.js"></script>
-    <title>SuiChenTree-Study</title>
+
+    <script>
+        
+        //加载技术文档
+        function ajax_study(obj){
+            $("#loadajax").load("./"+obj+".html");
+        }
+
+    </script>
+
     <style>
-        /* footer{
-            height:100px;
-            background-color: #eee;
-            bottom: 0;
-            width:100%;
-        } */
+        .mb a{border:1px solid gray;}   /*作用使class="md"元素下的所有<a>标签中border*/
     
     </style>
-    <script>
-      
-        function ajaxload(obj){
-            $("#loadajax").load(obj+".html");
-           
-        }
-    
-    </script>
 </head>
 <body>
-
-    <!--回到顶部按钮-->
+      <!--回到顶部按钮-->
     <div class="go-top">
         <div class="arrow"></div>
         <div class="stick"></div>
     </div>
 
+   <!--导航栏-->
+   <nav class="uk-navbar" style="margin-bottom:20px;padding-top:10px;padding-bottom:10px;">
+        <a class="uk-navbar-brand" href="../index.html" style="margin-left:40px;"><i class="uk-icon-user"></i>SuiChenTree's Blog</a>
 
-<!--导航栏-->
-   <nav class="navbar navbar-default navbar-static-top">
-    <div class="container-fluid">
-    
-    <!--
-        这段代码作用是： 当页面在手机上呈现时，导航栏的链接，会合并在一起。否则链接便无法呈现在手机上
-    -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="../index.html"><i class="fa fa-user fa-1x"></i>&nbsp;<strong>SuiChenTree's blog</strong></a>
-    </div>
-  
-  
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            <li><a href="../study_pages/study.html">Study</a></li>
-            <li><a href="../essay_pages/main.html">Essay</a></li>
-        
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MORE <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Developer : SuiChenTree</a></li>
-                <li><a href="#">Create Time : 2017/11/9/ ~ NOW</a></li>
-                <li><a href="#">READ MORE</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-</nav>
+        <!--导航栏左侧-->
+        <ul class="uk-navbar-nav">
+            <li class="uk-parent" data-uk-dropdown="">
+                <a href=""><i class="uk-icon-pencil"></i>Study</a>
+            </li>
 
-<!--网上教程链接-->
-<div class="container-fluid" style="margin-bottom:20px;">
- 
-        <div class="col-xs-12 col-md-10">
-        <ul class="list-inline"><strong>友情推荐：</strong>
-            <li><a href="http://www.runoob.com/" target="_blank">菜鸟教程</a></li>
-            <li><a href="https://www.w3cschool.cn/" target="_blank">W3SCHOOL</a></li>
-            <li><a href="http://v3.bootcss.com/" target="_blank">Bootstrap文档</a></li>
-            <li><a href="http://fontawesome.dashgame.com/" target="_blank">Font Awesome图标库</a></li>
-            <li><a href="https://www.liaoxuefeng.com/" target="_blank">廖雪峰的官方网站</a></li>
-        </ul>
-        </div>
-</div>
-
-<!--页面主体--> <!--  <div class="container-fluid" style="margin-left: 50px; margin-right: 100px;">  -->
-<div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 col-md-3">
-                <div class="list-group">
-                    <a href="#" class="list-group-item" onclick="ajaxload('javaweb')">
-                                <h4 class="list-group-item-heading">JavaWeb</h4>
-                                <p class="list-group-item-text">是用Java技术来解决相关web互联网领域的技术总和.</p>
-                    </a>
-                    <a href="#" class="list-group-item" onclick="ajaxload('markdown')">
-                                <h4 class="list-group-item-heading">Markdown</h4>
-                                <p class="list-group-item-text">Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式.</p>
-                    </a>
-                    <a href="#" class="list-group-item" onclick="ajaxload('mysql')">
-                            <h4 class="list-group-item-heading">MySQL</h4>
-                            <p class="list-group-item-text">Mysql是最流行的关系型数据库管理系统。</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('spring')">
-                        <h4 class="list-group-item-heading">Spring</h4>
-                        <p class="list-group-item-text">一个分层的JavaSE 轻量级开源框架。</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('mybatis')">
-                        <h4 class="list-group-item-heading">Mybatis</h4>
-                        <p class="list-group-item-text">一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('springmvc')">
-                        <h4 class="list-group-item-heading">Spring MVC</h4>
-                        <p class="list-group-item-text">一款优秀的MVC框架</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('Hibernate')">
-                        <h4 class="list-group-item-heading">Hibernate</h4>
-                        <p class="list-group-item-text">一个开放源代码的对象关系映射框架</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('html_css')">
-                        <h4 class="list-group-item-heading">HTML+CSS</h4>
-                        <p class="list-group-item-text">用于网页设计</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('JavaScript')">
-                        <h4 class="list-group-item-heading">JavaScript</h4>
-                        <p class="list-group-item-text">一种解释性脚本语言</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('Spring_Data_JPA')">
-                        <h4 class="list-group-item-heading">Spring Data JPA</h4>
-                        <p class="list-group-item-text">Spring提供的一个用于简化JPA开发的框架,是Spring Data 的一个子项目。</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('Shiro')">
-                        <h4 class="list-group-item-heading">Shiro</h4>
-                        <p class="list-group-item-text">Java的一个安全框架。</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('Spring_Boot')">
-                        <h4 class="list-group-item-heading">Spring Boot</h4>
-                        <p class="list-group-item-text">用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义繁琐，重复的配置。</p>
-                    </a>
-                    <a href="#" class="list-group-item"  onclick="ajaxload('Spring_Cloud')">
-                        <h4 class="list-group-item-heading">Spring Cloud</h4>
-                        <p class="list-group-item-text">一系列框架的有序集合,一套简单易懂、易部署和易维护的分布式系统开发工具包。</p>
-                    </a>
-
+            <li class="uk-parent" data-uk-dropdown="">
+                <a href="../essay_pages/essay.html"><i class="uk-icon-file"></i>Essay</a>
+                <div class="uk-dropdown uk-dropdown-navbar">
+                    <ul class="uk-nav uk-nav-navbar">
+                        <li class="uk-nav-header">FontEnd</li>
+                        <li><a href="#">html5</a></li>
+                        <li><a href="#">Another </a></li>
+                        <li class="uk-nav-header">BackEnd</li>
+                        <li><a href="#">java</a></li>
+                        <li><a href="#">Another java</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="#">other</a></li>
+                    </ul>
                 </div>
-            </div>
-            <div class="col-xs-12 col-md-9">
-                    <div class="list-group">
-                    <span href="#" class="list-group-item" id="loadajax">
+            </li>
 
+        </ul>
+
+        <!--导航栏右侧-->
+        <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav">
+                    <!--data-uk-dropdown="{pos:'bottom-right'}" 下拉菜单的内容右对齐-->
+                    <li class="uk-parent" data-uk-dropdown="{pos:'bottom-right'}">
+                        <a class="uk-button" href="#"><i class="uk-icon-link"></i>Link</a>
+                        <div class="uk-dropdown uk-dropdown-navbar">
+                                 <ul class="uk-nav uk-nav-navbar">
+                                    <li><a href="http://www.runoob.com/" target="_blank">菜鸟教程</a></li>
+                                    <li><a href="https://www.w3cschool.cn/" target="_blank">Bootstrap</a></li>
+                                    <li><a href="http://fontawesome.dashgame.com/" target="_blank" >Font Awesome图标库</a></li>
+                                    <li><a href="https://www.liaoxuefeng.com/" target="_blank">廖雪峰的官方网站</a></li>
+                                </ul>
+                        </div>
+                    </li>
+                </ul>
+        </div>
+    </nav>
+
+
+
+
+<!--面板组-->
+<div class="uk-grid uk-grid-small">
+
+        <!--面板组左侧内容-->
+        <!--
+                uk-border-rounded : 把元素的边框变为圆角形式。
+                md ：该类选择器，作用使class="md"元素下的所有<a>标签中border
+        -->
+        <div class="uk-width-medium-2-10 mb" style="padding-left:20px;">
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('javaweb')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >JavaWeb</h3>
+                是用Java技术来解决相关web互联网领域的技术总和。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('markdown')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Markdown</h3>
+                一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式.
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajax_study('mysql')">
+                <h3 class="uk-panel-title uk-panel-box-hover" >MySQL</h3>
+                是最流行的关系型数据库管理系统。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('spring')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Spring</h3>
+                一个分层的JavaSE 轻量级开源框架。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('mybatis')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Mybatis</h3>
+                一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('springmvc')">
+                <h3 class="uk-panel-title uk-panel-box-hover" >Spring MVC</h3>
+                一款优秀的MVC框架
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('Hibernate')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Hibernate</h3>
+                一个开放源代码的对象关系映射框架。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('html_css')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >HTML+CSS</h3>
+                用于网页设计。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('JavaScript')">
+                <h3 class="uk-panel-title uk-panel-box-hover" >JavaScript</h3>
+                一种解释性脚本语言。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('Spring_Data_JPA')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Spring Data JPA</h3>
+                Spring提供的一个用于简化JPA开发的框架,是Spring Data 的一个子项目。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajax_study('Shiro')">
+                <h3 class="uk-panel-title  uk-panel-box-hover" >Shiro</h3>
+                Java的一个安全框架。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajax_study('Spring_Boot')">
+                <h3 class="uk-panel-title uk-panel-box-hover" >Spring Boot</h3>
+                用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义繁琐，重复的配置。
+            </a>
+            <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajax_study('Spring_Cloud')">
+                    <h3 class="uk-panel-title uk-panel-box-hover" >Spring Cloud</h3>
+                    一系列框架的有序集合,一套简单易懂、易部署和易维护的分布式系统开发工具包。
+            </a>
+        </div>
+
+
+        <!--面板组右侧内容-->
+        <div class="uk-width-medium-8-10" style="padding-right:20px;">
+            <div class="uk-panel uk-panel-box uk-panel-box-secondary uk-border-rounded" style="border:1px solid #1a1a1a;background-color:white;" id="loadajax">
+                   
                         <!--ajax 加载不同的文档区域-->
                         <h2><strong> Welcome to SuiChenTree's Blog\Study</strong></h2>
                         <br/>
@@ -169,27 +167,10 @@
                         <p> 在我看来<font color="red"> 天赋 </font>决定你学习知识的快慢，而 <font color="red">努力+时间</font> 才<br>
                          决定你知识的<strong>广度与深度</strong>。<br>
                                  ———me</p>
-                    </span>
-                    </div>
             </div>
         </div>
 </div>
 
-
-<!--页脚
-<footer  style="height:150px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12" style="text-align: center;padding-top:30px;">
-                        <span>
-                                <strong>开发者：SuiChenTree</strong>
-                                <p><small>创建日期：2017年11月9日~</small></p>
-                        </span>
-                </div>
-            </div>
-        </div>
-</footer>
--->
-
 </body>
+
 </html>

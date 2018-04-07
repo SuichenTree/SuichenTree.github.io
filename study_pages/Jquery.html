@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>Jquery</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.2\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#jquery">Jquery</a>
+<ul>
+<li><a href="#1-jquery-%E7%9A%84%E5%BC%95%E7%94%A8">1. Jquery 的引用：</a></li>
+<li><a href="#2jquery%E5%AF%B9%E8%B1%A1%E5%BE%88%E5%83%8F%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E4%B8%8Edom%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96">2.jQuery对象（很像数组对象）与DOM对象的相互转化：</a>
+<ul>
+<li><a href="#1jqery%E5%AF%B9%E8%B1%A1%E8%BD%AC%E5%8C%96%E4%B8%BAdom%E5%AF%B9%E8%B1%A1">1.jqery对象转化为DOM对象：</a></li>
+<li><a href="#2dom%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2%E4%B8%BAjquery%E5%AF%B9%E8%B1%A1">2.DOM对象转换为Jquery对象：</a></li>
+</ul>
+</li>
+<li><a href="#3%E9%80%89%E6%8B%A9%E5%99%A8">3.选择器：</a>
+<ul>
+<li><a href="#1id%E9%80%89%E6%8B%A9%E5%99%A8">1.id选择器:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="jquery">Jquery</h1>
+
+<p>jQuery是一个JavaScript函数库。</p>
+<h2 class="mume-header" id="1-jquery-%E7%9A%84%E5%BC%95%E7%94%A8">1. Jquery 的引用：</h2>
+
+<pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!--这里使用的是在线的jquery库--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span> 
+</pre>
+<h2 class="mume-header" id="2jquery%E5%AF%B9%E8%B1%A1%E5%BE%88%E5%83%8F%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E4%B8%8Edom%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96">2.jQuery对象（很像数组对象）与DOM对象的相互转化：</h2>
+
+<h3 class="mume-header" id="1jqery%E5%AF%B9%E8%B1%A1%E8%BD%AC%E5%8C%96%E4%B8%BAdom%E5%AF%B9%E8%B1%A1">1.jqery对象转化为DOM对象：</h3>
+
+<p><mark>1.利用数组下标的方式读取到jQuery中的DOM对象</mark></p>
+<p>HTML代码</p>
+<pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>元素一<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>元素二<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>元素三<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</pre>
+<p>JavaScript代码</p>
+<pre class="language-js"><span class="token keyword">var</span> $div <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// 用jQuery找到所有的div元素（3个），为数组结构</span>
+<span class="token keyword">var</span> div <span class="token operator">=</span> $div<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token comment" spellcheck="true">//  通过数组下标索引，获取数组中的第一个div元素，返回DOM对象</span>
+div<span class="token punctuation">.</span>style<span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token string">'red'</span> <span class="token comment" spellcheck="true">//操作dom对象的属性</span>
+</pre>
+<p><mark>2.通过jQuery自带的get()方法</mark></p>
+<p><font color="red">jQuery对象自身提供一个.get() 方法允许我们直接访问jQuery对象中相关的DOM节点，get方法中提供一个元素的索引：</font></p>
+<pre class="language-js"><span class="token keyword">var</span> $div <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//获取jQuery对象，为数组结构</span>
+<span class="token keyword">var</span> div <span class="token operator">=</span> $div<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//通过get方法，把第一个div元素转化成DOM对象</span>
+div<span class="token punctuation">.</span>style<span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token string">'red'</span> <span class="token comment" spellcheck="true">//操作dom对象的属性</span>
+</pre>
+<h3 class="mume-header" id="2dom%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2%E4%B8%BAjquery%E5%AF%B9%E8%B1%A1">2.DOM对象转换为Jquery对象：</h3>
+
+<p><code>var a = $(被转换的dom对象); //将普通的dom对象加工成jQuery对象a</code></p>
+<p>HTML代码</p>
+<pre class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>元素一<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>元素二<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>元素三<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+</pre>
+<p>JavaScript代码</p>
+<pre class="language-js"><span class="token keyword">var</span> div <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//获取dom对象数组</span>
+<span class="token keyword">var</span> $div <span class="token operator">=</span> <span class="token function">$</span><span class="token punctuation">(</span>div<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//把DOM对象转换为jQuery对象</span>
+<span class="token keyword">var</span> $first <span class="token operator">=</span> $div<span class="token punctuation">.</span><span class="token function">first</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//first方法找到第一个div元素</span>
+$first<span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'color'</span><span class="token punctuation">,</span> <span class="token string">'red'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//给第一个元素设置颜色</span>
+</pre>
+<h2 class="mume-header" id="3%E9%80%89%E6%8B%A9%E5%99%A8">3.选择器：</h2>
+
+<h3 class="mume-header" id="1id%E9%80%89%E6%8B%A9%E5%99%A8">1.id选择器:</h3>
+
+<p><font color="red">id选择器：一个用来查找标签的ID，即元素的id属性<font></font></font></p>
+<pre class="language-js"><span class="token function">$</span><span class="token punctuation">(</span> <span class="token string">"#id"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
+<h3>2.类选择器：</h3>
+<p><font color="red">类选择器，顾名思义，通过class样式类名来获取节点<font></font></font></p>
+<pre class="language-js"><span class="token function">$</span><span class="token punctuation">(</span> <span class="token string">".class"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
+<h3>3.元素选择器：</h3>
+<p><font color="red">元素选择器：根据给定（html）标记名称选择所有的元素，有原生方法getElementsByTagName()函数支持<font></font></font></p>
+<pre class="language-js"><span class="token function">$</span><span class="token punctuation">(</span> <span class="token string">"element"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
+<p><mark>搜索指定元素标签名的所有节点，这个是一个合集的操作，产生数组对象。</mark></p>
+<h3>4.全（*）选择器：</h3>
+<p>jQuery中我们也可以通过传递*选择器来选中文档页面中的元素</p>
+<pre class="language-js"><span class="token function">$</span><span class="token punctuation">(</span> <span class="token string">"*"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//使用document.getElementsByTagName()中传递"*"同样可以做到</span>
+</pre>
+<h3>5.层级选择器：</h3>
+<p>把文档树当作一个家谱，那么节点与节点直接就会存在父子，兄弟，祖孙的关系了。</p>
+<p>通过一个列表，对比层级选择器的区别<br>
+<img src="../img/jquery_img/1.png" alt="1-png"></p>
+<h3>6.筛选选择器：</h3>
+<p>jQuery提供了一系列的筛选选择器用来更快捷的找到所需的DOM元素。<br>
+<mark>筛选选择器很多都不是CSS的规范，而是jQuery自己为了开发者的便利延展出来的选择器。</mark></p>
+<p>筛选选择器的用法与CSS中的伪元素相似，选择器用冒号“：”开头.</p>
+<p><mark>1.基本筛选器的描述：</mark></p>
+<p><img src="../img/jquery_img/2.png" alt="2-png"></p>
+<p><font color="red">注意事项：</font><br>
+:eq(), :lt(), :gt(), :even, :odd 用来筛选他们前面的匹配表达式的集合元素，根据之前匹配的元素在进一步筛选，<strong>注意jQuery合集都是从0开始索引</strong>.<br>
+gt是一个段落筛选，从指定索引的下一个开始，gt(1) 实际从2开始.</p>
+<p><mark>2.内容筛选选择器</mark><br>
+通过内容来过滤，jQuery也提供了一组内容筛选选择器，当然其规则也会体现在它所包含的子元素或者文本内容上<br>
+<img src="../img/jquery_img/3.png" alt="3-png"></p>
+<p><font color="red">注意事项：</font><br>
+:contains与:has都有查找的意思，但是contains查找包含“指定文本”的元素，has查找包含“指定元素”的元素<br>
+如果:contains匹配的文本包含在元素的子元素中，同样认为是符合条件的。<br>
+:parent与:empty是相反的，两者所涉及的子元素，包括文本节点</p>
+<p><mark>3.可见性筛选选择器:</mark><br>
+元素有显示状态与隐藏状态，jQuery根据元素的状态扩展了可见性筛选选择器:visible与:hidden.</p>
+<p><img src="../img/jquery_img/4.png" alt="4-png"></p>
+<p><font color="red">:hidden选择器，不仅仅包含样式是display=&quot;none&quot;的元素，还包括隐藏表单、visibility等等</font></p>
+<p>隐藏一个元素的几种方式：</p>
+<ol>
+<li>CSS display的值是none。</li>
+<li>type=&quot;hidden&quot;的表单元素。</li>
+<li>宽度和高度都显式设置为0。</li>
+<li>一个祖先元素是隐藏的，该元素是不会在页面上显示</li>
+<li>CSS visibility的值是hidden</li>
+<li>CSS opacity的指是0</li>
+</ol>
+<p><mark>4.属性筛选选择器</mark><br>
+属性选择器让你可以基于属性来定位一个元素。可以只指定该元素的某个属性，</p>
+<p><img src="../img/jquery_img/5.png" alt="5-png"></p>
+<p>注意：</p>
+<ol>
+<li>
+<p><font color="red">[attr=&quot;value&quot;]能帮我们定位不同类型的元素，特别是表单form元素的操作，比如说input[type=&quot;text&quot;],input[type=&quot;checkbox&quot;]等</font></p>
+</li>
+<li>
+<p><font color="red">[attr*=&quot;value&quot;]能在网站中帮助我们匹配不同类型的文件</font></p>
+</li>
+</ol>
+<p><mark>5.表单元素选择器</mark><br>
+jQuery中专门加入了表单选择器，从而能够极其方便地获取到某个类型的表单元素<br>
+<img src="../img/jquery_img/6.png" alt="6-png"></p>
+<p>注意事项：<br>
+除了input筛选选择器，几乎每个表单类别筛选器都对应一个input元素的type值。大部分表单类别筛选器可以使用属性筛选器替换。比如 <code>$(':password') == $('[type=password]')</code></p>
+<p><mark>6.表单元素选择器</mark><br>
+主要功能是对所选择的表单元素进行筛选.<br>
+<img src="../img/jquery_img/7.png" alt="7-png"></p>
+<p>注意事项：<br>
+选择器适用于复选框和单选框，对于下拉框元素, 使用 :selected 选择器<br>
+在某些浏览器中，选择器:checked可能会错误选取到<option>元素，所以保险起见换用选择器input:checked，确保只会选取<input>元素</option></p>
+
+      </div>
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#jquery">Jquery</a>
+<ul>
+<li><a href="#1-jquery-%E7%9A%84%E5%BC%95%E7%94%A8">1. Jquery 的引用：</a></li>
+<li><a href="#2jquery%E5%AF%B9%E8%B1%A1%E5%BE%88%E5%83%8F%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E4%B8%8Edom%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E5%8C%96">2.jQuery对象（很像数组对象）与DOM对象的相互转化：</a>
+<ul>
+<li><a href="#1jqery%E5%AF%B9%E8%B1%A1%E8%BD%AC%E5%8C%96%E4%B8%BAdom%E5%AF%B9%E8%B1%A1">1.jqery对象转化为DOM对象：</a></li>
+<li><a href="#2dom%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%8D%A2%E4%B8%BAjquery%E5%AF%B9%E8%B1%A1">2.DOM对象转换为Jquery对象：</a></li>
+</ul>
+</li>
+<li><a href="#3%E9%80%89%E6%8B%A9%E5%99%A8">3.选择器：</a>
+<ul>
+<li><a href="#1id%E9%80%89%E6%8B%A9%E5%99%A8">1.id选择器:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">≡</a>
+    </body>
+    
+    
+    
+    
+    
+    <script>
+(function bindTaskListEvent() {
+  var taskListItemCheckboxes = document.body.getElementsByClassName('task-list-item-checkbox')
+  for (var i = 0; i < taskListItemCheckboxes.length; i++) {
+    var checkbox = taskListItemCheckboxes[i]
+    var li = checkbox.parentElement
+    if (li.tagName !== 'LI') li = li.parentElement
+    if (li.tagName === 'LI') {
+      li.classList.add('task-list-item')
+    }
+  }
+}())    
+</script>
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  </html>
