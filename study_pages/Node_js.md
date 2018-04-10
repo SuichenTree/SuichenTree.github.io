@@ -331,7 +331,7 @@ undefined
 
 ---
 
-## 10. Node.js 常用功能：
+## 10. Node.js 核心模块：
 
 ### 1.fs 内置模块---文件系统模块：
 
@@ -782,3 +782,382 @@ console.log("buffer length: " + buffer.length);
 
 
 
+###  3.Stream（数据流）
+
+当内存中无法一次装下需要处理的数据时，或者一边读取一边处理更加高效时,我们就需要用到数据流。NodeJS中通过各种Stream来提供对数据流的操作。
+
+#### 1. 从流中读取数据:
+①: 创建 1.txt 文件，内容如下：
+`this is 1.txt`
+    
+②: EMO:
+
+```js
+var fs = require("fs");    //引入fs内置模块
+
+var data = '';
+// 创建可读流
+var readerStream = fs.createReadStream('1.txt');
+// 设置编码为 utf8。
+readerStream.setEncoding('UTF8');
+// 处理流事件 --> data, end, and error
+readerStream.on('data', function(chunk) {
+   data += chunk;
+});
+
+readerStream.on('end',function(){
+   console.log(data);
+});
+
+readerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log("程序执行完毕");
+```
+
+
+③：运行结果：
+```
+程序执行完毕
+this is 1.txt
+```
+
+#### 2.写入流：
+
+DEMO:
+```JS
+var fs = require("fs");
+var data = '菜鸟教程官网地址：www.runoob.com';
+
+// 创建一个可以写入的流，写入到文件 output.txt 中
+var writerStream = fs.createWriteStream('output.txt');
+
+// 使用 utf8 编码写入数据data 到写入流指定的文件中。
+writerStream.write(data,'UTF8');
+
+// 标记文件末尾
+writerStream.end();
+
+// 处理流事件 --> data, end, and error
+writerStream.on('finish', function() {
+    console.log("写入完成。");
+});
+
+writerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log("程序执行完毕");
+```
+
+运行结果：
+```
+程序执行完毕
+写入完成。
+```
+
+
+#### 3.管道流-实现文件内容的互相复制：
+
+DEMO(读取一个文件内容并将内容写入到另外一个文件中):
+
+①：创建文本文件 1.txt,2.txt:
+1.txt:
+```
+this is 1.txt
+```
+
+2.txt:
+```
+this is 2.txt
+```
+
+②：代码
+```js
+var fs = require("fs");      //引入fs内置模块
+
+// 创建一个可读流
+var readerStream = fs.createReadStream('1.txt');
+
+// 创建一个可写流
+var writerStream = fs.createWriteStream('2.txt');
+
+// 管道读写操作
+// 读取可读流的 1.txt 文件内容，并将内容写入到可写流的 2.txt 文件中
+
+readerStream.pipe(writerStream);
+
+console.log("程序执行完毕");
+```
+
+
+③：运行结果:
+```
+程序执行完毕
+```
+
+④：2.txt文件的内容：
+```
+this is 1.txt
+this is 2.txt
+```
+
+
+
+###  4.util 模块---提供常用函数的集合：
+
+#### 1.util.inspect
+语法：
+```
+util.inspect(object,[showHidden],[depth],[colors]);
+```
+
+>  object: 即要转换的对象。
+
+>  showHidden: 是一个可选参数，如果值为 true，将会输出更多隐藏信息。
+
+>  depth 表示最大递归的层数.
+
+>  如果color 值为 true，输出格式将会以ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。
+
+
+DEMO:
+```js
+var util = require('util'); 
+function Person() { 
+    this.name = 'byvoid'; 
+    this.toString = function() { 
+    return this.name; 
+    }; 
+} 
+var obj = new Person(); 
+console.log("输出正常信息："+util.inspect(obj)); 
+
+console.info("=================");
+
+console.log("输出更多信息："+util.inspect(obj, true));   //这里的showHidden参数为true
+```
+
+运行结果：
+
+![15-png](../img/Node_js_img/15.png)
+
+
+
+#### 2.util.isArray(object);
+
+如果给定的参数 "object" 是一个数组返回true，否则返回false。
+```js
+var util = require('util');
+
+util.isArray([]);
+  // true
+util.isArray(new Array);
+  // true
+util.isArray({});
+  // false
+
+```
+
+
+#### 3.util.isRegExp(object);
+
+如果给定的参数 "object" 是一个正则表达式返回true，否则返回false。
+```js
+var util = require('util');
+
+util.isRegExp(/some regexp/);
+  // true
+util.isRegExp(new RegExp('another regexp'));
+  // true
+util.isRegExp({});
+  // false
+
+```
+
+
+#### 4.util.isDate(object)
+
+如果给定的参数 "object" 是一个日期返回true，否则返回false。
+
+```js
+var util = require('util');
+
+util.isDate(new Date());
+  // true
+
+util.isDate({})
+  // false
+```
+
+
+#### 5.util.isError(object);
+
+如果给定的参数 "object" 是一个错误对象返回true，否则返回false。
+
+```js
+var util = require('util');
+
+util.isError(new Error())
+  // true
+util.isError(new TypeError())
+  // true
+util.isError({ name: 'Error', message: 'an error occurred' })
+  // false
+```
+
+
+
+---
+
+## 11. Node.js 函数：
+
+Node.js中函数的使用与Javascript类似。
+
+### 1.把函数作为另一个函数的变量:
+
+DEMO:
+```js
+function say(word) {     //定义一个say函数。
+  console.log(word);
+}
+
+/*
+定义一个函数execute.
+---someFunction 参数：表示接受另一个函数作为参数。、
+--- value 参数：接受一个值,作为参数函数的参数。
+*/
+
+function execute(someFunction, value) {   
+  someFunction(value);
+}
+
+/*
+
+1. 把 say 函数作为execute函数的第一个变量进行了传递。这里传递的不是 say 的返回值，而是 say 本身。
+2. say 就变成了execute 中的本地变量 someFunction。
+3. execute可以通过调用 someFunction() （带括号的形式）来使用 say 函数。
+
+*/
+execute(say, "Hello");   
+```
+
+运行结果：
+```
+Hello
+```
+
+
+
+### 2.匿名函数：
+
+DEMO:
+```JS
+function execute(someFunction, value) {
+  someFunction(value);
+}
+
+/*
+在 execute 接受第一个参数的地方直接定义了我们准备传递给 execute 的函数。
+这样的函数参数不用写函数名，称为匿名函数。
+*/
+execute(function(word){ console.log(word) }, "Hello");
+```
+
+
+## 12.全局对象：
+Node.js 中的全局对象是 global，所有全局变量（除了 global 本身以外）都是 global 对象的属性。
+在 Node.js 我们可以直接访问到 global的属性，而不需要引入它。 
+
+### 1.全局变量： __filename
+__filename 表示当前正在执行的脚本的文件绝对路径。
+
+main.js
+```js
+// 输出全局变量 __filename 的值
+console.log( __filename );
+```
+
+运行结果：
+```
+/web/com//nodejs/main.js
+```
+
+### 2.全局变量： __dirname
+__dirname 表示当前执行脚本所在的目录。
+
+main.js
+```js
+// 输出全局变量 __dirname 的值
+console.log( __dirname );
+```
+
+运行结果：
+```
+/web/com/runoob/nodejs
+```
+
+
+### 3.全局函数： setTimeout(cb, ms);  ---执行一次的定时器
+作用是在指定的毫秒(ms)数后执行指定函数(cb)。
+<font color="red">返回值：返回一个代表该定时器的变量。</font>
+==PS:setTimeout() 只执行一次指定函数。==
+
+DEMO:
+```js
+function printHello(){
+   console.log( "Hello, World!");
+}
+// 两秒后执行以上函数
+setTimeout(printHello, 2000);
+```
+
+运行结果：
+`Hello, World!`
+
+
+### 4.全局函数：clearTimeout(t);
+用于停止一个之前通过 setTimeout()函数创建的定时器。 参数 t 是通过 setTimeout() 函数创建的定时器的返回值，代表该定时器本身。
+
+DEMO:
+```JS
+function printHello(){
+   console.log( "Hello, World!");
+}
+// 两秒后执行以上函数
+var t = setTimeout(printHello, 2000);
+
+// 通过定时器的返回值，来清除定时器
+clearTimeout(t);   
+```
+
+
+### 5.全局函数：setInterval(cb, ms) ---执行多次的定时器
+作用是在指定的毫秒(ms)数后执行指定函数(cb)。返回一个代表定时器的句柄值。
+==etInterval() 方法会不停地调用函数，直到使用clearInterval()函数来清除或窗口被关闭。==
+
+DEMO:
+```js
+function printHello(){
+   console.log( "Hello, World!");
+}
+// 每隔两秒执行以上函数,
+setInterval(printHello, 2000);
+```
+
+运行结果
+```
+Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! ……
+```
+
+<font color="red">以上程序每隔两秒就会输出一次"Hello, World!"，且会永久执行下去，直到你按下 ctrl + c 按钮。
+</font>
+
+
+### 6.console
+console 用于提供控制台标准输出.
+
+![13-png](../img/Node_js_img/13.png)
+
+![14-png](../img/Node_js_img/14.png)

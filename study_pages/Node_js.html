@@ -240,7 +240,7 @@ code.language-yaml {
 <li><a href="#7%E5%8C%85">7.包：</a></li>
 <li><a href="#8%E6%A0%87%E5%87%86%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95">8.标准工程目录：</a></li>
 <li><a href="#9-global%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1process%E8%BF%9B%E7%A8%8B%E5%AF%B9%E8%B1%A1">9. global全局对象，process进程对象：</a></li>
-<li><a href="#10-nodejs-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD">10. Node.js 常用功能：</a>
+<li><a href="#10-nodejs-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97">10. Node.js 核心模块：</a>
 <ul>
 <li><a href="#1fs-%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9D%97">1.fs 内置模块---文件系统模块：</a>
 <ul>
@@ -264,6 +264,38 @@ code.language-yaml {
 <li><a href="#7%E7%BC%93%E5%86%B2%E5%8C%BA%E9%95%BF%E5%BA%A6">7.缓冲区长度:</a></li>
 </ul>
 </li>
+<li><a href="#3stream%E6%95%B0%E6%8D%AE%E6%B5%81">3.Stream（数据流）</a>
+<ul>
+<li><a href="#1-%E4%BB%8E%E6%B5%81%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE">1. 从流中读取数据:</a></li>
+<li><a href="#2%E5%86%99%E5%85%A5%E6%B5%81">2.写入流：</a></li>
+<li><a href="#3%E7%AE%A1%E9%81%93%E6%B5%81-%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E4%BA%92%E7%9B%B8%E5%A4%8D%E5%88%B6">3.管道流-实现文件内容的互相复制：</a></li>
+</ul>
+</li>
+<li><a href="#4util-%E6%A8%A1%E5%9D%97-%E6%8F%90%E4%BE%9B%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E9%9B%86%E5%90%88">4.util 模块---提供常用函数的集合：</a>
+<ul>
+<li><a href="#1utilinspect">1.util.inspect</a></li>
+<li><a href="#2utilisarrayobject">2.util.isArray(object);</a></li>
+<li><a href="#3utilisregexpobject">3.util.isRegExp(object);</a></li>
+<li><a href="#4utilisdateobject">4.util.isDate(object)</a></li>
+<li><a href="#5utiliserrorobject">5.util.isError(object);</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#11-nodejs-%E5%87%BD%E6%95%B0">11. Node.js 函数：</a>
+<ul>
+<li><a href="#1%E6%8A%8A%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%98%E9%87%8F">1.把函数作为另一个函数的变量:</a></li>
+<li><a href="#2%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">2.匿名函数：</a></li>
+</ul>
+</li>
+<li><a href="#12%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1">12.全局对象：</a>
+<ul>
+<li><a href="#1%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-__filename">1.全局变量： __filename</a></li>
+<li><a href="#2%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-__dirname">2.全局变量： __dirname</a></li>
+<li><a href="#3%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0-settimeoutcb-ms-%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8">3.全局函数： setTimeout(cb, ms);  ---执行一次的定时器</a></li>
+<li><a href="#4%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0cleartimeoutt">4.全局函数：clearTimeout(t);</a></li>
+<li><a href="#5%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0setintervalcb-ms-%E6%89%A7%E8%A1%8C%E5%A4%9A%E6%AC%A1%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8">5.全局函数：setInterval(cb, ms) ---执行多次的定时器</a></li>
+<li><a href="#6console">6.console</a></li>
 </ul>
 </li>
 </ul>
@@ -537,7 +569,7 @@ undefined
 &apos;/private/tmp&apos;
 
 </code></pre><hr>
-<h2 class="mume-header" id="10-nodejs-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD">10. Node.js 常用功能：</h2>
+<h2 class="mume-header" id="10-nodejs-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97">10. Node.js 核心模块：</h2>
 
 <h3 class="mume-header" id="1fs-%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9D%97">1.fs 内置模块---文件系统模块：</h3>
 
@@ -904,6 +936,280 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <span class="token comment" spellcheck="true">//  缓冲区长度</span>
 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"buffer length: "</span> <span class="token operator">+</span> buffer<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre><p>运行结果：<code>buffer length: 14</code></p>
+<h3 class="mume-header" id="3stream%E6%95%B0%E6%8D%AE%E6%B5%81">3.Stream（数据流）</h3>
+
+<p>当内存中无法一次装下需要处理的数据时，或者一边读取一边处理更加高效时,我们就需要用到数据流。NodeJS中通过各种Stream来提供对数据流的操作。</p>
+<h4 class="mume-header" id="1-%E4%BB%8E%E6%B5%81%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE">1. 从流中读取数据:</h4>
+
+<p>①: 创建 1.txt 文件，内容如下：<br>
+<code>this is 1.txt</code></p>
+<p>②: EMO:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//引入fs内置模块</span>
+
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 创建可读流</span>
+<span class="token keyword">var</span> readerStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">'1.txt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 设置编码为 utf8。</span>
+readerStream<span class="token punctuation">.</span><span class="token function">setEncoding</span><span class="token punctuation">(</span><span class="token string">'UTF8'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">// 处理流事件 --> data, end, and error</span>
+readerStream<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'data'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>chunk<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+   data <span class="token operator">+=</span> chunk<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+readerStream<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'end'</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+readerStream<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>stack<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"程序执行完毕"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>③：运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x5B8C;&#x6BD5;
+this is 1.txt
+</code></pre><h4 class="mume-header" id="2%E5%86%99%E5%85%A5%E6%B5%81">2.写入流：</h4>
+
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="JS" class="language-javascript"><span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> data <span class="token operator">=</span> <span class="token string">'菜鸟教程官网地址：www.runoob.com'</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 创建一个可以写入的流，写入到文件 output.txt 中</span>
+<span class="token keyword">var</span> writerStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">'output.txt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 使用 utf8 编码写入数据data 到写入流指定的文件中。</span>
+writerStream<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span><span class="token string">'UTF8'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 标记文件末尾</span>
+writerStream<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 处理流事件 --> data, end, and error</span>
+writerStream<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'finish'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"写入完成。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+writerStream<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">.</span>stack<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"程序执行完毕"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x5B8C;&#x6BD5;
+&#x5199;&#x5165;&#x5B8C;&#x6210;&#x3002;
+</code></pre><h4 class="mume-header" id="3%E7%AE%A1%E9%81%93%E6%B5%81-%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E4%BA%92%E7%9B%B8%E5%A4%8D%E5%88%B6">3.管道流-实现文件内容的互相复制：</h4>
+
+<p>DEMO(读取一个文件内容并将内容写入到另外一个文件中):</p>
+<p>①：创建文本文件 1.txt,2.txt:<br>
+1.txt:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>this is 1.txt
+</code></pre><p>2.txt:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>this is 2.txt
+</code></pre><p>②：代码</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"fs"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//引入fs内置模块</span>
+
+<span class="token comment" spellcheck="true">// 创建一个可读流</span>
+<span class="token keyword">var</span> readerStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">'1.txt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 创建一个可写流</span>
+<span class="token keyword">var</span> writerStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">'2.txt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 管道读写操作</span>
+<span class="token comment" spellcheck="true">// 读取可读流的 1.txt 文件内容，并将内容写入到可写流的 2.txt 文件中</span>
+
+readerStream<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>writerStream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"程序执行完毕"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>③：运行结果:</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x5B8C;&#x6BD5;
+</code></pre><p>④：2.txt文件的内容：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>this is 1.txt
+this is 2.txt
+</code></pre><h3 class="mume-header" id="4util-%E6%A8%A1%E5%9D%97-%E6%8F%90%E4%BE%9B%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E9%9B%86%E5%90%88">4.util 模块---提供常用函数的集合：</h3>
+
+<h4 class="mume-header" id="1utilinspect">1.util.inspect</h4>
+
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>util.inspect(object,[showHidden],[depth],[colors]);
+</code></pre><blockquote>
+<p>object: 即要转换的对象。</p>
+</blockquote>
+<blockquote>
+<p>showHidden: 是一个可选参数，如果值为 true，将会输出更多隐藏信息。</p>
+</blockquote>
+<blockquote>
+<p>depth 表示最大递归的层数.</p>
+</blockquote>
+<blockquote>
+<p>如果color 值为 true，输出格式将会以ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。</p>
+</blockquote>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> util <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token keyword">function</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'byvoid'</span><span class="token punctuation">;</span> 
+    <span class="token keyword">this</span><span class="token punctuation">.</span>toString <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span> 
+<span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"输出正常信息："</span><span class="token operator">+</span>util<span class="token punctuation">.</span><span class="token function">inspect</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+console<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"================="</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"输出更多信息："</span><span class="token operator">+</span>util<span class="token punctuation">.</span><span class="token function">inspect</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//这里的showHidden参数为true</span>
+</pre><p>运行结果：</p>
+<p><img src="../img/Node_js_img/15.png" alt="15-png"></p>
+<h4 class="mume-header" id="2utilisarrayobject">2.util.isArray(object);</h4>
+
+<p>如果给定的参数 &quot;object&quot; 是一个数组返回true，否则返回false。</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> util <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+util<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// true</span>
+util<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Array</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// true</span>
+util<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// false</span>
+
+</pre><h4 class="mume-header" id="3utilisregexpobject">3.util.isRegExp(object);</h4>
+
+<p>如果给定的参数 &quot;object&quot; 是一个正则表达式返回true，否则返回false。</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> util <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+util<span class="token punctuation">.</span><span class="token function">isRegExp</span><span class="token punctuation">(</span><span class="token regex">/some regexp/</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// true</span>
+util<span class="token punctuation">.</span><span class="token function">isRegExp</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">RegExp</span><span class="token punctuation">(</span><span class="token string">'another regexp'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// true</span>
+util<span class="token punctuation">.</span><span class="token function">isRegExp</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// false</span>
+
+</pre><h4 class="mume-header" id="4utilisdateobject">4.util.isDate(object)</h4>
+
+<p>如果给定的参数 &quot;object&quot; 是一个日期返回true，否则返回false。</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> util <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+util<span class="token punctuation">.</span><span class="token function">isDate</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// true</span>
+
+util<span class="token punctuation">.</span><span class="token function">isDate</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">// false</span>
+</pre><h4 class="mume-header" id="5utiliserrorobject">5.util.isError(object);</h4>
+
+<p>如果给定的参数 &quot;object&quot; 是一个错误对象返回true，否则返回false。</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> util <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+util<span class="token punctuation">.</span><span class="token function">isError</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">// true</span>
+util<span class="token punctuation">.</span><span class="token function">isError</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeError</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">// true</span>
+util<span class="token punctuation">.</span><span class="token function">isError</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'Error'</span><span class="token punctuation">,</span> message<span class="token punctuation">:</span> <span class="token string">'an error occurred'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">// false</span>
+</pre><hr>
+<h2 class="mume-header" id="11-nodejs-%E5%87%BD%E6%95%B0">11. Node.js 函数：</h2>
+
+<p>Node.js中函数的使用与Javascript类似。</p>
+<h3 class="mume-header" id="1%E6%8A%8A%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%98%E9%87%8F">1.把函数作为另一个函数的变量:</h3>
+
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token function">say</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">//定义一个say函数。</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/*
+定义一个函数execute.
+---someFunction 参数：表示接受另一个函数作为参数。、
+--- value 参数：接受一个值,作为参数函数的参数。
+*/</span>
+
+<span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>someFunction<span class="token punctuation">,</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>   
+  <span class="token function">someFunction</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/*
+
+1. 把 say 函数作为execute函数的第一个变量进行了传递。这里传递的不是 say 的返回值，而是 say 本身。
+2. say 就变成了execute 中的本地变量 someFunction。
+3. execute可以通过调用 someFunction() （带括号的形式）来使用 say 函数。
+
+*/</span>
+<span class="token function">execute</span><span class="token punctuation">(</span>say<span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>Hello
+</code></pre><h3 class="mume-header" id="2%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">2.匿名函数：</h3>
+
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="JS" class="language-javascript"><span class="token keyword">function</span> <span class="token function">execute</span><span class="token punctuation">(</span>someFunction<span class="token punctuation">,</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">someFunction</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/*
+在 execute 接受第一个参数的地方直接定义了我们准备传递给 execute 的函数。
+这样的函数参数不用写函数名，称为匿名函数。
+*/</span>
+<span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">{</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h2 class="mume-header" id="12%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1">12.全局对象：</h2>
+
+<p>Node.js 中的全局对象是 global，所有全局变量（除了 global 本身以外）都是 global 对象的属性。<br>
+在 Node.js 我们可以直接访问到 global的属性，而不需要引入它。</p>
+<h3 class="mume-header" id="1%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-__filename">1.全局变量： __filename</h3>
+
+<p>__filename 表示当前正在执行的脚本的文件绝对路径。</p>
+<p>main.js</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment" spellcheck="true">// 输出全局变量 __filename 的值</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> __filename <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>/web/com//nodejs/main.js
+</code></pre><h3 class="mume-header" id="2%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-__dirname">2.全局变量： __dirname</h3>
+
+<p>__dirname 表示当前执行脚本所在的目录。</p>
+<p>main.js</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment" spellcheck="true">// 输出全局变量 __dirname 的值</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> __dirname <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>/web/com/runoob/nodejs
+</code></pre><h3 class="mume-header" id="3%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0-settimeoutcb-ms-%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8">3.全局函数： setTimeout(cb, ms);  ---执行一次的定时器</h3>
+
+<p>作用是在指定的毫秒(ms)数后执行指定函数(cb)。<br>
+<font color="red">返回值：返回一个代表该定时器的变量。</font><br>
+<mark>PS:setTimeout() 只执行一次指定函数。</mark></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token function">printHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 两秒后执行以上函数</span>
+<span class="token function">setTimeout</span><span class="token punctuation">(</span>printHello<span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>运行结果：<br>
+<code>Hello, World!</code></p>
+<h3 class="mume-header" id="4%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0cleartimeoutt">4.全局函数：clearTimeout(t);</h3>
+
+<p>用于停止一个之前通过 setTimeout()函数创建的定时器。 参数 t 是通过 setTimeout() 函数创建的定时器的返回值，代表该定时器本身。</p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="JS" class="language-javascript"><span class="token keyword">function</span> <span class="token function">printHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 两秒后执行以上函数</span>
+<span class="token keyword">var</span> t <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span>printHello<span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 通过定时器的返回值，来清除定时器</span>
+<span class="token function">clearTimeout</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+</pre><h3 class="mume-header" id="5%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0setintervalcb-ms-%E6%89%A7%E8%A1%8C%E5%A4%9A%E6%AC%A1%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8">5.全局函数：setInterval(cb, ms) ---执行多次的定时器</h3>
+
+<p>作用是在指定的毫秒(ms)数后执行指定函数(cb)。返回一个代表定时器的句柄值。<br>
+<mark>etInterval() 方法会不停地调用函数，直到使用clearInterval()函数来清除或窗口被关闭。</mark></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token function">printHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// 每隔两秒执行以上函数,</span>
+<span class="token function">setInterval</span><span class="token punctuation">(</span>printHello<span class="token punctuation">,</span> <span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p>运行结果</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>Hello, World! Hello, World! Hello, World! Hello, World! Hello, World! &#x2026;&#x2026;
+</code></pre><p><font color="red">以上程序每隔两秒就会输出一次&quot;Hello, World!&quot;，且会永久执行下去，直到你按下 ctrl + c 按钮。<br>
+</font></p>
+<h3 class="mume-header" id="6console">6.console</h3>
+
+<p>console 用于提供控制台标准输出.</p>
+<p><img src="../img/Node_js_img/13.png" alt="13-png"></p>
+<p><img src="../img/Node_js_img/14.png" alt="14-png"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -934,7 +1240,7 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li><a href="#7%E5%8C%85">7.包：</a></li>
 <li><a href="#8%E6%A0%87%E5%87%86%E5%B7%A5%E7%A8%8B%E7%9B%AE%E5%BD%95">8.标准工程目录：</a></li>
 <li><a href="#9-global%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1process%E8%BF%9B%E7%A8%8B%E5%AF%B9%E8%B1%A1">9. global全局对象，process进程对象：</a></li>
-<li><a href="#10-nodejs-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD">10. Node.js 常用功能：</a>
+<li><a href="#10-nodejs-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97">10. Node.js 核心模块：</a>
 <ul>
 <li><a href="#1fs-%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9D%97">1.fs 内置模块---文件系统模块：</a>
 <ul>
@@ -958,6 +1264,38 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <li><a href="#7%E7%BC%93%E5%86%B2%E5%8C%BA%E9%95%BF%E5%BA%A6">7.缓冲区长度:</a></li>
 </ul>
 </li>
+<li><a href="#3stream%E6%95%B0%E6%8D%AE%E6%B5%81">3.Stream（数据流）</a>
+<ul>
+<li><a href="#1-%E4%BB%8E%E6%B5%81%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE">1. 从流中读取数据:</a></li>
+<li><a href="#2%E5%86%99%E5%85%A5%E6%B5%81">2.写入流：</a></li>
+<li><a href="#3%E7%AE%A1%E9%81%93%E6%B5%81-%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E4%BA%92%E7%9B%B8%E5%A4%8D%E5%88%B6">3.管道流-实现文件内容的互相复制：</a></li>
+</ul>
+</li>
+<li><a href="#4util-%E6%A8%A1%E5%9D%97-%E6%8F%90%E4%BE%9B%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E7%9A%84%E9%9B%86%E5%90%88">4.util 模块---提供常用函数的集合：</a>
+<ul>
+<li><a href="#1utilinspect">1.util.inspect</a></li>
+<li><a href="#2utilisarrayobject">2.util.isArray(object);</a></li>
+<li><a href="#3utilisregexpobject">3.util.isRegExp(object);</a></li>
+<li><a href="#4utilisdateobject">4.util.isDate(object)</a></li>
+<li><a href="#5utiliserrorobject">5.util.isError(object);</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#11-nodejs-%E5%87%BD%E6%95%B0">11. Node.js 函数：</a>
+<ul>
+<li><a href="#1%E6%8A%8A%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%98%E9%87%8F">1.把函数作为另一个函数的变量:</a></li>
+<li><a href="#2%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0">2.匿名函数：</a></li>
+</ul>
+</li>
+<li><a href="#12%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1">12.全局对象：</a>
+<ul>
+<li><a href="#1%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-__filename">1.全局变量： __filename</a></li>
+<li><a href="#2%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F-__dirname">2.全局变量： __dirname</a></li>
+<li><a href="#3%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0-settimeoutcb-ms-%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8">3.全局函数： setTimeout(cb, ms);  ---执行一次的定时器</a></li>
+<li><a href="#4%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0cleartimeoutt">4.全局函数：clearTimeout(t);</a></li>
+<li><a href="#5%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0setintervalcb-ms-%E6%89%A7%E8%A1%8C%E5%A4%9A%E6%AC%A1%E7%9A%84%E5%AE%9A%E6%97%B6%E5%99%A8">5.全局函数：setInterval(cb, ms) ---执行多次的定时器</a></li>
+<li><a href="#6console">6.console</a></li>
 </ul>
 </li>
 </ul>
