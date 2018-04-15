@@ -239,6 +239,14 @@ code.language-yaml {
 <li><a href="#7%E8%BF%90%E7%AE%97%E7%AC%A6">7.运算符：</a></li>
 </ul>
 </li>
+<li><a href="#8%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5">8.判断语句：</a>
+<ul>
+<li><a href="#1-if-%E8%AF%AD%E5%8F%A5">1. if 语句:</a></li>
+<li><a href="#2-ifelse-%E8%AF%AD%E5%8F%A5">2. if...else 语句:</a></li>
+<li><a href="#3-switch-%E8%AF%AD%E5%8F%A5">3. switch 语句:</a></li>
+<li><a href="#4-%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%BF%90%E7%AE%97%E7%AC%A6">4. 三目运算符（? : 运算符）:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -485,6 +493,140 @@ a++ 与 ++a 的区别：
 </blockquote>
 <p><mark>运算符的优先级确定表达式中项的组合。这会影响到一个表达式如何计算。</mark></p>
 <p><img src="../img/C_img/11.png" alt="11"></p>
+<h2 class="mume-header" id="8%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5">8.判断语句：</h2>
+
+<p><mark>C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。</mark></p>
+<h3 class="mume-header" id="1-if-%E8%AF%AD%E5%8F%A5">1. if 语句:</h3>
+
+<p><img src="../img/C_img/12.png" alt="12"></p>
+<p>Demo:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+ 
+   <span class="token comment" spellcheck="true">/* 使用 if 语句检查布尔条件 */</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+       <span class="token comment" spellcheck="true">/* 如果条件为真，则输出下面的语句 */</span>
+       <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 小于 20\n"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值是 %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="2-ifelse-%E8%AF%AD%E5%8F%A5">2. if...else 语句:</h3>
+
+<p><img src="../img/C_img/13.png" alt="13"></p>
+<p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* 局部变量定义 */</span>
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+ 
+   <span class="token comment" spellcheck="true">/* 检查布尔条件 */</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+       <span class="token comment" spellcheck="true">/* 如果条件为真，则输出下面的语句 */</span>
+       <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 小于 20\n"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">else</span>
+   <span class="token punctuation">{</span>
+       <span class="token comment" spellcheck="true">/* 如果条件为假，则输出下面的语句 */</span>
+       <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 大于 20\n"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值是 %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h4>①：一个 if 语句后可跟一个可选的 else if...else 语句，这可用于测试多种条件.</h4>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>boolean_expression <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* 当布尔表达式 1 为真时执行 */</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span> boolean_expression <span class="token number">2</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* 当布尔表达式 2 为真时执行 */</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span> boolean_expression <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* 当布尔表达式 3 为真时执行 */</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span> 
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* 当上面条件都不为真时执行 */</span>
+<span class="token punctuation">}</span>
+</pre><font color="red">
+<p>当使用 if...else if...else 语句时，以下几点需要注意：</p>
+<ol>
+<li>一个 if 后可跟零个或一个 else，else 必须在所有 else if 之后。</li>
+<li>一个 if 后可跟零个或多个 else if，else if 必须在 else 之前。</li>
+<li>一旦某个 else if 匹配成功，其他的 else if 或 else 将不会被测试。<br>
+</li></ol></font>
+
+<h4>②：嵌套 if 语句：一个 if 或 else if 语句内使用另一个 if 或 else if 语句</h4>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span> boolean_expression <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* 当布尔表达式 1 为真时执行 */</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span>boolean_expression <span class="token number">2</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">/* 当布尔表达式 2 为真时执行 */</span>
+   <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="3-switch-%E8%AF%AD%E5%8F%A5">3. switch 语句:</h3>
+
+<p><mark>一个 switch 语句允许测试一个变量等于多个值时的情况。每个值称为一个 case，且被测试的变量会对每个 switch case 进行检查。</mark></p>
+<p><img src="../img/C_img/14.png" alt="14"></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">switch</span><span class="token punctuation">(</span>expression<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">case</span> constant<span class="token operator">-</span>expression  <span class="token punctuation">:</span>
+       <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 可选的 */</span>
+    <span class="token keyword">case</span> constant<span class="token operator">-</span>expression  <span class="token punctuation">:</span>
+       <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 可选的 */</span>
+  
+    <span class="token comment" spellcheck="true">/* 您可以有任意数量的 case 语句 */</span>
+    <span class="token keyword">default</span> <span class="token punctuation">:</span> <span class="token comment" spellcheck="true">/* 可选的 */</span>
+       <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><font color="red">
+<p>switch 语句必须遵循下面的规则：</p>
+<ol>
+<li>switch 语句中的 expression 是一个常量表达式，必须是一个整型或枚举类型。</li>
+<li>在一个 switch 中可以有任意数量的 case 语句。每个 case 后跟一个要比较的值和一个冒号。</li>
+<li>case 的 constant-expression 必须与 switch 中的变量具有相同的数据类型，且必须是一个常量或字面量。</li>
+<li>当被测试的变量等于 case 中的常量时，case 后跟的语句将被执行，直到遇到 break 语句为止。</li>
+<li>当遇到 break 语句时，switch 终止，控制流将跳转到 switch 语句后的下一行。</li>
+<li>不是每一个 case 都需要包含 break。如果 case 语句不包含 break，控制流将会 继续 后续的 case，直到遇到 break 为止。</li>
+<li>一个 switch 语句可以有一个可选的 default，出现在 switch 的结尾。default可用于在上面所有 case 都不为真时执行一个任务。default 中的 break 语句不是必需的。<br>
+</li></ol></font>
+
+<h4>①：嵌套 switch 语句:</h4>
+<p><mark>把一个 switch 作为一个外部 switch 的语句序列的一部分，即可以在一个 switch 语句内使用另一个 switch 语句。即使内部和外部 switch 的 case 常量包含共同的值，也没有矛盾。</mark></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">switch</span><span class="token punctuation">(</span>ch1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">case</span> <span class="token string">'A'</span><span class="token punctuation">:</span> 
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"这个 A 是外部 switch 的一部分"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">switch</span><span class="token punctuation">(</span>ch2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token keyword">case</span> <span class="token string">'A'</span><span class="token punctuation">:</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"这个 A 是内部 switch 的一部分"</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+         <span class="token keyword">case</span> <span class="token string">'B'</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">/* 内部 B case 代码 */</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">'B'</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">/* 外部 B case 代码 */</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="4-%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%BF%90%E7%AE%97%E7%AC%A6">4. 三目运算符（? : 运算符）:</h3>
+
+<p>语法：<br>
+<code>Exp1 ? Exp2 : Exp3;</code></p>
+<p><img src="../img/C_img/15.png" alt="15"></p>
 
       </div>
       <div class="md-sidebar-toc"><ul>
@@ -512,6 +654,14 @@ a++ 与 ++a 的区别：
 </ul>
 </li>
 <li><a href="#7%E8%BF%90%E7%AE%97%E7%AC%A6">7.运算符：</a></li>
+</ul>
+</li>
+<li><a href="#8%E5%88%A4%E6%96%AD%E8%AF%AD%E5%8F%A5">8.判断语句：</a>
+<ul>
+<li><a href="#1-if-%E8%AF%AD%E5%8F%A5">1. if 语句:</a></li>
+<li><a href="#2-ifelse-%E8%AF%AD%E5%8F%A5">2. if...else 语句:</a></li>
+<li><a href="#3-switch-%E8%AF%AD%E5%8F%A5">3. switch 语句:</a></li>
+<li><a href="#4-%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%BF%90%E7%AE%97%E7%AC%A6">4. 三目运算符（? : 运算符）:</a></li>
 </ul>
 </li>
 </ul>

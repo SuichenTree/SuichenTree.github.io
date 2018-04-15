@@ -305,3 +305,180 @@ int main()
 
 ![11](../img/C_img/11.png)
 
+
+
+## 8.判断语句：
+
+==C 语言把任何非零和非空的值假定为 true，把零或 null 假定为 false。==
+
+### 1. if 语句:
+
+
+![12](../img/C_img/12.png)
+
+
+Demo:
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+   int a = 10;
+ 
+   /* 使用 if 语句检查布尔条件 */
+   if( a < 20 )
+   {
+       /* 如果条件为真，则输出下面的语句 */
+       printf("a 小于 20\n" );
+   }
+   printf("a 的值是 %d\n", a);
+ 
+   return 0;
+}
+```
+
+
+### 2. if...else 语句:
+
+![13](../img/C_img/13.png)
+
+DEMO：
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+   /* 局部变量定义 */
+   int a = 100;
+ 
+   /* 检查布尔条件 */
+   if( a < 20 )
+   {
+       /* 如果条件为真，则输出下面的语句 */
+       printf("a 小于 20\n" );
+   }
+   else
+   {
+       /* 如果条件为假，则输出下面的语句 */
+       printf("a 大于 20\n" );
+   }
+   printf("a 的值是 %d\n", a);
+ 
+   return 0;
+}
+```
+
+<h4>①：一个 if 语句后可跟一个可选的 else if...else 语句，这可用于测试多种条件.</h4>
+
+DEMO:
+```c
+if(boolean_expression 1)
+{
+   /* 当布尔表达式 1 为真时执行 */
+}
+else if( boolean_expression 2)
+{
+   /* 当布尔表达式 2 为真时执行 */
+}
+else if( boolean_expression 3)
+{
+   /* 当布尔表达式 3 为真时执行 */
+}
+else 
+{
+   /* 当上面条件都不为真时执行 */
+}
+```
+
+
+<font color="red">
+
+当使用 if...else if...else 语句时，以下几点需要注意：
+
+1. 一个 if 后可跟零个或一个 else，else 必须在所有 else if 之后。
+2. 一个 if 后可跟零个或多个 else if，else if 必须在 else 之前。
+3. 一旦某个 else if 匹配成功，其他的 else if 或 else 将不会被测试。
+</font>
+
+
+<h4>②：嵌套 if 语句：一个 if 或 else if 语句内使用另一个 if 或 else if 语句</h4>
+
+DEMO:
+```c
+if( boolean_expression 1)
+{
+   /* 当布尔表达式 1 为真时执行 */
+   if(boolean_expression 2)
+   {
+      /* 当布尔表达式 2 为真时执行 */
+   }
+}
+```
+
+### 3. switch 语句:
+
+==一个 switch 语句允许测试一个变量等于多个值时的情况。每个值称为一个 case，且被测试的变量会对每个 switch case 进行检查。==
+
+
+![14](../img/C_img/14.png)
+
+
+语法：
+```c
+switch(expression){
+    case constant-expression  :
+       statement(s);
+       break; /* 可选的 */
+    case constant-expression  :
+       statement(s);
+       break; /* 可选的 */
+  
+    /* 您可以有任意数量的 case 语句 */
+    default : /* 可选的 */
+       statement(s);
+}
+```
+
+<font color="red">
+
+switch 语句必须遵循下面的规则：
+
+1. switch 语句中的 expression 是一个常量表达式，必须是一个整型或枚举类型。
+2. 在一个 switch 中可以有任意数量的 case 语句。每个 case 后跟一个要比较的值和一个冒号。
+3. case 的 constant-expression 必须与 switch 中的变量具有相同的数据类型，且必须是一个常量或字面量。
+4. 当被测试的变量等于 case 中的常量时，case 后跟的语句将被执行，直到遇到 break 语句为止。
+5. 当遇到 break 语句时，switch 终止，控制流将跳转到 switch 语句后的下一行。
+6. 不是每一个 case 都需要包含 break。如果 case 语句不包含 break，控制流将会 继续 后续的 case，直到遇到 break 为止。
+7. 一个 switch 语句可以有一个可选的 default，出现在 switch 的结尾。default可用于在上面所有 case 都不为真时执行一个任务。default 中的 break 语句不是必需的。
+</font>
+
+
+<h4>①：嵌套 switch 语句:</h4>
+
+==把一个 switch 作为一个外部 switch 的语句序列的一部分，即可以在一个 switch 语句内使用另一个 switch 语句。即使内部和外部 switch 的 case 常量包含共同的值，也没有矛盾。==
+
+DEMO:
+```c
+switch(ch1) {
+    case 'A': 
+      printf("这个 A 是外部 switch 的一部分" );
+      switch(ch2) {
+         case 'A':
+            printf("这个 A 是内部 switch 的一部分" );
+            break;
+         case 'B': /* 内部 B case 代码 */
+      }
+      break;
+    case 'B': /* 外部 B case 代码 */
+}
+```
+
+
+### 4. 三目运算符（? : 运算符）:
+
+语法：
+`Exp1 ? Exp2 : Exp3;`
+
+![15](../img/C_img/15.png)
+
+
