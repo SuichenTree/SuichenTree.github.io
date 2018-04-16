@@ -482,3 +482,401 @@ switch(ch1) {
 ![15](../img/C_img/15.png)
 
 
+
+
+## 9.循环语句：
+
+
+### 1.while 循环：
+
+==只要给定的条件为真，C 语言中的 while 循环语句会重复执行一个目标语句。==
+
+![16](../img/C_img/16.png)
+
+
+<font color="red">
+while 循环的关键点是: 循环可能一次都不会执行。当条件为 false 时，会跳过循环主体，直接执行紧接着 while 循环的下一条语句。
+</font>
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+  
+   int a = 10;
+
+   /* while 循环执行 */
+   while( a < 20 )
+   {
+      printf("a 的值： %d\n", a);
+      a++;
+   }
+ 
+   return 0;
+}
+```
+
+
+### 2. for 循环:
+
+==for 循环允许您编写一个执行指定次数的循环控制结构。==
+
+语法：
+```c
+for ( init; condition; increment )
+{
+   statement(s);
+}
+```
+
+<h3>
+注意：
+
+1. init 会首先被执行，且只会执行一次。==也可以不在这里写任何语句，只要有一个分号出现即可。==
+
+2. 接下来，会判断 condition。如果为真，则执行循环主体。如果为假，则跳出循环。
+
+<br/>
+
+3. 在执行完 for 循环主体一次后，会跳回上面的 increment 语句。该语句允许您更新循环控制变量。==该语句可以留空，只要在条件后有一个分号出现即可。==
+
+4. 条件再次被判断。如果为真，则执行循环，这个过程会不断重复（==循环主体，然后增加步值，再然后重新判断条件==）。在条件变为假时，for 循环终止。
+
+</h3>
+
+
+![17](../img/C_img/17.png)
+
+
+DEMO：
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+   /* for 循环执行 */
+   for( int a = 10; a < 20; a = a + 1 )
+   {
+      printf("a 的值： %d\n", a);
+   }
+ 
+   return 0;
+}
+```
+
+运行结果：
+```
+a 的值： 10
+a 的值： 11
+a 的值： 12
+a 的值： 13
+a 的值： 14
+a 的值： 15
+a 的值： 16
+a 的值： 17
+a 的值： 18
+a 的值： 19
+```
+
+
+### 3. do...while 循环:
+
+==do...while 循环是在循环的尾部检查它的条件。do...while 循环会确保至少执行一次循环==
+
+
+![18](../img/C_img/18.png)
+
+DEMO：
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+  
+   int a = 10;
+
+   /* do 循环执行 */
+   do
+   {
+       printf("a 的值： %d\n", a);
+       a = a + 1;
+   }while( a < 20 );
+ 
+   return 0;
+}
+```
+
+
+### 4.嵌套循环:
+
+==C 语言允许在一个循环内使用另一个循环。循环之间可以是不同类型的==
+
+#### 1. 嵌套 for 循环:
+
+语法：
+```c
+for (initialization; condition; increment/decrement)
+{
+    statement(s);
+
+    /* 内部循环*/
+
+    for (initialization; condition; increment/decrement)
+    {
+        statement(s);
+        ... ... ...
+    }
+    ... ... ...
+}
+```
+
+
+![19](../img/C_img/19.png)
+
+
+#### 2. 嵌套 while 循环:
+
+语法：
+```c
+while (condition1)
+{
+    statement(s);
+
+    while (condition2)     /* 内部循环*/
+    {
+        statement(s);
+        ... ... ...
+    }
+    ... ... ...
+}
+```
+
+
+![20](../img/C_img/20.png)
+
+
+
+#### 3.嵌套 do...while 循环：
+
+语法：
+```c
+do
+{
+    statement(s);
+
+                      /* 内部循环*/
+    do
+    {
+        statement(s);
+        ... ... ...
+    }while (condition2);
+    ... ... ...
+    
+}while (condition1);
+```
+
+
+![21](../img/C_img/21.png)
+
+
+
+### 5.循环控制语句：
+
+==循环控制语句改变你代码的执行顺序。通过它你可以实现代码的跳转。==
+
+
+#### 1.break 语句:
+
+==终止循环或 switch 语句，程序流将继续执行循环或 switch 的下一条语句。==
+
+<font color="red">
+break 语句注意：
+
+1. 当 break 语句出现在一个循环内时，循环会立即终止，且程序流将跳出循环。
+2. 它可用于终止 switch 语句中的一个 case。
+
+3. 如果您使用的是嵌套循环，break 语句会停止执行最内层的循环，然后开始执行该块之后的下一行代码。
+
+</font>
+
+
+![22](../img/C_img/22.png)
+
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+  
+   int a = 10;
+
+ 
+   while( a < 20 )
+   {
+      printf("a 的值： %d\n", a);
+      a++;
+      if( a > 15)
+      {
+                         /* 使用 break 语句终止while循环 */
+          break;
+      }
+   }
+ 
+   return 0;
+}
+```
+
+
+
+#### 2.continue 语句:
+
+==continue 会跳过当前循环中的代码，强迫开始下一次循环。==
+
+<font color="red">
+continue 语句注意：
+
+1. 对于 for 循环，continue 语句执行后自增语句仍然会执行。
+2. 对于 while 和 do...while 循环，continue 语句重新执行条件判断语句。
+
+</font>
+
+
+![23](../img/C_img/23.png)
+
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+  
+   int a = 10;
+
+   /* do..while 循环执行 */
+   do
+   {
+      if( a == 15)
+      {
+        
+         a = a + 1;
+         continue;    /* continue 语句 */
+      }
+      printf("a 的值： %d\n", a);
+      a++;
+     
+   }while( a < 20 );
+ 
+   return 0;
+}
+```
+
+
+运行结果：<font color="red">没有15</font>
+```
+a 的值： 10
+a 的值： 11
+a 的值： 12
+a 的值： 13
+a 的值： 14
+a 的值： 16
+a 的值： 17
+a 的值： 18
+a 的值： 19
+```
+
+
+
+
+#### 3.goto 语句：★★★ 不建议使用：
+
+==goto 语句允许把控制无条件转移到同一函数内的被标记的语句。==
+
+语法：
+```c
+goto label;
+
+..
+..
+..
+
+label: statement;
+```
+
+<font color="red">
+注意：
+label 可以是任何除 C 关键字以外的纯文本，它可以设置在 C 程序中 goto 语句的前面或者后面。
+</font>
+
+
+![24](../img/C_img/24.png)
+
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+   
+   int a = 10;
+
+  
+   LOOP:do         //这里为LOOP，是do循环
+   {
+      if( a == 15)
+      {
+         
+         a = a + 1;
+         goto LOOP;    //使用goto 语句，跳到 LOOP 哪里。
+      }
+      printf("a 的值： %d\n", a);
+      a++;
+     
+   }while( a < 20 );
+ 
+   return 0;
+}
+
+```
+
+
+运行结果：<font color="red">没有15</font>
+```
+a 的值： 10
+a 的值： 11
+a 的值： 12
+a 的值： 13
+a 的值： 14
+a 的值： 16
+a 的值： 17
+a 的值： 18
+a 的值： 19
+```
+
+
+
+### 6.无限循环：
+
+==for 循环在传统意义上可用于实现无限循环。==
+
+```c
+#include <stdio.h>
+ 
+int main ()
+{
+   for( ; ; )
+   {
+      printf("该循环会永远执行下去！\n");
+   }
+   return 0;
+}
+```
+
+<font color="red">
+注意：您可以在命令窗口中按 Ctrl + C 键终止无限循环。
+</font>

@@ -247,6 +247,28 @@ code.language-yaml {
 <li><a href="#4-%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%BF%90%E7%AE%97%E7%AC%A6">4. 三目运算符（? : 运算符）:</a></li>
 </ul>
 </li>
+<li><a href="#9%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5">9.循环语句：</a>
+<ul>
+<li><a href="#1while-%E5%BE%AA%E7%8E%AF">1.while 循环：</a></li>
+<li><a href="#2-for-%E5%BE%AA%E7%8E%AF">2. for 循环:</a></li>
+<li><a href="#3-dowhile-%E5%BE%AA%E7%8E%AF">3. do...while 循环:</a></li>
+<li><a href="#4%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF">4.嵌套循环:</a>
+<ul>
+<li><a href="#1-%E5%B5%8C%E5%A5%97-for-%E5%BE%AA%E7%8E%AF">1. 嵌套 for 循环:</a></li>
+<li><a href="#2-%E5%B5%8C%E5%A5%97-while-%E5%BE%AA%E7%8E%AF">2. 嵌套 while 循环:</a></li>
+<li><a href="#3%E5%B5%8C%E5%A5%97-dowhile-%E5%BE%AA%E7%8E%AF">3.嵌套 do...while 循环：</a></li>
+</ul>
+</li>
+<li><a href="#5%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">5.循环控制语句：</a>
+<ul>
+<li><a href="#1break-%E8%AF%AD%E5%8F%A5">1.break 语句:</a></li>
+<li><a href="#2continue-%E8%AF%AD%E5%8F%A5">2.continue 语句:</a></li>
+<li><a href="#3goto-%E8%AF%AD%E5%8F%A5-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8">3.goto 语句：★★★ 不建议使用：</a></li>
+</ul>
+</li>
+<li><a href="#6%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF">6.无限循环：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -627,7 +649,313 @@ a++ 与 ++a 的区别：
 <p>语法：<br>
 <code>Exp1 ? Exp2 : Exp3;</code></p>
 <p><img src="../img/C_img/15.png" alt="15"></p>
+<h2 class="mume-header" id="9%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5">9.循环语句：</h2>
 
+<h3 class="mume-header" id="1while-%E5%BE%AA%E7%8E%AF">1.while 循环：</h3>
+
+<p><mark>只要给定的条件为真，C 语言中的 while 循环语句会重复执行一个目标语句。</mark></p>
+<p><img src="../img/C_img/16.png" alt="16"></p>
+<font color="red">
+while 循环的关键点是: 循环可能一次都不会执行。当条件为 false 时，会跳过循环主体，直接执行紧接着 while 循环的下一条语句。
+</font>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">/* while 循环执行 */</span>
+   <span class="token keyword">while</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值： %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      a<span class="token operator">++</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="2-for-%E5%BE%AA%E7%8E%AF">2. for 循环:</h3>
+
+<p><mark>for 循环允许您编写一个执行指定次数的循环控制结构。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">for</span> <span class="token punctuation">(</span> init<span class="token punctuation">;</span> condition<span class="token punctuation">;</span> increment <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h3>
+注意：
+<ol>
+<li>
+<p>init 会首先被执行，且只会执行一次。<mark>也可以不在这里写任何语句，只要有一个分号出现即可。</mark></p>
+</li>
+<li>
+<p>接下来，会判断 condition。如果为真，则执行循环主体。如果为假，则跳出循环。</p>
+</li>
+</ol>
+<br>
+<ol start="3">
+<li>
+<p>在执行完 for 循环主体一次后，会跳回上面的 increment 语句。该语句允许您更新循环控制变量。<mark>该语句可以留空，只要在条件后有一个分号出现即可。</mark></p>
+</li>
+<li>
+<p>条件再次被判断。如果为真，则执行循环，这个过程会不断重复（<mark>循环主体，然后增加步值，再然后重新判断条件</mark>）。在条件变为假时，for 循环终止。</p>
+</li>
+</ol>
+</h3>
+<p><img src="../img/C_img/17.png" alt="17"></p>
+<p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">/* for 循环执行 */</span>
+   <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> a <span class="token operator">&lt;</span> <span class="token number">20</span><span class="token punctuation">;</span> a <span class="token operator">=</span> a <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值： %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>a &#x7684;&#x503C;&#xFF1A; 10
+a &#x7684;&#x503C;&#xFF1A; 11
+a &#x7684;&#x503C;&#xFF1A; 12
+a &#x7684;&#x503C;&#xFF1A; 13
+a &#x7684;&#x503C;&#xFF1A; 14
+a &#x7684;&#x503C;&#xFF1A; 15
+a &#x7684;&#x503C;&#xFF1A; 16
+a &#x7684;&#x503C;&#xFF1A; 17
+a &#x7684;&#x503C;&#xFF1A; 18
+a &#x7684;&#x503C;&#xFF1A; 19
+</code></pre><h3 class="mume-header" id="3-dowhile-%E5%BE%AA%E7%8E%AF">3. do...while 循环:</h3>
+
+<p><mark>do...while 循环是在循环的尾部检查它的条件。do...while 循环会确保至少执行一次循环</mark></p>
+<p><img src="../img/C_img/18.png" alt="18"></p>
+<p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">/* do 循环执行 */</span>
+   <span class="token keyword">do</span>
+   <span class="token punctuation">{</span>
+       <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值： %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       a <span class="token operator">=</span> a <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="4%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF">4.嵌套循环:</h3>
+
+<p><mark>C 语言允许在一个循环内使用另一个循环。循环之间可以是不同类型的</mark></p>
+<h4 class="mume-header" id="1-%E5%B5%8C%E5%A5%97-for-%E5%BE%AA%E7%8E%AF">1. 嵌套 for 循环:</h4>
+
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">for</span> <span class="token punctuation">(</span>initialization<span class="token punctuation">;</span> condition<span class="token punctuation">;</span> increment<span class="token operator">/</span>decrement<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/* 内部循环*/</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>initialization<span class="token punctuation">;</span> condition<span class="token punctuation">;</span> increment<span class="token operator">/</span>decrement<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/C_img/19.png" alt="19"></p>
+<h4 class="mume-header" id="2-%E5%B5%8C%E5%A5%97-while-%E5%BE%AA%E7%8E%AF">2. 嵌套 while 循环:</h4>
+
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">while</span> <span class="token punctuation">(</span>condition1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>condition2<span class="token punctuation">)</span>     <span class="token comment" spellcheck="true">/* 内部循环*/</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/C_img/20.png" alt="20"></p>
+<h4 class="mume-header" id="3%E5%B5%8C%E5%A5%97-dowhile-%E5%BE%AA%E7%8E%AF">3.嵌套 do...while 循环：</h4>
+
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">do</span>
+<span class="token punctuation">{</span>
+    <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                      <span class="token comment" spellcheck="true">/* 内部循环*/</span>
+    <span class="token keyword">do</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">statement</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span><span class="token keyword">while</span> <span class="token punctuation">(</span>condition2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    
+<span class="token punctuation">}</span><span class="token keyword">while</span> <span class="token punctuation">(</span>condition1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><p><img src="../img/C_img/21.png" alt="21"></p>
+<h3 class="mume-header" id="5%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">5.循环控制语句：</h3>
+
+<p><mark>循环控制语句改变你代码的执行顺序。通过它你可以实现代码的跳转。</mark></p>
+<h4 class="mume-header" id="1break-%E8%AF%AD%E5%8F%A5">1.break 语句:</h4>
+
+<p><mark>终止循环或 switch 语句，程序流将继续执行循环或 switch 的下一条语句。</mark></p>
+<font color="red">
+break 语句注意：
+<ol>
+<li>
+<p>当 break 语句出现在一个循环内时，循环会立即终止，且程序流将跳出循环。</p>
+</li>
+<li>
+<p>它可用于终止 switch 语句中的一个 case。</p>
+</li>
+<li>
+<p>如果您使用的是嵌套循环，break 语句会停止执行最内层的循环，然后开始执行该块之后的下一行代码。</p>
+</li>
+</ol>
+</font>
+<p><img src="../img/C_img/22.png" alt="22"></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+ 
+   <span class="token keyword">while</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值： %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      a<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span> a <span class="token operator">></span> <span class="token number">15</span><span class="token punctuation">)</span>
+      <span class="token punctuation">{</span>
+                         <span class="token comment" spellcheck="true">/* 使用 break 语句终止while循环 */</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+   <span class="token punctuation">}</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="2continue-%E8%AF%AD%E5%8F%A5">2.continue 语句:</h4>
+
+<p><mark>continue 会跳过当前循环中的代码，强迫开始下一次循环。</mark></p>
+<font color="red">
+continue 语句注意：
+<ol>
+<li>对于 for 循环，continue 语句执行后自增语句仍然会执行。</li>
+<li>对于 while 和 do...while 循环，continue 语句重新执行条件判断语句。</li>
+</ol>
+</font>
+<p><img src="../img/C_img/23.png" alt="23"></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+   <span class="token comment" spellcheck="true">/* do..while 循环执行 */</span>
+   <span class="token keyword">do</span>
+   <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span> a <span class="token operator">==</span> <span class="token number">15</span><span class="token punctuation">)</span>
+      <span class="token punctuation">{</span>
+        
+         a <span class="token operator">=</span> a <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+         <span class="token keyword">continue</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">/* continue 语句 */</span>
+      <span class="token punctuation">}</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值： %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      a<span class="token operator">++</span><span class="token punctuation">;</span>
+     
+   <span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>运行结果：<font color="red">没有15</font></p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>a &#x7684;&#x503C;&#xFF1A; 10
+a &#x7684;&#x503C;&#xFF1A; 11
+a &#x7684;&#x503C;&#xFF1A; 12
+a &#x7684;&#x503C;&#xFF1A; 13
+a &#x7684;&#x503C;&#xFF1A; 14
+a &#x7684;&#x503C;&#xFF1A; 16
+a &#x7684;&#x503C;&#xFF1A; 17
+a &#x7684;&#x503C;&#xFF1A; 18
+a &#x7684;&#x503C;&#xFF1A; 19
+</code></pre><h4 class="mume-header" id="3goto-%E8%AF%AD%E5%8F%A5-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8">3.goto 语句：★★★ 不建议使用：</h4>
+
+<p><mark>goto 语句允许把控制无条件转移到同一函数内的被标记的语句。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">goto</span> label<span class="token punctuation">;</span>
+
+<span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+label<span class="token punctuation">:</span> statement<span class="token punctuation">;</span>
+</pre><font color="red">
+注意：
+label 可以是任何除 C 关键字以外的纯文本，它可以设置在 C 程序中 goto 语句的前面或者后面。
+</font>
+<p><img src="../img/C_img/24.png" alt="24"></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   
+   <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+  
+   LOOP<span class="token punctuation">:</span><span class="token keyword">do</span>         <span class="token comment" spellcheck="true">//这里为LOOP，是do循环</span>
+   <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span> a <span class="token operator">==</span> <span class="token number">15</span><span class="token punctuation">)</span>
+      <span class="token punctuation">{</span>
+         
+         a <span class="token operator">=</span> a <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+         <span class="token keyword">goto</span> LOOP<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//使用goto 语句，跳到 LOOP 哪里。</span>
+      <span class="token punctuation">}</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值： %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      a<span class="token operator">++</span><span class="token punctuation">;</span>
+     
+   <span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span> a <span class="token operator">&lt;</span> <span class="token number">20</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</pre><p>运行结果：<font color="red">没有15</font></p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>a &#x7684;&#x503C;&#xFF1A; 10
+a &#x7684;&#x503C;&#xFF1A; 11
+a &#x7684;&#x503C;&#xFF1A; 12
+a &#x7684;&#x503C;&#xFF1A; 13
+a &#x7684;&#x503C;&#xFF1A; 14
+a &#x7684;&#x503C;&#xFF1A; 16
+a &#x7684;&#x503C;&#xFF1A; 17
+a &#x7684;&#x503C;&#xFF1A; 18
+a &#x7684;&#x503C;&#xFF1A; 19
+</code></pre><h3 class="mume-header" id="6%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF">6.无限循环：</h3>
+
+<p><mark>for 循环在传统意义上可用于实现无限循环。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span> <span class="token punctuation">;</span> <span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"该循环会永远执行下去！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><font color="red">
+注意：您可以在命令窗口中按 Ctrl + C 键终止无限循环。
+</font>
       </div>
       <div class="md-sidebar-toc"><ul>
 <li><a href="#c%E8%AF%AD%E8%A8%80">C语言</a>
@@ -662,6 +990,28 @@ a++ 与 ++a 的区别：
 <li><a href="#2-ifelse-%E8%AF%AD%E5%8F%A5">2. if...else 语句:</a></li>
 <li><a href="#3-switch-%E8%AF%AD%E5%8F%A5">3. switch 语句:</a></li>
 <li><a href="#4-%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6-%E8%BF%90%E7%AE%97%E7%AC%A6">4. 三目运算符（? : 运算符）:</a></li>
+</ul>
+</li>
+<li><a href="#9%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5">9.循环语句：</a>
+<ul>
+<li><a href="#1while-%E5%BE%AA%E7%8E%AF">1.while 循环：</a></li>
+<li><a href="#2-for-%E5%BE%AA%E7%8E%AF">2. for 循环:</a></li>
+<li><a href="#3-dowhile-%E5%BE%AA%E7%8E%AF">3. do...while 循环:</a></li>
+<li><a href="#4%E5%B5%8C%E5%A5%97%E5%BE%AA%E7%8E%AF">4.嵌套循环:</a>
+<ul>
+<li><a href="#1-%E5%B5%8C%E5%A5%97-for-%E5%BE%AA%E7%8E%AF">1. 嵌套 for 循环:</a></li>
+<li><a href="#2-%E5%B5%8C%E5%A5%97-while-%E5%BE%AA%E7%8E%AF">2. 嵌套 while 循环:</a></li>
+<li><a href="#3%E5%B5%8C%E5%A5%97-dowhile-%E5%BE%AA%E7%8E%AF">3.嵌套 do...while 循环：</a></li>
+</ul>
+</li>
+<li><a href="#5%E5%BE%AA%E7%8E%AF%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5">5.循环控制语句：</a>
+<ul>
+<li><a href="#1break-%E8%AF%AD%E5%8F%A5">1.break 语句:</a></li>
+<li><a href="#2continue-%E8%AF%AD%E5%8F%A5">2.continue 语句:</a></li>
+<li><a href="#3goto-%E8%AF%AD%E5%8F%A5-%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8">3.goto 语句：★★★ 不建议使用：</a></li>
+</ul>
+</li>
+<li><a href="#6%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF">6.无限循环：</a></li>
 </ul>
 </li>
 </ul>
