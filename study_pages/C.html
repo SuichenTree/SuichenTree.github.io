@@ -299,6 +299,26 @@ code.language-yaml {
 <li><a href="#6-%E6%8C%87%E5%90%91%E6%95%B0%E7%BB%84%E7%9A%84%E6%8C%87%E9%92%88">6. 指向数组的指针：</a></li>
 </ul>
 </li>
+<li><a href="#9-%E6%8C%87%E9%92%88">9. 指针：</a>
+<ul>
+<li><a href="#1-%E5%8F%96%E5%9C%B0%E5%9D%80%E7%AC%A6">1. &amp; 取地址符：</a></li>
+<li><a href="#2-%E6%8C%87%E9%92%88%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E4%BD%BF%E7%94%A8">2. 指针的介绍与使用：</a></li>
+<li><a href="#3-null%E7%A9%BA%E6%8C%87%E9%92%88">3. NULL空指针：</a></li>
+<li><a href="#4-%E6%8C%87%E9%92%88%E7%9A%84%E7%AE%97%E6%9C%AF%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97">4. 指针的算术&amp;关系运算:</a>
+<ul>
+<li><a href="#1-%E9%80%92%E5%A2%9E%E4%B8%80%E4%B8%AA%E6%8C%87%E9%92%88">1. ++ 递增一个指针</a></li>
+<li><a href="#2-%E9%80%92%E5%87%8F%E4%B8%80%E4%B8%AA%E6%8C%87%E9%92%88">2. -- 递减一个指针:</a></li>
+<li><a href="#3-%E6%8C%87%E9%92%88%E7%9A%84%E6%AF%94%E8%BE%83">3. 指针的比较：</a></li>
+</ul>
+</li>
+<li><a href="#5-%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84">5. 指针数组:</a></li>
+<li><a href="#6-%E6%8C%87%E5%90%91%E6%8C%87%E9%92%88%E7%9A%84%E6%8C%87%E9%92%88">6. 指向指针的指针:</a></li>
+<li><a href="#7-%E4%BC%A0%E9%80%92%E6%8C%87%E9%92%88%E7%BB%99%E5%87%BD%E6%95%B0%E9%80%9A%E8%BF%87%E5%BC%95%E7%94%A8%E6%88%96%E5%9C%B0%E5%9D%80%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0">7. 传递指针给函数(通过引用或地址传递参数)：</a></li>
+<li><a href="#8-%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E6%8C%87%E9%92%88">8. 函数返回指针</a></li>
+<li><a href="#9-%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%B8%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0">9. 函数指针与回调函数(？？？)</a></li>
+</ul>
+</li>
+<li><a href="#10-%E5%AD%97%E7%AC%A6%E4%B8%B2">10. 字符串：</a></li>
 </ul>
 </li>
 </ul>
@@ -1459,6 +1479,189 @@ p <span class="token operator">=</span> a<span class="token punctuation">;</span
 </pre><font color="red">
 可以使用 *p)、*(p+2) 等来访问数组、*(p+1元素
 </font>
+<h2 class="mume-header" id="9-%E6%8C%87%E9%92%88">9. 指针：</h2>
+
+<h3 class="mume-header" id="1-%E5%8F%96%E5%9C%B0%E5%9D%80%E7%AC%A6">1. &amp; 取地址符：</h3>
+
+<p><mark>每一个变量都有一个内存位置，每一个内存位置都定义了可使用连字号（&amp;）运算符访问的地址，它表示了在内存中的一个地址。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span>  var1<span class="token punctuation">;</span>
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"var1 变量的地址： %p\n"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>var1  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><hr>
+<h3 class="mume-header" id="2-%E6%8C%87%E9%92%88%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E4%BD%BF%E7%94%A8">2. 指针的介绍与使用：</h3>
+
+<p><mark>指针是一个变量，其值为另一个变量的地址，即，内存位置的直接地址。</mark></p>
+<p><font color="red">星号是用来指定一个变量是指针，不同数据类型的指针之间的区别是，指针所指向的变量或常量的数据类型不同。</font></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span>    <span class="token operator">*</span>ip<span class="token punctuation">;</span>    <span class="token comment">/* 一个整型的指针 */</span>
+<span class="token keyword">double</span> <span class="token operator">*</span>dp<span class="token punctuation">;</span>    <span class="token comment">/* 一个 double 型的指针 */</span>
+<span class="token keyword">float</span>  <span class="token operator">*</span>fp<span class="token punctuation">;</span>    <span class="token comment">/* 一个浮点型的指针 */</span>
+<span class="token keyword">char</span>   <span class="token operator">*</span>ch<span class="token punctuation">;</span>     <span class="token comment">/* 一个字符型的指针 */</span>
+</pre><p>使用步骤：</p>
+<ol>
+<li>定义一个指针变量。</li>
+<li>把变量地址赋值给指针。</li>
+<li>访问指针变量中可用地址的值</li>
+</ol>
+<pre data-role="codeBlock" data-info="C" class="language-c">   <span class="token keyword">int</span>  var <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>   <span class="token comment">/* 实际变量的声明 */</span>
+   <span class="token keyword">int</span>  <span class="token operator">*</span>ip<span class="token punctuation">;</span>        <span class="token comment">/* 指针变量的声明 */</span>
+ 
+   ip <span class="token operator">=</span> <span class="token operator">&amp;</span>var<span class="token punctuation">;</span>  <span class="token comment">/* 在指针变量中存储 var 的地址 */</span>
+   <span class="token comment">/* 使用指针访问值 */</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value of *ip variable: %d\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>ip <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><hr>
+<h3 class="mume-header" id="3-null%E7%A9%BA%E6%8C%87%E9%92%88">3. NULL空指针：</h3>
+
+<p><mark>赋为 NULL 值的指针被称为空指针。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span>  <span class="token operator">*</span>a <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+ 
+<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a 的值是 %p\n"</span><span class="token punctuation">,</span> a  <span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// a 的值是 0</span>
+ 
+</pre><font color="red">
+PS:
+如果指针包含空值（零值）,表明该指针不指向一个可访问的内存位置
+</font>
+<h3 class="mume-header" id="4-%E6%8C%87%E9%92%88%E7%9A%84%E7%AE%97%E6%9C%AF%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97">4. 指针的算术&amp;关系运算:</h3>
+
+<p><mark>可以对指针进行四种算术运算：++、--、+、-。</mark></p>
+<h4 class="mume-header" id="1-%E9%80%92%E5%A2%9E%E4%B8%80%E4%B8%AA%E6%8C%87%E9%92%88">1. ++ 递增一个指针</h4>
+
+<pre data-role="codeBlock" data-info="c" class="language-c">  <span class="token keyword">int</span> <span class="token operator">*</span>a<span class="token punctuation">;</span>
+  <span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"value of &amp;a %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  
+  a<span class="token operator">++</span><span class="token punctuation">;</span>
+  
+  <span class="token function">printf</span> <span class="token punctuation">(</span><span class="token string">"value of &amp;a++ %d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+</pre><p><img src="../img/C_img/30.png" alt="30"></p>
+<font color="red">
+注意：
+<ol>
+<li>
+<p>若指针是 int 类型（4个字节），上例中a的初始地址为1,递增后，a的地址变为5。</p>
+</li>
+<li>
+<p>若指针为 char 类型（1个字节），则递增后，a的地址为2</p>
+</li>
+<li>
+<p><mark>根据指针类型的不同，指针指针递增后的地址也不同。</mark><br>
+</p></li></ol></font>
+
+
+<h4 class="mume-header" id="2-%E9%80%92%E5%87%8F%E4%B8%80%E4%B8%AA%E6%8C%87%E9%92%88">2. -- 递减一个指针:</h4>
+
+<blockquote>
+<p>对指针进行递减运算，即把值减去其数据类型的字节数</p>
+</blockquote>
+<h4 class="mume-header" id="3-%E6%8C%87%E9%92%88%E7%9A%84%E6%AF%94%E8%BE%83">3. 指针的比较：</h4>
+
+<blockquote>
+<p>指针可以用关系运算符进行比较，如 ==、&lt; 和 &gt;。<br>
+如果 p1 和 p2 指向两个相关的变量，比如同一个数组中的不同元素，则可对 p1 和 p2 进行大小比较。</p>
+</blockquote>
+<hr>
+<h3 class="mume-header" id="5-%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84">5. 指针数组:</h3>
+
+<p><mark>想要让数组存储指向 int 或 char 或其他数据类型的指针。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span> <span class="token operator">*</span>a<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">//a 中的每个元素，都是一个指向 int 值的指针。</span>
+</pre><p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c">   <span class="token keyword">int</span>  var<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+   <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">[</span>MAX<span class="token punctuation">]</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> MAX<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>var<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* 赋值为整数的地址 */</span>
+   <span class="token punctuation">}</span>
+
+   <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> MAX<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" %d\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+</pre><hr>
+<h3 class="mume-header" id="6-%E6%8C%87%E5%90%91%E6%8C%87%E9%92%88%E7%9A%84%E6%8C%87%E9%92%88">6. 指向指针的指针:</h3>
+
+<p><mark>指向指针的指针是一种多级间接寻址的形式，或者说是一个指针链。</mark></p>
+<p><img src="../img/C_img/31.png" alt="31"></p>
+<p><font color="red">第一个指针包含了第二个指针的地址，第二个指针指向包含实际值的位置</font></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span> <span class="token operator">*</span><span class="token operator">*</span>a<span class="token punctuation">;</span>     <span class="token comment">//声明了一个指向 int 类型指针的指针a</span>
+</pre><p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c">   <span class="token keyword">int</span>  var<span class="token punctuation">;</span>
+   <span class="token keyword">int</span>  <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+   <span class="token keyword">int</span>  <span class="token operator">*</span><span class="token operator">*</span>pptr<span class="token punctuation">;</span>
+
+   var <span class="token operator">=</span> <span class="token number">3000</span><span class="token punctuation">;</span>
+
+   <span class="token comment">/* 获取 var 的地址 */</span>
+   ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>var<span class="token punctuation">;</span>
+
+   <span class="token comment">/* 使用运算符 &amp; 获取 ptr 的地址 */</span>
+   pptr <span class="token operator">=</span> <span class="token operator">&amp;</span>ptr<span class="token punctuation">;</span>
+
+   <span class="token comment">/* 使用 pptr 获取值 */</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value of var = %d\n"</span><span class="token punctuation">,</span> var <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value available at *ptr = %d\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span>ptr <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value available at **pptr = %d\n"</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token operator">*</span>pptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>Value of var = 3000
+Value available at *ptr = 3000
+Value available at **pptr = 3000
+</code></pre><hr>
+<h3 class="mume-header" id="7-%E4%BC%A0%E9%80%92%E6%8C%87%E9%92%88%E7%BB%99%E5%87%BD%E6%95%B0%E9%80%9A%E8%BF%87%E5%BC%95%E7%94%A8%E6%88%96%E5%9C%B0%E5%9D%80%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0">7. 传递指针给函数(通过引用或地址传递参数)：</h3>
+
+<p><mark>C 语言允许传递指针给函数，只需要简单地声明函数参数为指针类型即可。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token comment">/* 函数声明 */</span>
+<span class="token keyword">double</span> <span class="token function">getAverage</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment">/* 带有 5 个元素的整型数组  */</span>
+   <span class="token keyword">int</span> balance<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">17</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+   <span class="token comment">/* 传递一个指向数组的指针作为参数 */</span>
+   <span class="token keyword">double</span> avg <span class="token operator">=</span> <span class="token function">getAverage</span><span class="token punctuation">(</span>balance<span class="token punctuation">)</span> <span class="token punctuation">;</span>
+ 
+    
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">double</span> <span class="token function">getAverage</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>arr<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment">//....</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="8-%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E6%8C%87%E9%92%88">8. 函数返回指针</h3>
+
+<p><mark>C 允许您从函数返回指针,必须声明一个返回指针的函数。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span> <span class="token operator">*</span> <span class="token function">myFunction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token punctuation">}</span>     <span class="token comment">//返回类型为指针</span>
+</pre><p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token comment">/* 要生成和返回随机数的函数 */</span>
+<span class="token keyword">int</span> <span class="token operator">*</span> <span class="token function">getRandom</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">static</span> <span class="token keyword">int</span> r<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   
+   <span class="token comment">//...</span>
+
+   <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="9-%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%B8%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0">9. 函数指针与回调函数(？？？)</h3>
+
+<p>尚未更新，耐心等待！！！</p>
+<hr>
+<h2 class="mume-header" id="10-%E5%AD%97%E7%AC%A6%E4%B8%B2">10. 字符串：</h2>
+
+<p><mark>在 C 语言中，字符串实际上是使用 null 字符 '\0' 终止的一维字符数组。</mark></p>
+<p><font color="red">C 编译器会在初始化数组时，自动把 '\0' 放在字符串的末尾</font></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">char</span> greeting<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello"</span><span class="token punctuation">;</span>
+</pre><p><img src="../img/C_img/33.png" alt="33"></p>
+<br>
+<p><img src="../img/C_img/32.png" alt="32"></p>
+<blockquote>
+<p>关于字符串的函数：</p>
+</blockquote>
+<p><img src="../img/C_img/34.png" alt="34"></p>
+
       </div>
       
       
