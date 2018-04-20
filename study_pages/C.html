@@ -319,6 +319,13 @@ code.language-yaml {
 </ul>
 </li>
 <li><a href="#10-%E5%AD%97%E7%AC%A6%E4%B8%B2">10. 字符串：</a></li>
+<li><a href="#11-%E7%BB%93%E6%9E%84%E4%BD%93">11. 结构体:</a>
+<ul>
+<li><a href="#1%E5%AE%9A%E4%B9%89%E7%BB%93%E6%9E%842%E7%A7%8D%E6%96%B9%E5%BC%8F">1.定义结构(2种方式)：</a></li>
+<li><a href="#2-%E7%BB%93%E6%9E%84%E4%BD%93%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0">2. 结构体作为函数参数：</a></li>
+<li><a href="#3-%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88">3. 结构体指针：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1661,7 +1668,122 @@ Value available at **pptr = 3000
 <p>关于字符串的函数：</p>
 </blockquote>
 <p><img src="../img/C_img/34.png" alt="34"></p>
+<hr>
+<h2 class="mume-header" id="11-%E7%BB%93%E6%9E%84%E4%BD%93">11. 结构体:</h2>
 
+<p><mark>结构体是 C 语言中一种用户自定义的可用的数据类型，允许存储不同类型的数据项。</mark></p>
+<h3 class="mume-header" id="1%E5%AE%9A%E4%B9%89%E7%BB%93%E6%9E%842%E7%A7%8D%E6%96%B9%E5%BC%8F">1.定义结构(2种方式)：</h3>
+
+<p><font color="red">例如定义一本书的结构，需要书的各种属性（book_id,title,author,...)<br>
+</font></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">struct</span> <span class="token punctuation">[</span>结构体类型名称<span class="token punctuation">]</span>
+<span class="token punctuation">{</span>
+   结构体属性<span class="token punctuation">;</span>
+   结构体属性<span class="token punctuation">;</span>
+   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+   结构体属性<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token punctuation">[</span>一个或多个结构体未初始化的变量（可选）<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</pre><p>DEMO-1:</p>
+<p><font color="red">使用成员访问运算符（.），来访问结构体的属性。</font></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">struct</span> Books     <span class="token comment">//声明Books结构体</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">int</span>   book_id<span class="token punctuation">;</span>     <span class="token comment">//这是Books的属性</span>
+   <span class="token keyword">char</span>  title<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span>  author<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span>           <span class="token comment">//分号不能省略</span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">struct</span> Books Book1<span class="token punctuation">;</span>        <span class="token comment">/* 声明 Book1，类型为 Books */</span>
+ 
+   <span class="token comment">/* Book1 详述 */</span>
+   <span class="token function">strcpy</span><span class="token punctuation">(</span> Book1<span class="token punctuation">.</span>title<span class="token punctuation">,</span> <span class="token string">"C Programming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">strcpy</span><span class="token punctuation">(</span> Book1<span class="token punctuation">.</span>author<span class="token punctuation">,</span> <span class="token string">"Nuha Ali"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   Book1<span class="token punctuation">.</span>book_id <span class="token operator">=</span> <span class="token number">6495407</span><span class="token punctuation">;</span>
+ 
+   <span class="token comment">/* 输出 Book1 信息 */</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book 1 title : %s\n"</span><span class="token punctuation">,</span> Book1<span class="token punctuation">.</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book 1 author : %s\n"</span><span class="token punctuation">,</span> Book1<span class="token punctuation">.</span>author<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book 1 book_id : %d\n"</span><span class="token punctuation">,</span> Book1<span class="token punctuation">.</span>book_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>DEMO-2:</p>
+<p><font color="red">在声明结构体的同时，定义一个结构体变量。</font></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">struct</span> Books    
+<span class="token punctuation">{</span>
+   <span class="token keyword">int</span>   book_id<span class="token punctuation">;</span>   
+   <span class="token keyword">char</span>  title<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span>  author<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>bk<span class="token punctuation">;</span> 
+
+
+<span class="token comment">//上面例子与下面例子等价，就相当于下面这种。==================</span>
+<span class="token keyword">struct</span> Books    
+<span class="token punctuation">{</span>
+   <span class="token keyword">int</span>   book_id<span class="token punctuation">;</span>   
+   <span class="token keyword">char</span>  title<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span>  author<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span> 
+
+<span class="token keyword">struct</span> Books bk<span class="token punctuation">;</span>  
+
+
+</pre><p><img src="../img/C_img/35.png" alt="35"></p>
+<hr>
+<h3 class="mume-header" id="2-%E7%BB%93%E6%9E%84%E4%BD%93%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0">2. 结构体作为函数参数：</h3>
+
+<p><mark>可以把结构作为函数参数，传参方式与其他类型的变量或指针类似。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">void</span> <span class="token function">printBook</span><span class="token punctuation">(</span> <span class="token keyword">struct</span> Books book <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book title : %s\n"</span><span class="token punctuation">,</span> book<span class="token punctuation">.</span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book author : %s\n"</span><span class="token punctuation">,</span> book<span class="token punctuation">.</span>author<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book subject : %s\n"</span><span class="token punctuation">,</span> book<span class="token punctuation">.</span>subject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book book_id : %d\n"</span><span class="token punctuation">,</span> book<span class="token punctuation">.</span>book_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</pre><h3 class="mume-header" id="3-%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88">3. 结构体指针：</h3>
+
+<p><mark>可以定义指向结构体的指针，方式与定义指向其他类型变量的指针相似。</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">struct</span> Books <span class="token operator">*</span>struct_pointer<span class="token punctuation">;</span>   <span class="token comment">//该指针类型为Books结构体</span>
+</pre><h4><font color="red">结构体指针访问结构体的属性----使用-> 运算符；</font></h4>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">struct</span> Books
+<span class="token punctuation">{</span>
+   <span class="token keyword">char</span>  title<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span>  author<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">int</span>   book_id<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token comment">/* 函数声明 */</span>
+<span class="token keyword">void</span> <span class="token function">printBook</span><span class="token punctuation">(</span> <span class="token keyword">struct</span> Books <span class="token operator">*</span>book <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">struct</span> Books Book1<span class="token punctuation">;</span>        <span class="token comment">/* 声明 Book1，类型为 Books */</span>
+ 
+   <span class="token function">strcpy</span><span class="token punctuation">(</span> Book1<span class="token punctuation">.</span>title<span class="token punctuation">,</span> <span class="token string">"C Programming"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">strcpy</span><span class="token punctuation">(</span> Book1<span class="token punctuation">.</span>author<span class="token punctuation">,</span> <span class="token string">"Nuha Ali"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+   <span class="token function">strcpy</span><span class="token punctuation">(</span> Book1<span class="token punctuation">.</span>subject<span class="token punctuation">,</span> <span class="token string">"C Programming Tutorial"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   Book1<span class="token punctuation">.</span>book_id <span class="token operator">=</span> <span class="token number">6495407</span><span class="token punctuation">;</span>
+ 
+   <span class="token comment">/* 通过传 Book1 的地址来输出 Book1 信息 */</span>
+   <span class="token function">printBook</span><span class="token punctuation">(</span> <span class="token operator">&amp;</span>Book1 <span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">printBook</span><span class="token punctuation">(</span> <span class="token keyword">struct</span> Books <span class="token operator">*</span>book <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book title : %s\n"</span><span class="token punctuation">,</span> book<span class="token operator">-></span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book author : %s\n"</span><span class="token punctuation">,</span> book<span class="token operator">-></span>author<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book book_id : %d\n"</span><span class="token punctuation">,</span> book<span class="token operator">-></span>book_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre>
       </div>
       
       

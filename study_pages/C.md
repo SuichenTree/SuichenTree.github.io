@@ -1750,3 +1750,156 @@ char greeting[] = "Hello";
 > 关于字符串的函数：
 
 ![34](../img/C_img/34.png)
+
+
+---
+
+
+## 11. 结构体:
+
+==结构体是 C 语言中一种用户自定义的可用的数据类型，允许存储不同类型的数据项。==
+
+
+### 1.定义结构(2种方式)：
+<font color="red">例如定义一本书的结构，需要书的各种属性（book_id,title,author,...)
+</font>
+
+语法：
+```c
+struct [结构体类型名称]
+{
+   结构体属性;
+   结构体属性;
+   ...
+   结构体属性;
+} [一个或多个结构体未初始化的变量（可选）];
+```
+
+
+
+
+DEMO-1:
+
+<font color="red">使用成员访问运算符（.），来访问结构体的属性。</font>
+```c
+struct Books     //声明Books结构体
+{
+   int   book_id;     //这是Books的属性
+   char  title[50];
+   char  author[50];
+
+};           //分号不能省略
+
+
+int main( )
+{
+   struct Books Book1;        /* 声明 Book1，类型为 Books */
+ 
+   /* Book1 详述 */
+   strcpy( Book1.title, "C Programming");
+   strcpy( Book1.author, "Nuha Ali"); 
+   Book1.book_id = 6495407;
+ 
+   /* 输出 Book1 信息 */
+   printf( "Book 1 title : %s\n", Book1.title);
+   printf( "Book 1 author : %s\n", Book1.author);
+   printf( "Book 1 book_id : %d\n", Book1.book_id);
+ 
+   return 0;
+}
+```
+
+DEMO-2:
+
+<font color="red">在声明结构体的同时，定义一个结构体变量。</font>
+
+```c
+struct Books    
+{
+   int   book_id;   
+   char  title[50];
+   char  author[50];
+
+}bk; 
+
+
+//上面例子与下面例子等价，就相当于下面这种。==================
+struct Books    
+{
+   int   book_id;   
+   char  title[50];
+   char  author[50];
+
+}; 
+
+struct Books bk;  
+
+
+```
+
+
+![35](../img/C_img/35.png)
+
+
+---
+
+
+### 2. 结构体作为函数参数：
+
+==可以把结构作为函数参数，传参方式与其他类型的变量或指针类似。==
+
+```c
+void printBook( struct Books book )
+{
+   printf( "Book title : %s\n", book.title);
+   printf( "Book author : %s\n", book.author);
+   printf( "Book subject : %s\n", book.subject);
+   printf( "Book book_id : %d\n", book.book_id);
+}
+
+```
+
+
+### 3. 结构体指针：
+
+==可以定义指向结构体的指针，方式与定义指向其他类型变量的指针相似。==
+
+```c
+struct Books *struct_pointer;   //该指针类型为Books结构体
+```
+
+<h4><font color="red">结构体指针访问结构体的属性----使用-> 运算符；</font></h4>
+
+```c
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   int   book_id;
+};
+ 
+/* 函数声明 */
+void printBook( struct Books *book );
+
+int main( )
+{
+   struct Books Book1;        /* 声明 Book1，类型为 Books */
+ 
+   strcpy( Book1.title, "C Programming");
+   strcpy( Book1.author, "Nuha Ali"); 
+   strcpy( Book1.subject, "C Programming Tutorial");
+   Book1.book_id = 6495407;
+ 
+   /* 通过传 Book1 的地址来输出 Book1 信息 */
+   printBook( &Book1 );
+ 
+   return 0;
+}
+
+void printBook( struct Books *book )
+{
+   printf( "Book title : %s\n", book->title);
+   printf( "Book author : %s\n", book->author);
+   printf( "Book book_id : %d\n", book->book_id);
+}
+```
