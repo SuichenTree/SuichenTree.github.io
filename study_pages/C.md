@@ -1,6 +1,8 @@
 [toc]
 # C语言
 
+资料来源：[菜鸟教程](http://www.runoob.com/cprogramming/c-preprocessors.html)
+
 ## 1.介绍与C编译器：
 
 C语言是一门==面向过程==的计算机编程语言,与C++，Java等==面向对象==的编程语言有所不同。
@@ -2134,4 +2136,179 @@ int main()
    fclose(fp);                           //关闭文件
  
 }
+```
+
+
+---
+
+## 15. 预处理器：
+
+==预处理器，它们会指示编译器在实际编译之前完成所需的预处理。==
+
+![38](../img/C_img/38.png)
+
+
+DEMO:
+```c
+#define MAX 20  
+```
+>  把所有的 MAX 替换为 20.
+
+```c
+#include <stdio.h>
+#include "myheader.h" 
+```
+>  从系统库中获取 stdio.h，并添加文本到当前的源文件中。
+>  从本地目录中获取 myheader.h，并添加内容到当前的源文件中。
+
+
+```c
+#undef  FILE_SIZE
+#define FILE_SIZE 42
+```
+>  取消先前已定义的 FILE_SIZE，并重新定义它为 42。
+
+
+### 1. 预定义宏:
+
+![39](../img/C_img/39.png)
+
+DEMO：
+```c
+#include <stdio.h>
+
+main()
+{
+   printf("File :%s\n", __FILE__ );
+   printf("Date :%s\n", __DATE__ );
+   printf("Time :%s\n", __TIME__ );
+   printf("Line :%d\n", __LINE__ );
+   printf("ANSI :%d\n", __STDC__ );
+
+}
+```
+
+运行结果：
+```
+File :test.c
+Date :Jun 2 2012
+Time :03:36:24
+Line :8
+ANSI :1
+```
+
+
+## 16. 强制类型转换:
+
+==强制类型转换是把变量从一种类型转换为另一种数据类型。==
+
+语法：
+```c
+(type_name) expression
+```
+
+DEMO:
+```c
+#include <stdio.h>
+
+main()
+{
+   int sum = 17, count = 5;
+   double mean;
+
+   mean = (double) sum / count;   //int类型的sum被强转为double类型
+   printf("Value of mean : %f\n", mean );
+
+}
+```
+
+
+## 17. 递归：
+
+==递归指的是函数自己调用自己。==
+
+语法：
+```c
+void recursion()
+{
+   statements;
+   ... ... ...
+   recursion(); /* 函数调用自身 */
+   ... ... ...
+}
+ 
+int main()
+{
+   recursion();
+}
+```
+
+
+![40](../img/C_img/40.png)
+
+<h3><font color="red">在使用递归时，需要注意定义一个从函数退出的条件，否则会进入死循环。</font></h3>
+
+
+> DEMO1---数的阶乘:
+```c
+#include <stdio.h>
+ 
+double factorial(unsigned int i)
+{
+   if(i <= 1)
+   {
+      return 1;
+   }
+   return i * factorial(i - 1);
+}
+int  main()
+{
+    int i = 15;
+    printf("%d 的阶乘为 %f\n", i, factorial(i));
+    return 0;
+}
+```
+
+<br/>
+
+> DEMO2---斐波那契数列:
+```c
+#include <stdio.h>
+ 
+int fibonaci(int i)
+{
+   if(i == 0)
+   {
+      return 0;
+   }
+   if(i == 1)
+   {
+      return 1;
+   }
+   return fibonaci(i-1) + fibonaci(i-2);
+}
+ 
+int  main()
+{
+    int i;
+    for (i = 0; i < 10; i++)
+    {
+       printf("%d\t\n", fibonaci(i));
+    }
+    return 0;
+}
+```
+
+运行结果：
+```
+0    
+1    
+1    
+2    
+3    
+5    
+8    
+13    
+21    
+34
 ```

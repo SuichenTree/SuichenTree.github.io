@@ -345,11 +345,19 @@ code.language-yaml {
 <li><a href="#4-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6">4. 读取文件:</a></li>
 </ul>
 </li>
+<li><a href="#15-%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8">15. 预处理器：</a>
+<ul>
+<li><a href="#1-%E9%A2%84%E5%AE%9A%E4%B9%89%E5%AE%8F">1. 预定义宏:</a></li>
+</ul>
+</li>
+<li><a href="#16-%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">16. 强制类型转换:</a></li>
+<li><a href="#17-%E9%80%92%E5%BD%92">17. 递归：</a></li>
 </ul>
 </li>
 </ul>
 <h1 class="mume-header" id="c%E8%AF%AD%E8%A8%80">C语言</h1>
 
+<p>资料来源：<a href="http://www.runoob.com/cprogramming/c-preprocessors.html">菜鸟教程</a></p>
 <h2 class="mume-header" id="1%E4%BB%8B%E7%BB%8D%E4%B8%8Ec%E7%BC%96%E8%AF%91%E5%99%A8">1.介绍与C编译器：</h2>
 
 <p>C语言是一门<mark>面向过程</mark>的计算机编程语言,与C++，Java等<mark>面向对象</mark>的编程语言有所不同。</p>
@@ -1986,7 +1994,142 @@ fgets()函数，在读取最后一个字符之前就遇到一个换行符 '\n'�
    <span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>                           <span class="token comment">//关闭文件</span>
  
 <span class="token punctuation">}</span>
-</pre>
+</pre><hr>
+<h2 class="mume-header" id="15-%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8">15. 预处理器：</h2>
+
+<p><mark>预处理器，它们会指示编译器在实际编译之前完成所需的预处理。</mark></p>
+<p><img src="../img/C_img/38.png" alt="38"></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> MAX 20  </span>
+</pre><blockquote>
+<p>把所有的 MAX 替换为 20.</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"myheader.h"</span> </span>
+</pre><blockquote>
+<p>从系统库中获取 stdio.h，并添加文本到当前的源文件中。<br>
+从本地目录中获取 myheader.h，并添加内容到当前的源文件中。</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">undef</span>  FILE_SIZE</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> FILE_SIZE 42</span>
+</pre><blockquote>
+<p>取消先前已定义的 FILE_SIZE，并重新定义它为 42。</p>
+</blockquote>
+<h3 class="mume-header" id="1-%E9%A2%84%E5%AE%9A%E4%B9%89%E5%AE%8F">1. 预定义宏:</h3>
+
+<p><img src="../img/C_img/39.png" alt="39"></p>
+<p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"File :%s\n"</span><span class="token punctuation">,</span> <span class="token constant">__FILE__</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Date :%s\n"</span><span class="token punctuation">,</span> <span class="token constant">__DATE__</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Time :%s\n"</span><span class="token punctuation">,</span> <span class="token constant">__TIME__</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Line :%d\n"</span><span class="token punctuation">,</span> <span class="token constant">__LINE__</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"ANSI :%d\n"</span><span class="token punctuation">,</span> __STDC__ <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>File :test.c
+Date :Jun 2 2012
+Time :03:36:24
+Line :8
+ANSI :1
+</code></pre><h2 class="mume-header" id="16-%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">16. 强制类型转换:</h2>
+
+<p><mark>强制类型转换是把变量从一种类型转换为另一种数据类型。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token punctuation">(</span>type_name<span class="token punctuation">)</span> expression
+</pre><p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">17</span><span class="token punctuation">,</span> count <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+   <span class="token keyword">double</span> mean<span class="token punctuation">;</span>
+
+   mean <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> sum <span class="token operator">/</span> count<span class="token punctuation">;</span>   <span class="token comment">//int类型的sum被强转为double类型</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Value of mean : %f\n"</span><span class="token punctuation">,</span> mean <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</pre><h2 class="mume-header" id="17-%E9%80%92%E5%BD%92">17. 递归：</h2>
+
+<p><mark>递归指的是函数自己调用自己。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">void</span> <span class="token function">recursion</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   statements<span class="token punctuation">;</span>
+   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+   <span class="token function">recursion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* 函数调用自身 */</span>
+   <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">recursion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/C_img/40.png" alt="40"></p>
+<h3><font color="red">在使用递归时，需要注意定义一个从函数退出的条件，否则会进入死循环。</font></h3>
+<blockquote>
+<p>DEMO1---数的阶乘:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">double</span> <span class="token function">factorial</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> i <span class="token operator">*</span> <span class="token function">factorial</span><span class="token punctuation">(</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span>  <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d 的阶乘为 %f\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> <span class="token function">factorial</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><br>
+<blockquote>
+<p>DEMO2---斐波那契数列:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">fibonaci</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+   <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+   <span class="token keyword">return</span> <span class="token function">fibonaci</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">fibonaci</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span>  <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+       <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t\n"</span><span class="token punctuation">,</span> <span class="token function">fibonaci</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>0    
+1    
+1    
+2    
+3    
+5    
+8    
+13    
+21    
+34
+</code></pre>
       </div>
       
       
