@@ -326,6 +326,25 @@ code.language-yaml {
 <li><a href="#3-%E7%BB%93%E6%9E%84%E4%BD%93%E6%8C%87%E9%92%88">3. 结构体指针：</a></li>
 </ul>
 </li>
+<li><a href="#12-typedef-%E5%85%B3%E9%94%AE%E5%AD%97-%E4%B8%BA%E7%B1%BB%E5%9E%8B%E5%8F%96%E5%88%AB%E5%90%8D">12. typedef 关键字 ---为类型取别名:</a>
+<ul>
+<li><a href="#1-typedef-%E4%B8%8E-define-%E7%9A%84%E5%8C%BA%E5%88%AB">1. typedef 与 #define 的区别：</a></li>
+</ul>
+</li>
+<li><a href="#13-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA">13. 输入输出：</a>
+<ul>
+<li><a href="#1-scanf%E5%87%BD%E6%95%B0-%E4%B8%8E-printf-%E5%87%BD%E6%95%B0">1. scanf()函数 与 printf() 函数:</a></li>
+<li><a href="#2-gets%E5%87%BD%E6%95%B0-%E4%B8%8E-puts-%E5%87%BD%E6%95%B0">2. gets()函数 与 puts() 函数：</a></li>
+</ul>
+</li>
+<li><a href="#14-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99">14. 文件读写：</a>
+<ul>
+<li><a href="#1-%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%88%96%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6">1. 打开文件或创建文件：</a></li>
+<li><a href="#2-%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6">2. 关闭文件：</a></li>
+<li><a href="#3-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6-%E6%8A%8A%E5%AD%97%E7%AC%A6%E5%86%99%E5%85%A5%E5%88%B0%E6%B5%81%E4%B8%AD">3. 写入文件 --- 把字符写入到流中:</a></li>
+<li><a href="#4-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6">4. 读取文件:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1782,6 +1801,190 @@ Value available at **pptr = 3000
    <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book title : %s\n"</span><span class="token punctuation">,</span> book<span class="token operator">-></span>title<span class="token punctuation">)</span><span class="token punctuation">;</span>
    <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book author : %s\n"</span><span class="token punctuation">,</span> book<span class="token operator">-></span>author<span class="token punctuation">)</span><span class="token punctuation">;</span>
    <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Book book_id : %d\n"</span><span class="token punctuation">,</span> book<span class="token operator">-></span>book_id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h2 class="mume-header" id="12-typedef-%E5%85%B3%E9%94%AE%E5%AD%97-%E4%B8%BA%E7%B1%BB%E5%9E%8B%E5%8F%96%E5%88%AB%E5%90%8D">12. typedef 关键字 ---为类型取别名:</h2>
+
+<p><mark>typedef 关键字，可以使用它来为类型取一个新的名字。</mark></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">char</span> cr<span class="token punctuation">;</span>    <span class="token comment">//为 char 类型取一个别名，cr</span>
+
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> Books 
+<span class="token punctuation">{</span>
+   <span class="token keyword">char</span>  title<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span>  author<span class="token punctuation">[</span><span class="token number">50</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span>  subject<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">int</span>   book_id<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>bk<span class="token punctuation">;</span>                  <span class="token comment">//因为typedef关键字，这里的 bk相当于 struct Books</span>
+ 
+
+</pre><p><img src="../img/C_img/36.png" alt="36"></p>
+<h3 class="mume-header" id="1-typedef-%E4%B8%8E-define-%E7%9A%84%E5%8C%BA%E5%88%AB">1. typedef 与 #define 的区别：</h3>
+
+<p><font color="red">区别：</font></p>
+<blockquote>
+<p>typedef 仅限于为类型定义符号名称，#define 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。</p>
+</blockquote>
+<blockquote>
+<p>typedef 是由编译器执行解释的，#define 语句是由预编译器进行处理的。</p>
+</blockquote>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token macro property">#<span class="token directive keyword">define</span> one  1</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> zero 0</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"one 的值: %d\n"</span><span class="token punctuation">,</span> one<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"zero 的值: %d\n"</span><span class="token punctuation">,</span> zero<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><hr>
+<h2 class="mume-header" id="13-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA">13. 输入输出：</h2>
+
+<font color="red">
+注意:
+<ol>
+<li>%s  : 用来输出或读取字符串。</li>
+<li>%d  : 用来输出或读取整数</li>
+<li>%c  : 用来输出或读取字符</li>
+<li>%f  : 用来输出或读取浮点数<br>
+</li></ol></font>
+
+<h3 class="mume-header" id="1-scanf%E5%87%BD%E6%95%B0-%E4%B8%8E-printf-%E5%87%BD%E6%95%B0">1. scanf()函数 与 printf() 函数:</h3>
+
+<blockquote>
+<p>scanf()函数: 从<font color="red">标准输入流stdin（键盘) 读取输入的数据.</font></p>
+</blockquote>
+<blockquote>
+<p>printf()函数: <font color="red">函数把输出的数据写入到标准输出流 stdout（屏幕）。</font></p>
+</blockquote>
+<p>DEMO:</p>
+<p><strong>执行 printf() 函数需要 stdio.h 头文件（标准输入输出头文件)）</strong></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span>    </span><span class="token comment">// 执行 printf() 函数需要该库</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+   <span class="token keyword">char</span> str<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+ 
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Enter a value :"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%s %d"</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token operator">&amp;</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"\nYou entered: %s %d "</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+</pre><p><mark>在读取字符串时，只要遇到一个空格，scanf()函数就会停止读取，所以 &quot;this is test&quot; 对 scanf() 来说是三个字符串。</mark></p>
+<hr>
+<h3 class="mume-header" id="2-gets%E5%87%BD%E6%95%B0-%E4%B8%8E-puts-%E5%87%BD%E6%95%B0">2. gets()函数 与 puts() 函数：</h3>
+
+<blockquote>
+<p>gets() 函数： 从 stdin（键盘）读取数据，直到读到一个终止符或 EOF，就停止读取。</p>
+</blockquote>
+<blockquote>
+<p>puts() 函数：把字符串或字符数组中的内容写入到 stdout（屏幕上）。</p>
+</blockquote>
+<p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token keyword">char</span> str<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+ 
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"Enter a value :"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">gets</span><span class="token punctuation">(</span> str <span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">//从键盘读取数据，并写入到str中</span>
+ 
+   <span class="token function">printf</span><span class="token punctuation">(</span> <span class="token string">"\nYou entered: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">puts</span><span class="token punctuation">(</span> str <span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">//把str的数据写入到屏幕中。</span>
+   <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h2 class="mume-header" id="14-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99">14. 文件读写：</h2>
+
+<h3 class="mume-header" id="1-%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%88%96%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6">1. 打开文件或创建文件：</h3>
+
+<p><mark>fopen() 函数：创建一个新的文件或者打开一个已有的文件。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c">FILE <span class="token function">fopen</span><span class="token punctuation">(</span>  <span class="token keyword">char</span>  filename<span class="token punctuation">,</span>  <span class="token keyword">char</span>  mode <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><blockquote>
+<p>filename : 用来命名文件.<br>
+mode :是一组特定的值，下图就是mode的取值。</p>
+</blockquote>
+<p><img src="../img/C_img/37.png" alt="37"></p>
+<h3 class="mume-header" id="2-%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6">2. 关闭文件：</h3>
+
+<p><mark>成功关闭文件，fclose( ) 函数返回零，如果关闭文件时发生错误，函数返回 EOF。EOF 是一个定义在头文件 stdio.h 中的常量。</mark></p>
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"> <span class="token keyword">int</span> <span class="token function">fclose</span><span class="token punctuation">(</span> FILE <span class="token operator">*</span>fp <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h3 class="mume-header" id="3-%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6-%E6%8A%8A%E5%AD%97%E7%AC%A6%E5%86%99%E5%85%A5%E5%88%B0%E6%B5%81%E4%B8%AD">3. 写入文件 --- 把字符写入到流中:</h3>
+
+<p>语法：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span> <span class="token function">fputc</span><span class="token punctuation">(</span> <span class="token keyword">int</span> c<span class="token punctuation">,</span> FILE <span class="token operator">*</span>fp <span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+<span class="token comment">/*
+fputc() 把参数 c 的字符值写入到 fp 所指向的输出流中。
+如果写入成功，它会返回写入的字符，如果发生错误，则会返回 EOF。
+
+*/</span>
+
+<span class="token keyword">int</span> <span class="token function">fputs</span><span class="token punctuation">(</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>s<span class="token punctuation">,</span> FILE <span class="token operator">*</span>fp <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/*
+fputs() 把字符串 s 写入到 fp 所指向的输出流中。如果写入成功，它会返回一个非负值，如果发生错误，则会返回 EOF。
+
+*/</span>
+</pre><p>DEMO:</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   FILE <span class="token operator">*</span>fp <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+ 
+   fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"/tmp/test.txt"</span><span class="token punctuation">,</span> <span class="token string">"w+"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//打开文件</span>
+   <span class="token function">fputs</span><span class="token punctuation">(</span><span class="token string">"This is testing for fputs...\n"</span><span class="token punctuation">,</span> fp<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//写入文件</span>
+   <span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment">//关闭文件</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="4-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6">4. 读取文件:</h3>
+
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token keyword">int</span> <span class="token function">fgetc</span><span class="token punctuation">(</span> FILE <span class="token operator">*</span> fp <span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+<span class="token comment">/*
+fgetc() 函数从 fp 所指向的输入文件中读取一个字符。
+返回值是读取的字符，如果发生错误则返回 EOF。
+*/</span>
+
+<span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">fgets</span><span class="token punctuation">(</span> <span class="token keyword">char</span> <span class="token operator">*</span>buf<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">,</span> FILE <span class="token operator">*</span>fp <span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+<span class="token comment">/*
+函数 fgets() 从 fp 所指向的输入流中读取 n - 1 个字符。
+它会把读取的字符串复制到缓冲区 buf，并在最后追加一个 null 字符来终止字符串。
+
+*/</span>
+
+</pre><font color="red">
+fgets()函数，在读取最后一个字符之前就遇到一个换行符 '\n'，或遇到第一个空格字符时，则会停止读取并返回值。
+</font>
+<p>DEMO：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   FILE <span class="token operator">*</span>fp <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+   <span class="token keyword">char</span> buff<span class="token punctuation">[</span><span class="token number">255</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+   
+   fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"/tmp/test.txt"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//打开文件</span>
+   <span class="token function">fscanf</span><span class="token punctuation">(</span>fp<span class="token punctuation">,</span> <span class="token string">"%s"</span><span class="token punctuation">,</span> buff<span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//输入数据给文件</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"1: %s\n"</span><span class="token punctuation">,</span> buff <span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+   <span class="token function">fgets</span><span class="token punctuation">(</span>buff<span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>FILE<span class="token operator">*</span><span class="token punctuation">)</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">//读取文件</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"2: %s\n"</span><span class="token punctuation">,</span> buff <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+   <span class="token function">fgets</span><span class="token punctuation">(</span>buff<span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>FILE<span class="token operator">*</span><span class="token punctuation">)</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">//读取文件</span>
+   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"3: %s\n"</span><span class="token punctuation">,</span> buff <span class="token punctuation">)</span><span class="token punctuation">;</span>
+   <span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>                           <span class="token comment">//关闭文件</span>
+ 
 <span class="token punctuation">}</span>
 </pre>
       </div>

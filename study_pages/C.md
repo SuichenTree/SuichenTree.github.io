@@ -1903,3 +1903,235 @@ void printBook( struct Books *book )
    printf( "Book book_id : %d\n", book->book_id);
 }
 ```
+
+
+
+
+## 12. typedef 关键字 ---为类型取别名:
+
+==typedef 关键字，可以使用它来为类型取一个新的名字。==
+
+DEMO:
+```c
+typedef char cr;    //为 char 类型取一个别名，cr
+
+
+typedef struct Books 
+{
+   char  title[50];
+   char  author[50];
+   char  subject[100];
+   int   book_id;
+}bk;                  //因为typedef关键字，这里的 bk相当于 struct Books
+ 
+
+```
+
+![36](../img/C_img/36.png)
+
+
+### 1. typedef 与 #define 的区别：
+
+<font color="red">区别：</font>
+> typedef 仅限于为类型定义符号名称，#define 不仅可以为类型定义别名，也能为数值定义别名，比如您可以定义 1 为 ONE。
+
+>typedef 是由编译器执行解释的，#define 语句是由预编译器进行处理的。
+
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+#define one  1
+#define zero 0
+ 
+int main( )
+{
+   printf( "one 的值: %d\n", one);
+   printf( "zero 的值: %d\n", zero);
+ 
+   return 0;
+}
+```
+
+---
+
+## 13. 输入输出：
+
+<font color="red">
+注意:
+
+1. %s  : 用来输出或读取字符串。
+2. %d  : 用来输出或读取整数
+3. %c  : 用来输出或读取字符
+4. %f  : 用来输出或读取浮点数
+</font>
+
+### 1. scanf()函数 与 printf() 函数:
+
+> scanf()函数: 从<font color="red">标准输入流stdin（键盘) 读取输入的数据.</font>
+
+> printf()函数: <font color="red">函数把输出的数据写入到标准输出流 stdout（屏幕）。</font>
+
+
+DEMO:
+
+**执行 printf() 函数需要 stdio.h 头文件（标准输入输出头文件)）**
+
+```c
+#include <stdio.h>    // 执行 printf() 函数需要该库
+int main( ) {
+
+   char str[100];
+   int i;
+ 
+   printf( "Enter a value :");
+   scanf("%s %d", str, &i);
+ 
+   printf( "\nYou entered: %s %d ", str, i);
+   printf("\n");
+   return 0;
+
+}
+```
+
+==在读取字符串时，只要遇到一个空格，scanf()函数就会停止读取，所以 "this is test" 对 scanf() 来说是三个字符串。==
+
+
+---
+
+### 2. gets()函数 与 puts() 函数：
+
+> gets() 函数： 从 stdin（键盘）读取数据，直到读到一个终止符或 EOF，就停止读取。
+
+> puts() 函数：把字符串或字符数组中的内容写入到 stdout（屏幕上）。
+
+DEMO：
+```c
+#include <stdio.h>
+ 
+int main( )
+{
+   char str[100];
+ 
+   printf( "Enter a value :");
+   gets( str );         //从键盘读取数据，并写入到str中
+ 
+   printf( "\nYou entered: ");
+   puts( str );         //把str的数据写入到屏幕中。
+   return 0;
+}
+```
+
+
+## 14. 文件读写：
+
+### 1. 打开文件或创建文件：
+
+==fopen() 函数：创建一个新的文件或者打开一个已有的文件。==
+
+语法：
+```c
+FILE fopen(  char  filename,  char  mode );
+```
+
+> filename : 用来命名文件.
+> mode :是一组特定的值，下图就是mode的取值。
+
+
+![37](../img/C_img/37.png)
+
+
+
+### 2. 关闭文件：
+
+==成功关闭文件，fclose( ) 函数返回零，如果关闭文件时发生错误，函数返回 EOF。EOF 是一个定义在头文件 stdio.h 中的常量。==
+
+语法：
+```c
+ int fclose( FILE *fp );
+```
+
+### 3. 写入文件 --- 把字符写入到流中:
+
+语法：
+```c
+int fputc( int c, FILE *fp );  
+
+/*
+fputc() 把参数 c 的字符值写入到 fp 所指向的输出流中。
+如果写入成功，它会返回写入的字符，如果发生错误，则会返回 EOF。
+
+*/
+
+int fputs( const char *s, FILE *fp );
+
+/*
+fputs() 把字符串 s 写入到 fp 所指向的输出流中。如果写入成功，它会返回一个非负值，如果发生错误，则会返回 EOF。
+
+*/
+```
+
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+int main()
+{
+   FILE *fp = NULL;
+ 
+   fp = fopen("/tmp/test.txt", "w+");   //打开文件
+   fputs("This is testing for fputs...\n", fp);   //写入文件
+   fclose(fp);         //关闭文件
+}
+```
+
+
+### 4. 读取文件:
+
+```c
+int fgetc( FILE * fp ); 
+
+/*
+fgetc() 函数从 fp 所指向的输入文件中读取一个字符。
+返回值是读取的字符，如果发生错误则返回 EOF。
+*/
+
+char *fgets( char *buf, int n, FILE *fp );  
+
+/*
+函数 fgets() 从 fp 所指向的输入流中读取 n - 1 个字符。
+它会把读取的字符串复制到缓冲区 buf，并在最后追加一个 null 字符来终止字符串。
+
+*/
+
+```
+
+<font color="red">
+fgets()函数，在读取最后一个字符之前就遇到一个换行符 '\n'，或遇到第一个空格字符时，则会停止读取并返回值。
+</font>
+
+
+DEMO：
+```c
+#include <stdio.h>
+ 
+int main()
+{
+   FILE *fp = NULL;
+   char buff[255];
+   
+   fp = fopen("/tmp/test.txt", "r");     //打开文件
+   fscanf(fp, "%s", buff);               //输入数据给文件
+   printf("1: %s\n", buff );
+ 
+   fgets(buff, 255, (FILE*)fp);          //读取文件
+   printf("2: %s\n", buff );
+   
+   fgets(buff, 255, (FILE*)fp);          //读取文件
+   printf("3: %s\n", buff );
+   fclose(fp);                           //关闭文件
+ 
+}
+```
