@@ -246,6 +246,20 @@ code.language-yaml {
 <ul>
 <li><a href="#1%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89">1.变量的定义：</a></li>
 <li><a href="#2-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2. 变量的数据类型：</a></li>
+<li><a href="#3-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%A4%E7%A7%8D">3. 变量的数据类型转换(两种)：</a>
+<ul>
+<li><a href="#1%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">1.自动类型转换：</a></li>
+<li><a href="#2%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">2.强制类型转换：</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">4. 变量的作用域：</a></li>
+<li><a href="#5-%E5%8F%98%E9%87%8F%E7%A7%8D%E7%B1%BB3%E7%A7%8D">5. 变量种类（3种）：</a>
+<ul>
+<li><a href="#1-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">1. 局部变量(main方法可访问):</a></li>
+<li><a href="#2-%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE">2. 实例变量(main方法不可访问)：</a></li>
+<li><a href="#3-%E7%B1%BB%E5%8F%98%E9%87%8F%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">3. 类变量（静态变量）(main方法可访问)：</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -543,18 +557,9 @@ int c=10;
 <h4 class="mume-header" id="2-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2. 变量的数据类型：</h4>
 
 <font color="red">
-<ol>
-<li>
-<p>在java中，定义变量时必须声明变量的数据类型。</p>
-</li>
-<li>
-<p>为变量赋值时，必须赋予和变量相同类型的值。</p>
-</li>
-<li>
-<p>变量的数据类型有8个。<br>
-</p></li></ol></font>
-
-
+在java中，定义变量时必须声明变量的数据类型。
+</font>
+<p></p>
 <blockquote>
 <p>整数类型（byte ， short ， int , long）<br>
 byte ：占1个字节（8位），<mark>范围：-128（-2^7）~ 127（2^7-1）</mark><br>
@@ -563,11 +568,13 @@ int : 占4个字节（32位），<mark>范围: -2^31 ~ 2^31 - 1</mark><br>
 long : 占8个字节（64位），<mark>范围：-2^63 ~ 2^63 -1</mark></p>
 </blockquote>
 <blockquote>
-<p>浮点数类型（float ， double）</p>
+<p>浮点数类型（float ， double）<br>
+float : <mark>用于存储小数数值。</mark><br>
+double : <mark>既可以存储小数，也可以存储整数。</mark></p>
 </blockquote>
 <blockquote>
 <p>字符型（char）<br>
-char : <mark>最小值是 \u0000（即为0）；最大值是 \uffff（即为65,535）</mark></p>
+char : <mark>用于存储一个单一的字符，最小值是 \u0000（即为0）；最大值是 \uffff（即为65,535）</mark></p>
 </blockquote>
 <blockquote>
 <p>布尔型（boolean）<br>
@@ -577,13 +584,182 @@ boolean : <mark>只有两个取值：true 和 false；</mark></p>
 <p>DEMO:</p>
 <pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">byte</span> a <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
 <span class="token keyword">short</span> s <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">100000</span><span class="token punctuation">;</span>
-<span class="token keyword">long</span> a <span class="token operator">=</span> <span class="token number">100000</span>L<span class="token punctuation">;</span>
-<span class="token keyword">float</span> f1 <span class="token operator">=</span> <span class="token number">234.5f</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10000</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> a <span class="token operator">=</span> <span class="token number">100000</span>L<span class="token punctuation">;</span>    <span class="token comment">//为long类型变量赋值时，需在数值的后面加上大写的L，表示该类型为long类型。</span>
+<span class="token keyword">float</span> f1 <span class="token operator">=</span> <span class="token number">234.5f</span><span class="token punctuation">;</span>  <span class="token comment">//为float类型变量赋值时，需在数值的后面加上F或f，表示该类型为float类型。</span>
 <span class="token keyword">double</span> d1 <span class="token operator">=</span> <span class="token number">123.4</span><span class="token punctuation">;</span>
 <span class="token keyword">boolean</span> one <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> letter <span class="token operator">=</span> <span class="token string">'A'</span><span class="token punctuation">;</span>
-</pre>
+</pre><hr>
+<h4 class="mume-header" id="3-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%A4%E7%A7%8D">3. 变量的数据类型转换(两种)：</h4>
+
+<p><mark>在程序中，当把一种数据类型的值赋给另一种类型的变量时，需要进行变量的数据类型转换。</mark></p>
+<font color="blue">
+整型、实型（常量）、字符型数据可以混合运算。在运算中，不同类型的数据先转化为同一类型，然后进行运算。
+</font>
+<p></p>
+<font color="red">
+数据类型转换必须满足如下规则：
+<p>①：不能对boolean类型进行类型转换。<br>
+②：在把容量大的类型转换为容量小的类型时必须使用强制类型转换.<br>
+③：转换过程中可能导致溢出或损失精度.<br>
+</p></font>
+<h5 class="mume-header" id="1%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">1.自动类型转换：</h5>
+
+<p><mark>自动类型转换也叫隐式类型转换，在转换过程中不需要进行声明的转换。</mark><br>
+<font color="red"><br>
+实现自动类型转换的条件：<br>
+①：目标类型的取值范围大于源类型的取值范围。<br>
+</font></p>
+<p>转换图：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>byte -&gt; short,int,long
+short , char -&gt; int,long
+int -&gt; long
+
+byte,char,short,int -&gt; float
+byte,char,short,int,long,float -&gt; double 
+
+</code></pre><h5 class="mume-header" id="2%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">2.强制类型转换：</h5>
+
+<p><mark>强制类型转换也叫显示类型转换。当两种类型彼此不兼容，或者目标类型的取值范围小于源类型时，可使用强制类型转换。</mark></p>
+<blockquote>
+<p>实现强制类型转换的写法格式：<br>
+目标类型  变量 =（目标类型）源类型的变量；</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">byte</span> a<span class="token punctuation">;</span>
+<span class="token keyword">int</span> b<span class="token operator">=</span><span class="token number">122</span><span class="token punctuation">;</span>
+a<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span>a<span class="token punctuation">;</span>   <span class="token comment">//int -> byte , 会导致数据精度的损失。</span>
+
+</pre><hr>
+<h4 class="mume-header" id="4-%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">4. 变量的作用域：</h4>
+
+<p>变量需要在它的作用范围内才可以被使用，这个作用范围就是变量的作用域。</p>
+<p><mark>变量一定会定义在某一对大括号中，这个大括号包括的区域就是该变量的作用域。</mark></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        
+        <span class="token keyword">int</span> x<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> y<span class="token operator">=</span><span class="token number">19</span><span class="token punctuation">;</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+
+         System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//这段错误</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/11.png" alt="11"></p>
+<h4 class="mume-header" id="5-%E5%8F%98%E9%87%8F%E7%A7%8D%E7%B1%BB3%E7%A7%8D">5. 变量种类（3种）：</h4>
+
+<blockquote>
+<p>在java中有三种类型的变量：</p>
+<ol>
+<li>局部变量 :方法或语句块内声明的变量称为局部变量.</li>
+<li>实例变量 :在类中声明但在方法外部的变量称为实例变量.</li>
+<li>(类变量)静态变量 ：被声明为static的变量(加static修辞符)称为静态变量。它不是局部的。</li>
+</ol>
+</blockquote>
+<p><font color="blue">局部变量与静态变量可以被main方法使用，实例变量不可。</font></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> Hello1<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> data<span class="token operator">=</span><span class="token number">50</span><span class="token punctuation">;</span><span class="token comment">//实例变量</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">int</span> m<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">;</span><span class="token comment">// 静态变量</span>
+
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       
+       <span class="token keyword">int</span> x<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">;</span> <span class="token comment">//局部变量</span>
+       
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//此处有错误</span>
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   <span class="token punctuation">}</span>
+	 
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/15.png" alt="15"></p>
+<h5 class="mume-header" id="1-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">1. 局部变量(main方法可访问):</h5>
+
+<font color="red">
+<ol>
+<li>
+<p>局部变量声明在方法、构造方法或者语句块中.</p>
+</li>
+<li>
+<p>局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁；</p>
+</li>
+<li>
+<p>局部变量是在栈上分配的.</p>
+</li>
+<li>
+<p>局部变量没有默认值，所以局部变量被声明后，必须经过初始化，才可以使用。<br>
+</p></li></ol></font>
+
+
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+	 
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String args<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+        age <span class="token operator">=</span> age <span class="token operator">+</span> <span class="token number">7</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"小狗的年龄是 : "</span> <span class="token operator">+</span> age<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/12.png" alt="12"></p>
+<h5 class="mume-header" id="2-%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE">2. 实例变量(main方法不可访问)：</h5>
+
+<font color="red">
+<ol>
+<li>
+<p>实例变量声明在一个类中，但在方法、构造方法和语句块之外；</p>
+</li>
+<li>
+<p>实例变量在对象创建的时候创建，在对象被销毁的时候销毁；</p>
+</li>
+<li>
+<p>实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。</p>
+</li>
+</ol>
+</font>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+	 
+	   <span class="token comment">// 这个实例变量对子类可见</span>
+	   <span class="token keyword">public</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span>
+	   
+	   <span class="token comment">// 私有变量，仅在该类可见，其他类看不到它</span>
+	   <span class="token keyword">private</span> <span class="token keyword">double</span> b<span class="token punctuation">;</span>
+	   
+
+	   <span class="token comment">// 打印信息</span>
+	   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">printEmp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	   <span class="token punctuation">}</span>
+	   
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/13.png" alt="13"></p>
+<h5 class="mume-header" id="3-%E7%B1%BB%E5%8F%98%E9%87%8F%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">3. 类变量（静态变量）(main方法可访问)：</h5>
+
+<font color="red">
+<ol>
+<li>
+<p>类变量也称为静态变量，在类中以static关键字声明，但必须在方法构造方法和语句块之外。</p>
+</li>
+<li>
+<p>静态变量在程序开始时创建，在程序结束时销毁。</p>
+</li>
+<li>
+<p>数值型变量默认值是0，布尔型默认值是false，引用类型默认值是null。</p>
+</li>
+</ol>
+</font>
+<p><img src="../img/java_img/14.png" alt="14"></p>
+
       </div>
       
       

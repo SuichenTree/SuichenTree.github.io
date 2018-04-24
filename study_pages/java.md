@@ -344,13 +344,10 @@ int c=a+3;
 #### 2. 变量的数据类型：
 
 <font color="red">
-
-1. 在java中，定义变量时必须声明变量的数据类型。
-
-2. 为变量赋值时，必须赋予和变量相同类型的值。
-
-3. 变量的数据类型有8个。
+在java中，定义变量时必须声明变量的数据类型。
 </font>
+
+<p/>
 
 > 整数类型（byte ， short ， int , long）
 > byte ：占1个字节（8位），==范围：-128（-2^7）~ 127（2^7-1）==
@@ -360,10 +357,11 @@ int c=a+3;
 
 
 > 浮点数类型（float ， double）
-
+> float : ==用于存储小数数值。==
+> double : ==既可以存储小数，也可以存储整数。==
 
 > 字符型（char）
-> char : ==最小值是 \u0000（即为0）；最大值是 \uffff（即为65,535）==
+> char : ==用于存储一个单一的字符，最小值是 \u0000（即为0）；最大值是 \uffff（即为65,535）==
 
 > 布尔型（boolean）
 > boolean : ==只有两个取值：true 和 false；==
@@ -375,10 +373,211 @@ DEMO:
 ```java
 byte a = 100;
 short s = 1000;
-int a = 100000;
-long a = 100000L;
-float f1 = 234.5f;
+int a = 10000;
+long a = 100000L;    //为long类型变量赋值时，需在数值的后面加上大写的L，表示该类型为long类型。
+float f1 = 234.5f;  //为float类型变量赋值时，需在数值的后面加上F或f，表示该类型为float类型。
 double d1 = 123.4;
 boolean one = true;
 char letter = 'A';
 ```
+
+
+---
+
+
+#### 3. 变量的数据类型转换(两种)：
+
+==在程序中，当把一种数据类型的值赋给另一种类型的变量时，需要进行变量的数据类型转换。==
+
+<font color="blue">
+整型、实型（常量）、字符型数据可以混合运算。在运算中，不同类型的数据先转化为同一类型，然后进行运算。
+</font>
+
+<p/>
+
+
+<font color="red">
+数据类型转换必须满足如下规则：
+
+ ①：不能对boolean类型进行类型转换。
+ ②：在把容量大的类型转换为容量小的类型时必须使用强制类型转换.
+ ③：转换过程中可能导致溢出或损失精度.
+</font>
+
+
+
+##### 1.自动类型转换：
+
+==自动类型转换也叫隐式类型转换，在转换过程中不需要进行声明的转换。==
+<font color="red">
+实现自动类型转换的条件：
+①：目标类型的取值范围大于源类型的取值范围。
+</font>
+
+转换图：
+```
+byte -> short,int,long
+short , char -> int,long
+int -> long
+
+byte,char,short,int -> float
+byte,char,short,int,long,float -> double 
+
+```
+
+##### 2.强制类型转换：
+
+==强制类型转换也叫显示类型转换。当两种类型彼此不兼容，或者目标类型的取值范围小于源类型时，可使用强制类型转换。==
+
+
+> 实现强制类型转换的写法格式：
+> 目标类型  变量 =（目标类型）源类型的变量；
+```java
+byte a;
+int b=122;
+a=(byte)a;   //int -> byte , 会导致数据精度的损失。
+
+```
+
+
+---
+
+
+#### 4. 变量的作用域：
+
+变量需要在它的作用范围内才可以被使用，这个作用范围就是变量的作用域。
+
+==变量一定会定义在某一对大括号中，这个大括号包括的区域就是该变量的作用域。==
+
+```java
+public class Test {
+    public static void main(String[] args) {
+        
+        int x=12;
+
+        {
+            int y=19;
+
+            System.out.println(x);
+
+        }
+
+         System.out.println(y);    //这段错误
+
+    }
+}
+```
+
+![11](../img/java_img/11.png)
+
+
+
+#### 5. 变量种类（3种）：
+
+> 在java中有三种类型的变量：
+> 1. 局部变量 :方法或语句块内声明的变量称为局部变量.
+> 2. 实例变量 :在类中声明但在方法外部的变量称为实例变量.
+> 3. (类变量)静态变量 ：被声明为static的变量(加static修辞符)称为静态变量。它不是局部的。
+
+<font color="blue">局部变量与静态变量可以被main方法使用，实例变量不可。</font>
+
+DEMO:
+```java
+package Hello1;
+
+public class HelloWorld {
+	int data=50;//实例变量
+
+    static int m=100;// 静态变量
+
+   public static void main(String[] args) {
+       
+       int x=12; //局部变量
+       
+       System.out.println(data);    //此处有错误
+       System.out.println(x);
+       System.out.println(m);
+
+   }
+	 
+}
+```
+
+![15](../img/java_img/15.png)
+
+
+##### 1. 局部变量(main方法可访问):
+
+<font color="red">
+
+1. 局部变量声明在方法、构造方法或者语句块中.
+
+2. 局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁；
+
+3. 局部变量是在栈上分配的.
+
+4. 局部变量没有默认值，所以局部变量被声明后，必须经过初始化，才可以使用。
+</font>
+
+```java
+public class HelloWorld {
+	 
+    public static void main(String args[]){
+        int age;
+        age = age + 7;
+        System.out.println("小狗的年龄是 : " + age);
+    }
+}
+```
+
+![12](../img/java_img/12.png)
+
+
+##### 2. 实例变量(main方法不可访问)：
+
+<font color="red">
+
+1. 实例变量声明在一个类中，但在方法、构造方法和语句块之外；
+
+2. 实例变量在对象创建的时候创建，在对象被销毁的时候销毁；
+
+3. 实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。
+
+</font>
+
+DEMO:
+```java
+public class HelloWorld {
+	 
+	   // 这个实例变量对子类可见
+	   public int a;
+	   
+	   // 私有变量，仅在该类可见，其他类看不到它
+	   private double b;
+	   
+
+	   // 打印信息
+	   public void printEmp(){
+	      System.out.println(a);
+	      System.out.println(b);
+	   }
+	   
+}
+```
+
+![13](../img/java_img/13.png)
+
+
+##### 3. 类变量（静态变量）(main方法可访问)：
+
+<font color="red">
+
+1. 类变量也称为静态变量，在类中以static关键字声明，但必须在方法构造方法和语句块之外。
+
+2. 静态变量在程序开始时创建，在程序结束时销毁。
+
+3. 数值型变量默认值是0，布尔型默认值是false，引用类型默认值是null。
+
+</font>
+
+![14](../img/java_img/14.png)
