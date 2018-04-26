@@ -218,6 +218,7 @@ code.language-yaml {
 <li><a href="#pat%E4%B9%99%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%8F%8A%E8%AE%AD%E7%BB%83%E9%9B%86">PAT乙级真题及训练集</a>
 <ul>
 <li><a href="#1001-%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%843n1%E7%8C%9C%E6%83%B3-15">1001. 害死人不偿命的(3n+1)猜想 (15)</a></li>
+<li><a href="#1002-%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0-20">1002. 写出这个数 (20)：</a></li>
 </ul>
 </li>
 </ul>
@@ -277,6 +278,89 @@ code.language-yaml {
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span> 
 
+</pre><hr>
+<h3 class="mume-header" id="1002-%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0-20">1002. 写出这个数 (20)：</h3>
+
+<blockquote>
+<p>读入一个自然数n，计算其各位数字之和，用汉语拼音写出和的每一位数字。</p>
+</blockquote>
+<p>输入格式：每个测试输入包含1个测试用例，即给出自然数n的值。这里保证n小于10100。</p>
+<p>输出格式：在一行内输出n的各位数字之和的每一位，拼音数字间有1 空格，但一行中最后一个拼音数字后没有空格。</p>
+<p>输入样例：<br>
+1234567890987654321123456789<br>
+输出样例：<br>
+yi san wu</p>
+<p>Code<br>
+<mark>格式可能有问题</mark></p>
+<pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span> </span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string.h></span> </span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">long</span> n<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> sum<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>     <span class="token comment">//n的各个位数之和</span>
+	
+	<span class="token keyword">int</span> a<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>       <span class="token comment">//n的各个位数之和的颠倒数(若sum=45 ,则a=54)       </span>
+	
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"shu ru n:\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//读入自然数n </span>
+	
+	<span class="token keyword">while</span><span class="token punctuation">(</span>n<span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>            <span class="token comment">//使用while循环遍历n</span>
+		i<span class="token operator">=</span>n<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>             <span class="token comment">// 取出n的个位数 </span>
+		sum<span class="token operator">=</span>sum<span class="token operator">+</span>i<span class="token punctuation">;</span>          <span class="token comment">// 把取出的个位数 加到一起</span>
+		n<span class="token operator">=</span>n<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">;</span>             <span class="token comment">//把n从 n 位数变成 n-1 位数。(例如：123 -> 12) </span>
+		
+	<span class="token punctuation">}</span>
+	
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"sum is %d\n"</span><span class="token punctuation">,</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//sum是n的各个数之和 </span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	 
+	 
+	<span class="token keyword">while</span><span class="token punctuation">(</span>sum<span class="token operator">></span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span>           <span class="token comment">//把sum的位数反转（例如：123 -> 321） </span>
+		a<span class="token operator">=</span>sum<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+		a<span class="token operator">=</span>a<span class="token operator">*</span><span class="token number">10</span><span class="token punctuation">;</span> 
+		sum<span class="token operator">=</span>sum<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	    a<span class="token operator">=</span>a<span class="token operator">+</span>sum<span class="token punctuation">;</span>            <span class="token comment">//此时的sum是原先的sun的最高位数，与a相加后，会变成a的最低位数。 </span>
+	 
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"reverse is %d\n"</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	 
+	<span class="token keyword">while</span><span class="token punctuation">(</span>a<span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>             <span class="token comment">// 遍历 a </span>
+		
+		<span class="token keyword">switch</span><span class="token punctuation">(</span>a<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span>        <span class="token comment">//取出a的个位数(就是原先sun的最高位数) </span>
+			<span class="token keyword">case</span> <span class="token number">1</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"yi "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"er "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"san "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">4</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"si "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">5</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"wu "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">6</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"liu "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">7</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"qi "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">8</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"ba "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token keyword">case</span> <span class="token number">9</span><span class="token punctuation">:</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"jiu "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+		a<span class="token operator">=</span>a<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">;</span>        <span class="token comment">//把a从 n 位数变成 n-1 位数。</span>
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
 </pre>
       </div>
       

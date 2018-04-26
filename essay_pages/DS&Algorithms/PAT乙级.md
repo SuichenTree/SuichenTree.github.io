@@ -60,3 +60,92 @@ int main(){
 } 
 
 ```
+
+---
+
+### 1002. 写出这个数 (20)：
+
+> 读入一个自然数n，计算其各位数字之和，用汉语拼音写出和的每一位数字。
+
+输入格式：每个测试输入包含1个测试用例，即给出自然数n的值。这里保证n小于10100。
+
+输出格式：在一行内输出n的各位数字之和的每一位，拼音数字间有1 空格，但一行中最后一个拼音数字后没有空格。
+
+输入样例：
+1234567890987654321123456789
+输出样例：
+yi san wu
+
+Code 
+==格式可能有问题==
+```c
+#include<stdio.h> 
+#include<string.h> 
+
+int main(){
+	long n;
+	int i=0;
+	int sum=0;     //n的各个位数之和
+	
+	int a=0;       //n的各个位数之和的颠倒数(若sum=45 ,则a=54)       
+	
+	printf("shu ru n:\n");    
+	scanf("%d",&n);			//读入自然数n 
+	
+	while(n!=0){            //使用while循环遍历n
+		i=n%10;             // 取出n的个位数 
+		sum=sum+i;          // 把取出的个位数 加到一起
+		n=n/10;             //把n从 n 位数变成 n-1 位数。(例如：123 -> 12) 
+		
+	}
+	
+	printf("sum is %d\n",sum);    //sum是n的各个数之和 
+	printf("\n");
+	 
+	 
+	while(sum>10){           //把sum的位数反转（例如：123 -> 321） 
+		a=sum%10;
+		a=a*10; 
+		sum=sum/10;
+	}
+	    a=a+sum;            //此时的sum是原先的sun的最高位数，与a相加后，会变成a的最低位数。 
+	 
+	printf("reverse is %d\n",a); 
+	 
+	while(a!=0){             // 遍历 a 
+		
+		switch(a%10){        //取出a的个位数(就是原先sun的最高位数) 
+			case 1:
+				printf("yi ");
+				break;
+			case 2:
+				printf("er ");
+				break;
+			case 3:
+				printf("san ");
+				break;
+			case 4:
+				printf("si ");
+				break;
+			case 5:
+				printf("wu ");
+				break;
+			case 6:
+				printf("liu ");
+				break;
+			case 7:
+				printf("qi ");
+				break;
+			case 8:
+				printf("ba ");
+				break;
+			case 9:
+				printf("jiu ");
+				break;
+		}
+		
+		a=a/10;        //把a从 n 位数变成 n-1 位数。
+	}
+	
+}
+```
