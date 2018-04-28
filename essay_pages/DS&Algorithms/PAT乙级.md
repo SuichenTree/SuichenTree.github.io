@@ -16,7 +16,7 @@
 链接：[PAT乙级真题及训练集](https://www.patest.cn/contests/pat-b-practise)
 
 
-### 1001. 害死人不偿命的(3n+1)猜想 (15)
+### 1001. 害死人不偿命的(3n+1)猜想 (15分)
 
 > 卡拉兹(Callatz)猜想：
 
@@ -33,7 +33,9 @@
 输出样例：
 5
 
-Code:
+
+
+C
 ```c
 #include<stdio.h>
 int main(){
@@ -63,7 +65,7 @@ int main(){
 
 ---
 
-### 1002. 写出这个数 (20)：
+### 1002. 写出这个数 (20分)：
 
 > 读入一个自然数n，计算其各位数字之和，用汉语拼音写出和的每一位数字。
 
@@ -76,76 +78,88 @@ int main(){
 输出样例：
 yi san wu
 
-Code 
-==格式可能有问题==
-```c
-#include<stdio.h> 
-#include<string.h> 
 
+
+C++
+```c
+#include<iostream>
+#include<string>
+using namespace std;
 int main(){
-	long n;
-	int i=0;
+    string n;
 	int sum=0;     //n的各个位数之和
 	
-	int a=0;       //n的各个位数之和的颠倒数(若sum=45 ,则a=54)       
-	
-	printf("shu ru n:\n");    
-	scanf("%d",&n);			//读入自然数n 
-	
-	while(n!=0){            //使用while循环遍历n
-		i=n%10;             // 取出n的个位数 
-		sum=sum+i;          // 把取出的个位数 加到一起
-		n=n/10;             //把n从 n 位数变成 n-1 位数。(例如：123 -> 12) 
-		
+	string str[10]={"ling","yi","er","san","si","wu","liu","qi","ba","jiu"};
+	  
+	cin>>n;			//读入自然数n 
+
+
+	//由于 n 不是传统的数字，是一串数字组成的字符串，下面是对字符串的数字进行求和
+	for(int i=0;i<n.size();i++){
+		sum = sum+n[i]-'0' ;		//sum是n的各个数之和 
 	}
-	
-	printf("sum is %d\n",sum);    //sum是n的各个数之和 
-	printf("\n");
-	 
-	 
-	while(sum>10){           //把sum的位数反转（例如：123 -> 321） 
-		a=sum%10;
-		a=a*10; 
-		sum=sum/10;
+
+	//取出sum的各个位数
+	int bai=sum/100; 
+	int shi=(sum/10)%10;
+	int ge=sum%10;
+
+	if(bai!=0){
+		cout<<str[bai]<<" ";
+		cout<<str[shi]<<" ";
+		cout<<str[ge];          //题目要求个位数后面无空格
+
+	}else if(shi!=0){
+		cout<<str[shi]<<" ";
+		cout<<str[ge];
+
+	}else if(ge!=0 || ge==0){
+		cout<<str[ge];
 	}
-	    a=a+sum;            //此时的sum是原先的sun的最高位数，与a相加后，会变成a的最低位数。 
-	 
-	printf("reverse is %d\n",a); 
-	 
-	while(a!=0){             // 遍历 a 
-		
-		switch(a%10){        //取出a的个位数(就是原先sun的最高位数) 
-			case 1:
-				printf("yi ");
-				break;
-			case 2:
-				printf("er ");
-				break;
-			case 3:
-				printf("san ");
-				break;
-			case 4:
-				printf("si ");
-				break;
-			case 5:
-				printf("wu ");
-				break;
-			case 6:
-				printf("liu ");
-				break;
-			case 7:
-				printf("qi ");
-				break;
-			case 8:
-				printf("ba ");
-				break;
-			case 9:
-				printf("jiu ");
-				break;
-		}
-		
-		a=a/10;        //把a从 n 位数变成 n-1 位数。
-	}
-	
+
+	return 0;
 }
+
 ```
+
+
+---
+
+
+### 1003. 我要通过！(20)
+
+“答案正确”是自动判题系统给出的最令人欢喜的回复。本题属于PAT的“答案正确”大派送 —— 只要读入的字符串满足下列条件，系统就输出“答案正确”，否则输出“答案错误”。
+
+得到“答案正确”的条件是：
+
+1. 字符串中必须仅有P, A, T这三种字符，不可以包含其它字符；
+2. 任意形如 xPATx 的字符串都可以获得“答案正确”，其中 x 或者是空字符串，或者是仅由字母 A 组成的字符串；
+3. 如果 aPbTc 是正确的，那么 aPbATca 也是正确的，其中 a, b, c 均或者是空字符串，或者是仅由字母 A 组成的字符串。
+
+现在就请你为PAT写一个自动裁判程序，判定哪些字符串是可以获得“答案正确”的。
+
+> 输入格式： 每个测试输入包含1个测试用例。第1行给出一个自然数n (<10)，是需要检测的字符串个数。接下来每个字符串占一行，字符串长度不超过100，且不包含空格。
+
+> 输出格式：每个字符串的检测结果占一行，如果该字符串可以获得“答案正确”，则输出YES，否则输出NO。
+
+
+输入样例：
+8
+PAT
+PAAT
+AAPATAA
+AAPAATAAAA
+xPATx
+PT
+Whatever
+APAAATAA
+
+输出样例：
+YES
+YES
+YES
+YES
+NO
+NO
+NO
+NO
