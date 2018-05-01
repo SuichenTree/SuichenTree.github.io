@@ -220,6 +220,8 @@ code.language-yaml {
 <li><a href="#1001-%E5%AE%B3%E6%AD%BB%E4%BA%BA%E4%B8%8D%E5%81%BF%E5%91%BD%E7%9A%843n1%E7%8C%9C%E6%83%B3-15%E5%88%86">1001. 害死人不偿命的(3n+1)猜想 (15分)</a></li>
 <li><a href="#1002-%E5%86%99%E5%87%BA%E8%BF%99%E4%B8%AA%E6%95%B0-20%E5%88%86">1002. 写出这个数 (20分)：</a></li>
 <li><a href="#1003-%E6%88%91%E8%A6%81%E9%80%9A%E8%BF%8720">1003. 我要通过！(20)</a></li>
+<li><a href="#1004-%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D-20">1004. 成绩排名 (20)</a></li>
+<li><a href="#1005-%E7%BB%A7%E7%BB%AD3n1%E7%8C%9C%E6%83%B3-25">1005. 继续(3n+1)猜想 (25):</a></li>
 </ul>
 </li>
 </ul>
@@ -366,6 +368,116 @@ NO<br>
 NO<br>
 NO<br>
 NO</p>
+<p>c++</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"></pre><hr>
+<h3 class="mume-header" id="1004-%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D-20">1004. 成绩排名 (20)</h3>
+
+<blockquote>
+<p>读入n名学生的姓名、学号、成绩，分别输出成绩最高和成绩最低学生的姓名和学号。</p>
+</blockquote>
+<p>输入格式：每个测试输入包含1个测试用例，格式为</p>
+<p>第1行：正整数n<br>
+第2行：第1个学生的姓名 学号 成绩<br>
+第3行：第2个学生的姓名 学号 成绩<br>
+... ... ...<br>
+第n+1行：第n个学生的姓名 学号 成绩</p>
+<p>其中姓名和学号均为不超过10个字符的字符串，成绩为0到100之间的一个整数，这里保证在一组测试用例中没有两个学生的成绩是相同的。<br>
+输出格式：对每个测试用例输出2行，第1行是成绩最高学生的姓名和学号，第2行是成绩最低学生的姓名和学号，字符串间有1空格。</p>
+<blockquote>
+<p>输入样例：<br>
+3<br>
+Joe Math990112 89<br>
+Mike CS991301 100<br>
+Mary EE990830 95</p>
+</blockquote>
+<blockquote>
+<p>输出样例：<br>
+Mike CS991301<br>
+Joe Math990112</p>
+</blockquote>
+<p>C++</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token comment">//构造学生结构体</span>
+<span class="token keyword">struct</span> stu     
+<span class="token punctuation">{</span>
+   string name<span class="token punctuation">;</span>
+   string sid<span class="token punctuation">;</span>
+   <span class="token keyword">int</span> score<span class="token punctuation">;</span>
+   
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> max_score<span class="token punctuation">,</span>min_score<span class="token punctuation">;</span>      <span class="token comment">//最高分与最低分</span>
+
+	cin<span class="token operator">>></span>n<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> stu s<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	<span class="token comment">//输入信息给 结构体数组</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cin<span class="token operator">>></span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>name<span class="token operator">>></span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>sid<span class="token operator">>></span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//找出结构体数组中的最高分</span>
+	max_score<span class="token operator">=</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">;</span> 
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>max_score<span class="token operator">&lt;</span>s<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			max_score<span class="token operator">=</span>s<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//找出结构体数组中的最低分</span>
+	min_score<span class="token operator">=</span>s<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>min_score<span class="token operator">></span>s<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			min_score<span class="token operator">=</span>s<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	
+	<span class="token keyword">int</span> max<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>    <span class="token comment">//分数最大的是结构体数组中的第几个，max为下标</span>
+	<span class="token keyword">int</span> min<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+	<span class="token comment">//通过最高分与最低分的对比，来找出最高分与最低分的学生是谁？</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>k<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token operator">==</span>max_score<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			max<span class="token operator">=</span>k<span class="token punctuation">;</span>       <span class="token comment">//最高分学生在数组的位置</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>score<span class="token operator">==</span>min_score<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			min<span class="token operator">=</span>k<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+
+	cout<span class="token operator">&lt;&lt;</span>s<span class="token punctuation">[</span>max<span class="token punctuation">]</span><span class="token punctuation">.</span>name<span class="token operator">&lt;&lt;</span><span class="token string">' '</span><span class="token operator">&lt;&lt;</span>s<span class="token punctuation">[</span>max<span class="token punctuation">]</span><span class="token punctuation">.</span>sid<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>   <span class="token comment">//输出最高分学生的下标</span>
+	cout<span class="token operator">&lt;&lt;</span>s<span class="token punctuation">[</span>min<span class="token punctuation">]</span><span class="token punctuation">.</span>name<span class="token operator">&lt;&lt;</span><span class="token string">' '</span><span class="token operator">&lt;&lt;</span>s<span class="token punctuation">[</span>min<span class="token punctuation">]</span><span class="token punctuation">.</span>sid<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</pre><hr>
+<h3 class="mume-header" id="1005-%E7%BB%A7%E7%BB%AD3n1%E7%8C%9C%E6%83%B3-25">1005. 继续(3n+1)猜想 (25):</h3>
+
+<p>卡拉兹(Callatz)猜想已经在1001中给出了描述。在这个题目里，情况稍微有些复杂。</p>
+<p>当我们验证卡拉兹猜想的时候，为了避免重复计算，可以记录下递推过程中遇到的每一个数。例如对n=3进行验证的时候，我们需要计算3、5、8、4、2、1，则当我们对n=5、8、4、2进行验证的时候，就可以直接判定卡拉兹猜想的真伪，而不需要重复计算，因为这4个数已经在验证3的时候遇到过了，我们称5、8、4、2是被3“覆盖”的数。我们称一个数列中的某个数n为“关键数”，如果n不能被数列中的其他数字所覆盖。</p>
+<blockquote>
+<p>现在给定一系列待验证的数字，我们只需要验证其中的几个关键数，就可以不必再重复验证余下的数字。<mark>你的任务就是找出这些关键数字，并按从大到小的顺序输出它们。</mark></p>
+</blockquote>
+<blockquote>
+<p>输入格式：每个测试输入包含1个测试用例，第1行给出一个正整数K(&lt;100)，第2行给出K个互不相同的待验证的正整数n(1&lt;n&lt;=100)的值，数字间用空格隔开。</p>
+</blockquote>
+<blockquote>
+<p>输出格式：每个测试用例的输出占一行，按从大到小的顺序输出关键数字。数字间用1个空格隔开，但一行中最后一个数字后没有空格。</p>
+</blockquote>
+<p>输入样例：<br>
+6<br>
+3 5 6 7 8 11</p>
+<p>输出样例：<br>
+7 6</p>
 
       </div>
       
