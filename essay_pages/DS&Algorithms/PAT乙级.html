@@ -222,6 +222,9 @@ code.language-yaml {
 <li><a href="#1003-%E6%88%91%E8%A6%81%E9%80%9A%E8%BF%8720">1003. 我要通过！(20)</a></li>
 <li><a href="#1004-%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D-20">1004. 成绩排名 (20)</a></li>
 <li><a href="#1005-%E7%BB%A7%E7%BB%AD3n1%E7%8C%9C%E6%83%B3-25">1005. 继续(3n+1)猜想 (25):</a></li>
+<li><a href="#1006-%E6%8D%A2%E4%B8%AA%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%87%BA%E6%95%B4%E6%95%B0-15">1006. 换个格式输出整数 (15)</a></li>
+<li><a href="#1007-%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3-20">1007. 素数对猜想 (20):</a></li>
+<li><a href="#1008-%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%BE%AA%E7%8E%AF%E5%8F%B3%E7%A7%BB%E9%97%AE%E9%A2%98-20">1008. 数组元素循环右移问题 (20):</a></li>
 </ul>
 </li>
 </ul>
@@ -256,7 +259,7 @@ code.language-yaml {
 3<br>
 输出样例：<br>
 5</p>
-<p>C</p>
+<p><mark>C</mark></p>
 <pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stdio.h></span></span>
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 	
@@ -293,7 +296,7 @@ code.language-yaml {
 1234567890987654321123456789<br>
 输出样例：<br>
 yi san wu</p>
-<p>C++</p>
+<p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c" class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
 using namespace std<span class="token punctuation">;</span>
@@ -368,7 +371,7 @@ NO<br>
 NO<br>
 NO<br>
 NO</p>
-<p>c++</p>
+<p><mark>c++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp"></pre><hr>
 <h3 class="mume-header" id="1004-%E6%88%90%E7%BB%A9%E6%8E%92%E5%90%8D-20">1004. 成绩排名 (20)</h3>
 
@@ -395,7 +398,7 @@ Mary EE990830 95</p>
 Mike CS991301<br>
 Joe Math990112</p>
 </blockquote>
-<p>C++</p>
+<p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
 <span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
@@ -478,7 +481,116 @@ Joe Math990112</p>
 3 5 6 7 8 11</p>
 <p>输出样例：<br>
 7 6</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+</pre><h3 class="mume-header" id="1006-%E6%8D%A2%E4%B8%AA%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%87%BA%E6%95%B4%E6%95%B0-15">1006. 换个格式输出整数 (15)</h3>
 
+<p>让我们用字母B来表示“百”、字母S表示“十”，用“12...n”来表示个位数字n（&lt;10），换个格式来输出任一个不超过3位的正整数。例如234应该被输出为BBSSS1234，因为它有2个“百”、3个“十”、以及个位的4。</p>
+<blockquote>
+<p>输入格式：每个测试输入包含1个测试用例，给出正整数n（&lt;1000）。</p>
+</blockquote>
+<blockquote>
+<p>输出格式：每个测试用例的输出占一行，用规定的格式输出n。</p>
+</blockquote>
+<p>输入样例1：<br>
+234</p>
+<p>输出样例1：<br>
+BBSSS1234</p>
+<p>输入样例2：<br>
+23</p>
+<p>输出样例2：<br>
+SS123</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+	cin<span class="token operator">>></span>n<span class="token punctuation">;</span>      <span class="token comment">//输入n</span>
+
+	 <span class="token comment">// n 的个十百上的数字</span>
+	<span class="token keyword">int</span> ge<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> shi<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> bai<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+	
+	<span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">>=</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+		ge<span class="token operator">=</span>n<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>			 <span class="token comment">//若n>100,则个十百上的数字是</span>
+		shi<span class="token operator">=</span><span class="token punctuation">(</span>n<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+		bai<span class="token operator">=</span><span class="token punctuation">(</span>n<span class="token operator">/</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>bai<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">//百位数是几，就输出几个B</span>
+			cout<span class="token operator">&lt;&lt;</span><span class="token string">'B'</span><span class="token punctuation">;</span> 
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>shi<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span><span class="token string">'S'</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>ge<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment">//由于个位数，若为 4，则输出1234，所有 i=1,且 i&lt;ge+1</span>
+			cout<span class="token operator">&lt;&lt;</span>i<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">>=</span><span class="token number">10</span><span class="token operator">&amp;&amp;</span>n<span class="token operator">&lt;</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+		ge<span class="token operator">=</span>n<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+		shi<span class="token operator">=</span><span class="token punctuation">(</span>n<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+		
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>shi<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span><span class="token string">'S'</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>ge<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span>i<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">></span><span class="token number">0</span><span class="token operator">&amp;&amp;</span>n<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		
+		ge<span class="token operator">=</span>n<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>ge<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span>i<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+</pre><hr>
+<h3 class="mume-header" id="1007-%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3-20">1007. 素数对猜想 (20):</h3>
+
+<p>让我们定义 dn 为：dn = pn+1 - pn，其中 pi 是第i个素数。显然有 d1=1 且对于n&gt;1有 dn 是偶数。“素数对猜想”认为“存在无穷多对相邻且差为2的素数”。</p>
+<p>现给定任意正整数N (&lt; 105)，请计算不超过N的满足猜想的素数对的个数。</p>
+<blockquote>
+<p>输入格式：每个测试输入包含1个测试用例，给出正整数N。</p>
+</blockquote>
+<blockquote>
+<p>输出格式：每个测试用例的输出占一行，不超过N的满足猜想的素数对的个数。</p>
+</blockquote>
+<p>输入样例：<br>
+20</p>
+<p>输出样例：<br>
+4</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+</pre><hr>
+<h3 class="mume-header" id="1008-%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%BE%AA%E7%8E%AF%E5%8F%B3%E7%A7%BB%E9%97%AE%E9%A2%98-20">1008. 数组元素循环右移问题 (20):</h3>
+
+<p>一个数组A中存有N（N&gt;0）个整数，在不允许使用另外数组的前提下，将每个整数循环向右移M（M&gt;=0）个位置，即将A中的数据由（A0 A1……AN-1）变换为（AN-M …… AN-1 A0 A1……AN-M-1）（最后M个数循环移至最前面的M个位置）。如果需要考虑程序移动数据的次数尽量少，要如何设计移动的方法？</p>
+<blockquote>
+<p>输入格式：每个输入包含一个测试用例，第1行输入N ( 1&lt;=N&lt;=100)、M（M&gt;=0）；第2行输入N个整数，之间用空格分隔。</p>
+</blockquote>
+<blockquote>
+<p>输出格式：在一行中输出循环右移M位以后的整数序列，之间用空格分隔，序列结尾不能有多余空格。</p>
+</blockquote>
+<p>输入样例：<br>
+6 2<br>
+1 2 3 4 5 6</p>
+<p>输出样例：<br>
+5 6 1 2 3 4</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+</pre>
       </div>
       
       
