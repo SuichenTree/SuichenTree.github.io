@@ -225,6 +225,7 @@ code.language-yaml {
 <li><a href="#1006-%E6%8D%A2%E4%B8%AA%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%87%BA%E6%95%B4%E6%95%B0-15">1006. 换个格式输出整数 (15)</a></li>
 <li><a href="#1007-%E7%B4%A0%E6%95%B0%E5%AF%B9%E7%8C%9C%E6%83%B3-20">1007. 素数对猜想 (20):</a></li>
 <li><a href="#1008-%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%BE%AA%E7%8E%AF%E5%8F%B3%E7%A7%BB%E9%97%AE%E9%A2%98-20">1008. 数组元素循环右移问题 (20):</a></li>
+<li><a href="#1009-%E8%AF%B4%E5%8F%8D%E8%AF%9D-20">1009. 说反话 (20)</a></li>
 </ul>
 </li>
 </ul>
@@ -588,6 +589,87 @@ SS123</p>
 1 2 3 4 5 6</p>
 <p>输出样例：<br>
 5 6 1 2 3 4</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token comment">/*
+	例子：
+		1. n=5 , m=2
+	       输出： 4 5 1 2 3
+
+		2. n=5 , m=7
+		   输出： 4 5 1 2 3
+
+	    3. n=5 , m=12
+    	   输出： 4 5 1 2 3
+	
+	思路：
+		1.不需要直接对数组的数字进行交换后，再输出数组
+		
+		2.可以转换思想，在本例1中可以直接输出后两位，在输出前三位即可。
+		
+		3.在例2,3中，由于m>n,且 m%n==2,这个余数就相当于例1的m。此时的2，就是新的m，不是本例的旧的m，12
+	
+	总结：
+		当 n>m 时，m的值就是m。
+		当 m>n 时, m%n的值就是m。
+	*/</span>
+
+
+	<span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> k<span class="token punctuation">;</span>       <span class="token comment">//k就是当m>n时，k==m%n </span>
+
+	cin<span class="token operator">>></span>n<span class="token operator">>></span>m<span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cin<span class="token operator">>></span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//当n>=m时，</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>n<span class="token operator">>=</span>m<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>n<span class="token operator">-</span>m<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>       <span class="token comment">//这个for循环，输出数组中后面m个数字。后面有空格</span>
+			cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token operator">-</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">// 这个for循环，输出数组其余数据，除了最后一个数字。后面有空格</span>
+			cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>n<span class="token operator">-</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>              <span class="token comment">//输出最后一个数字，后面没有空格</span>
+		
+	 <span class="token comment">//当 m>n 时</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>m<span class="token operator">></span>n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		k<span class="token operator">=</span>m<span class="token operator">%</span>n<span class="token punctuation">;</span>
+		
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>n<span class="token operator">-</span>k<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token operator">-</span>k<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+
+		cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>n<span class="token operator">-</span>k<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span>
+
+</pre><hr>
+<h3 class="mume-header" id="1009-%E8%AF%B4%E5%8F%8D%E8%AF%9D-20">1009. 说反话 (20)</h3>
+
+<blockquote>
+<p>给定一句英语，要求你编写程序，将句中所有单词的顺序颠倒输出。</p>
+</blockquote>
+<p>输入格式：<br>
+测试输入包含一个测试用例，在一行内给出总长度不超过80的字符串。字符串由若干单词和若干空格组成，其中单词是由英文字母（大小写有区分）组成的字符串，单词之间用1个空格分开，输入保证句子末尾没有多余的空格。</p>
+<p>输出格式：每个测试用例的输出占一行，输出倒序后的句子。</p>
+<p>输入样例：<br>
+Hello World Here I Come</p>
+<p>输出样例：<br>
+Come I Here World Hello</p>
 <p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp">
 </pre>
