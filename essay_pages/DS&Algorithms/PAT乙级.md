@@ -511,6 +511,83 @@ Hello World Here I Come
 Come I Here World Hello
 
 
+==C++==  
+<h3><font color="red">这个是借鉴别人的思路，思路清奇。但这个有运行超时的可能，</font></h3>
+```c++
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+string in, out;
+cin>>out;                  //输入第一个字符
+
+do{
+cin>>in;					//再输入其余字符
+out = in + " " + out;			  //把其余字符与第一个字符用空格连接。其中第一个字符在最后。相当于倒序连接
+
+}while(cin.get()!='\n');                //当输入回车符时，终止while循环
+
+
+cout<<out<<endl;           //输出字符
+
+return 0;
+}
+```
+
+==C++==
+```c++
+#include <iostream>
+#include <string>
+#include<stack>    //引入栈的数据结构
+using namespace std;
+int main()
+{
+	string str;       //字符串变量
+	
+	int a;           //记录栈内元素个数
+ 
+	stack<string> stk;
+
+	do{
+		cin>>str;                //使用cin从键盘输入字符串时，读取到空格就断开
+		stk.push(str);
+	}while(cin.get()!='\n');     //读入回车符，停止while循环
+
+
+	a=stk.size();               //栈内元素个数
+
+	for(int i=0;i<a-1;i++){     //除了栈底元素，其余元素全部输出，后面有空格
+		     
+		cout<<stk.top()<<" ";
+		stk.pop();             //移除栈顶元素，让下一个元素变成栈顶
+	}
+
+	cout<<stk.top();           //输出最后一个栈底元素，后面没有空格
+
+return 0;
+}
+```
+
+
+---
+
+
+### 1010. 一元多项式求导 (25)：
+
+> 设计函数求一元多项式的导数。（注：xn（n为整数）的一阶导数为n*xn-1。）
+
+输入格式：以指数递降方式输入多项式非零项系数和指数（绝对值均为不超过1000的整数）。数字间以空格分隔。
+
+输出格式：以与输入相同的格式输出导数多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。注意“零多项式”的指数和系数都是0，但是表示为“0 0”。
+
+输入样例：
+3 4 -5 2 6 1 -2 0
+
+输出样例：
+12 3 -10 1 6 0
+
+
 ==C++==
 ```c++
 

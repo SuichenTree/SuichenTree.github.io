@@ -258,6 +258,7 @@ code.language-yaml {
 <li><a href="#3-%E5%B5%8C%E5%A5%97%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">3. 嵌套的命名空间:</a></li>
 </ul>
 </li>
+<li><a href="#10-%E6%A0%88%E7%9A%84%E7%94%A8%E6%B3%95">10. 栈的用法:</a></li>
 </ul>
 </li>
 </ul>
@@ -621,6 +622,59 @@ Inside second_space
  
 <span class="token comment">// 访问 namespace:name1 中的成员</span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> namespace_name1<span class="token punctuation">;</span>
+</pre><hr>
+<h2 class="mume-header" id="10-%E6%A0%88%E7%9A%84%E7%94%A8%E6%B3%95">10. 栈的用法:</h2>
+
+<p><mark>使用栈，要先包含头文件</mark> ： #include&lt;stack&gt;</p>
+<p>栈的定义：</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">stack <span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span>stk<span class="token punctuation">;</span>        <span class="token comment">//整型栈</span>
+stack <span class="token operator">&lt;</span>string<span class="token operator">></span>stk<span class="token punctuation">;</span>     <span class="token comment">//字符串栈</span>
+</pre><p>栈的基本方法：</p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">s<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>		<span class="token comment">//将item压入栈顶</span>
+s<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//删除栈顶的元素，但不会返回该元素</span>
+s<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//返回栈顶的元素，但不会删除</span>
+s<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//返回栈中元素的个数</span>
+s<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//检查栈是否为空，如果为空返回true，否则返回false </span>
+</pre><p><mark>PAT算法举例：</mark><br>
+DEMO-说反话 :</p>
+<blockquote>
+<p>输入例子:<br>
+Hello World Here I Come</p>
+</blockquote>
+<blockquote>
+<p>输出例子:<br>
+Come I Here World Hello</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stack></span>    </span><span class="token comment">//引入栈的数据结构</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	string str<span class="token punctuation">;</span>       <span class="token comment">//字符串变量</span>
+	
+	<span class="token keyword">int</span> a<span class="token punctuation">;</span>           <span class="token comment">//记录栈内元素个数</span>
+ 
+	stack<span class="token operator">&lt;</span>string<span class="token operator">></span> stk<span class="token punctuation">;</span>
+
+	<span class="token keyword">do</span><span class="token punctuation">{</span>
+		cin<span class="token operator">>></span>str<span class="token punctuation">;</span>                <span class="token comment">//使用cin从键盘输入字符串时，读取到空格就断开</span>
+		stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span>cin<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//读入回车符，停止while循环</span>
+
+
+	a<span class="token operator">=</span>stk<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//栈内元素个数</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>a<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>     <span class="token comment">//除了栈底元素，其余元素全部输出，后面有空格</span>
+		     
+		cout<span class="token operator">&lt;&lt;</span>stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		stk<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//移除栈顶元素，让下一个元素变成栈顶</span>
+	<span class="token punctuation">}</span>
+
+	cout<span class="token operator">&lt;&lt;</span>stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">//输出最后一个栈底元素，后面没有空格</span>
+
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </pre>
       </div>
       

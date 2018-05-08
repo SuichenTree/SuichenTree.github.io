@@ -480,3 +480,72 @@ using namespace namespace_name1::namespace_name2;
 // 访问 namespace:name1 中的成员
 using namespace namespace_name1;
 ```
+
+
+---
+
+## 10. 栈的用法:
+
+==使用栈，要先包含头文件== ： #include&lt;stack&gt;
+
+栈的定义：
+```c++
+stack <int>stk;        //整型栈
+stack <string>stk;     //字符串栈
+```
+
+栈的基本方法：
+
+```c++
+s.push(item);		//将item压入栈顶
+s.pop();			//删除栈顶的元素，但不会返回该元素
+s.top();			//返回栈顶的元素，但不会删除
+s.size();			//返回栈中元素的个数
+s.empty();			//检查栈是否为空，如果为空返回true，否则返回false 
+```
+
+
+==PAT算法举例：==
+DEMO-说反话 :
+
+
+>输入例子:
+Hello World Here I Come
+
+
+>输出例子:
+Come I Here World Hello
+
+
+```c++
+#include <iostream>
+#include <string>
+#include<stack>    //引入栈的数据结构
+using namespace std;
+int main()
+{
+	string str;       //字符串变量
+	
+	int a;           //记录栈内元素个数
+ 
+	stack<string> stk;
+
+	do{
+		cin>>str;                //使用cin从键盘输入字符串时，读取到空格就断开
+		stk.push(str);
+	}while(cin.get()!='\n');     //读入回车符，停止while循环
+
+
+	a=stk.size();               //栈内元素个数
+
+	for(int i=0;i<a-1;i++){     //除了栈底元素，其余元素全部输出，后面有空格
+		     
+		cout<<stk.top()<<" ";
+		stk.pop();             //移除栈顶元素，让下一个元素变成栈顶
+	}
+
+	cout<<stk.top();           //输出最后一个栈底元素，后面没有空格
+
+return 0;
+}
+```
