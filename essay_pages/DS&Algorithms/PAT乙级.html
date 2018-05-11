@@ -673,55 +673,57 @@ Hello World Here I Come</p>
 Come I Here World Hello</p>
 <p><mark>C++</mark></p>
 <h3><font color="red">这个是借鉴别人的思路，思路清奇。但这个有运行超时的可能，</font></h3>
-```c++
-#include <iostream>
-#include <string>
-using namespace std;
-int main()
-{
-string in, out;
-cin>>out;                  //输入第一个字符
-<p>do{<br>
-cin&gt;&gt;in;					//再输入其余字符<br>
-out = in + &quot; &quot; + out;			  //把其余字符与第一个字符用空格连接。其中第一个字符在最后。相当于倒序连接</p>
-<p>}while(cin.get()!='\n');                //当输入回车符时，终止while循环</p>
-<p>cout&lt;&lt;out&lt;&lt;endl;           //输出字符</p>
-<p>return 0;<br>
-}</p>
-<pre data-role="codeBlock" data-info="" class="language-"><code>
-==C++==
-```c++
-#include &lt;iostream&gt;
-#include &lt;string&gt;
-#include&lt;stack&gt;    //&#x5F15;&#x5165;&#x6808;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;
-using namespace std;
-int main()
-{
-	string str;       //&#x5B57;&#x7B26;&#x4E32;&#x53D8;&#x91CF;
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+string in<span class="token punctuation">,</span> out<span class="token punctuation">;</span>
+cin<span class="token operator">>></span>out<span class="token punctuation">;</span>                  <span class="token comment">//输入第一个字符</span>
+
+<span class="token keyword">do</span><span class="token punctuation">{</span>
+cin<span class="token operator">>></span>in<span class="token punctuation">;</span>					<span class="token comment">//再输入其余字符</span>
+out <span class="token operator">=</span> in <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> out<span class="token punctuation">;</span>			  <span class="token comment">//把其余字符与第一个字符用空格连接。其中第一个字符在最后。相当于倒序连接</span>
+
+<span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span>cin<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">//当输入回车符时，终止while循环</span>
+
+
+cout<span class="token operator">&lt;&lt;</span>out<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>           <span class="token comment">//输出字符</span>
+
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;stack></span>    </span><span class="token comment">//引入栈的数据结构</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	string str<span class="token punctuation">;</span>       <span class="token comment">//字符串变量</span>
 	
-	int a;           //&#x8BB0;&#x5F55;&#x6808;&#x5185;&#x5143;&#x7D20;&#x4E2A;&#x6570;
+	<span class="token keyword">int</span> a<span class="token punctuation">;</span>           <span class="token comment">//记录栈内元素个数</span>
  
-	stack&lt;string&gt; stk;
+	stack<span class="token operator">&lt;</span>string<span class="token operator">></span> stk<span class="token punctuation">;</span>
 
-	do{
-		cin&gt;&gt;str;                //&#x4F7F;&#x7528;cin&#x4ECE;&#x952E;&#x76D8;&#x8F93;&#x5165;&#x5B57;&#x7B26;&#x4E32;&#x65F6;&#xFF0C;&#x8BFB;&#x53D6;&#x5230;&#x7A7A;&#x683C;&#x5C31;&#x65AD;&#x5F00;
-		stk.push(str);
-	}while(cin.get()!=&apos;\n&apos;);     //&#x8BFB;&#x5165;&#x56DE;&#x8F66;&#x7B26;&#xFF0C;&#x505C;&#x6B62;while&#x5FAA;&#x73AF;
+	<span class="token keyword">do</span><span class="token punctuation">{</span>
+		cin<span class="token operator">>></span>str<span class="token punctuation">;</span>                <span class="token comment">//使用cin从键盘输入字符串时，读取到空格就断开</span>
+		stk<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span>cin<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//读入回车符，停止while循环</span>
 
 
-	a=stk.size();               //&#x6808;&#x5185;&#x5143;&#x7D20;&#x4E2A;&#x6570;
+	a<span class="token operator">=</span>stk<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//栈内元素个数</span>
 
-	for(int i=0;i&lt;a-1;i++){     //&#x9664;&#x4E86;&#x6808;&#x5E95;&#x5143;&#x7D20;&#xFF0C;&#x5176;&#x4F59;&#x5143;&#x7D20;&#x5168;&#x90E8;&#x8F93;&#x51FA;&#xFF0C;&#x540E;&#x9762;&#x6709;&#x7A7A;&#x683C;
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>a<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>     <span class="token comment">//除了栈底元素，其余元素全部输出，后面有空格</span>
 		     
-		cout&lt;&lt;stk.top()&lt;&lt;&quot; &quot;;
-		stk.pop();             //&#x79FB;&#x9664;&#x6808;&#x9876;&#x5143;&#x7D20;&#xFF0C;&#x8BA9;&#x4E0B;&#x4E00;&#x4E2A;&#x5143;&#x7D20;&#x53D8;&#x6210;&#x6808;&#x9876;
-	}
+		cout<span class="token operator">&lt;&lt;</span>stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+		stk<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>             <span class="token comment">//移除栈顶元素，让下一个元素变成栈顶</span>
+	<span class="token punctuation">}</span>
 
-	cout&lt;&lt;stk.top();           //&#x8F93;&#x51FA;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x6808;&#x5E95;&#x5143;&#x7D20;&#xFF0C;&#x540E;&#x9762;&#x6CA1;&#x6709;&#x7A7A;&#x683C;
+	cout<span class="token operator">&lt;&lt;</span>stk<span class="token punctuation">.</span><span class="token function">top</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>           <span class="token comment">//输出最后一个栈底元素，后面没有空格</span>
 
-return 0;
-}
-</code></pre><hr>
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><hr>
 <h3 class="mume-header" id="1010-%E4%B8%80%E5%85%83%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%B1%82%E5%AF%BC-25">1010. 一元多项式求导 (25)：</h3>
 
 <blockquote>
@@ -734,8 +736,63 @@ return 0;
 <p>输出样例：<br>
 12 3 -10 1 6 0</p>
 <p><mark>C++</mark></p>
-<pre data-role="codeBlock" data-info="c++" class="language-cpp">
-</pre></string></iostream>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">,</span>b<span class="token punctuation">;</span>
+    <span class="token keyword">bool</span> t<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>           <span class="token comment">//t用于判断是否是 第一个a与b</span>
+
+	<span class="token comment">/*
+	思路：
+	  1. 一般情况下，输入a b,则输出a*b b-1, 注意a*b前面没有空格，a*b与b-1之间有空格。
+
+	  2. 当输入第一个a，b时，若b==0,则输出0 0，若b==1,由于b-1==0，因此输出a*b,后面的b-1==0就不输出了。
+	
+	  3. 当输出由第一个a，b得出的两个数，t从true --> false。防止程序在进入if循环中。
+	  
+	  ----
+
+	  4. 若不是第一个a,b. 若b==0,则输出 0（单个0），若b==1,由于b-1==0，因此输出 a*b,后面的b-1==0就不输出了。
+
+	  5. 注意从第二个a,b开始，输出的第一个数前面有空格，第二个数无空格。
+	  
+
+	  ps: 测试例子都是： 第一个b为0，或者最后一个b为0的情况。
+
+
+	*/</span>
+
+
+	<span class="token keyword">while</span><span class="token punctuation">(</span>cin<span class="token operator">>></span>a<span class="token operator">>></span>b<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+              cout<span class="token operator">&lt;&lt;</span><span class="token number">0</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+              cout<span class="token operator">&lt;&lt;</span>a<span class="token operator">*</span>b<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+              cout<span class="token operator">&lt;&lt;</span>a<span class="token operator">*</span>b<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span>b<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            
+            t<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">;</span>
+            
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+              cout<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span>a<span class="token operator">*</span>b<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+              cout<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span>a<span class="token operator">*</span>b<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+              cout<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span>a<span class="token operator">*</span>b<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token operator">&lt;&lt;</span>b<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+            
+        <span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</pre>
       </div>
       
       

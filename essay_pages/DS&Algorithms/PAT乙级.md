@@ -512,7 +512,9 @@ Come I Here World Hello
 
 
 ==C++==  
+
 <h3><font color="red">这个是借鉴别人的思路，思路清奇。但这个有运行超时的可能，</font></h3>
+
 ```c++
 #include <iostream>
 #include <string>
@@ -534,6 +536,10 @@ cout<<out<<endl;           //输出字符
 return 0;
 }
 ```
+
+
+
+
 
 ==C++==
 ```c++
@@ -590,5 +596,60 @@ return 0;
 
 ==C++==
 ```c++
+#include <iostream>
+using namespace std;
+int main()
+{
+	int a,b;
+    bool t=true;           //t用于判断是否是 第一个a与b
+
+	/*
+	思路：
+	  1. 一般情况下，输入a b,则输出a*b b-1, 注意a*b前面没有空格，a*b与b-1之间有空格。
+
+	  2. 当输入第一个a，b时，若b==0,则输出0 0，若b==1,由于b-1==0，因此输出a*b,后面的b-1==0就不输出了。
+	
+	  3. 当输出由第一个a，b得出的两个数，t从true --> false。防止程序在进入if循环中。
+	  
+	  ----
+
+	  4. 若不是第一个a,b. 若b==0,则输出 0（单个0），若b==1,由于b-1==0，因此输出 a*b,后面的b-1==0就不输出了。
+
+	  5. 注意从第二个a,b开始，输出的第一个数前面有空格，第二个数无空格。
+	  
+
+	  ps: 测试例子都是： 第一个b为0，或者最后一个b为0的情况。
+
+
+	*/
+
+
+	while(cin>>a>>b){
+        if(t){
+            if(b==0){
+              cout<<0<<" "<<0;
+            }else if(b==1){
+              cout<<a*b;
+            }else{
+              cout<<a*b<<" "<<b-1;
+            }
+            
+            t=false;
+            
+        }else{
+            if(b==0){
+              cout<<" "<<a*b;
+            }else if(b==1){
+              cout<<" "<<a*b;
+            }else{
+              cout<<" "<<a*b<<" "<<b-1;
+           }
+            
+        }
+		
+	}
+
+return 0;
+}
 
 ```
