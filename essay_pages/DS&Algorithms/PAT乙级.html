@@ -227,6 +227,7 @@ code.language-yaml {
 <li><a href="#1008-%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E5%BE%AA%E7%8E%AF%E5%8F%B3%E7%A7%BB%E9%97%AE%E9%A2%98-20">1008. 数组元素循环右移问题 (20):</a></li>
 <li><a href="#1009-%E8%AF%B4%E5%8F%8D%E8%AF%9D-20">1009. 说反话 (20)</a></li>
 <li><a href="#1010-%E4%B8%80%E5%85%83%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%B1%82%E5%AF%BC-25">1010. 一元多项式求导 (25)：</a></li>
+<li><a href="#1011-ab%E5%92%8Cc-15">1011: A+B和C (15)</a></li>
 </ul>
 </li>
 </ul>
@@ -792,6 +793,70 @@ cout<span class="token operator">&lt;&lt;</span>out<span class="token operator">
 <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
+</pre><hr>
+<h3 class="mume-header" id="1011-ab%E5%92%8Cc-15">1011: A+B和C (15)</h3>
+
+<blockquote>
+<p>给定区间[-2的31次方, 2的31次方]内的3个整数A、B和C，请判断A+B是否大于C。</p>
+</blockquote>
+<p>输入描述:<br>
+输入第1行给出正整数T(&lt;=10)，是测试用例的个数。随后给出T组测试用例，每组占一行，顺序给出A、B和C。整数间以空格分隔。</p>
+<p>输出描述:<br>
+对每组测试用例，在一行中输出“Case #X: true”如果A+B&gt;C，否则输出“Case #X: false”，其中X是测试用例的编号（从1开始）。</p>
+<p>输入例子:<br>
+4</p>
+<p>1 2 3</p>
+<p>2 3 4</p>
+<p>2147483647 0 2147483646</p>
+<p>0 -2147483648 -2147483647</p>
+<p>输出例子:<br>
+Case #1: false</p>
+<p>Case #2: true</p>
+<p>Case #3: true</p>
+<p>Case #4: false</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>t<span class="token punctuation">;</span>              <span class="token comment">//t输出示例的个数</span>
+	<span class="token keyword">int</span> s<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>               <span class="token comment">//用于存放每个示例的结果，若a+b>c,则对应的数组位置存放1，否则为0； </span>
+	cin<span class="token operator">>></span>t<span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>t<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>         <span class="token comment">//循环输入示例</span>
+		
+		cin<span class="token operator">>></span>a<span class="token operator">>></span>b<span class="token operator">>></span>c<span class="token punctuation">;</span>
+
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">&lt;</span><span class="token number">0</span><span class="token operator">&amp;&amp;</span>a<span class="token operator">==</span>b<span class="token operator">&amp;&amp;</span>b<span class="token operator">==</span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>       
+			<span class="token comment">//特殊情况下，若 a,b,c 为 -1 -1 -1，则a+b&lt;c,则在数组的对应位置赋值为0。</span>
+			
+			s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token number">2147483647</span><span class="token operator">&amp;&amp;</span>a<span class="token operator">==</span>b<span class="token operator">&amp;&amp;</span>b<span class="token operator">==</span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>  
+			<span class="token comment">//特殊情况下，若a,b,c 为 2147483647 2147483647 2147483647 ，则a+b&lt;c,因为int的数据溢出。</span>
+			
+			s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">+</span>b<span class="token operator">></span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">//一般情况</span>
+				s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+				s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>t<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">//循环数组，若对应数组值为0，1则输出不同的内容。</span>
+
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span><span class="token string">"Case #"</span><span class="token operator">&lt;&lt;</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token string">": "</span><span class="token operator">&lt;&lt;</span><span class="token string">"true"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			cout<span class="token operator">&lt;&lt;</span><span class="token string">"Case #"</span><span class="token operator">&lt;&lt;</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token operator">&lt;&lt;</span><span class="token string">": "</span><span class="token operator">&lt;&lt;</span><span class="token string">"false"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		
+	<span class="token punctuation">}</span>
+
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </pre>
       </div>
       
