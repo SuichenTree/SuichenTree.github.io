@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>index.html</title>
+    <title>index</title>
     
 
     <link rel="stylesheet" href="./css/uikit.min.css" />
@@ -21,10 +21,107 @@
     <link rel="stylesheet" href="./css/components/dotnav.css" />
     <script src="./js/components/slideshow.js"></script>
     
+
+    <!--返回顶部 外部css，js样式-->
+    <link rel="stylesheet" href="./Study_pages/css/Go_top.css">
+    <script type="text/javascript" src="./Study_pages/js/Go_top.js"></script>
+
+
+    <script>
+
+    </script>
+
+
+    <style>
+        .mb a{border:1px solid gray;}   /*作用使class="md"元素下的所有<a>标签中border*/
+
+    </style>
+
 </head>
 <body>
 
-    <!--幻灯片-->
+     <!--回到顶部按钮-->
+     <div class="go-top">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+    </div>
+
+    <!--抽屉式导航栏-->
+    <div id="my-id" class="uk-offcanvas">
+            <div class="uk-offcanvas-bar">
+                <div class="uk-panel">
+                    <div class="uk-grid">
+                            <div class="uk-width-1-1 uk-container-center">
+                                    <div class="uk-panel">
+                                        <div class="uk-panel-teaser">
+                                                <!--用户图像-->
+                                                <img class="uk-border-rounded" src="./index_img/user.jpg" alt="#" style="width: 70%;height: 70%">   
+                                        </div>
+                                    </div>
+                            </div>
+                    </div>
+    
+                      <!--名字，名言-->
+                    <div class="uk-text-center" style="margin-bottom:15px;">
+                        <article class="uk-article uk-container-center uk-text-large">
+                                SuiChenTree
+                          <p class="uk-text-contrast">" 欲戴其冠,必承其重 "</p>
+                        </article>
+                    </div>
+    
+    
+                    <!--github,mail图标-->
+                    <a href="https://github.com/SuichenTree" target="_blank" class="uk-icon-hover uk-icon-github-square uk-icon-medium" style="margin-left:80px;margin-right:10px;"></a>
+                    <a href="mailto:18271801652@163.com" class="uk-icon-hover uk-icon-envelope-o uk-icon-medium"></a>
+    
+    
+                     
+                    <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
+                        <li class="uk-nav-header">Header</li>
+                        <li class="uk-parent">
+                                <li class="uk-active"><a href="#">
+                                    <i class="uk-icon-home" style="margin-right:20px;"></i>Index</a>
+                                </li>
+                                <li class="uk-active"><a href="./Study_pages/Study.html">
+                                    <i class="uk-icon-pencil" style="margin-right:20px;"></i>Study</a>
+                                </li>
+                                <li class="uk-active">
+                                    <a href="./Essay_pages/Essay.html"><i class="uk-icon-file" style="margin-right:20px;"></i>Essay</a>
+                                </li>
+                                <li class="uk-active">
+                                        <a href="./Tags_pages/Tags.html"><i class="uk-icon-tags"  style="margin-right:20px;"></i>Tags</a>
+                                </li>
+                        </li>
+                        
+                        <!--分隔线-->
+                        <li class="uk-nav-divider" style="border-top:1px solid #1a1a1a;"></li>
+    
+                        <li class="uk-parent">
+                            <li class="uk-active"><a href="#About-id" data-uk-modal="{center:true}"><i class="uk-icon-plus-square" style="margin-right:20px;"></i>About</a></li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+    
+    <!-- About 模态对话框 -->
+    <div id="About-id" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <article class="uk-article">
+            <h1 class="uk-article-title">About</h1>
+            <hr class="uk-article-divider">
+            Create Time : 2017/11/9/ ~ NOW  |
+            Developer : SuiChenTree  |
+            github:SuiChenTree    |
+            Email:18271801652@163.com  |
+        </article>
+    </div>
+    </div>
+
+    <!--ajax加载区域，例如会加载Study页面，Essay页面-->
+    <div id="ajaxContent">
+    
+        <!--幻灯片-->
       
         <!--
             uk-slideshow-fullscreen : 全屏效果。
@@ -230,132 +327,7 @@
                 </ul>
         </div>
     
-    <!--抽屉式导航栏-->
-    <div id="my-id" class="uk-offcanvas">
-        <div class="uk-offcanvas-bar">
-            <div class="uk-panel">
-                <div class="uk-grid">
-                        <div class="uk-width-1-1 uk-container-center">
-                                <div class="uk-panel">
-                                    <div class="uk-panel-teaser">
-                                            <!--用户图像-->
-                                            <img class="uk-border-rounded" src="./index_img/user.jpg" alt="#">
-                                    </div>
-                                </div>
-                        </div>
-                </div>
 
-                  <!--名字，名言-->
-                <div class="uk-text-center" style="margin-bottom:15px;">
-                    <article class="uk-article uk-container-center uk-text-large">
-                            SuiChenTree
-                      <p class="uk-text-contrast">" 欲戴其冠,必承其重 "</p>
-                    </article>
-                </div>
-
-
-                <!--github,mail图标-->
-                <a href="https://github.com/SuichenTree" target="_blank" class="uk-icon-hover uk-icon-github-square uk-icon-medium" style="margin-left:80px;margin-right:10px;"></a>
-                <a href="mailto:18271801652@163.com" class="uk-icon-hover uk-icon-envelope-o uk-icon-medium"></a>
-
-
-                <!--手风琴式导航-->
-                <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
-                    <li class="uk-nav-header">Header</li>
-                    <li class="uk-parent">
-                            <li class="uk-active"><a href="./study_pages/study.html">
-                                <i class="uk-icon-pencil" style="margin-right:20px;"></i>Study</a>
-                            </li>
-                    </li>
-                    <li class="uk-parent">
-                        <a href="./essay_pages/essay.html"><i class="uk-icon-file" style="margin-right:20px;"></i>Essay</a>
-                        <ul class="uk-nav-sub">
-                            <li>
-                                <a href="#" style="margin-left:30px;">
-                                java</a>
-                            </li>
-                            <li>
-                                <a href="#" style="margin-left:30px;">
-                                FontEnd</a>
-                            </li>
-                            <li>
-                                <a href="#" style="margin-left:30px;">
-                                 Spring</a>
-                            </li>
-                            <li>
-                                <a href="#" style="margin-left:30px;">
-                                 JS</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--分隔线-->
-                    <li class="uk-nav-divider" style="border-top:1px solid #9c9898;"></li>
-
-                    <li class="uk-parent">
-                            <a href="#"><i class="uk-icon-tags"  style="margin-right:20px;"></i>Tags</a>
-                            <ul class="uk-nav-sub">
-                                <li>
-                                    <a href="#" style="margin-left:30px;">
-                                    java</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="margin-left:30px;">
-                                    FontEnd</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="margin-left:30px;">
-                                    Spring</a>
-                                </li>
-                                <li>
-                                    <a href="#" style="margin-left:30px;">
-                                    JS</a>
-                                </li>
-                            </ul>
-                    </li>
-
-                    <li class="uk-nav-header">Footer</li>
-                    <li class="uk-parent">
-                            <a href="#"><i class="uk-icon-link"  style="margin-right:20px;"></i>link</a>
-                            <ul class="uk-nav-sub">
-                                <li>
-                                    <a href="http://www.runoob.com/" target="_blank" style="margin-left:30px;">
-                                    菜鸟教程</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.w3cschool.cn/" target="_blank" style="margin-left:30px;">
-                                     Bootstrap文档</a>
-                                </li>
-                                <li>
-                                    <a href="http://fontawesome.dashgame.com/" target="_blank" style="margin-left:30px;">
-                                     Font Awesome图标库</a>
-                                </li>
-                                <li>
-                                    <a href="https://www.liaoxuefeng.com/" target="_blank" style="margin-left:30px;">
-                                    廖雪峰的官方网站</a>
-                                </li>
-                            </ul>
-                    </li>
-                    <li class="uk-parent">
-                        <li class="uk-active"><a href="#About-id" data-uk-modal="{center:true}"><i class="uk-icon-plus-square" style="margin-right:20px;"></i>About</a></li>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- About 模态对话框 -->
-    <div id="About-id" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <article class="uk-article">
-            <h1 class="uk-article-title">About</h1>
-            <hr class="uk-article-divider">
-            Create Time : 2017/11/9/ ~ NOW  |
-            Developer : SuiChenTree  |
-            github:SuiChenTree    |
-            Email:18271801652@163.com  |
-        </article>
-    </div>
     </div>
 
 </body>
