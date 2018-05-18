@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>java</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#java">Java</a>
+<ul>
+<li><a href="#1-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">1. 开发环境配置：</a></li>
+<li><a href="#2-%E7%AC%AC%E4%B8%80%E4%B8%AAjava%E7%A8%8B%E5%BA%8F-helloworld">2. 第一个java程序 ---helloworld ：</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">1. 使用命令行运行程序：</a></li>
+<li><a href="#2-%E4%BD%BF%E7%94%A8ide%E8%BF%90%E8%A1%8Cjava%E7%A8%8B%E5%BA%8F">2. 使用IDE运行Java程序：</a></li>
+<li><a href="#3-%E7%AC%AC%E4%B8%80%E4%B8%AAjava%E7%A8%8B%E5%BA%8F%E8%A7%A3%E6%9E%90">3. 第一个java程序解析：</a></li>
+<li><a href="#4-%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%97%B6%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%86%E8%8A%82">4. 程序运行时的内部细节（★★★）：</a></li>
+<li><a href="#5-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94">5. 常见问题解答（★★★★★）：</a>
+<ul>
+<li><a href="#1-%E4%B8%80%E4%B8%AAjava%E6%BA%90%E6%96%87%E4%BB%B6%E4%B8%AD%E5%8F%AF%E4%BB%A5%E6%9C%89%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%90%97">1. 一个java源文件中可以有多个类吗？</a></li>
+<li><a href="#2-jvm">2. JVM:</a></li>
+<li><a href="#3-jre">3. JRE:</a></li>
+<li><a href="#4-jdk">4. JDK：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-java%E5%9F%BA%E7%A1%80">2. java基础：</a>
+<ul>
+<li><a href="#1-java%E4%BB%A3%E7%A0%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">1. java代码的基本语法：</a>
+<ul>
+<li><a href="#1-%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F%E4%B8%8E%E8%A6%81%E7%82%B9">1. 基本格式与要点：</a></li>
+<li><a href="#2-%E6%B3%A8%E9%87%8A">2. 注释：</a></li>
+<li><a href="#3-%E6%A0%87%E8%AF%86%E7%AC%A6">3. 标识符：</a></li>
+<li><a href="#4-java-%E5%85%B3%E9%94%AE%E5%AD%97">4. java 关键字：</a></li>
+</ul>
+</li>
+<li><a href="#2-java-%E5%8F%98%E9%87%8F">2. java 变量：</a>
+<ul>
+<li><a href="#1%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89">1.变量的定义：</a></li>
+<li><a href="#2-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2. 变量的数据类型：</a></li>
+<li><a href="#3-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%A4%E7%A7%8D">3. 变量的数据类型转换(两种)：</a>
+<ul>
+<li><a href="#1%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">1.自动类型转换：</a></li>
+<li><a href="#2%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">2.强制类型转换：</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">4. 变量的作用域：</a></li>
+<li><a href="#5-%E5%8F%98%E9%87%8F%E7%A7%8D%E7%B1%BB3%E7%A7%8D">5. 变量种类（3种）：</a>
+<ul>
+<li><a href="#1-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">1. 局部变量(main方法可访问):</a></li>
+<li><a href="#2-%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE">2. 实例变量(main方法不可访问)：</a></li>
+<li><a href="#3-%E7%B1%BB%E5%8F%98%E9%87%8F%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">3. 类变量（静态变量）(main方法可访问)：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="java">Java</h1>
+
+<p>java语言是一门面向对象程序设计语言</p>
+<h2 class="mume-header" id="1-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">1. 开发环境配置：</h2>
+
+<h3>百度一下</h3>
+<h3>java语言的IDE工具：</h3> 
+<ol>
+<li>eclipse。</li>
+<li>Spring Tool Suite (STS)：spring团队创建的对eclipse工具的强化版。</li>
+<li>IDEA</li>
+</ol>
+<h3>
+<font color="red">
+以上几种工具，要学会使用其中一种。请自行百度。
+<p></p>
+<p>注意：<br>
+下面所有示例主要用STS 运行java代码。<br>
+</p></font>
+</h3>
+<hr>
+<h2 class="mume-header" id="2-%E7%AC%AC%E4%B8%80%E4%B8%AAjava%E7%A8%8B%E5%BA%8F-helloworld">2. 第一个java程序 ---helloworld ：</h2>
+
+<h3 class="mume-header" id="1-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F">1. 使用命令行运行程序：</h3>
+
+<p>①：创建文件：HelloWorld.java</p>
+<p>②：在文件中编写代码：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 第一个Java程序
+     * 它将打印字符串 Hello World
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String <span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 打印 Hello World</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>③：打开命令行窗口:</p>
+<ol>
+<li>找到HelloWorld.java在那个路径下：</li>
+<li>执行命令(假如文件在c盘下)：</li>
+</ol>
+<pre data-role="codeBlock" data-info="" class="language-"><code>C : &gt; javac HelloWorld.java    //&#x7F16;&#x8BD1;&#x6587;&#x4EF6;&#xFF0C;&#x4EA7;&#x751F;.class&#x7684;&#x5B57;&#x8282;&#x7801;&#x6587;&#x4EF6;
+C : &gt; java HelloWorld      //&#x8FD0;&#x884C;&#x5B57;&#x8282;&#x7801;&#x6587;&#x4EF6;&#xFF0C;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x6E90;&#x4EE3;&#x7801;
+</code></pre><p>④：运行结果：</p>
+<p><img src="../img/java_img/1.png" alt="1"></p>
+<h3 class="mume-header" id="2-%E4%BD%BF%E7%94%A8ide%E8%BF%90%E8%A1%8Cjava%E7%A8%8B%E5%BA%8F">2. 使用IDE运行Java程序：</h3>
+
+<p>①：创建java project：<br>
+<img src="../img/java_img/2.png" alt="2"></p>
+<p>②：创建package包，class类<br>
+<img src="../img/java_img/3.png" alt="3"></p>
+<p>③：在类中编写源代码：</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> Hello1<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* 第一个Java程序
+     * 它将打印字符串 Hello World
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String <span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 打印 Hello World</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>④：运行程序。（右键 --&gt; RunAs --&gt; Java application）</p>
+<p><img src="../img/java_img/4.png" alt="4"></p>
+<h3 class="mume-header" id="3-%E7%AC%AC%E4%B8%80%E4%B8%AAjava%E7%A8%8B%E5%BA%8F%E8%A7%A3%E6%9E%90">3. 第一个java程序解析：</h3>
+
+<p>源代码：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c">package Hello1<span class="token punctuation">;</span>
+
+public class HelloWorld <span class="token punctuation">{</span>
+    <span class="token comment">/* 第一个Java程序
+     * 它将打印字符串 Hello World
+     */</span>
+    public <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String <span class="token punctuation">[</span><span class="token punctuation">]</span>args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello World"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 打印 Hello World</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+</pre><font color="red">
+解析：
+<ol>
+<li>
+<p>package Hello1;   //声明包名</p>
+</li>
+<li>
+<p>class 关键字用于在java中声明一个类。</p>
+</li>
+<li>
+<p>public 关键字是一个表示可见性的访问修饰符，它表示对所有人可见。</p>
+</li>
+<li>
+<p>static是一个关键字,表示该方法为静态方法。<mark>main方法由JVM执行，因此它不需要创建对象来调用main方法。所以它节省了内存</mark>。</p>
+</li>
+<li>
+<p>void是方法的返回类型，它意味着它不返回任何值。</p>
+</li>
+<li>
+<p>main表示程序开始(执行的入口)。</p>
+</li>
+<li>
+<p>public static void main(String []args) { ... }</p>
+</li>
+</ol>
+<p>所有的java程序都是由这个main方法开始执行的。</p>
+<ol start="8">
+<li>String []args</li>
+</ol>
+<p>String[] args是main函数的形式参数。当使用命令行运行程序时，可以用来获取命令行用户输入进去的参数。<mark>java 本身不存在不带String args[]的main函数,所以在程序中去掉String args[]会出现错误。</mark></p>
+<p>例如：</p>
+<p>①：创建Test.java :</p>
+<pre data-role="codeBlock" data-info="c" class="language-c">public class Test <span class="token punctuation">{</span>
+    public <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>②：在命令行窗口中比如运行 Test.class 文件：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>C : &gt; javac Test.java    
+C : &gt; java Test
+</code></pre><p>③：运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>Test  
+</code></pre></font>
+<h3 class="mume-header" id="4-%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%97%B6%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%86%E8%8A%82">4. 程序运行时的内部细节（★★★）：</h3>
+
+<p><img src="../img/java_img/5.png" alt="5"></p>
+<ol>
+<li>
+<p>在编译时，java文件(.java)准换为字节码文件（.class），并将java代码转换为字节码.</p>
+</li>
+<li>
+<p>类加载器(Classloader)：是用于加载类文件的JVM的子系统。</p>
+</li>
+<li>
+<p>字节码校验器(Bytecode Verifier)：检查代码中是否存在错误代码。</p>
+</li>
+</ol>
+<h3 class="mume-header" id="5-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94">5. 常见问题解答（★★★★★）：</h3>
+
+<h4 class="mume-header" id="1-%E4%B8%80%E4%B8%AAjava%E6%BA%90%E6%96%87%E4%BB%B6%E4%B8%AD%E5%8F%AF%E4%BB%A5%E6%9C%89%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%90%97">1. 一个java源文件中可以有多个类吗？</h4>
+
+<p><mark>可以，但只能有一个 public 类</mark></p>
+<h4 class="mume-header" id="2-jvm">2. JVM:</h4>
+
+<p>JVM(Java虚拟机)是一个抽象机器。它是一个提供可以执行Java字节码的运行时环境的规范。</p>
+<p><mark>字节码文件(.class)并不直接与机器的操作系统相对应，而是经过虚拟机间接与操作系统交互，由虚拟机将程序解释给本地系统执行。<br>
+因此，JVM屏蔽了与具体操作系统平台相关的信息，使得Java程序只需生成在Java虚拟机上运行的目标代码（字节码），就可以在多种平台上不加修改地运行。</mark></p>
+<p>JVM执行以下主要任务：</p>
+<p>提供运行时环境(JRE) ---&gt; 加载代码 ---&gt; 验证代码 ---&gt; 执行代码</p>
+<h4 class="mume-header" id="3-jre">3. JRE:</h4>
+
+<p>JRE是Java Runtime Environment的缩写。用于提供java程序运行时环境。<mark>它包含一组运行java程序库和JVM</mark>。</p>
+<h4 class="mume-header" id="4-jdk">4. JDK：</h4>
+
+<p>JDK是Java开发工具包。<br>
+JDK包括了Java运行环境JRE、Java工具和Java基础类库。</p>
+<hr>
+<h2 class="mume-header" id="2-java%E5%9F%BA%E7%A1%80">2. java基础：</h2>
+
+<h3 class="mume-header" id="1-java%E4%BB%A3%E7%A0%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95">1. java代码的基本语法：</h3>
+
+<h4 class="mume-header" id="1-%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F%E4%B8%8E%E8%A6%81%E7%82%B9">1. 基本格式与要点：</h4>
+
+<p><mark>①：java中的所有程序代码都必须放在类中。可以大概理解为一个.java文件代表一个类</mark></p>
+<p>类的定义：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>&#x4FEE;&#x9970;&#x7B26; class &#x7C7B;&#x540D;{
+
+    &#x7A0B;&#x5E8F;&#x4EE3;&#x7801;;
+}
+</code></pre><p><mark>②：编写java代码注意：</mark></p>
+<blockquote>
+<ol>
+<li>java程序中每条语句都必须用分号（;）结束。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li>Java是大小写敏感的，这就意味着标识符Hello与hello是不同的。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>java程序中，一句连续的字符串不能分开在两行写。要把两行用 + 号连起来。</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>"<span class="token keyword">this</span> is a 
+     java 程序"<span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">//这是错误示例</span>
+
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this is a"</span><span class="token operator">+</span> 
+    <span class="token string">"java 程序"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                  <span class="token comment">//这是正确示例</span>
+</pre><blockquote>
+<ol start="4">
+<li><font color="red">类名的首字母应该大写。</font>如果类名由若干单词组成，那么每个单词的首字母应该大写，例如 MyFirstJavaClass</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="5">
+<li><font color="red">方法名都应该以小写字母开头</font>。如果方法名含有若干单词，则后面的每个单词首字母大写。例如 myFirstJava</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="6">
+<li>源文件名(.java文件名)必须和公共类名（public class 类名）相同。</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="7">
+<li>主方法入口:所有的Java 程序由public static void main(String []args)方法开始执行.</li>
+</ol>
+</blockquote>
+<hr>
+<h4 class="mume-header" id="2-%E6%B3%A8%E9%87%8A">2. 注释：</h4>
+
+<p>Java支持单行以及多行注释。<mark>注释中的字符将被Java编译器忽略。</mark></p>
+<p>①：单行注释： 以 <code>//</code> 两个字符作为一行注释的开始.</p>
+<p>②：多行注释： 它以 <code>/*</code> 开始，并以 <code>*/</code> 结束.</p>
+<p>③：文档注释：看下例。<mark>在STS的快捷键：ALT + SHIFT +J</mark></p>
+<pre data-role="codeBlock" data-info="java" class="language-java">
+<span class="token keyword">int</span> a<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">;</span>    <span class="token comment">//这是单行注释</span>
+
+<span class="token comment">/*
+int b=10;
+int c=10;
+
+这是多行注释
+*/</span>
+
+<span class="token comment">/**
+ * 文档注释，用于为代码编写帮助文档 
+ *
+ */</span>
+
+</pre><font color="red">
+注意：
+<ol>
+<li>
+<p>多行注释 可以嵌套单行注释。</p>
+</li>
+<li>
+<p>多行注释 不能嵌套多行注释。<br>
+</p></li></ol></font>
+
+
+<h4 class="mume-header" id="3-%E6%A0%87%E8%AF%86%E7%AC%A6">3. 标识符：</h4>
+
+<p><mark>java程序中，类名、变量名以及方法名等都被称为标识符。</mark></p>
+<blockquote>
+<p>关于Java标识符，有以下几点需要注意：</p>
+</blockquote>
+<ol>
+<li>
+<p>所有的标识符都应该以字母（A-Z或者a-z）,美元符（$）、或者下划线（_）开始。（<font color="red">不能以数字开头</font>）</p>
+</li>
+<li>
+<p>首字符之后可以是字母（A-Z或者a-z）,美元符（$）、下划线（_）或数字的任何字符组合</p>
+</li>
+<li>
+<p><mark>关键字不能用作标识符.</mark></p>
+</li>
+<li>
+<p>标识符是大小写敏感的</p>
+</li>
+<li>
+<p>合法标识符举例：age、$salary、_value、__1_value</p>
+</li>
+<li>
+<p>非法标识符举例：123abc、-salary</p>
+</li>
+</ol>
+<h4 class="mume-header" id="4-java-%E5%85%B3%E9%94%AE%E5%AD%97">4. java 关键字：</h4>
+
+<p><mark>这些关键字不能用于常量、变量、和任何标识符的名称。</mark></p>
+<p><font color="red">所有的关键字都是小写的。</font></p>
+<p><img src="../img/java_img/6.png" alt="6"></p>
+<p><img src="../img/java_img/7.png" alt="7"></p>
+<p><img src="../img/java_img/8.png" alt="8"></p>
+<h3 class="mume-header" id="2-java-%E5%8F%98%E9%87%8F">2. java 变量：</h3>
+
+<h4 class="mume-header" id="1%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89">1.变量的定义：</h4>
+
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">int</span> a<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> b<span class="token punctuation">;</span>
+<span class="token keyword">int</span> c<span class="token operator">=</span>a<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">;</span>
+
+</pre><p><img src="../img/java_img/9.png" alt="9"></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">int</span> c<span class="token operator">=</span>a<span class="token operator">+</span><span class="token number">3</span><span class="token punctuation">;</span>  
+</pre><font color="red">
+在内存中的表现是：程序首先取出变量a的值，与3相加后，把结果赋值给变量c。
+</font>
+<h4 class="mume-header" id="2-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">2. 变量的数据类型：</h4>
+
+<font color="red">
+在java中，定义变量时必须声明变量的数据类型。
+</font>
+<p></p>
+<blockquote>
+<p>整数类型（byte ， short ， int , long）<br>
+byte ：占1个字节（8位），<mark>范围：-128（-2^7）~ 127（2^7-1）</mark><br>
+short ：占2个字节（16位），<mark>范围：-32768（-2^15）~ 32767（2^15 - 1）</mark><br>
+int : 占4个字节（32位），<mark>范围: -2^31 ~ 2^31 - 1</mark><br>
+long : 占8个字节（64位），<mark>范围：-2^63 ~ 2^63 -1</mark></p>
+</blockquote>
+<blockquote>
+<p>浮点数类型（float ， double）<br>
+float : <mark>用于存储小数数值。</mark><br>
+double : <mark>既可以存储小数，也可以存储整数。</mark></p>
+</blockquote>
+<blockquote>
+<p>字符型（char）<br>
+char : <mark>用于存储一个单一的字符，最小值是 \u0000（即为0）；最大值是 \uffff（即为65,535）</mark></p>
+</blockquote>
+<blockquote>
+<p>布尔型（boolean）<br>
+boolean : <mark>只有两个取值：true 和 false；</mark></p>
+</blockquote>
+<p><img src="../img/java_img/10.png" alt="10"></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">byte</span> a <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+<span class="token keyword">short</span> s <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10000</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> a <span class="token operator">=</span> <span class="token number">100000</span>L<span class="token punctuation">;</span>    <span class="token comment">//为long类型变量赋值时，需在数值的后面加上大写的L，表示该类型为long类型。</span>
+<span class="token keyword">float</span> f1 <span class="token operator">=</span> <span class="token number">234.5f</span><span class="token punctuation">;</span>  <span class="token comment">//为float类型变量赋值时，需在数值的后面加上F或f，表示该类型为float类型。</span>
+<span class="token keyword">double</span> d1 <span class="token operator">=</span> <span class="token number">123.4</span><span class="token punctuation">;</span>
+<span class="token keyword">boolean</span> one <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> letter <span class="token operator">=</span> <span class="token string">'A'</span><span class="token punctuation">;</span>
+</pre><hr>
+<h4 class="mume-header" id="3-%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B8%A4%E7%A7%8D">3. 变量的数据类型转换(两种)：</h4>
+
+<p><mark>在程序中，当把一种数据类型的值赋给另一种类型的变量时，需要进行变量的数据类型转换。</mark></p>
+<font color="blue">
+整型、实型（常量）、字符型数据可以混合运算。在运算中，不同类型的数据先转化为同一类型，然后进行运算。
+</font>
+<p></p>
+<font color="red">
+数据类型转换必须满足如下规则：
+<p>①：不能对boolean类型进行类型转换。<br>
+②：在把容量大的类型转换为容量小的类型时必须使用强制类型转换.<br>
+③：转换过程中可能导致溢出或损失精度.<br>
+</p></font>
+<h5 class="mume-header" id="1%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">1.自动类型转换：</h5>
+
+<p><mark>自动类型转换也叫隐式类型转换，在转换过程中不需要进行声明的转换。</mark><br>
+<font color="red"><br>
+实现自动类型转换的条件：<br>
+①：目标类型的取值范围大于源类型的取值范围。<br>
+</font></p>
+<p>转换图：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>byte -&gt; short,int,long
+short , char -&gt; int,long
+int -&gt; long
+
+byte,char,short,int -&gt; float
+byte,char,short,int,long,float -&gt; double 
+
+</code></pre><h5 class="mume-header" id="2%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">2.强制类型转换：</h5>
+
+<p><mark>强制类型转换也叫显示类型转换。当两种类型彼此不兼容，或者目标类型的取值范围小于源类型时，可使用强制类型转换。</mark></p>
+<blockquote>
+<p>实现强制类型转换的写法格式：<br>
+目标类型  变量 =（目标类型）源类型的变量；</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">byte</span> a<span class="token punctuation">;</span>
+<span class="token keyword">int</span> b<span class="token operator">=</span><span class="token number">122</span><span class="token punctuation">;</span>
+a<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span>a<span class="token punctuation">;</span>   <span class="token comment">//int -> byte , 会导致数据精度的损失。</span>
+
+</pre><hr>
+<h4 class="mume-header" id="4-%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F">4. 变量的作用域：</h4>
+
+<p>变量需要在它的作用范围内才可以被使用，这个作用范围就是变量的作用域。</p>
+<p><mark>变量一定会定义在某一对大括号中，这个大括号包括的区域就是该变量的作用域。</mark></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        
+        <span class="token keyword">int</span> x<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> y<span class="token operator">=</span><span class="token number">19</span><span class="token punctuation">;</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span>
+
+         System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//这段错误</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/11.png" alt="11"></p>
+<h4 class="mume-header" id="5-%E5%8F%98%E9%87%8F%E7%A7%8D%E7%B1%BB3%E7%A7%8D">5. 变量种类（3种）：</h4>
+
+<blockquote>
+<p>在java中有三种类型的变量：</p>
+<ol>
+<li>局部变量 :方法或语句块内声明的变量称为局部变量.</li>
+<li>实例变量 :在类中声明但在方法外部的变量称为实例变量.</li>
+<li>(类变量)静态变量 ：被声明为static的变量(加static修辞符)称为静态变量。它不是局部的。</li>
+</ol>
+</blockquote>
+<p><font color="blue">局部变量与静态变量可以被main方法使用，实例变量不可。</font></p>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">package</span> Hello1<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+	<span class="token keyword">int</span> data<span class="token operator">=</span><span class="token number">50</span><span class="token punctuation">;</span><span class="token comment">//实例变量</span>
+
+    <span class="token keyword">static</span> <span class="token keyword">int</span> m<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">;</span><span class="token comment">// 静态变量</span>
+
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+       
+       <span class="token keyword">int</span> x<span class="token operator">=</span><span class="token number">12</span><span class="token punctuation">;</span> <span class="token comment">//局部变量</span>
+       
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//此处有错误</span>
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   <span class="token punctuation">}</span>
+	 
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/15.png" alt="15"></p>
+<h5 class="mume-header" id="1-%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">1. 局部变量(main方法可访问):</h5>
+
+<font color="red">
+<ol>
+<li>
+<p>局部变量声明在方法、构造方法或者语句块中.</p>
+</li>
+<li>
+<p>局部变量在方法、构造方法、或者语句块被执行的时候创建，当它们执行完成后，变量将会被销毁；</p>
+</li>
+<li>
+<p>局部变量是在栈上分配的.</p>
+</li>
+<li>
+<p>局部变量没有默认值，所以局部变量被声明后，必须经过初始化，才可以使用。<br>
+</p></li></ol></font>
+
+
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+	 
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String args<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+        age <span class="token operator">=</span> age <span class="token operator">+</span> <span class="token number">7</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"小狗的年龄是 : "</span> <span class="token operator">+</span> age<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/12.png" alt="12"></p>
+<h5 class="mume-header" id="2-%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE">2. 实例变量(main方法不可访问)：</h5>
+
+<font color="red">
+<ol>
+<li>
+<p>实例变量声明在一个类中，但在方法、构造方法和语句块之外；</p>
+</li>
+<li>
+<p>实例变量在对象创建的时候创建，在对象被销毁的时候销毁；</p>
+</li>
+<li>
+<p>实例变量具有默认值。数值型变量的默认值是0，布尔型变量的默认值是false，引用类型变量的默认值是null。</p>
+</li>
+</ol>
+</font>
+<p>DEMO:</p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">{</span>
+	 
+	   <span class="token comment">// 这个实例变量对子类可见</span>
+	   <span class="token keyword">public</span> <span class="token keyword">int</span> a<span class="token punctuation">;</span>
+	   
+	   <span class="token comment">// 私有变量，仅在该类可见，其他类看不到它</span>
+	   <span class="token keyword">private</span> <span class="token keyword">double</span> b<span class="token punctuation">;</span>
+	   
+
+	   <span class="token comment">// 打印信息</span>
+	   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">printEmp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	   <span class="token punctuation">}</span>
+	   
+<span class="token punctuation">}</span>
+</pre><p><img src="../img/java_img/13.png" alt="13"></p>
+<h5 class="mume-header" id="3-%E7%B1%BB%E5%8F%98%E9%87%8F%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8Fmain%E6%96%B9%E6%B3%95%E5%8F%AF%E8%AE%BF%E9%97%AE">3. 类变量（静态变量）(main方法可访问)：</h5>
+
+<font color="red">
+<ol>
+<li>
+<p>类变量也称为静态变量，在类中以static关键字声明，但必须在方法构造方法和语句块之外。</p>
+</li>
+<li>
+<p>静态变量在程序开始时创建，在程序结束时销毁。</p>
+</li>
+<li>
+<p>数值型变量默认值是0，布尔型默认值是false，引用类型默认值是null。</p>
+</li>
+</ol>
+</font>
+<p><img src="../img/java_img/14.png" alt="14"></p>
+
+      </div>
+      
+      
+    </body>
+    
+    
+    
+    
+    
+    
+    
+  </html>

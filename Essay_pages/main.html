@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../jq/jquery.js"></script>
+    <script type="text/javascript" src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet"  href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
+    <title>SuiChenTree-Study</title>
+    <style>
+        /* footer{
+            height:100px;
+            background-color: #eee;
+            bottom: 0;
+            width:100%;
+        } */
+    
+    </style>
+    <script>
+      
+      
+        function ajaxcatalog(obj){
+            $("#loadajax").load("./"+obj+".html");
+        }
+    
+    </script>
+</head>
+<body>
+<!--导航栏-->
+   <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+    
+    <!--
+        这段代码作用是： 当页面在手机上呈现时，导航栏的链接，会合并在一起。否则链接便无法呈现在手机上
+    -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><i class="fa fa-user fa-1x"></i>&nbsp;<strong>SuiChenTree's blog</strong></a>
+    </div>
+  
+  
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="../study_pages/study.html">Study</a></li>
+            <li><a href="#">Essay</a></li>
+        
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MORE <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Developer : SuiChenTree</a></li>
+                <li><a href="#">Create Time : 2017/11/9/ ~ NOW</a></li>
+                <li><a href="#">READ MORE</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+
+
+<!--页面主体     <div class="container-fluid" style="margin-left: 50px; margin-right:100px;">   -->
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-md-2">
+                <div class="list-group">
+                    <a href="#" class="list-group-item" onclick="ajaxcatalog('java_catalog')">
+                        <h4 class="list-group-item-heading">Java</h4>
+                                
+                    </a>
+                    <a href="#" class="list-group-item" onclick="ajaxcatalog('mysql_catalog')">
+                        <h4 class="list-group-item-heading">Data Base</h4>
+                           
+                    </a>
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('javaWeb_catalog')">
+                        <h4 class="list-group-item-heading">Java WEB</h4>
+                    </a>
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('FrontEnd_catalog')">
+                        <h4 class="list-group-item-heading">Front End</h4>
+                    </a>
+                    <a href="#" class="list-group-item"  onclick="ajaxcatalog('other_catalog')">
+                        <h4 class="list-group-item-heading">Other</h4>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <div class="list-group">
+
+                    <!--ajax 加载 java_catalog.html-->
+                    <span href="#" class="list-group-item" id="loadajax">
+                        <h2><strong> Welcome to read SuiChenTree's Blog \ Essay</strong></h2>
+                        <br/>
+                        <h4><strong>CreateDATE：2017/11/29</strong></h4> 
+                        <br/>
+                        <h4><strong>随笔:</strong><span style="color:red">是记下平时生活中，零散的小知识，没有写在 Study 中的一些知识 或者 解决的一些问题。</span></h4>  
+                        <br/>
+                    </span>
+                    
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<!--页脚
+<footer  style="height:100px; position:fixed; bottom:0px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12" style="text-align: center;padding-top:30px;">
+                        <span>
+                                <strong>开发者：SuiChenTree</strong>
+                                <p><small>创建日期：2017年11月9日~</small></p>
+                        </span>
+                </div>
+            </div>
+        </div>
+</footer>
+-->
+
+</body>
+</html>

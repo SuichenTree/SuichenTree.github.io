@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Essay</title>
+    
+
+    <link rel="stylesheet" href="../css/uikit.min.css" />
+    <script src="../jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+
+    <!--网页icon-->
+    <link rel="shortcut icon" href="../index_img/favicon-1.ico" />
+    <link rel="bookmark"href="/favicon-1.ico" />
+
+    <!--加载幻灯片的依赖-->
+    <link rel="stylesheet" href="../css/components/slideshow.css" />
+    <link rel="stylesheet" href="../css/components/dotnav.css" />
+    <script src="../js/components/slideshow.js"></script>
+    
+
+    <!--返回顶部 外部css，js样式-->
+    <link rel="stylesheet" href="../Study_pages/css/Go_top.css">
+    <script type="text/javascript" src="../Study_pages/js/Go_top.js"></script>
+
+
+    <script>
+                 
+                    //在Essay页面内使用ajax，加载不同分类的文章目录
+                    function ajaxEssaycatalog(obj) {
+                        $("#loadajax").load("./" + obj + ".html");
+                    }
+
+    </script>
+
+
+    <style>
+        .mb a{border:1px solid gray;}   /*作用使class="md"元素下的所有<a>标签中border*/
+
+    </style>
+
+</head>
+<body>
+
+     <!--回到顶部按钮-->
+     <div class="go-top">
+        <div class="arrow"></div>
+        <div class="stick"></div>
+    </div>
+
+    <!--抽屉式导航栏-->
+    <div id="my-id" class="uk-offcanvas">
+            <div class="uk-offcanvas-bar">
+                <div class="uk-panel">
+                    <div class="uk-grid">
+                            <div class="uk-width-1-1 uk-container-center">
+                                    <div class="uk-panel">
+                                        <div class="uk-panel-teaser">
+                                                <!--用户图像-->
+                                                <img class="uk-border-rounded" src="../index_img/user.jpg" alt="#" style="width: 70%;height: 70%">   
+                                        </div>
+                                    </div>
+                            </div>
+                    </div>
+    
+                      <!--名字，名言-->
+                    <div class="uk-text-center" style="margin-bottom:15px;">
+                        <article class="uk-article uk-container-center uk-text-large">
+                                SuiChenTree
+                          <p class="uk-text-contrast">" 欲戴其冠,必承其重 "</p>
+                        </article>
+                    </div>
+    
+    
+                    <!--github,mail图标-->
+                    <a href="https://github.com/SuichenTree" target="_blank" class="uk-icon-hover uk-icon-github-square uk-icon-medium" style="margin-left:80px;margin-right:10px;"></a>
+                    <a href="mailto:18271801652@163.com" class="uk-icon-hover uk-icon-envelope-o uk-icon-medium"></a>
+    
+    
+                     
+                    <ul class="uk-nav uk-nav-parent-icon" data-uk-nav>
+                        <li class="uk-nav-header">Header</li>
+                        <li class="uk-parent">
+                                <li class="uk-active"><a href="../index.html">
+                                    <i class="uk-icon-home" style="margin-right:20px;"></i>Index</a>
+                                </li>
+                                <li class="uk-active"><a href="../Study_pages/Study.html">
+                                    <i class="uk-icon-pencil" style="margin-right:20px;"></i>Study</a>
+                                </li>
+                                <li class="uk-active">
+                                    <a href="#"><i class="uk-icon-file" style="margin-right:20px;"></i>Essay</a>
+                                </li>
+                                <li class="uk-active">
+                                        <a href="../Tags_pages/Tags.html"><i class="uk-icon-tags"  style="margin-right:20px;"></i>Tags</a>
+                                </li>
+                        </li>
+                        
+                        <!--分隔线-->
+                        <li class="uk-nav-divider" style="border-top:1px solid #1a1a1a;"></li>
+    
+                        <li class="uk-parent">
+                            <li class="uk-active"><a href="#About-id" data-uk-modal="{center:true}"><i class="uk-icon-plus-square" style="margin-right:20px;"></i>About</a></li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    
+        <!-- About 模态对话框 -->
+        <div id="About-id" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <article class="uk-article">
+                <h1 class="uk-article-title">About</h1>
+                <hr class="uk-article-divider">
+                Create Time : 2017/11/9/ ~ NOW  |
+                Developer : SuiChenTree  |
+                github:SuiChenTree    |
+                Email:18271801652@163.com  |
+            </article>
+        </div>
+        </div>
+
+    <!--ajax加载区域，例如会加载Study页面，Essay页面-->
+    <div id="ajaxContent">
+    
+        <!--导航栏-->
+        <nav class="uk-navbar" style="margin-bottom:20px;padding-top:10px;padding-bottom:10px;height:90px;background-color: #5E5EA2">
+            <a  class="uk-navbar-brand" href="#my-id" data-uk-offcanvas><i style="color: white" class="uk-icon-navicon uk-icon-large"></i></a>
+        
+            <!--uk-contrast :与背景产生对比度，使字体更突出
+                uk-text-center ：字体放在中间。
+                uk-animation-slide-right : 动画。
+            -->
+            <h1 class="uk-contrast uk-text-center uk-animation-slide-right">Essay</h1>
+        
+        </nav>
+    
+        <!--面板组-->
+        <div class="uk-grid uk-grid-small">
+    
+            <!--面板组左侧内容-->
+            <!--
+                    uk-border-rounded : 把元素的边框变为圆角形式。
+                    md ：该类选择器，作用使class="md"元素下的所有<a>标签中border
+            -->
+            <div class="uk-width-medium-2-10 mb" style="padding-left:20px;">
+                <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajaxEssaycatalog('java_catalog')">
+                    <h3 class="uk-panel-title  uk-panel-box-hover" >Java</h3>
+                </a>
+                <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#"  onclick="ajaxEssaycatalog('mysql_catalog')">
+                    <h3 class="uk-panel-title  uk-panel-box-hover" >Data Base</h3>
+                </a>
+                <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxEssaycatalog('javaWeb_catalog')">
+                    <h3 class="uk-panel-title uk-panel-box-hover" >Java WEB</h3>
+                </a>
+                <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxEssaycatalog('FrontEnd_catalog')">
+                    <h3 class="uk-panel-title  uk-panel-box-hover" >Front End</h3>
+                </a>
+                <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxEssaycatalog('other_catalog')">
+                    <h3 class="uk-panel-title  uk-panel-box-hover" >Other</h3>
+                </a>
+                <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajaxEssaycatalog('DS&Algorithms_catalog')">
+                    <h3 class="uk-panel-title  uk-panel-box-hover" >数据结构与算法测试</h3>
+                </a>
+            </div>
+    
+    
+            <!--面板组右侧内容-->
+            <div class="uk-width-medium-8-10 uk-border-rounded">
+                <div class="uk-grid uk-grid-small">
+                    <div class="uk-width-medium-1-1 mb" style="padding-left:20px;padding-right:20px;" id="loadajax">
+                        <!--ajax 加载 随笔分类文章目录-->
+                            <div class="uk-border-rounded" style="border:1px solid #1a1a1a;padding: 15px;">                               
+                                <h2>
+                                    <strong> Welcome to read SuiChenTree's Blog \ Essay</strong>
+                                </h2>
+                            <br/>
+                                <h4>
+                                    <strong>CreateDATE：2017/11/29</strong>
+                                </h4>
+                            <br/>
+                                <h4>
+                                    <strong>随笔:</strong>
+                                    <span style="color:red">是记下平时生活中，零散的小知识，没有写在 Study 中的一些知识 或者 解决的一些问题。</span>
+                                </h4>
+                            <br/>
+                            </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    
+
+    </div>
+
+</body>
+</html>
