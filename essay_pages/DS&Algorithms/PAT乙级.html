@@ -230,6 +230,9 @@ code.language-yaml {
 <li><a href="#1011-ab%E5%92%8Cc-15">1011: A+B和C (15)</a></li>
 <li><a href="#1012%E6%95%B0%E5%AD%97%E5%88%86%E7%B1%BB-20">1012：数字分类 (20)</a></li>
 <li><a href="#1013-%E6%95%B0%E7%B4%A0%E6%95%B0-20">1013: 数素数 (20)</a></li>
+<li><a href="#1014%E7%A6%8F%E5%B0%94%E6%91%A9%E6%96%AF%E7%9A%84%E7%BA%A6%E4%BC%9A-20">1014：福尔摩斯的约会 (20)</a></li>
+<li><a href="#1015-%E5%BE%B7%E6%89%8D%E8%AE%BA-25">1015: 德才论 (25)</a></li>
+<li><a href="#1016-%E9%83%A8%E5%88%86ab-15">1016: 部分A+B (15)</a></li>
 </ul>
 </li>
 </ul>
@@ -1053,7 +1056,211 @@ Case #1: false</p>
 
 
 
-</pre>
+</pre><hr>
+<h3 class="mume-header" id="1014%E7%A6%8F%E5%B0%94%E6%91%A9%E6%96%AF%E7%9A%84%E7%BA%A6%E4%BC%9A-20">1014：福尔摩斯的约会 (20)</h3>
+
+<p>大侦探福尔摩斯接到一张奇怪的字条：<br>
+“我们约会吧！<br>
+3485djDkxh4hhGE<br>
+2984akDfkkkkggEdsb<br>
+s&amp;hgsfdk<br>
+d&amp;Hyscvnm”。</p>
+<p>大侦探很快就明白了，字条上奇怪的乱码实际上就是约会的时间“星期四 14:04”，因为前面两字符串中第1对相同的大写英文字母（大小写有区分）是</p>
+<p>第4个字母'D'，代表星期四；第2对相同的字符是'E'，那是第5个英文字母，代表一天里的第14个钟头（于是一天的0点到23点由数字0到9、</p>
+<p>以及大写字母A到N表示）；后面两字符串第1对相同的英文字母's'出现在第4个位置（从0开始计数）上，代表第4分钟。现给定两对字符串，</p>
+<p>请帮助福尔摩斯解码得到约会的时间。</p>
+<blockquote>
+<p>输入描述:<br>
+输入在4行中分别给出4个非空、不包含空格、且长度不超过60的字符串。</p>
+</blockquote>
+<blockquote>
+<p>输出描述:<br>
+在一行中输出约会的时间，格式为“DAY HH:MM”，其中“DAY”是某星期的3字符缩写，即MON表示星期一，TUE表示星期二，WED表示星期三，THU表示星期<br>
+四，FRI表示星期五，SAT表示星期六，SUN表示星期日。题目输入保证每个测试存在唯一解。</p>
+</blockquote>
+<blockquote>
+<p>输入例子:</p>
+</blockquote>
+<p>3485djDkxh4hhGE</p>
+<p>2984akDfkkkkggEdsb</p>
+<p>s&amp;hgsfdk</p>
+<p>d&amp;Hyscvnm</p>
+<blockquote>
+<p>输出例子:</p>
+</blockquote>
+<p>THU 14:04</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+
+
+</pre><hr>
+<h3 class="mume-header" id="1015-%E5%BE%B7%E6%89%8D%E8%AE%BA-25">1015: 德才论 (25)</h3>
+
+<p>题目描述<br>
+宋代史学家司马光在《资治通鉴》中有一段著名的“德才论”：“是故才德全尽谓之圣人，才德兼亡谓之愚人，德胜才谓之君子，才胜德谓之</p>
+<p>小人。凡取人之术，苟不得圣人，君子而与之，与其得小人，不若得愚人。”</p>
+<blockquote>
+<p>现给出一批考生的德才分数，请根据司马光的理论给出录取排名。</p>
+</blockquote>
+<blockquote>
+<p>输入描述:<br>
+输入第1行给出3个正整数，分别为：N（&lt;=105），即考生总数；L（&gt;=60），为录取最低分数线.<br>
+即德分和才分均不低于L的考生才有资格被考虑录取；H（&lt;100），<br>
+为优先录取线——德分和才分均不低于此线的被定义为“才德全尽”，此类考生按德才总分从高到低排序；<br>
+才分不到但德分到线的一类考生属于“德胜才”，也按总分排序，但排在第一类考生之后；<br>
+德才分均低于H，但是德分不低于才分的考生属于“才德兼<br>
+亡”但尚有“德胜才”者，按总分排序，但排在第二类考生之后；其他达到最低线L的考生也按总分排序，但排在第三类考生之后。随后N行，每行给出一位考生的信息，包括：准考证号、德分、才分，其中准考证号为8位整数，德才分为区间[0, 100]内的整数。数字间以空格分隔。</p>
+</blockquote>
+<blockquote>
+<p>输出描述:<br>
+输出第1行首先给出达到最低分数线的考生人数M，随后M行，每行按照输入格式输出一位考生的信息，考生按输入中说明的规则从高到低排序。当某类考生中有多人总分相同时，按其德分降序排列；若德分也并列，则按准考证号的升序输出。</p>
+</blockquote>
+<blockquote>
+<p>输入例子:</p>
+</blockquote>
+<p>14 60 80</p>
+<p>10000001 64 90</p>
+<p>10000002 90 60</p>
+<p>10000011 85 80</p>
+<p>10000003 85 80</p>
+<p>10000004 80 85</p>
+<p>10000005 82 77</p>
+<p>10000006 83 76</p>
+<p>10000007 90 78</p>
+<p>10000008 75 79</p>
+<p>10000009 59 90</p>
+<p>10000010 88 45</p>
+<p>10000012 80 100</p>
+<p>10000013 90 99</p>
+<p>10000014 66 60</p>
+<blockquote>
+<p>输出例子:</p>
+</blockquote>
+<p>12</p>
+<p>10000013 90 99</p>
+<p>10000012 80 100</p>
+<p>10000003 85 80</p>
+<p>10000011 85 80</p>
+<p>10000004 80 85</p>
+<p>10000007 90 78</p>
+<p>10000006 83 76</p>
+<p>10000005 82 77</p>
+<p>10000002 90 60</p>
+<p>10000014 66 60</p>
+<p>10000008 75 79</p>
+<p>10000001 64 90</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+
+
+</pre><hr>
+<h3 class="mume-header" id="1016-%E9%83%A8%E5%88%86ab-15">1016: 部分A+B (15)</h3>
+
+<p>题目描述<br>
+正整数A的“DA（为1位整数）部分”定义为由A中所有DA组成的新整数PA。例如：给定A = 3862767，DA = 6，则A的“6部分”PA是66，因为A中有2个6。</p>
+<blockquote>
+<p>现给定A、DA、B、DB，请编写程序计算PA + PB。</p>
+</blockquote>
+<blockquote>
+<p>输入描述:<br>
+输入在一行中依次给出A、DA、B、DB，中间以空格分隔，其中0 &lt; A, B &lt; 1010。</p>
+</blockquote>
+<blockquote>
+<p>输出描述:<br>
+在一行中输出PA + PB的值。</p>
+</blockquote>
+<blockquote>
+<p>输入例子:<br>
+3862767 6 13530293 3</p>
+</blockquote>
+<blockquote>
+<p>输出例子:<br>
+399</p>
+</blockquote>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;cmath></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+	<span class="token keyword">long</span> A<span class="token punctuation">,</span>B<span class="token punctuation">,</span>C<span class="token punctuation">,</span>D<span class="token punctuation">;</span>
+
+	<span class="token keyword">int</span> a<span class="token punctuation">,</span>ai<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>c<span class="token punctuation">,</span>ci<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>           <span class="token comment">//a，ai是A B的辅助变量</span>
+	<span class="token keyword">long</span> pa<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>pb<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+	cin<span class="token operator">>></span>A<span class="token operator">>></span>B<span class="token operator">>></span>C<span class="token operator">>></span>D<span class="token punctuation">;</span>
+
+	<span class="token keyword">while</span><span class="token punctuation">(</span>A<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>     
+		a<span class="token operator">=</span>A<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>           <span class="token comment">//取A的最后一位数。如123 -> 3</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span>B<span class="token punctuation">)</span><span class="token punctuation">{</span>        <span class="token comment">//当A的最后一个数字与B相同时，ai++</span>
+			ai<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		A<span class="token operator">=</span>A<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">;</span>         <span class="token comment">//A去掉最后一位数，如123 -> 12</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">while</span><span class="token punctuation">(</span>C<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		c<span class="token operator">=</span>C<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>c<span class="token operator">==</span>D<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			ci<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		C<span class="token operator">=</span>C<span class="token operator">/</span><span class="token number">10</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//懒得写for循环，直接写这种计算公式</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">1000000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">10000000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ai<span class="token operator">==</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pa<span class="token operator">=</span>B<span class="token operator">*</span><span class="token number">100000000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10000000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>B<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>B<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+
+	<span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">1000000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">10000000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ci<span class="token operator">==</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		pb<span class="token operator">=</span>D<span class="token operator">*</span><span class="token number">100000000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10000000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">1000</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>D<span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>D<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	
+	cout<span class="token operator">&lt;&lt;</span>pa<span class="token operator">+</span>pb<span class="token punctuation">;</span>
+
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+
+
+
+</pre><hr>
+
       </div>
       
       
