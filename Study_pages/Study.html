@@ -7,17 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Study</title>
     
-    <!--uikit框架依赖文件-->
+
     <link rel="stylesheet" href="../css/uikit.min.css" />
     <script src="../jquery-3.3.1/jquery-3.3.1.min.js"></script>
     <script src="../js/uikit.min.js"></script>
+
     <!--网页icon-->
     <link rel="shortcut icon" href="../index_img/favicon-1.ico" />
     <link rel="bookmark"href="/favicon-1.ico" />
+
+    <!--加载幻灯片的依赖-->
+    <link rel="stylesheet" href="../css/components/slideshow.css" />
+    <link rel="stylesheet" href="../css/components/dotnav.css" />
+    <script src="../js/components/slideshow.js"></script>
+    
+
     <!--返回顶部 外部css，js样式-->
     <link rel="stylesheet" href="./css/Go_top.css">
     <script type="text/javascript" src="./js/Go_top.js"></script>
-    
+
+
     <script>
                     //在Study页面内使用ajax，加载各个技术文档
                     function ajax_study(obj){
@@ -25,6 +34,7 @@
                     }
 
     </script>
+
 
     <style>
         .mb a{border:1px solid gray;}   /*作用使class="md"元素下的所有<a>标签中border*/
@@ -84,9 +94,6 @@
                                 </li>
                                 <li class="uk-active">
                                         <a href="../Tags_pages/Tags.html"><i class="uk-icon-tags"  style="margin-right:20px;"></i>Tags</a>
-                                </li>
-                                <li class="uk-active">
-                                        <a href="../Music_pages/Music.html"><i class="uk-icon-music"  style="margin-right:20px;"></i>Music</a>
                                 </li>
                         </li>
                         
@@ -208,6 +215,10 @@
                         <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajax_study('Node_js')">
                                 <h3 class="uk-panel-title uk-panel-box-hover" >Node.js</h3>
                                 Node.js 就是运行在服务端的 JavaScript。
+                        </a>
+                        <a class="uk-panel uk-panel-box-primary uk-panel-hover uk-border-rounded" href="#" onclick="ajax_study('Vus_js')">
+                                <h3 class="uk-panel-title uk-panel-box-hover" >Vue.js</h3>
+                                Vue 是一套用于构建用户界面的渐进式框架。
                         </a>
                     </div>
             
