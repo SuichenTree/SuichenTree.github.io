@@ -1097,7 +1097,101 @@ THU 14:04
 
 
 ==C++==
+
+<h2><font color="red">这个demo有问题，题目给出的示例过了，但测试没过，我也不知为什么？</font></h2>
+
 ```c++
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+struct Student{
+	int id;		//id:准考证号（8位数字），dscore:德分，cscore:才分。德才分为区间[0, 100]内的整数。数字间以空格分隔。
+	int dscore;
+	int cscore;
+	int kind;				// sum:德才总分,kind表示这个考生是第几类
+	int sum;
+
+};
+
+int cmp(struct Student a, struct Student b) {
+    if ((a.sum) != (b.sum))
+        return (a.sum) > (b.sum);
+    else if (a.dscore != b.dscore)
+        return a.dscore > b.dscore;
+    else
+        return a.id < b.id;
+}
+
+int main() {
+
+	int N,L,H;              //N:考生总数 ，L:录取最低分数线, H：为优先录取线
+
+	cin>>N>>L>>H;
+	
+	int nopass=0;
+	struct Student stu;
+	vector<Student> Set_stu[4];
+
+	for(int i=0;i<N;i++){
+		cin>>stu.id>>stu.dscore>>stu.cscore;
+
+		if(stu.dscore < L || stu.cscore < L){
+			nopass++;	
+
+		}else{
+			
+			if(stu.dscore >= H && stu.cscore >= H){								//才德全尽的人
+				
+				stu.sum=stu.cscore + stu.dscore;
+				stu.kind=1;
+
+				Set_stu[0].push_back(stu);               //把第一类的学生的插入到set集合中
+
+
+			}else if(stu.dscore >= H && stu.cscore < H){   //德胜才的人
+				
+				stu.sum=stu.cscore + stu.dscore;
+				stu.kind=2;
+
+				Set_stu[1].push_back(stu);               //把第二类的学生的插入到set集合中
+
+
+			}else if(stu.dscore < H && stu.cscore < H && stu.dscore >= L){  //才德兼亡”但尚有“德胜才”的人 
+
+				stu.sum=stu.cscore + stu.dscore;
+				stu.kind=3;
+				Set_stu[2].push_back(stu);               //把第三类的学生的插入到set集合中
+
+			}else{
+				stu.sum=stu.cscore + stu.dscore;
+				stu.kind=4;
+				Set_stu[3].push_back(stu);               //把第四类的学生的插入到set集合中
+
+			}
+		}
+
+	}
+
+
+
+	cout<<N-nopass<<endl<<endl;
+	for(int i=0;i<4;i++){
+
+		sort(Set_stu[i].begin(), Set_stu[i].end(), cmp);
+
+		for(int j = 0; j < Set_stu[i].size(); j++){ 
+			 printf("%d %d %d\n", Set_stu[i][j].id, Set_stu[i][j].dscore, Set_stu[i][j].cscore);
+		}
+	
+	}
+
+
+    
+	return 0;
+}
+
+
 
 
 
@@ -1208,7 +1302,128 @@ int main() {
 }
 
 
+```
 
+
+---
+
+
+### 1017：A除以B (20)：
+
+本题要求计算A/B，其中A是不超过1000位的正整数，B是1位正整数。你需要输出商数Q和余数R，使得A = B * Q + R成立。
+
+> 输入描述:
+输入在1行中依次给出A和B，中间以1空格分隔。
+
+> 输出描述:
+在1行中依次输出Q和R，中间以1空格分隔。
+
+输入例子:
+123456789050987654321 7
+
+输出例子:
+17636684150141093474 3
+
+
+==C++==
+```c++
+
+#include<iostream>
+#include<string>
+using namespace std;
+int main(){
+
+	/*
+	算法思想：
+
+	比如 100/2 等价于 1/2 商为0,余数为1,商为0的情况下不能输输出, 
+	然后余数和下一位 即0 组合为1*10+0=10,就变成10/2 商为5余数为0,此时输出商数。
+	然后0和下一位0组合为0*10+0=0 0/2余数为0,此时运算完毕。
+	
+	*/
+
+
+	string a,q;    //a,b 为除数与被除数，q,r为商数，余数。
+	int b=0,r=0;
+	int c=0;       //c为临时变量
+
+	cin>>a>>b;
+
+	for(int i = 0; i < a.length(); i++){           //a的每一位数字与b相除
+				
+		c = r * 10 + (a[i] - '0');                 //由于从一开始，所以商的第一位数有一个0，要去除0
+				
+		q= c / b +'0';
+				
+		r = c % b;
+				
+		if(i == 0 && q[0] =='0'){                 //这里是去除0
+			continue;
+		}else{
+			cout << q;							//打印此时的商数，最终的商数有许多给不同的时候的商数拼成的
+		}
+			
+	}
+		cout <<' ';                         
+		cout << r;                              //商数打印完，输出余数
+			
+
+	return 0;
+}
+
+```
+
+
+---
+
+
+### 1018：锤子剪刀布 (20)
+
+题目描述
+大家应该都会玩“锤子剪刀布”的游戏：
+
+现给出两人的交锋记录，请统计双方的胜、平、负次数，并且给出双方分别出什么手势的胜算最大。
+
+> 输入描述:
+输入第1行给出正整数N（<=105），即双方交锋的次数。随后N行，每行给出一次交锋的信息，即甲、乙双方同时给出的的手势。C代表“锤子”、J代表“剪刀”、B代表“布”，第1个字母代表甲方，第2个代表乙方，中间有1个空格。
+
+
+> 输出描述:
+输出第1、2行分别给出甲、乙的胜、平、负次数，数字间以1个空格分隔。第3行给出两个字母，分别代表甲、乙获胜次数最多的手势，中间有1个空格。如果解不唯一，则输出按字母序最小的解。
+
+输入例子:
+10
+
+C J
+
+J B
+
+C B
+
+B B
+
+B C
+
+C C
+
+C B
+
+J B
+
+B C
+
+J J
+
+输出例子:
+5 3 2
+
+2 3 5
+
+B B
+
+
+==C++==
+```c++
 
 
 ```
@@ -1216,3 +1431,48 @@ int main() {
 
 ---
 
+
+
+### 1019. 数字黑洞 (20)
+
+题目描述
+给定任一个各位数字不完全相同的4位正整数，如果我们先把4个数字按非递增排序，再按非递减排序，然后用第1个数字减第2个数字，将得到
+ 一个新的数字。一直重复这样做，我们很快会停在有“数字黑洞”之称的6174，这个神奇的数字也叫Kaprekar常数。
+ 
+ 例如，我们从6767开始，将得到
+ 
+ 7766 - 6677 = 1089
+ 9810 - 0189 = 9621
+ 9621 - 1269 = 8352
+ 8532 - 2358 = 6174
+ 7641 - 1467 = 6174
+ ... ...
+ 
+ 现给定任意4位正整数，请编写程序演示到达黑洞的过程。
+
+
+>输入描述:
+输入给出一个(0, 10000)区间内的正整数N。
+
+
+> 输出描述:
+如果N的4位数字全相等，则在一行内输出“N - N = 0000”；否则将计算的每一步在一行内输出，直到6174作为差出现，输出格式见样例,每行中间没有空行。注意每个数字按4位数格
+ 式输出。
+
+输入例子:
+6767
+
+输出例子:
+7766 - 6677 = 1089
+9810 - 0189 = 9621
+9621 - 1269 = 8352
+8532 - 2358 = 6174
+
+==C++==
+```c++
+
+
+```
+
+
+---

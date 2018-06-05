@@ -233,6 +233,9 @@ code.language-yaml {
 <li><a href="#1014%E7%A6%8F%E5%B0%94%E6%91%A9%E6%96%AF%E7%9A%84%E7%BA%A6%E4%BC%9A-20">1014：福尔摩斯的约会 (20)</a></li>
 <li><a href="#1015-%E5%BE%B7%E6%89%8D%E8%AE%BA-25">1015: 德才论 (25)</a></li>
 <li><a href="#1016-%E9%83%A8%E5%88%86ab-15">1016: 部分A+B (15)</a></li>
+<li><a href="#1017a%E9%99%A4%E4%BB%A5b-20">1017：A除以B (20)：</a></li>
+<li><a href="#1018%E9%94%A4%E5%AD%90%E5%89%AA%E5%88%80%E5%B8%83-20">1018：锤子剪刀布 (20)</a></li>
+<li><a href="#1019-%E6%95%B0%E5%AD%97%E9%BB%91%E6%B4%9E-20">1019. 数字黑洞 (20)</a></li>
 </ul>
 </li>
 </ul>
@@ -1150,7 +1153,99 @@ d&amp;Hyscvnm”。</p>
 <p>10000008 75 79</p>
 <p>10000001 64 90</p>
 <p><mark>C++</mark></p>
-<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<h2><font color="red">这个demo有问题，题目给出的示例过了，但测试没过，我也不知为什么？</font></h2>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;vector></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">struct</span> Student<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> id<span class="token punctuation">;</span>		<span class="token comment">//id:准考证号（8位数字），dscore:德分，cscore:才分。德才分为区间[0, 100]内的整数。数字间以空格分隔。</span>
+	<span class="token keyword">int</span> dscore<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> cscore<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> kind<span class="token punctuation">;</span>				<span class="token comment">// sum:德才总分,kind表示这个考生是第几类</span>
+	<span class="token keyword">int</span> sum<span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">cmp</span><span class="token punctuation">(</span><span class="token keyword">struct</span> Student a<span class="token punctuation">,</span> <span class="token keyword">struct</span> Student b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>sum<span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token punctuation">(</span>b<span class="token punctuation">.</span>sum<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>a<span class="token punctuation">.</span>sum<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token punctuation">(</span>b<span class="token punctuation">.</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">.</span>dscore <span class="token operator">!=</span> b<span class="token punctuation">.</span>dscore<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> a<span class="token punctuation">.</span>dscore <span class="token operator">></span> b<span class="token punctuation">.</span>dscore<span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token keyword">return</span> a<span class="token punctuation">.</span>id <span class="token operator">&lt;</span> b<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+	<span class="token keyword">int</span> N<span class="token punctuation">,</span>L<span class="token punctuation">,</span>H<span class="token punctuation">;</span>              <span class="token comment">//N:考生总数 ，L:录取最低分数线, H：为优先录取线</span>
+
+	cin<span class="token operator">>></span>N<span class="token operator">>></span>L<span class="token operator">>></span>H<span class="token punctuation">;</span>
+	
+	<span class="token keyword">int</span> nopass<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> Student stu<span class="token punctuation">;</span>
+	vector<span class="token operator">&lt;</span>Student<span class="token operator">></span> Set_stu<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cin<span class="token operator">>></span>stu<span class="token punctuation">.</span>id<span class="token operator">>></span>stu<span class="token punctuation">.</span>dscore<span class="token operator">>></span>stu<span class="token punctuation">.</span>cscore<span class="token punctuation">;</span>
+
+		<span class="token keyword">if</span><span class="token punctuation">(</span>stu<span class="token punctuation">.</span>dscore <span class="token operator">&lt;</span> L <span class="token operator">||</span> stu<span class="token punctuation">.</span>cscore <span class="token operator">&lt;</span> L<span class="token punctuation">)</span><span class="token punctuation">{</span>
+			nopass<span class="token operator">++</span><span class="token punctuation">;</span>	
+
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			
+			<span class="token keyword">if</span><span class="token punctuation">(</span>stu<span class="token punctuation">.</span>dscore <span class="token operator">>=</span> H <span class="token operator">&amp;&amp;</span> stu<span class="token punctuation">.</span>cscore <span class="token operator">>=</span> H<span class="token punctuation">)</span><span class="token punctuation">{</span>								<span class="token comment">//才德全尽的人</span>
+				
+				stu<span class="token punctuation">.</span>sum<span class="token operator">=</span>stu<span class="token punctuation">.</span>cscore <span class="token operator">+</span> stu<span class="token punctuation">.</span>dscore<span class="token punctuation">;</span>
+				stu<span class="token punctuation">.</span>kind<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+				Set_stu<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//把第一类的学生的插入到set集合中</span>
+
+
+			<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>stu<span class="token punctuation">.</span>dscore <span class="token operator">>=</span> H <span class="token operator">&amp;&amp;</span> stu<span class="token punctuation">.</span>cscore <span class="token operator">&lt;</span> H<span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment">//德胜才的人</span>
+				
+				stu<span class="token punctuation">.</span>sum<span class="token operator">=</span>stu<span class="token punctuation">.</span>cscore <span class="token operator">+</span> stu<span class="token punctuation">.</span>dscore<span class="token punctuation">;</span>
+				stu<span class="token punctuation">.</span>kind<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span>
+
+				Set_stu<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//把第二类的学生的插入到set集合中</span>
+
+
+			<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>stu<span class="token punctuation">.</span>dscore <span class="token operator">&lt;</span> H <span class="token operator">&amp;&amp;</span> stu<span class="token punctuation">.</span>cscore <span class="token operator">&lt;</span> H <span class="token operator">&amp;&amp;</span> stu<span class="token punctuation">.</span>dscore <span class="token operator">>=</span> L<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment">//才德兼亡”但尚有“德胜才”的人 </span>
+
+				stu<span class="token punctuation">.</span>sum<span class="token operator">=</span>stu<span class="token punctuation">.</span>cscore <span class="token operator">+</span> stu<span class="token punctuation">.</span>dscore<span class="token punctuation">;</span>
+				stu<span class="token punctuation">.</span>kind<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span>
+				Set_stu<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//把第三类的学生的插入到set集合中</span>
+
+			<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+				stu<span class="token punctuation">.</span>sum<span class="token operator">=</span>stu<span class="token punctuation">.</span>cscore <span class="token operator">+</span> stu<span class="token punctuation">.</span>dscore<span class="token punctuation">;</span>
+				stu<span class="token punctuation">.</span>kind<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span>
+				Set_stu<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>stu<span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment">//把第四类的学生的插入到set集合中</span>
+
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+
+	<span class="token punctuation">}</span>
+
+
+
+	cout<span class="token operator">&lt;&lt;</span>N<span class="token operator">-</span>nopass<span class="token operator">&lt;&lt;</span>endl<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+		<span class="token function">sort</span><span class="token punctuation">(</span>Set_stu<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Set_stu<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> cmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> Set_stu<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span> 
+			 <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d %d %d\n"</span><span class="token punctuation">,</span> Set_stu<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>id<span class="token punctuation">,</span> Set_stu<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>dscore<span class="token punctuation">,</span> Set_stu<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>cscore<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	
+	<span class="token punctuation">}</span>
+
+
+    
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+
 
 
 </pre><hr>
@@ -1256,8 +1351,132 @@ d&amp;Hyscvnm”。</p>
 <span class="token punctuation">}</span>
 
 
+</pre><hr>
+<h3 class="mume-header" id="1017a%E9%99%A4%E4%BB%A5b-20">1017：A除以B (20)：</h3>
+
+<p>本题要求计算A/B，其中A是不超过1000位的正整数，B是1位正整数。你需要输出商数Q和余数R，使得A = B * Q + R成立。</p>
+<blockquote>
+<p>输入描述:<br>
+输入在1行中依次给出A和B，中间以1空格分隔。</p>
+</blockquote>
+<blockquote>
+<p>输出描述:<br>
+在1行中依次输出Q和R，中间以1空格分隔。</p>
+</blockquote>
+<p>输入例子:<br>
+123456789050987654321 7</p>
+<p>输出例子:<br>
+17636684150141093474 3</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+	<span class="token comment">/*
+	算法思想：
+
+	比如 100/2 等价于 1/2 商为0,余数为1,商为0的情况下不能输输出, 
+	然后余数和下一位 即0 组合为1*10+0=10,就变成10/2 商为5余数为0,此时输出商数。
+	然后0和下一位0组合为0*10+0=0 0/2余数为0,此时运算完毕。
+	
+	*/</span>
 
 
+	string a<span class="token punctuation">,</span>q<span class="token punctuation">;</span>    <span class="token comment">//a,b 为除数与被除数，q,r为商数，余数。</span>
+	<span class="token keyword">int</span> b<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>r<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>       <span class="token comment">//c为临时变量</span>
+
+	cin<span class="token operator">>></span>a<span class="token operator">>></span>b<span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> a<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>           <span class="token comment">//a的每一位数字与b相除</span>
+				
+		c <span class="token operator">=</span> r <span class="token operator">*</span> <span class="token number">10</span> <span class="token operator">+</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">//由于从一开始，所以商的第一位数有一个0，要去除0</span>
+				
+		q<span class="token operator">=</span> c <span class="token operator">/</span> b <span class="token operator">+</span><span class="token string">'0'</span><span class="token punctuation">;</span>
+				
+		r <span class="token operator">=</span> c <span class="token operator">%</span> b<span class="token punctuation">;</span>
+				
+		<span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> q<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>                 <span class="token comment">//这里是去除0</span>
+			<span class="token keyword">continue</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+			cout <span class="token operator">&lt;&lt;</span> q<span class="token punctuation">;</span>							<span class="token comment">//打印此时的商数，最终的商数有许多给不同的时候的商数拼成的</span>
+		<span class="token punctuation">}</span>
+			
+	<span class="token punctuation">}</span>
+		cout <span class="token operator">&lt;&lt;</span><span class="token string">' '</span><span class="token punctuation">;</span>                         
+		cout <span class="token operator">&lt;&lt;</span> r<span class="token punctuation">;</span>                              <span class="token comment">//商数打印完，输出余数</span>
+			
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</pre><hr>
+<h3 class="mume-header" id="1018%E9%94%A4%E5%AD%90%E5%89%AA%E5%88%80%E5%B8%83-20">1018：锤子剪刀布 (20)</h3>
+
+<p>题目描述<br>
+大家应该都会玩“锤子剪刀布”的游戏：</p>
+<p>现给出两人的交锋记录，请统计双方的胜、平、负次数，并且给出双方分别出什么手势的胜算最大。</p>
+<blockquote>
+<p>输入描述:<br>
+输入第1行给出正整数N（&lt;=105），即双方交锋的次数。随后N行，每行给出一次交锋的信息，即甲、乙双方同时给出的的手势。C代表“锤子”、J代表“剪刀”、B代表“布”，第1个字母代表甲方，第2个代表乙方，中间有1个空格。</p>
+</blockquote>
+<blockquote>
+<p>输出描述:<br>
+输出第1、2行分别给出甲、乙的胜、平、负次数，数字间以1个空格分隔。第3行给出两个字母，分别代表甲、乙获胜次数最多的手势，中间有1个空格。如果解不唯一，则输出按字母序最小的解。</p>
+</blockquote>
+<p>输入例子:<br>
+10</p>
+<p>C J</p>
+<p>J B</p>
+<p>C B</p>
+<p>B B</p>
+<p>B C</p>
+<p>C C</p>
+<p>C B</p>
+<p>J B</p>
+<p>B C</p>
+<p>J J</p>
+<p>输出例子:<br>
+5 3 2</p>
+<p>2 3 5</p>
+<p>B B</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+
+</pre><hr>
+<h3 class="mume-header" id="1019-%E6%95%B0%E5%AD%97%E9%BB%91%E6%B4%9E-20">1019. 数字黑洞 (20)</h3>
+
+<p>题目描述<br>
+给定任一个各位数字不完全相同的4位正整数，如果我们先把4个数字按非递增排序，再按非递减排序，然后用第1个数字减第2个数字，将得到<br>
+一个新的数字。一直重复这样做，我们很快会停在有“数字黑洞”之称的6174，这个神奇的数字也叫Kaprekar常数。</p>
+<p>例如，我们从6767开始，将得到</p>
+<p>7766 - 6677 = 1089<br>
+9810 - 0189 = 9621<br>
+9621 - 1269 = 8352<br>
+8532 - 2358 = 6174<br>
+7641 - 1467 = 6174<br>
+... ...</p>
+<p>现给定任意4位正整数，请编写程序演示到达黑洞的过程。</p>
+<blockquote>
+<p>输入描述:<br>
+输入给出一个(0, 10000)区间内的正整数N。</p>
+</blockquote>
+<blockquote>
+<p>输出描述:<br>
+如果N的4位数字全相等，则在一行内输出“N - N = 0000”；否则将计算的每一步在一行内输出，直到6174作为差出现，输出格式见样例,每行中间没有空行。注意每个数字按4位数格<br>
+式输出。</p>
+</blockquote>
+<p>输入例子:<br>
+6767</p>
+<p>输出例子:<br>
+7766 - 6677 = 1089<br>
+9810 - 0189 = 9621<br>
+9621 - 1269 = 8352<br>
+8532 - 2358 = 6174</p>
+<p><mark>C++</mark></p>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
 
 </pre><hr>
 
