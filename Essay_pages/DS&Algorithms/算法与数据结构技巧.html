@@ -218,6 +218,7 @@ code.language-yaml {
 <li><a href="#c">C++:</a>
 <ul>
 <li><a href="#1-%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E9%9D%A2%E7%9A%84%E6%95%B0%E5%AD%97%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%95%B4%E6%95%B0">1. 把字符串里面的数字转化为整数：</a></li>
+<li><a href="#2-includecctype-c%E5%AD%97%E7%AC%A6%E5%87%BD%E6%95%B0%E5%BA%93%E7%94%A8%E4%BA%8E%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6">2. <code>#include&lt;cctype&gt;</code> ---c++字符函数库（用于判断字符）：</a></li>
 </ul>
 </li>
 </ul>
@@ -239,10 +240,9 @@ code.language-yaml {
 	string str<span class="token operator">=</span><span class="token string">"1234567890"</span><span class="token punctuation">;</span>
 
 	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> str<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-		n <span class="token operator">=</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>
+		n <span class="token operator">=</span> str<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>   <span class="token comment">//这里把string类型的数字转换为int类型</span>
 		cout<span class="token operator">&lt;&lt;</span>n<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-
 
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -257,7 +257,84 @@ code.language-yaml {
 8
 9
 0
-</code></pre>
+</code></pre><hr>
+<h3 class="mume-header" id="2-includecctype-c%E5%AD%97%E7%AC%A6%E5%87%BD%E6%95%B0%E5%BA%93%E7%94%A8%E4%BA%8E%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6">2. <code>#include&lt;cctype&gt;</code> ---c++字符函数库（用于判断字符）：</h3>
+
+<p><mark>c++中应该是<code>#include &lt;cctype&gt;</code>,c中应该是<code>#include &lt;ctype.h&gt;</code></mark></p>
+<table>
+<thead>
+<tr>
+<th>函数名称</th>
+<th>功能及返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>isalnum()</td>
+<td>如果参数是字母数字，即字母或数字，该函数返回true</td>
+</tr>
+<tr>
+<td>isalpha()</td>
+<td>如果参数是字母，该函数返回真</td>
+</tr>
+<tr>
+<td>isblank()</td>
+<td>如果参数是空格或水平制表符，该函数返回true</td>
+</tr>
+<tr>
+<td>iscntrl()</td>
+<td>如果参数是控制字符，该函数返回true</td>
+</tr>
+<tr>
+<td>isdigit()</td>
+<td>如果参数是数字（0～9），该函数返回true</td>
+</tr>
+<tr>
+<td>isgraph()</td>
+<td>如果参数是除空格之外的打印字符，该函数返回true</td>
+</tr>
+<tr>
+<td>islower()</td>
+<td>如果参数是小写字母，该函数返回true</td>
+</tr>
+<tr>
+<td>isprint()</td>
+<td>如果参数是打印字符（包括空格），该函数返回true</td>
+</tr>
+<tr>
+<td>ispunct()</td>
+<td>如果参数是标点符号，该函数返回true</td>
+</tr>
+<tr>
+<td>isspace()</td>
+<td>如果参数是标准空白字符，如空格、进纸、换行符、回车、水平制表符或者垂直制表符，该函数返回true。</td>
+</tr>
+<tr>
+<td>isupper()</td>
+<td>如果参数是大写字母，该函数返回true</td>
+</tr>
+<tr>
+<td>isxdigit()</td>
+<td>如果参数是十六进制的数字，即0～9、a<sub>f、A</sub>F，该函数返回true</td>
+</tr>
+<tr>
+<td>tolower()</td>
+<td>如果参数是大写字符，则返回其小写，否则返回该参数</td>
+</tr>
+<tr>
+<td>toupper()</td>
+<td>如果参数是小写字母，则返回其大写，否则返回该参数</td>
+</tr>
+</tbody>
+</table>
+<font color="red">
+注意：常用的为：
+<p>tolower() ， toupper()<br>
+isupper() ， islower()<br>
+isalnum() ， isalpha()<br>
+</p></font>
+<hr>
+
       </div>
       
       

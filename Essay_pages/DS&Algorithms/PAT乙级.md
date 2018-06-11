@@ -1004,6 +1004,170 @@ THU 14:04
 ==C++==
 ```c++
 
+#include<iostream>
+#include<string>
+#include <cctype>
+using namespace std;
+int main(){
+
+	//这题有几个注意点：
+	/*
+	①： 找出的第一个字符为：两字符串中第1对相同的大写英文字母。
+	②： 第二个字符为：可以是字母与数字，但寻找范围是从第一个字符串的tag1+1位置，
+					与第二个字符串的tag2+1的位置开始找。
+			
+		 举例：   
+			3485djDkxh4hhGE
+			2984akDfkkkkggEdsb
+			其中第一个字符为D，则第二个字符应该在：
+												kxh4hhGE
+												fkkkkggEdsb
+			两个字符串从D之后截取的字符串的范围中找。
+
+			其中tag1 是第一个字符串中D的下标，tag2是第二个字符串中D的下标
+
+	③:  第三个字符是第三个与第四个字符串中相同位置的相同字母所在的下标。
+
+	④： 找第三个字符的遍历次数为两个字符串中长度小的次数。
+	*/
+
+	string s1,s2,s3,s4;
+
+	char a;      //c为通过s1 s2 找出的第一个大写字母
+	char b;		 //e为通过s1 s2 找出的第二个字符，可以为字母或数字
+
+	int tag1=0,tag2=0;    //通过s1 s2 找出的第二个字符，所需要的辅助条件
+
+	int d=0;               //记录s3,s4 第一对相同位置的相同字母，并存放其下标位置
+	int t;				  //辅助变量，记录s3,s4字符串中小的字符串的长度
+
+	int s1tag=0;    //若sb为0，则为没找到第一个大写字母，为1 表示找到
+	int s2tag=0;
+
+	cin>>s1>>s2>>s3>>s4;
+
+	//遍历s1，s2，找出第一个字符
+	for(int i=0;i<s1.size();i++){
+		if(isupper(s1[i])){						//若s1中某个字符为大写字母
+			for(int j=0;j<s2.size();j++){	    
+				if(s1tag==0){
+					if(isupper(s2[j])){        //若s2中某个字符为大写字母
+						if(s1[i]==s2[j]){
+								a=s1[i];                     
+								tag2=j;         //记录此时第一个字符在两个字符串的位置
+								tag1=i;
+								s1tag=1;
+						}
+					}
+				}
+		    }
+		}
+	}
+
+	for(int i=tag1+1;i<s1.size();i++){
+		if(s2tag==0){
+			if(!(islower(s1[i]))){          
+				for(int j=tag2+1;j<s2.size();j++){
+					if(!(islower(s2[j]))){
+						if(s1[i]==s2[j]){
+							b=s1[i];
+							s2tag=1;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//共同遍历s3,s4，找出位置相同的字母,并记下下标位置，遍历次数t为短的字符串的字符个数
+
+	t=s3.size()>s4.size()?s4.size():s3.size();
+	for(int i=0;i<t;i++){
+		if(isalpha(s3[i])){       //判断s3[i]是否为英文字母
+			if(s3[i]==s4[i]){
+				d=i;              //若字母相同则记录下标数，只记录第一对的
+				break;
+			}
+		}
+	}
+
+	//打印输出语句，通过给出的要求
+
+	if(a=='A'){
+		cout<<"MON"<<" ";
+	}else if(a=='B'){
+		cout<<"TUE"<<" ";
+	}else if(a=='C'){
+		cout<<"WED"<<" ";
+	}else if(a=='D'){
+		cout<<"THU"<<" ";
+	}else if(a=='E'){
+		cout<<"FRI"<<" ";
+	}else if(a=='F'){
+		cout<<"SAT"<<" ";
+	}else if(a=='G'){
+		cout<<"SUN"<<" ";
+	}
+
+	if(b=='0'){
+		cout<<"00"<<":";
+	}else if(b=='1'){
+		cout<<"01"<<":";
+	}else if(b=='2'){
+		cout<<"02"<<":";
+	}else if(b=='3'){
+		cout<<"03"<<":";
+	}else if(b=='4'){
+		cout<<"04"<<":";
+	}else if(b=='5'){
+		cout<<"05"<<":";
+	}else if(b=='6'){
+		cout<<"06"<<":";
+	}else if(b=='7'){
+		cout<<"07"<<":";
+	}else if(b=='8'){
+		cout<<"08"<<":";
+	}else if(b=='9'){
+		cout<<"09"<<":";
+	}else if(b=='A'){
+		cout<<"10"<<":";
+	}else if(b=='B'){
+		cout<<"11"<<":";
+	}else if(b=='C'){
+		cout<<"12"<<":";
+	}else if(b=='D'){
+		cout<<"13"<<":";
+	}else if(b=='E'){
+		cout<<"14"<<":";
+	}else if(b=='F'){
+		cout<<"15"<<":";
+	}else if(b=='G'){
+		cout<<"16"<<":";
+	}else if(b=='H'){
+		cout<<"17"<<":";
+	}else if(b=='I'){
+		cout<<"18"<<":";
+	}else if(b=='J'){
+		cout<<"19"<<":";
+	}else if(b=='K'){
+		cout<<"20"<<":";
+	}else if(b=='L'){
+		cout<<"21"<<":";
+	}else if(b=='M'){
+		cout<<"22"<<":";
+	}else if(b=='N'){
+		cout<<"23"<<":";
+	}
+
+	if(d<10){
+		cout<<"0"<<d;
+	}else{
+		cout<<d;
+	}
+
+}
+
+
 
 
 ```

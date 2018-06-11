@@ -5,7 +5,11 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\18271\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.0\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
       
       
       
@@ -211,56 +215,161 @@ code.language-yaml {
       <ul>
 <li><a href="#mysql">MySQL</a>
 <ul>
-<li><a href="#alter%E5%91%BD%E4%BB%A4">ALTER命令:</a>
+<li><a href="#1-mysql%E5%91%BD%E4%BB%A4windows-%E4%B8%8B">1. Mysql命令（windows 下）:</a>
+<ul>
+<li><a href="#1-%E8%BF%9E%E6%8E%A5mysql">1. 连接Mysql:</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81">2. 修改密码:</a></li>
+<li><a href="#3-%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81">3. 显示数据库，修改数据库默认编码:</a></li>
+<li><a href="#4-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93">4. 删除数据库：</a></li>
+<li><a href="#5-%E8%BF%9E%E6%8E%A5%E6%88%96%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E4%BA%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E5%AF%B9%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">5. 连接或切换数据库(用于在命令行中对其他数据库进行操作)：</a></li>
+<li><a href="#6-select%E5%91%BD%E4%BB%A4">6. SELECT命令:</a>
+<ul>
+<li><a href="#1-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0">1. 显示当前使用的数据库名称：</a></li>
+<li><a href="#2-%E6%98%BE%E7%A4%BAmysql%E7%9A%84%E7%89%88%E6%9C%AC">2. 显示MYSQL的版本：</a></li>
+<li><a href="#3-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4">3. 显示当前时间:</a></li>
+<li><a href="#4-%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2">4. 显示字符串：</a></li>
+<li><a href="#5-%E5%BD%93%E8%AE%A1%E7%AE%97%E5%99%A8%E7%94%A8">5. 当计算器用:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-%E5%AF%B9%E8%A1%A8%E6%A0%BC%E6%93%8D%E4%BD%9C">2 对表格操作:</a>
 <ul>
 <li><a href="#1%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">1.展示表的结构：</a></li>
 <li><a href="#2%E4%BD%BF%E7%94%A8-add%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%88%97-id">2.使用 add来为数据表中添加列 id ：</a></li>
 <li><a href="#3-%E4%BD%BF%E7%94%A8drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">3. 使用drop来删除表的 id 字段：</a></li>
-<li><a href="#4%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%90%8D%E7%A7%B0">4.需要修改字段类型及名称:</a></li>
-<li><a href="#5%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D">5.修改表名:</a></li>
+<li><a href="#4-%E4%BD%BF%E7%94%A8alter%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%90%8D%E7%A7%B0">4. 使用alter需要修改字段类型及名称:</a></li>
+<li><a href="#5-%E4%BD%BF%E7%94%A8alter%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D">5. 使用alter修改表名:</a></li>
+<li><a href="#6-%E5%88%9B%E5%BB%BAmysql%E7%9A%84student%E8%A1%A8">6. 创建MySQL的student表：</a></li>
+<li><a href="#7-%E5%88%A0%E9%99%A4student%E8%A1%A8%E5%8C%85%E6%8B%AC%E6%95%B0%E6%8D%AE%E5%92%8C%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">7. 删除student表（包括数据和表的结构）：</a></li>
 </ul>
 </li>
-<li><a href="#%E5%88%9B%E5%BB%BAmysql%E7%9A%84student%E8%A1%A8">创建MySQL的student表：</a></li>
-<li><a href="#%E5%88%A0%E9%99%A4student%E8%A1%A8%E5%8C%85%E6%8B%AC%E6%95%B0%E6%8D%AE%E5%92%8C%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">删除student表（包括数据和表的结构）：</a></li>
-<li><a href="#%E4%BB%85%E5%88%A0%E9%99%A4%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE">仅删除表中存储的数据：</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">插入数据：</a></li>
-<li><a href="#group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">group by 语句根据一个或多个列对结果集进行分组：</a></li>
-<li><a href="#mysql-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E4%BD%BF%E7%94%A8join">MySQL 连接多个表的使用(join):</a>
+<li><a href="#3%E5%AF%B9%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">3.对表格中的数据操作：</a>
+<ul>
+<li><a href="#1-%E4%BB%85%E5%88%A0%E9%99%A4%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE">1. 仅删除表中存储的数据：</a></li>
+<li><a href="#2-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">2. 插入数据：</a></li>
+<li><a href="#3-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">3. 修改数据：</a></li>
+<li><a href="#4-%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">4. 单表查询数据：</a></li>
+<li><a href="#5-%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2">5. 多表查询：</a></li>
+<li><a href="#6-%E4%BD%BF%E7%94%A8-like-%E5%AD%90%E5%8F%A5%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">6. 使用 LIKE 子句模糊查询：</a></li>
+<li><a href="#7-%E4%BD%BF%E7%94%A8-order-by-%E5%AD%90%E5%8F%A5%E5%B0%86%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E5%90%8E%E5%86%8D%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE">7. 使用 order by 子句将查询数据排序后再返回数据:</a></li>
+<li><a href="#8-group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">8. group by 语句根据一个或多个列对结果集进行分组：</a></li>
+</ul>
+</li>
+<li><a href="#4-mysql-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E4%BD%BF%E7%94%A8join">4. MySQL 连接多个表的使用(join):</a>
 <ul>
 <li><a href="#1inner-join">1.inner join:</a></li>
 <li><a href="#2left-join">2.left join:</a></li>
 <li><a href="#3right-join">3.right join:</a></li>
 </ul>
 </li>
-<li><a href="#null-%E5%80%BC%E5%A4%84%E7%90%86">NULL 值处理：</a></li>
+<li><a href="#5-null-%E5%80%BC%E5%A4%84%E7%90%86">5. NULL 值处理：</a></li>
 </ul>
 </li>
 </ul>
 <h1 class="mume-header" id="mysql">MySQL</h1>
 
-<h2 class="mume-header" id="alter&#x547D;&#x4EE4;">ALTER命令:</h2>
+<h2 class="mume-header" id="1-mysql%E5%91%BD%E4%BB%A4windows-%E4%B8%8B">1. Mysql命令（windows 下）:</h2>
+
+<h3 class="mume-header" id="1-%E8%BF%9E%E6%8E%A5mysql">1. 连接Mysql:</h3>
+
+<blockquote>
+<p>格式： mysql -h主机地址 -u用户名 －p用户密码</p>
+</blockquote>
+<p>①：连接到本机上的MYSQL:</p>
+<blockquote>
+<p>mysql -u root -p<br>
+Enter password:密码</p>
+</blockquote>
+<p><font color="red">注意-u 与 root之间可以有空格也可以没有空格，但是密码前必须没有空格</font></p>
+<p>②：连接到远程主机上的MYSQL（<mark>如果远程主机的IP为110.110.110.110，用户名为root,密码为abcd123</mark>）：</p>
+<blockquote>
+<p>mysql -h110.110.110.110 -u root -p 123;</p>
+</blockquote>
+<p>③：退出MYSQL命令：<code>exit</code>（回车）</p>
+<h3 class="mume-header" id="2-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81">2. 修改密码:</h3>
+
+<blockquote>
+<p>格式：mysqladmin -u用户名 -p旧密码 password 新密码</p>
+</blockquote>
+<h3 class="mume-header" id="3-%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81">3. 显示数据库，修改数据库默认编码:</h3>
+
+<blockquote>
+<p>mysql&gt; show databases;</p>
+</blockquote>
+<p><font color="red">注意：为了不再显示的时候中文乱码，要修改数据库默认编码。</font></p>
+<p><mark>①：修改MYSQL的配置文件</mark>：</p>
+<p>my.ini文件里面修改default-character-set=gbk</p>
+<p><mark>②：代码运行时修改</mark>：</p>
+<p>Java代码方式(test为数据库名字)：<br>
+<code>jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8</code></p>
+<h3 class="mume-header" id="4-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93">4. 删除数据库：</h3>
+
+<blockquote>
+<p>mysql&gt; drop database 数据库名;</p>
+</blockquote>
+<h3 class="mume-header" id="5-%E8%BF%9E%E6%8E%A5%E6%88%96%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E4%BA%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E5%AF%B9%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">5. 连接或切换数据库(用于在命令行中对其他数据库进行操作)：</h3>
+
+<blockquote>
+<p>mysql&gt; use 数据库名;</p>
+</blockquote>
+<h3 class="mume-header" id="6-select%E5%91%BD%E4%BB%A4">6. SELECT命令:</h3>
+
+<h4 class="mume-header" id="1-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0">1. 显示当前使用的数据库名称：</h4>
+
+<blockquote>
+<p>mysql&gt; select database();</p>
+</blockquote>
+<h4 class="mume-header" id="2-%E6%98%BE%E7%A4%BAmysql%E7%9A%84%E7%89%88%E6%9C%AC">2. 显示MYSQL的版本：</h4>
+
+<blockquote>
+<p>mysql&gt; select version();</p>
+</blockquote>
+<h4 class="mume-header" id="3-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4">3. 显示当前时间:</h4>
+
+<blockquote>
+<p>mysql&gt; select now();</p>
+</blockquote>
+<p><font color="red">显示年月日：</font></p>
+<blockquote>
+<p>mysql&gt; SELECT YEAR(CURRENT_DATE);<br>
+mysql&gt; SELECT MONTH(CURRENT_DATE);<br>
+mysql&gt; SELECT DAYOFMONTH(CURRENT_DATE);</p>
+</blockquote>
+<h4 class="mume-header" id="4-%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2">4. 显示字符串：</h4>
+
+<blockquote>
+<p>mysql&gt; SELECT &quot;welecome to my blog!&quot;;</p>
+</blockquote>
+<h4 class="mume-header" id="5-%E5%BD%93%E8%AE%A1%E7%AE%97%E5%99%A8%E7%94%A8">5. 当计算器用:</h4>
+
+<blockquote>
+<p>select ((4 * 4) / 10 ) + 25;</p>
+</blockquote>
+<hr>
+<h2 class="mume-header" id="2-%E5%AF%B9%E8%A1%A8%E6%A0%BC%E6%93%8D%E4%BD%9C">2 对表格操作:</h2>
 
 <p>需要修改数据表名或者修改数据表字段时，就需要使用到MySQL ALTER命令。</p>
-<h3 class="mume-header" id="1&#x5C55;&#x793A;&#x8868;&#x7684;&#x7ED3;&#x6784;">1.展示表的结构：</h3>
+<h3 class="mume-header" id="1%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">1.展示表的结构：</h3>
 
 <p><font color="red">show columns</font> from table_name;</p>
-<h3 class="mume-header" id="2&#x4F7F;&#x7528;-add&#x6765;&#x4E3A;&#x6570;&#x636E;&#x8868;&#x4E2D;&#x6DFB;&#x52A0;&#x5217;-id">2.使用 add来为数据表中添加列 id ：</h3>
+<h3 class="mume-header" id="2%E4%BD%BF%E7%94%A8-add%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%88%97-id">2.使用 add来为数据表中添加列 id ：</h3>
 
 <p>alter table testalter_tbl <font color="red">add</font> id int;</p>
-<h3 class="mume-header" id="3-&#x4F7F;&#x7528;drop&#x6765;&#x5220;&#x9664;&#x8868;&#x7684;-id-&#x5B57;&#x6BB5;">3. 使用drop来删除表的 id 字段：</h3>
+<h3 class="mume-header" id="3-%E4%BD%BF%E7%94%A8drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">3. 使用drop来删除表的 id 字段：</h3>
 
 <p>alter table testalter_tbl <font color="red">drop</font> i;</p>
-<h3 class="mume-header" id="4&#x9700;&#x8981;&#x4FEE;&#x6539;&#x5B57;&#x6BB5;&#x7C7B;&#x578B;&#x53CA;&#x540D;&#x79F0;">4.需要修改字段类型及名称:</h3>
+<h3 class="mume-header" id="4-%E4%BD%BF%E7%94%A8alter%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%90%8D%E7%A7%B0">4. 使用alter需要修改字段类型及名称:</h3>
 
 <p>把字段 c 的类型从 CHAR(1) 改为 CHAR(10):<br>
-alter table testalter_tbl <font color="red">modify</font> c CHAR(10);</p>
-<p>在 change 关键字之后，紧跟着的是你要修改的字段名，然后指定新字段的类型及名称:<br>
-alter table testalter_tbl <font color="red">change</font> i j INT;</p>
-<h3 class="mume-header" id="5&#x4FEE;&#x6539;&#x8868;&#x540D;">5.修改表名:</h3>
+<font color="red">alter</font> table testalter_tbl <font color="red">modify</font> c CHAR(10);</p>
+<p>在 change 关键字之后，紧跟着的是你要修改的字段名，然后指定新字段的类型及名称:</p>
+<p><font color="red">alter</font> table testalter_tbl <font color="red">change</font> i j INT;</p>
+<h3 class="mume-header" id="5-%E4%BD%BF%E7%94%A8alter%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D">5. 使用alter修改表名:</h3>
 
 <p>将数据表 testalter_tbl 重命名为 alter_tbl：<br>
-alter table testalter_tbl <font color="red">rename to</font> alter_tbl;</p>
-<h2 class="mume-header" id="&#x521B;&#x5EFA;mysql&#x7684;student&#x8868;">创建MySQL的student表：</h2>
+<font color="red">alter</font> table testalter_tbl <font color="red">rename to</font> alter_tbl;</p>
+<h3 class="mume-header" id="6-%E5%88%9B%E5%BB%BAmysql%E7%9A%84student%E8%A1%A8">6. 创建MySQL的student表：</h3>
 
 <p>create table student(<br>
  sid <font color="red">INT NOT NULL AUTO_INCREMENT</font>,<br>
@@ -273,45 +382,54 @@ varchar(100) ：可变字符型，长度为100<br>
 NOT NULL ：不能为空<br>
 AUTO_INCREMENT：自动增长<br>
 primary key : 主键</p>
-<h2 class="mume-header" id="&#x5220;&#x9664;student&#x8868;&#x5305;&#x62EC;&#x6570;&#x636E;&#x548C;&#x8868;&#x7684;&#x7ED3;&#x6784;">删除student表（包括数据和表的结构）：</h2>
+<hr>
+<h3 class="mume-header" id="7-%E5%88%A0%E9%99%A4student%E8%A1%A8%E5%8C%85%E6%8B%AC%E6%95%B0%E6%8D%AE%E5%92%8C%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">7. 删除student表（包括数据和表的结构）：</h3>
 
 <p>DROP TABLE student ;</p>
-<h2 class="mume-header" id="&#x4EC5;&#x5220;&#x9664;&#x8868;&#x4E2D;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;">仅删除表中存储的数据：</h2>
+<h2 class="mume-header" id="3%E5%AF%B9%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">3.对表格中的数据操作：</h2>
+
+<h3 class="mume-header" id="1-%E4%BB%85%E5%88%A0%E9%99%A4%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE">1. 仅删除表中存储的数据：</h3>
 
 <p>delete from student [where 条件]</p>
 <p>①如果没有指定 WHERE 子句，表中的所有记录将被删除（不删除表的结构，表还存在数据库中，只是没有了数据）。<br>
 ②你可以在 WHERE 子句中指定任何条件<br>
 ③您可以在单个表中一次性删除记录。</p>
-<h2 class="mume-header" id="&#x63D2;&#x5165;&#x6570;&#x636E;">插入数据：</h2>
+<h3 class="mume-header" id="2-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">2. 插入数据：</h3>
 
 <p>insert into table_name ( sid, sname,sgender,... ) values ( 1, 'jim','男',...);<br>
 <font color="red">注意：字符数据，统一用单引号（''）,引起来。</font></p>
-<h2>修改数据：</h2>
+<h3 class="mume-header" id="3-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">3. 修改数据：</h3>
+
 <p>update table_name set sid=new-value1,sname=new-value2.... [where 条件]</p>
 <p>①你可以同时更新一个或多个字段。<br>
 ②你可以在 WHERE 子句中指定任何条件。<br>
 ③你可以在一个单独表中同时更新数据。</p>
-<h2>单表查询数据：</h2>
+<h3 class="mume-header" id="4-%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">4. 单表查询数据：</h3>
+
 <p>select sid,sname,.. from student [where sid&gt;10];</p>
-<h2>多表查询：</h2>
+<h3 class="mume-header" id="5-%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2">5. 多表查询：</h3>
+
 <p>select field1, field2,...fieldN from table_name1,table_name2...where 条件1 [and /or] 条件2.....</p>
 <p><img src="../img/mysql_img/1.png" alt="mysql-1.png"></p>
-<h2>使用 LIKE 子句模糊查询：</h2>
+<h3 class="mume-header" id="6-%E4%BD%BF%E7%94%A8-like-%E5%AD%90%E5%8F%A5%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">6. 使用 LIKE 子句模糊查询：</h3>
+
 <p>select field1, field2,...fieldN table_name1,table_name2...where field1 like 条件 [and /or] filed2 = 'somevalue'</p>
 <p>①如果没有使用百分号(%), LIKE 子句与等号（=）的效果是一样的。<br>
 ② % 表示任意多个字符，_ 表示任意单个字符。</p>
-<h2>使用 order by 子句将查询数据排序后再返回数据:</h2>
+<h3 class="mume-header" id="7-%E4%BD%BF%E7%94%A8-order-by-%E5%AD%90%E5%8F%A5%E5%B0%86%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E5%90%8E%E5%86%8D%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE">7. 使用 order by 子句将查询数据排序后再返回数据:</h3>
+
 <p>select field1, field2,...fieldN from table_name1, table_name2...<br>
 order by field1, [field2...] [asc [desc]]</p>
 <p>①你可以使用任何字段来作为排序的条件，从而返回排序后的查询结果。<br>
 ②你可以设定多个字段来排序。<br>
 <font color="red">③你可以使用 ASC 或 DESC 关键字来设置查询结果是按升序或降序排列。 默认情况下，它是按升序排列。</font><br>
 ④你可以添加 WHERE...LIKE 子句来设置条件。</p>
-<h2 class="mume-header" id="group-by-&#x8BED;&#x53E5;&#x6839;&#x636E;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5217;&#x5BF9;&#x7ED3;&#x679C;&#x96C6;&#x8FDB;&#x884C;&#x5206;&#x7EC4;">group by 语句根据一个或多个列对结果集进行分组：</h2>
+<h3 class="mume-header" id="8-group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">8. group by 语句根据一个或多个列对结果集进行分组：</h3>
 
 <p>使用 GROUP BY 语句 把表按名字进行分组，并统计每个人有多少条记录：<br>
 SELECT sname, COUNT(*) FROM  student group by sname;</p>
-<h2 class="mume-header" id="mysql-&#x8FDE;&#x63A5;&#x591A;&#x4E2A;&#x8868;&#x7684;&#x4F7F;&#x7528;join">MySQL 连接多个表的使用(join):</h2>
+<hr>
+<h2 class="mume-header" id="4-mysql-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E4%BD%BF%E7%94%A8join">4. MySQL 连接多个表的使用(join):</h2>
 
 <p>join 按照功能大致分为如下三类：<br>
  <strong>inner join（内连接,或等值连接）：获取两个表中字段匹配关系的记录。</strong><br>
@@ -329,7 +447,8 @@ SELECT sname, COUNT(*) FROM  student group by sname;</p>
 
 <p>以 tcount_tbl 为左表，w3cschool_tbl 为右表:</p>
 <p>select b.w3cschool_id, b.w3cschool_author, a.w3cschool_count <font color="red">from</font> tcount_tbl a <font color="red">right join</font>w3cschool_tbl b <font color="red">on</font> a.w3cschool_author = b.w3cschool_author;</p>
-<h2 class="mume-header" id="null-&#x503C;&#x5904;&#x7406;">NULL 值处理：</h2>
+<hr>
+<h2 class="mume-header" id="5-null-%E5%80%BC%E5%A4%84%E7%90%86">5. NULL 值处理：</h2>
 
 <p>① IS NULL: 当列的值是NULL,此运算符返回true。<br>
 ② IS NOT NULL: 当列的值不为NULL, 运算符返回true。<br>
@@ -339,65 +458,14 @@ SELECT sname, COUNT(*) FROM  student group by sname;</p>
 ⑥<font color="red">MySQL中处理NULL使用IS NULL和IS NOT NULL运算符。</font></p>
 
       </div>
-      <div class="md-sidebar-toc"><ul>
-<li><a href="#mysql">MySQL</a>
-<ul>
-<li><a href="#alter%E5%91%BD%E4%BB%A4">ALTER命令:</a>
-<ul>
-<li><a href="#1%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">1.展示表的结构：</a></li>
-<li><a href="#2%E4%BD%BF%E7%94%A8-add%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%88%97-id">2.使用 add来为数据表中添加列 id ：</a></li>
-<li><a href="#3-%E4%BD%BF%E7%94%A8drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">3. 使用drop来删除表的 id 字段：</a></li>
-<li><a href="#4%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%8F%8A%E5%90%8D%E7%A7%B0">4.需要修改字段类型及名称:</a></li>
-<li><a href="#5%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D">5.修改表名:</a></li>
-</ul>
-</li>
-<li><a href="#%E5%88%9B%E5%BB%BAmysql%E7%9A%84student%E8%A1%A8">创建MySQL的student表：</a></li>
-<li><a href="#%E5%88%A0%E9%99%A4student%E8%A1%A8%E5%8C%85%E6%8B%AC%E6%95%B0%E6%8D%AE%E5%92%8C%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">删除student表（包括数据和表的结构）：</a></li>
-<li><a href="#%E4%BB%85%E5%88%A0%E9%99%A4%E8%A1%A8%E4%B8%AD%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE">仅删除表中存储的数据：</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">插入数据：</a></li>
-<li><a href="#group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">group by 语句根据一个或多个列对结果集进行分组：</a></li>
-<li><a href="#mysql-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E4%BD%BF%E7%94%A8join">MySQL 连接多个表的使用(join):</a>
-<ul>
-<li><a href="#1inner-join">1.inner join:</a></li>
-<li><a href="#2left-join">2.left join:</a></li>
-<li><a href="#3right-join">3.right join:</a></li>
-</ul>
-</li>
-<li><a href="#null-%E5%80%BC%E5%A4%84%E7%90%86">NULL 值处理：</a></li>
-</ul>
-</li>
-</ul>
-</div>
-      <a id="sidebar-toc-btn">≡</a>
+      
+      
     </body>
     
     
     
-    <script>
-(function bindTaskListEvent() {
-  var taskListItemCheckboxes = document.body.getElementsByClassName('task-list-item-checkbox')
-  for (var i = 0; i < taskListItemCheckboxes.length; i++) {
-    var checkbox = taskListItemCheckboxes[i]
-    var li = checkbox.parentElement
-    if (li.tagName !== 'LI') li = li.parentElement
-    if (li.tagName === 'LI') {
-      li.classList.add('task-list-item')
-    }
-  }
-}())    
-</script>
     
-<script>
-
-var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
-sidebarTOCBtn.addEventListener('click', function(event) {
-  event.stopPropagation()
-  if (document.body.hasAttribute('html-show-sidebar-toc')) {
-    document.body.removeAttribute('html-show-sidebar-toc')
-  } else {
-    document.body.setAttribute('html-show-sidebar-toc', true)
-  }
-})
-</script>
-      
+    
+    
+    
   </html>

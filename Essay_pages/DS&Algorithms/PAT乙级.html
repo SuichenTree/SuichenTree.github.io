@@ -1115,6 +1115,170 @@ d&amp;Hyscvnm”。</p>
 <p>THU 14:04</p>
 <p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cctype></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+	<span class="token comment">//这题有几个注意点：</span>
+	<span class="token comment">/*
+	①： 找出的第一个字符为：两字符串中第1对相同的大写英文字母。
+	②： 第二个字符为：可以是字母与数字，但寻找范围是从第一个字符串的tag1+1位置，
+					与第二个字符串的tag2+1的位置开始找。
+			
+		 举例：   
+			3485djDkxh4hhGE
+			2984akDfkkkkggEdsb
+			其中第一个字符为D，则第二个字符应该在：
+												kxh4hhGE
+												fkkkkggEdsb
+			两个字符串从D之后截取的字符串的范围中找。
+
+			其中tag1 是第一个字符串中D的下标，tag2是第二个字符串中D的下标
+
+	③:  第三个字符是第三个与第四个字符串中相同位置的相同字母所在的下标。
+
+	④： 找第三个字符的遍历次数为两个字符串中长度小的次数。
+	*/</span>
+
+	string s1<span class="token punctuation">,</span>s2<span class="token punctuation">,</span>s3<span class="token punctuation">,</span>s4<span class="token punctuation">;</span>
+
+	<span class="token keyword">char</span> a<span class="token punctuation">;</span>      <span class="token comment">//c为通过s1 s2 找出的第一个大写字母</span>
+	<span class="token keyword">char</span> b<span class="token punctuation">;</span>		 <span class="token comment">//e为通过s1 s2 找出的第二个字符，可以为字母或数字</span>
+
+	<span class="token keyword">int</span> tag1<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>tag2<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>    <span class="token comment">//通过s1 s2 找出的第二个字符，所需要的辅助条件</span>
+
+	<span class="token keyword">int</span> d<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>               <span class="token comment">//记录s3,s4 第一对相同位置的相同字母，并存放其下标位置</span>
+	<span class="token keyword">int</span> t<span class="token punctuation">;</span>				  <span class="token comment">//辅助变量，记录s3,s4字符串中小的字符串的长度</span>
+
+	<span class="token keyword">int</span> s1tag<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>    <span class="token comment">//若sb为0，则为没找到第一个大写字母，为1 表示找到</span>
+	<span class="token keyword">int</span> s2tag<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+
+	cin<span class="token operator">>></span>s1<span class="token operator">>></span>s2<span class="token operator">>></span>s3<span class="token operator">>></span>s4<span class="token punctuation">;</span>
+
+	<span class="token comment">//遍历s1，s2，找出第一个字符</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>s1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isupper</span><span class="token punctuation">(</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>						<span class="token comment">//若s1中某个字符为大写字母</span>
+			<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>s2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>	    
+				<span class="token keyword">if</span><span class="token punctuation">(</span>s1tag<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+					<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isupper</span><span class="token punctuation">(</span>s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>        <span class="token comment">//若s2中某个字符为大写字母</span>
+						<span class="token keyword">if</span><span class="token punctuation">(</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+								a<span class="token operator">=</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>                     
+								tag2<span class="token operator">=</span>j<span class="token punctuation">;</span>         <span class="token comment">//记录此时第一个字符在两个字符串的位置</span>
+								tag1<span class="token operator">=</span>i<span class="token punctuation">;</span>
+								s1tag<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+						<span class="token punctuation">}</span>
+					<span class="token punctuation">}</span>
+				<span class="token punctuation">}</span>
+		    <span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>tag1<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>s1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>s2tag<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token function">islower</span><span class="token punctuation">(</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>          
+				<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>tag2<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>s2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+					<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token function">islower</span><span class="token punctuation">(</span>s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+						<span class="token keyword">if</span><span class="token punctuation">(</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+							b<span class="token operator">=</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+							s2tag<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+						<span class="token punctuation">}</span>
+					<span class="token punctuation">}</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//共同遍历s3,s4，找出位置相同的字母,并记下下标位置，遍历次数t为短的字符串的字符个数</span>
+
+	t<span class="token operator">=</span>s3<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">></span>s4<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>s4<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span>s3<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>t<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isalpha</span><span class="token punctuation">(</span>s3<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>       <span class="token comment">//判断s3[i]是否为英文字母</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>s3<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">==</span>s4<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+				d<span class="token operator">=</span>i<span class="token punctuation">;</span>              <span class="token comment">//若字母相同则记录下标数，只记录第一对的</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//打印输出语句，通过给出的要求</span>
+
+	<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'A'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"MON"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'B'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"TUE"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'C'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"WED"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'D'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"THU"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'E'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"FRI"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'F'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"SAT"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">==</span><span class="token string">'G'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"SUN"</span><span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"00"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'1'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"01"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'2'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"02"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'3'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"03"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'4'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"04"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'5'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"05"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'6'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"06"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'7'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"07"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'8'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"08"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'9'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"09"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'A'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"10"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'B'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"11"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'C'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"12"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'D'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"13"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'E'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"14"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'F'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"15"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'G'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"16"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'H'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"17"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'I'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"18"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'J'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"19"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'K'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"20"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'L'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"21"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'M'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"22"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>b<span class="token operator">==</span><span class="token string">'N'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"23"</span><span class="token operator">&lt;&lt;</span><span class="token string">":"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">if</span><span class="token punctuation">(</span>d<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token string">"0"</span><span class="token operator">&lt;&lt;</span>d<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span>d<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+
 
 
 </pre><hr>
