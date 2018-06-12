@@ -219,6 +219,8 @@ code.language-yaml {
 <ul>
 <li><a href="#1-%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E9%9D%A2%E7%9A%84%E6%95%B0%E5%AD%97%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%95%B4%E6%95%B0">1. 把字符串里面的数字转化为整数：</a></li>
 <li><a href="#2-includecctype-c%E5%AD%97%E7%AC%A6%E5%87%BD%E6%95%B0%E5%BA%93%E7%94%A8%E4%BA%8E%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6">2. <code>#include&lt;cctype&gt;</code> ---c++字符函数库（用于判断字符）：</a></li>
+<li><a href="#3-string%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84-insert-%E5%87%BD%E6%95%B0-%E7%94%A8%E4%BA%8E%E7%BB%99%E4%B8%8D%E8%B6%B3%E4%BD%8D%E6%95%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E8%A1%A5%E9%9B%B6">3. string头文件的 insert 函数--用于给不足位数的字符补零：</a></li>
+<li><a href="#4-includealgorithm-%E5%A4%B4%E6%96%87%E4%BB%B6-sort%E5%87%BD%E6%95%B0">4. <code>#include&lt;algorithm&gt; 头文件</code> --- sort()函数；</a></li>
 </ul>
 </li>
 </ul>
@@ -334,7 +336,159 @@ isupper() ， islower()<br>
 isalnum() ， isalpha()<br>
 </p></font>
 <hr>
+<h3 class="mume-header" id="3-string%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84-insert-%E5%87%BD%E6%95%B0-%E7%94%A8%E4%BA%8E%E7%BB%99%E4%B8%8D%E8%B6%B3%E4%BD%8D%E6%95%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E8%A1%A5%E9%9B%B6">3. string头文件的 insert 函数--用于给不足位数的字符补零：</h3>
 
+<p><font color="red">string的成员函数insert有以下多种重载：</font></p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>string &amp;insert(int p0, const char *s);</td>
+<td>在p0位置插入字符串s</td>
+</tr>
+<tr>
+<td>string &amp;insert(int p0, const char *s, int n);</td>
+<td>在p0位置插入字符串s的前n个字符</td>
+</tr>
+<tr>
+<td>string &amp;insert(int p0,const string &amp;s);</td>
+<td>在p0位置插入字符串s</td>
+</tr>
+<tr>
+<td>string &amp;insert(int p0,const string &amp;s, int pos, int n);</td>
+<td>在p0位置插入字符串s从pos开始的连续n个字符</td>
+</tr>
+<tr>
+<td>string &amp;insert(int p0, int n, char c);</td>
+<td>在p0处插入n个字符c</td>
+</tr>
+<tr>
+<td>iterator insert(iterator it, char c);</td>
+<td>在it处插入字符c，返回插入后迭代器的位置</td>
+</tr>
+<tr>
+<td>void insert(iterator it, const_iterator first, const_iteratorlast);</td>
+<td>在it处插入从first开始至last-1的所有字符</td>
+</tr>
+<tr>
+<td>void insert(iterator it, int n, char c);</td>
+<td>在it处插入n个字符c</td>
+</tr>
+</tbody>
+</table>
+<p><mark>代码部分来源：PAT乙级考试-数字黑洞</mark></p>
+<blockquote>
+<p><font color="red">这是展示 void insert(iterator it, int n, char c);	 //在it处插入n个字符c.</font></p>
+</blockquote>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+	string str<span class="token punctuation">;</span>
+
+	cin<span class="token operator">>></span>str<span class="token punctuation">;</span>
+
+	str<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">-</span> str<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//用于对不足四位数在前面补零</span>
+
+	cout<span class="token operator">&lt;&lt;</span>str<span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>&#x793A;&#x4F8B;1&#xFF1A;
+1
+0001
+
+&#x793A;&#x4F8B;2&#xFF1A;
+0
+0000
+
+&#x793A;&#x4F8B;3&#xFF1A;
+21
+0021
+
+&#x793A;&#x4F8B;4&#xFF1A;
+224
+0224
+
+&#x793A;&#x4F8B;5&#xFF1A;
+3125
+3125
+</code></pre><h3 class="mume-header" id="4-includealgorithm-%E5%A4%B4%E6%96%87%E4%BB%B6-sort%E5%87%BD%E6%95%B0">4. <code>#include&lt;algorithm&gt; 头文件</code> --- sort()函数；</h3>
+
+<p><mark>sort()函数是c++一种排序方法之一,时间复杂度为n*log2(n)，执行效率较高。</mark></p>
+<blockquote>
+<p>sort函数有三个参数：<br>
+（1）第一个是要排序的数组的起始地址。<br>
+（2）第二个是结束的地址（最后一位要排序的地址）<br>
+<mark>（3）可选填，不填时表示为升序排序。第三个参数是自定义的排序方法。</mark></p>
+</blockquote>
+<h3>升序 --可以写第三个参数，也可以不写：</h3>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+ <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//升序</span>
+ 
+ <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	 cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>1
+2
+4
+23
+</code></pre><h3>降序--需要写第三个参数：</h3>
+<pre data-role="codeBlock" data-info="c++" class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">bool</span> <span class="token function">up</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>    <span class="token comment">//升序排列</span>
+<span class="token keyword">bool</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>i<span class="token operator">></span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>  <span class="token comment">//降序排列</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+ <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">23</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+ <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">,</span>up<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//升序</span>
+
+ <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	 cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+
+ cout<span class="token operator">&lt;&lt;</span><span class="token string">"----"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+
+ <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">,</span>down<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//降序</span>
+ 
+ <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	 cout<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+ 
+ <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><p>运行结果：</p>
+<pre data-role="codeBlock" data-info="" class="language-"><code>1
+2
+4
+23
+----
+23
+4
+2
+1
+
+</code></pre>
       </div>
       
       
