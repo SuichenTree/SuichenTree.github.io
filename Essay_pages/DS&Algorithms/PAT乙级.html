@@ -1758,8 +1758,125 @@ d&amp;Hyscvnm”。</p>
 9810 - 0189 = 9621<br>
 9621 - 1269 = 8352<br>
 8532 - 2358 = 6174</p>
+<font color="red">
+注意：
+<ol>
+<li>输出的数字都是字符串的形式，否则不符合要求。</li>
+<li>注意四个数都相同的情况。</li>
+<li>注意两数之差也是字符串的形式的输出。<br>
+</li></ol></font>
+
 <p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sstream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span>			</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">bool</span> <span class="token function">up</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>    <span class="token comment">//升序排列字符串</span>
+<span class="token keyword">bool</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>i<span class="token operator">></span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>  <span class="token comment">//降序排列字符串</span>
+
+string <span class="token function">intToString</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">//int -> string</span>
+<span class="token keyword">int</span> <span class="token function">StringToint</span><span class="token punctuation">(</span>string str<span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">// string -> int</span>
+
+string <span class="token function">subtractionToString</span><span class="token punctuation">(</span>string big<span class="token punctuation">,</span>string small<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">//把排序后的两个字符串之差，进行补零</span>
+string <span class="token function">upsort</span><span class="token punctuation">(</span>string n<span class="token punctuation">)</span><span class="token punctuation">;</span>                <span class="token comment">//对字符串进行升序处理</span>
+string <span class="token function">downsort</span><span class="token punctuation">(</span>string n<span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">//对字符串进行降序处理</span>
+
+<span class="token keyword">bool</span> <span class="token function">inequal</span><span class="token punctuation">(</span>string n<span class="token punctuation">)</span><span class="token punctuation">;</span>					<span class="token comment">//判断字符串的数字元素是否全部相同</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> big<span class="token punctuation">,</span>small<span class="token punctuation">;</span>
+    string str<span class="token punctuation">;</span>
+	cin<span class="token operator">>></span>str<span class="token punctuation">;</span>
+	str<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token operator">-</span>str<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">//不足4位的补零</span>
+	
+	<span class="token comment">//判断数字是否全相同</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">inequal</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token function">upsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">" - "</span><span class="token operator">&lt;&lt;</span><span class="token function">downsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">" = "</span><span class="token operator">&lt;&lt;</span><span class="token function">subtractionToString</span><span class="token punctuation">(</span><span class="token function">upsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">downsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+		<span class="token keyword">do</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span><span class="token function">upsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">" - "</span><span class="token operator">&lt;&lt;</span><span class="token function">downsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span><span class="token string">" = "</span><span class="token operator">&lt;&lt;</span><span class="token function">subtractionToString</span><span class="token punctuation">(</span><span class="token function">upsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">downsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+		str<span class="token operator">=</span><span class="token function">subtractionToString</span><span class="token punctuation">(</span><span class="token function">upsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">downsort</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token punctuation">}</span><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token function">StringToint</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token operator">!=</span><span class="token number">6174</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 对两个字符串数之间的差转换为string，并补零</span>
+string <span class="token function">subtractionToString</span><span class="token punctuation">(</span>string big<span class="token punctuation">,</span>string small<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> b<span class="token operator">=</span><span class="token function">StringToint</span><span class="token punctuation">(</span>big<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> s<span class="token operator">=</span><span class="token function">StringToint</span><span class="token punctuation">(</span>small<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> c<span class="token operator">=</span>b<span class="token operator">-</span>s<span class="token punctuation">;</span>
+	string sc<span class="token operator">=</span><span class="token function">intToString</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment">//把int-> string</span>
+	sc<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token operator">-</span>sc<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">//补零</span>
+	<span class="token keyword">return</span> sc<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//判断字符串数字是否全相同</span>
+<span class="token keyword">bool</span> <span class="token function">inequal</span><span class="token punctuation">(</span>string n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">bool</span> t<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">//把字符串的数字一个个赋值给数组</span>
+		a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>n<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>   
+	<span class="token punctuation">}</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">//判断数组元素是否全相同</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">!=</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			t<span class="token operator">=</span><span class="token boolean">true</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> t<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//对字符串数字进行升序处理，并返回</span>
+string <span class="token function">upsort</span><span class="token punctuation">(</span>string n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	string r<span class="token punctuation">;</span>
+	stringstream sum<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment">//把字符串的数字一个个赋值给数组</span>
+		a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>n<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token string">'0'</span><span class="token punctuation">;</span>   
+	<span class="token punctuation">}</span>
+	<span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">,</span>up<span class="token punctuation">)</span><span class="token punctuation">;</span>						<span class="token comment">//升序排序数组</span>
+	sum<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">1000</span><span class="token punctuation">;</span>         
+	r<span class="token operator">=</span>sum<span class="token punctuation">.</span><span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	r<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token operator">-</span>r<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">//不足4位的补零</span>
+
+	<span class="token keyword">return</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//对字符串数字进行降序处理，并返回</span>
+string <span class="token function">downsort</span><span class="token punctuation">(</span>string n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	string r<span class="token punctuation">;</span>
+    stringstream sum<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>n<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-</span><span class="token string">'0'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>a<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">,</span>down<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+	sum<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">100</span><span class="token operator">+</span>a<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token operator">*</span><span class="token number">1000</span><span class="token punctuation">;</span>
+    r<span class="token operator">=</span>sum<span class="token punctuation">.</span><span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	r<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token operator">-</span>r<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">//不足4位的补零</span>
+
+	<span class="token keyword">return</span> r<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// int->string</span>
+string <span class="token function">intToString</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	stringstream s<span class="token punctuation">;</span>
+	s<span class="token operator">&lt;&lt;</span>a<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// string->int</span>
+<span class="token keyword">int</span> <span class="token function">StringToint</span><span class="token punctuation">(</span>string str<span class="token punctuation">)</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+	n <span class="token operator">=</span> <span class="token function">atoi</span><span class="token punctuation">(</span>str<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">//把string -> int</span>
+	<span class="token keyword">return</span> n<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
 </pre><hr>
 <h3 class="mume-header" id="1020%E6%9C%88%E9%A5%BC-25">1020：月饼 (25)</h3>

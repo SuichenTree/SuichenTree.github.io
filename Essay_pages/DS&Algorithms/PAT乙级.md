@@ -1730,9 +1730,126 @@ int main(){
 9621 - 1269 = 8352
 8532 - 2358 = 6174
 
+<font color="red">
+注意：
+
+1. 输出的数字都是字符串的形式，否则不符合要求。
+2. 注意四个数都相同的情况。
+3. 注意两数之差也是字符串的形式的输出。
+</font>
+
 ==C++==
 ```c++
 
+#include<iostream>
+#include<string>
+#include <sstream>
+#include<algorithm>			
+using namespace std;
+bool up(int i,int j){ return (i<j);}    //升序排列字符串
+bool down(int i,int j){ return (i>j);}  //降序排列字符串
+
+string intToString(int a);				//int -> string
+int StringToint(string str);			// string -> int
+
+string subtractionToString(string big,string small);     //把排序后的两个字符串之差，进行补零
+string upsort(string n);                //对字符串进行升序处理
+string downsort(string n);				//对字符串进行降序处理
+
+bool inequal(string n);					//判断字符串的数字元素是否全部相同
+int main(){
+	int big,small;
+    string str;
+	cin>>str;
+	str.insert(0,4-str.size(),'0');            //不足4位的补零
+	
+	//判断数字是否全相同
+	if(!inequal(str)){
+		cout<<upsort(str)<<" - "<<downsort(str)<<" = "<<subtractionToString(upsort(str),downsort(str))<<endl;
+	}else{
+		do{
+		cout<<upsort(str)<<" - "<<downsort(str)<<" = "<<subtractionToString(upsort(str),downsort(str))<<endl;
+		str=subtractionToString(upsort(str),downsort(str));
+
+		}while(StringToint(str)!=6174);
+	
+	}
+
+	return 0;
+}
+
+// 对两个字符串数之间的差转换为string，并补零
+string subtractionToString(string big,string small){
+	int b=StringToint(big);
+	int s=StringToint(small);
+	int c=b-s;
+	string sc=intToString(c);          //把int-> string
+	sc.insert(0,4-sc.size(),'0');      //补零
+	return sc;
+}
+
+//判断字符串数字是否全相同
+bool inequal(string n){
+	bool t=false;
+	int a[4];
+	for (int i = 0;i<n.size();i++){    //把字符串的数字一个个赋值给数组
+		a[i]=n[i] - '0';   
+	}
+	for(int i=0;i<4;i++){    //判断数组元素是否全相同
+		if(a[0]!=a[i]){
+			t=true;
+		}
+	}
+	return t;
+}
+
+//对字符串数字进行升序处理，并返回
+string upsort(string n){
+	string r;
+	stringstream sum;
+	int a[4];
+
+	for (int i = 0;i<n.size();i++){    //把字符串的数字一个个赋值给数组
+		a[i]=n[i] - '0';   
+	}
+	sort(a,a+4,up);						//升序排序数组
+	sum<<a[0]+a[1]*10+a[2]*100+a[3]*1000;         
+	r=sum.str();
+	r.insert(0,4-r.size(),'0');            //不足4位的补零
+
+	return r;
+}
+
+//对字符串数字进行降序处理，并返回
+string downsort(string n){
+	string r;
+    stringstream sum;
+	int a[4];
+
+	for(int i=0;i<n.size();i++){
+		a[i]=n[i]-'0';
+	}
+	sort(a,a+4,down);   
+	sum<<a[0]+a[1]*10+a[2]*100+a[3]*1000;
+    r=sum.str();
+	r.insert(0,4-r.size(),'0');            //不足4位的补零
+
+	return r;
+}
+
+// int->string
+string intToString(int a){
+	stringstream s;
+	s<<a;
+	return s.str();
+}
+
+// string->int
+int StringToint(string str){
+	int n;
+	n = atoi(str.c_str());    //把string -> int
+	return n;
+}
 
 ```
 
