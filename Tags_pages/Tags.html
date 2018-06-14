@@ -26,9 +26,18 @@
     <script type="text/javascript" src="../Study_pages/js/Go_top.js"></script>
 
     <style>
+     .mb{ margin-top: 5px;}
      .mb a{border:1px solid gray;}   /*作用使class="md"元素下的所有<a>标签中border*/
      .bookmark{ margin-bottom: 10px;}
     </style>
+
+    <script>
+            window.onload =function(){$("#link-id").load("./Often_Tags.html");}  //js默认加载
+
+            function ajaxTags(obj){
+                $("#link-id").load("./"+obj+"_Tags.html");
+            }
+    </script>
 
 </head>
 <body>
@@ -124,11 +133,6 @@
         <!--导航栏-->
         <nav class="uk-navbar" style="margin-bottom:20px;padding-top:10px;padding-bottom:10px;height:90px;background-color: #5E5EA2">
         <a  class="uk-navbar-brand" href="#my-id" data-uk-offcanvas><i style="color: white" class="uk-icon-navicon uk-icon-large"></i></a>
-    
-        <!--uk-contrast :与背景产生对比度，使字体更突出
-            uk-text-center ：字体放在中间。
-             uk-animation-slide-right : 动画。
-        -->
         <h1 class="uk-contrast uk-text-center uk-animation-slide-right">Tags</h1>
         
         </nav>
@@ -137,145 +141,17 @@
         <div>
 
             <!-- 包含拨动元素的容器 -->
-            <ul class="uk-subnav uk-subnav-line uk-subnav-pill" style="margin-left: 0px;" data-uk-switcher="{connect:'#link-id', animation:'scale'}">
-                <li aria-expanded="true" class="uk-active"><a href="#" class="uk-text-large">Mysql</a></li>
-                <li aria-expanded="false" class=""><a href="#" class="uk-text-large">前端资料</a></li>
-                <li aria-expanded="false" class=""><a href="#" class="uk-text-large">Spring</a></li>
+            <ul class="uk-subnav uk-subnav-line uk-subnav-pill" style="margin-left: 0px;">
+                <li aria-expanded="true"><a href="#" onclick="ajaxTags('Often');" class="uk-text-large">常用的</a></li>
+                <li aria-expanded="true"><a href="#" onclick="ajaxTags('Mysql');" class="uk-text-large">Mysql</a></li>
+                <li aria-expanded="true"><a href="#"  onclick="ajaxTags('FontEnd');" class="uk-text-large">前端资料</a></li>
+                <li aria-expanded="true"><a href="#"  onclick="ajaxTags('Spring');" class="uk-text-large">Spring</a></li>
             </ul>
 
             <!-- 包含内容项目的容器 -->
             <ul id="link-id" class="uk-switcher uk-margin">
-                <!--默认激活的切换选项-->
-                <li aria-hidden="false" class="uk-active" style="animation-duration: 200ms;">
-               
-                <!--Mysql的书签-->
-                <div class="bookmark">
-                <!--书签标题名-->
-                <div style="margin-left: 20px;">
-                    <h3 class="uk-text-left uk-article-title uk-text-primary">Mysql</h3>
-                    <hr/>    <!--分界线-->
-                </div>
-    
-                
-                <div class="uk-grid uk-grid-small" style="margin-left:10px;margin-right: 10px;" data-uk-grid-margin="10px">
-    
-                        <div class="uk-width-medium-2-10 mb" >
-                            <a class="uk-panel uk-panel-hover" target="_blank" href="http://www.jb51.net/article/27913.htm">
-                                <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                彻底卸载MySQL的方法分享
-                            </a>
-                        </div>
-                        <div class="uk-width-medium-2-10 mb" >
-                                <a class="uk-panel uk-panel-hover" target="_blank" href="http://database.51cto.com/art/201010/229167.htm">
-                                    <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                    修改mysql默认字符集的方法
-                                </a>
-                        </div>
-                        <div class="uk-width-medium-2-10 mb" >
-                                <a class="uk-panel uk-panel-hover" target="_blank" href="https://www.jb51.net/article/39454.htm">
-                                    <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                    修改root密码的4种方法(以windows为例)
-                                </a>
-                        </div>
-                        <div class="uk-width-medium-2-10 mb" >
-                                <a class="uk-panel uk-panel-hover" target="_blank" href="https://www.cnblogs.com/zhangzhu/archive/2013/07/04/3172486.html">
-                                    <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                    Mysql命令大全
-                                </a>
-                        </div>
-                       
-                </div>
-                </div>
+                   
 
-                </li>
-                
-                <li aria-hidden="true" class="" style="animation-duration: 200ms;">
-
-                    
-                    <div class="bookmark">
-                        <div style="margin-left: 20px;">
-                            <h3 class="uk-text-left uk-article-title uk-text-primary">前端资料</h3>
-                            <hr/>   
-                        </div>
-
-                        <div class="uk-grid uk-grid-small" style="margin-left:10px;margin-right: 10px;" data-uk-grid-margin="10px">
-            
-                                <div class="uk-width-medium-2-10 mb" >
-                                    <a class="uk-panel uk-panel-hover" target="_blank" href="http://www.bootcss.com/">
-                                        <h3 class="uk-panel-title">
-                                        <div class="uk-badge uk-badge-success">Fontend</div>
-                                        <div class="uk-badge">CSS</div>
-                                        </h3>
-                                        BootStrap 中文网
-                                    </a>
-                                </div>
-
-                                <div class="uk-width-medium-2-10 mb" >
-                                    <a class="uk-panel uk-panel-hover" target="_blank" href="http://www.jeasyui.net/">
-                                        <h3 class="uk-panel-title">
-                                        <div class="uk-badge uk-badge-success">Fontend</div>
-                                        <div class="uk-badge">UI</div>
-                                        </h3>
-                                        Jquery EasyUI 中文网
-                                    </a>
-                                </div>
-                                
-                                
-                        </div>
-                    </div>
-                </li>
-
-                <li aria-hidden="true" class="" style="animation-duration: 200ms;">
-
-                    
-                        <div class="bookmark">
-                            <div style="margin-left: 20px;">
-                                <h3 class="uk-text-left uk-article-title uk-text-primary">Spring</h3>
-                                <hr/>   
-                            </div>
-    
-                            <div class="uk-grid uk-grid-small" style="margin-left:10px;margin-right: 10px;" data-uk-grid-margin="10px">
-                
-                                    <div class="uk-width-medium-2-10 mb" >
-                                        <a class="uk-panel uk-panel-hover" target="_blank" href="http://www.jb51.net/article/27913.htm">
-                                            <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                            彻底卸载MySQL的方法分享
-                                        </a>
-                                    </div>
-                                    
-                                    <div class="uk-width-medium-2-10 mb" >
-                                            <a class="uk-panel uk-panel-hover" target="_blank" href="http://database.51cto.com/art/201010/229167.htm">
-                                                <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                                修改mysql默认字符集的方法
-                                            </a>
-                                    </div>
-                                    <div class="uk-width-medium-2-10 mb" >
-                                            <a class="uk-panel uk-panel-hover" target="_blank" href="http://database.51cto.com/art/201010/229167.htm">
-                                                <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                                修改mysql默认字符集的方法
-                                            </a>
-                                    </div> 
-                                    <div class="uk-width-medium-2-10 mb" >
-                                            <a class="uk-panel uk-panel-hover" target="_blank" href="http://database.51cto.com/art/201010/229167.htm">
-                                                <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                                修改mysql默认字符集的方法
-                                            </a>
-                                    </div> 
-                                    <div class="uk-width-medium-2-10 mb" >
-                                        <a class="uk-panel uk-panel-hover" target="_blank" href="http://database.51cto.com/art/201010/229167.htm">
-                                            <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                            修改mysql默认字符集的方法
-                                        </a>
-                                    </div>
-                                    <div class="uk-width-medium-2-10 mb" >
-                                        <a class="uk-panel uk-panel-hover" target="_blank" href="http://database.51cto.com/art/201010/229167.htm">
-                                            <h3 class="uk-panel-title"><div class="uk-badge uk-badge-success">Mysql</div></h3>
-                                            修改mysql默认字符集的方法
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                </li>
             </ul>
         </div>
 
