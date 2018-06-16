@@ -1903,6 +1903,69 @@ string <span class="token function">intToString</span><span class="token punctua
 94.50</p>
 <p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;algorithm></span>			</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">struct</span> yuebing<span class="token punctuation">{</span>
+	<span class="token keyword">double</span> price<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> sumprice<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> stock<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">struct</span> yuebing a<span class="token punctuation">,</span><span class="token keyword">struct</span> yuebing b<span class="token punctuation">)</span>    <span class="token comment">//对结构体进行单价的降序处理</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">return</span> a<span class="token punctuation">.</span>price<span class="token operator">></span>b<span class="token punctuation">.</span>price<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+	<span class="token comment">/*
+	思路： 求出每种月饼的单价，
+		  最大收益就是先把单价最高（利润最大的）先卖完。
+		  在卖其次的月饼。
+	*/</span>
+
+
+	<span class="token keyword">int</span> kind<span class="token punctuation">,</span>max_need<span class="token punctuation">,</span>max_stock<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">//max_need 是给出的最大需求量，max_stock是所有月饼的存储量之和</span>
+	<span class="token keyword">struct</span> yuebing yb<span class="token punctuation">[</span><span class="token number">10000</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">double</span> sum_money<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>              <span class="token comment">//最大收益</span>
+
+	cin<span class="token operator">>></span>kind<span class="token operator">>></span>max_need<span class="token punctuation">;</span>  
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>kind<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cin<span class="token operator">>></span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>stock<span class="token punctuation">;</span>
+		max_stock<span class="token operator">=</span>max_stock<span class="token operator">+</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>stock<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>kind<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment">//输入总价，并计算出单价</span>
+		cin<span class="token operator">>></span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>sumprice<span class="token punctuation">;</span>
+		yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>price<span class="token operator">=</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>sumprice<span class="token operator">/</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>stock<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token function">sort</span><span class="token punctuation">(</span>yb<span class="token punctuation">,</span>yb<span class="token operator">+</span>kind<span class="token punctuation">,</span>down<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">//对月饼进行单价的降序排序</span>
+
+	<span class="token keyword">if</span><span class="token punctuation">(</span>max_need<span class="token operator">></span>max_stock<span class="token punctuation">)</span><span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>kind<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			sum_money<span class="token operator">=</span>sum_money<span class="token operator">+</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>sumprice<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		 
+		 <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%.2f\n"</span><span class="token punctuation">,</span>sum_money<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//保留两位小数输出</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+
+	
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>kind<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>max_need<span class="token operator">></span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>stock<span class="token punctuation">)</span><span class="token punctuation">{</span>
+				sum_money<span class="token operator">=</span>sum_money<span class="token operator">+</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>sumprice<span class="token punctuation">;</span>
+				max_need<span class="token operator">=</span>max_need<span class="token operator">-</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>stock<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+				sum_money<span class="token operator">=</span>sum_money<span class="token operator">+</span>yb<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>price<span class="token operator">*</span>max_need<span class="token punctuation">;</span>
+				<span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%.2f\n"</span><span class="token punctuation">,</span>sum_money<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//保留两位小数输出</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
 
 </pre><hr>
 <h3 class="mume-header" id="1021-%E4%B8%AA%E4%BD%8D%E6%95%B0%E7%BB%9F%E8%AE%A1-15">1021: 个位数统计 (15)</h3>

@@ -1888,6 +1888,69 @@ int StringToint(string str){
 ==C++==
 ```c++
 
+#include<iostream>
+#include<string>
+#include<algorithm>			
+using namespace std;
+struct yuebing{
+	double price;
+	double sumprice;
+	double stock;
+};
+int down(struct yuebing a,struct yuebing b)    //对结构体进行单价的降序处理
+{
+	return a.price>b.price;
+}
+int main(){
+
+	/*
+	思路： 求出每种月饼的单价，
+		  最大收益就是先把单价最高（利润最大的）先卖完。
+		  在卖其次的月饼。
+	*/
+
+
+	int kind,max_need,max_stock=0;  //max_need 是给出的最大需求量，max_stock是所有月饼的存储量之和
+	struct yuebing yb[10000];
+	double sum_money=0;              //最大收益
+
+	cin>>kind>>max_need;  
+	for(int i=0;i<kind;i++){
+		cin>>yb[i].stock;
+		max_stock=max_stock+yb[i].stock;
+	}
+	for(int i=0;i<kind;i++){   //输入总价，并计算出单价
+		cin>>yb[i].sumprice;
+		yb[i].price=yb[i].sumprice/yb[i].stock;
+	}
+	
+	sort(yb,yb+kind,down);      //对月饼进行单价的降序排序
+
+	if(max_need>max_stock){
+		for(int i=0;i<kind;i++){
+			sum_money=sum_money+yb[i].sumprice;
+		}
+		 
+		 printf("%.2f\n",sum_money); //保留两位小数输出
+	}else{
+
+	
+		for(int i=0;i<kind;i++){
+			if(max_need>yb[i].stock){
+				sum_money=sum_money+yb[i].sumprice;
+				max_need=max_need-yb[i].stock;
+			}else{
+				sum_money=sum_money+yb[i].price*max_need;
+				break;
+			}
+		}
+
+		printf("%.2f\n",sum_money); //保留两位小数输出
+	}
+	return 0;
+}
+
+
 
 ```
 
