@@ -2057,6 +2057,34 @@ int main(){
 ==C++==
 ```c++
 
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{	
+	/*
+	 转换进制的思想就相当于求余数。
+	*/
+
+	int a,b,c,sum;   //c为输入的进制
+	int d[100];      //存放sum转换后的每位数字
+	int i=0;
+	cin>>a>>b>>c;
+	sum=a+b;
+
+	while(sum!=0){
+		d[i]=sum%c;        //对sum,c 之间求余数，结果存放在d数组中
+		i++;
+		sum=sum/c;
+	}
+
+	//最后所得到的数组就是一个个余数的组合，把它逆序输出就是sum转换为c进制的数
+	for(int j=i-1;j>=0;j--){
+		cout<<d[j];
+	}
+	
+    return 0;
+}
 
 ```
 

@@ -2053,6 +2053,34 @@ string <span class="token function">intToString</span><span class="token punctua
 1103</p>
 <p><mark>C++</mark></p>
 <pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;string></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>	
+	<span class="token comment">/*
+	 转换进制的思想就相当于求余数。
+	*/</span>
+
+	<span class="token keyword">int</span> a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">,</span>sum<span class="token punctuation">;</span>   <span class="token comment">//c为输入的进制</span>
+	<span class="token keyword">int</span> d<span class="token punctuation">[</span><span class="token number">100</span><span class="token punctuation">]</span><span class="token punctuation">;</span>      <span class="token comment">//存放sum转换后的每位数字</span>
+	<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	cin<span class="token operator">>></span>a<span class="token operator">>></span>b<span class="token operator">>></span>c<span class="token punctuation">;</span>
+	sum<span class="token operator">=</span>a<span class="token operator">+</span>b<span class="token punctuation">;</span>
+
+	<span class="token keyword">while</span><span class="token punctuation">(</span>sum<span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		d<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>sum<span class="token operator">%</span>c<span class="token punctuation">;</span>        <span class="token comment">//对sum,c 之间求余数，结果存放在d数组中</span>
+		i<span class="token operator">++</span><span class="token punctuation">;</span>
+		sum<span class="token operator">=</span>sum<span class="token operator">/</span>c<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">//最后所得到的数组就是一个个余数的组合，把它逆序输出就是sum转换为c进制的数</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+		cout<span class="token operator">&lt;&lt;</span>d<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
 </pre><hr>
 <h3 class="mume-header" id="1023-%E7%BB%84%E4%B8%AA%E6%9C%80%E5%B0%8F%E6%95%B0-20">1023: 组个最小数 (20)</h3>
