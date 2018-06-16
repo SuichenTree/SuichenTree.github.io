@@ -223,6 +223,7 @@ code.language-yaml {
 <li><a href="#4-includealgorithm-%E5%A4%B4%E6%96%87%E4%BB%B6-sort%E5%87%BD%E6%95%B0">4. <code>#include&lt;algorithm&gt; 头文件</code> --- sort()函数；</a></li>
 <li><a href="#5-int-string-string-int">5. int -&gt; string , string -&gt; int</a></li>
 <li><a href="#6-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B9%8B%E9%97%B4%E7%9A%84%E6%AF%94%E8%BE%83-compare%E5%87%BD%E6%95%B0">6. 字符串之间的比较 --- compare()函数：</a></li>
+<li><a href="#7-%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E%E5%87%A0%E4%BD%8D">7. 保留小数点后几位：</a></li>
 </ul>
 </li>
 </ul>
@@ -531,6 +532,29 @@ string <span class="token function">intToString</span><span class="token punctua
    
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
 <span class="token punctuation">}</span>  
+</pre><h3 class="mume-header" id="7-%E4%BF%9D%E7%95%99%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E%E5%87%A0%E4%BD%8D">7. 保留小数点后几位：</h3>
+
+<pre data-role="codeBlock" data-info="c++" class="language-cpp">
+<span class="token macro property">#<span class="token directive keyword">include</span><span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">double</span> a<span class="token operator">=</span><span class="token number">88.247337324252</span><span class="token punctuation">;</span>
+
+	cout<span class="token operator">&lt;&lt;</span><span class="token string">"c 的方式："</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = %.2f\n"</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//a = 88.25</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = %f\n"</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//a = 88.247337</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"a = %.8f\n"</span><span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//a = 88.24733732</span>
+
+	<span class="token comment">/*
+	%f :默认保留六位小数
+	%.2f ：保留两位小数
+	%.8f ：保留八位小数
+	*/</span>
+	
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </pre>
       </div>
       
