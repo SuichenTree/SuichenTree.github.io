@@ -217,7 +217,18 @@ code.language-yaml {
 <ul>
 <li><a href="#1-%E7%AE%80%E4%BB%8B">1. 简介</a></li>
 <li><a href="#2-%E5%BC%95%E7%94%A8">2. 引用：</a></li>
-<li><a href="#3-%E4%BD%BF%E7%94%A8">3. 使用：</a></li>
+<li><a href="#3-%E4%BD%BF%E7%94%A8">3. 使用：</a>
+<ul>
+<li><a href="#1-%E5%88%9B%E5%BB%BAvue%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1">1. 创建vue的实例对象：</a></li>
+<li><a href="#2-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95">2. 基础语法：</a>
+<ul>
+<li><a href="#1-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5%E6%96%87%E6%9C%AC%E5%80%BC">1. 给标签插入文本值：</a></li>
+<li><a href="#2-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5html%E4%BB%A3%E7%A0%81%E5%B9%B6%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88">2. 给标签插入html代码，并使其生效：</a></li>
+<li><a href="#3%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9Av-bind">3.属性绑定：v-bind</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -239,17 +250,86 @@ Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方�
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token comment">&lt;!-- 生产环境版本，优化了尺寸和速度 --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/vue<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 </pre><blockquote>
-<p>②：CDN:</p>
+<p>②:CDN:</p>
 </blockquote>
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 </pre><blockquote>
-<p>3 :CDN:</p>
+<p>③:NPM:</p>
 </blockquote>
 <p>在用 Vue 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件。</p>
 <pre data-role="codeBlock" data-info="" class="language-"><code># &#x6700;&#x65B0;&#x7A33;&#x5B9A;&#x7248;
 $ npm install vue
 </code></pre><h2 class="mume-header" id="3-%E4%BD%BF%E7%94%A8">3. 使用：</h2>
 
+<p><font color="red">PS:先引用vue的js文件.</font></p>
+<h3 class="mume-header" id="1-%E5%88%9B%E5%BB%BAvue%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1">1. 创建vue的实例对象：</h3>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>vue_det<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>site : {{site}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>url : {{url}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>{{details()}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token comment">//创建vue的实例对象</span>
+    <span class="token keyword">var</span> vm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span> <span class="token string">'#vue_det'</span><span class="token punctuation">,</span>   <span class="token comment">//el的值表示与之绑定的标签id，例如：&lt;div id="vue_det"></span>
+        data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            site<span class="token punctuation">:</span> <span class="token string">"菜鸟教程"</span><span class="token punctuation">,</span>   <span class="token comment">//对于该实例对象对于的标签的数据绑定。</span>
+            url<span class="token punctuation">:</span> <span class="token string">"www.runoob.com"</span><span class="token punctuation">,</span>
+            alexa<span class="token punctuation">:</span> <span class="token string">"10000"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            details<span class="token punctuation">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span>  <span class="token keyword">this</span><span class="token punctuation">.</span>site <span class="token operator">+</span> <span class="token string">" - 学的不仅是技术，更是梦想！"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p>①：每个vue的实例对象都有一个el属性,它的值为标签的id值。<br>
+<font color="red">vue的实例对象通过el属性与html标签进行绑定。对该实例对象的改动就会改动对应的标签。该标签外部不受影响。</font></p>
+<p>②：<font color="red">data 用于定义属性</font>，实例中有三个属性分别为：site、url、alexa。</p>
+<p>③：<font color="red">methods用于定义函数，通过 return 来返回函数值。</font></p>
+<p><mark>④：{{ }} 用于输出对象属性和函数返回值。</mark></p>
+<p><font color="blue">⑤：当一个 Vue 实例对象被创建时，它会向 html 视图中加入了其 data 属性中的值。当这些属性的值发生改变时，html 视图将也会产生相应的变化。</font></p>
+<h3 class="mume-header" id="2-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95">2. 基础语法：</h3>
+
+<p><font color="red">数据绑定最常见的形式就是使用 {{...}}（双大括号）的文本插值。</font><br>
+<mark>{{ }} 用于输出对象属性和函数返回值。</mark></p>
+<h4 class="mume-header" id="1-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5%E6%96%87%E6%9C%AC%E5%80%BC">1. 给标签插入文本值：</h4>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+   {{ message }}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    message<span class="token punctuation">:</span> <span class="token string">'菜鸟教程'</span>    <span class="token comment">//该值与div标签内的message进行数据绑定。</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><h4 class="mume-header" id="2-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5html%E4%BB%A3%E7%A0%81%E5%B9%B6%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88">2. 给标签插入html代码，并使其生效：</h4>
+
+<blockquote>
+<p>使用 v-html 指令用于输出 html 代码</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-html</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>message<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+     message<span class="token punctuation">:</span> <span class="token string">'&lt;h1>菜鸟教程&lt;/h1>'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><h4 class="mume-header" id="3%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9Av-bind">3.属性绑定：v-bind</h4>
+
+<p>v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等</p>
 
       </div>
       
