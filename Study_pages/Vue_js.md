@@ -124,3 +124,238 @@ new Vue({
 #### 3.属性绑定：v-bind
 
 v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等
+
+##### 1. v-bind:class 绑定class属性,以动态地切换class
+
+==方式①：==
+
+```html
+<script src="./vue.js"></script>
+    <style>
+        .box{
+            border:1px dashed #f0f;
+        }
+
+      .textColor{
+          color:blue;
+      }
+      .textSize{
+          font-size:30px;
+      }
+</style>
+</head>
+
+<body>
+  <ul class="box" v-bind:class="{'textColor':isColor, 'textSize':isSize}">
+    <li>Vue</li>
+    <li>Angular</li>
+    <li>React</li>
+ </ul>
+</body>
+
+<script>
+var vm= new Vue({
+    el:'.box',    //vue实例对象与class=box的标签进行绑定
+    data:{
+        isColor:true,     //当为true时，ul标签会添加textColor样式
+        isSize:true
+    }
+})
+</script>
+```
+
+![1.png](../img/vue_js_img/1.png)
+
+
+**当 isColor 和 isSize 变化时，class列表将相应的更新.**
+
+==方式②：传一个数据对象给v-bind:class==
+
+
+```html
+<style>
+      .textColor{
+          color:red;
+      }
+      .textSize{
+          font-size:30px;
+      }
+</style>
+
+<ul class="box" v-bind:class="classObject">
+    <li>Vue</li>
+    <li>Angular</li>
+    <li>React</li>
+</ul>
+
+<script>
+var vm= new Vue({
+    el:‘.box‘,
+    data:{
+        classObject:{
+            ‘textColor‘:true,
+            ‘textSize‘:false  
+        }
+    }
+})
+</script>
+
+
+```
+
+![2.png](../img/vue_js_img/2.png)
+
+**把class样式写在数据对象中，在用ul标签引用这个数据对象.**
+
+==方式③：传一个数组给v-bind:class，形成一个class列表==
+
+```html
+<style>
+      .textColor{
+          color:green;
+      }
+      .textSize{
+          font-size:30px;
+      }
+    </style>
+</head>
+
+<body>
+    <ul class="box" v-bind:class="[classA, classB]">
+        <li>Vue</li>    
+        <li>Angular</li>
+        <li>React</li>
+    </ul>
+    
+    <script>
+    var vm= new Vue({
+        el:'.box',
+        data:{
+          classA:'textColor',   //默认加载该样式，为true
+          classB:'textSize'
+        }
+    })
+    </script>
+</body>
+```
+
+![3.png](../img/vue_js_img/3.png)
+
+
+==方式④：通过三目运算符，来切换列表中的class==
+
+```html
+<ul class="box" :class="[isA?classA:classB]">
+        <li>学习Vue</li>
+        <li>学习Node</li>
+        <li>学习React</li>
+</ul>
+    
+<script>
+    var vm= new Vue({
+        el:'.box',
+        data:{
+            classA:'textColor',
+            classB:'textSize',
+            isA:true 
+        }
+    })
+</script>
+```
+
+**首先判断isA的boolean值，如果为true，则渲染classA；如果为false，则渲染classB。**
+
+<h2><font color="red">PS:</font></h2>
+
+>对于多个class，可以这么写：
+```html
+<div v-bind:class="[classA, { classB: isB, classC: isC }]">
+```
+
+---
+
+##### 2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:
+
+<h3><font color="red">CSS属性名必须用驼峰命名法</font></h3>
+
+==方式①：==
+
+```html
+<div id="box" v-bind:style="{color:activeColor, fontSize:size}">
+     哈哈哈哈哈哈
+    </div>
+    
+    <script>
+    var vm= new Vue({
+        el:'#box',
+        data:{
+          activeColor:'pink',
+          size:'20px'
+        }
+    })
+</script>
+```
+==color:activeColor, fontSize:size，这里用驼峰命名法书写。==
+
+![4.png](../img/vue_js_img/4.png)
+
+
+==方式②：绑定一个数据对象==
+
+```html
+<div id="box" v-bind:style="styleObject">
+     哈哈哈哈哈哈
+</div>
+    
+    <script>
+    var vm= new Vue({
+        el:'#box',
+        data:{
+            styleObject:{
+                color:'red',
+                fontSize:'30px'
+            }
+        }
+    })
+</script>
+```
+
+==方式③：绑定多个数据对象，写成数组的形式==
+
+```html
+<div id="box" v-bind:style="[styleObjectA, styleObjectB]">
+     哈哈哈哈哈哈
+</div>
+    
+<script>
+    var vm= new Vue({
+        el:'#box',
+        data:{
+            styleObjectA:{
+                fontSize:'36px',
+               
+            },
+            styleObjectB:{
+                color:'blue'
+            }
+        }
+    })
+</script>
+```
+
+---
+
+##### 3.v-bind:src绑定src属性:
+
+```html
+<img class="box" v-bind:src="url" >
+
+<script>
+    var vm= new Vue({
+        el:'.box',
+        data:{
+         url:'~~~'
+        }
+    })
+</script>
+```

@@ -224,7 +224,13 @@ code.language-yaml {
 <ul>
 <li><a href="#1-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5%E6%96%87%E6%9C%AC%E5%80%BC">1. 给标签插入文本值：</a></li>
 <li><a href="#2-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5html%E4%BB%A3%E7%A0%81%E5%B9%B6%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88">2. 给标签插入html代码，并使其生效：</a></li>
-<li><a href="#3%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9Av-bind">3.属性绑定：v-bind</a></li>
+<li><a href="#3%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9Av-bind">3.属性绑定：v-bind</a>
+<ul>
+<li><a href="#1-v-bindclass-%E7%BB%91%E5%AE%9Aclass%E5%B1%9E%E6%80%A7%E4%BB%A5%E5%8A%A8%E6%80%81%E5%9C%B0%E5%88%87%E6%8D%A2class">1. v-bind:class 绑定class属性,以动态地切换class</a></li>
+<li><a href="#2v-bindstyle%E7%BB%91%E5%AE%9Astyle%E5%B1%9E%E6%80%A7css%E5%B1%9E%E6%80%A7%E5%90%8D%E5%BF%85%E9%A1%BB%E7%94%A8%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95">2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:</a></li>
+<li><a href="#3v-bindsrc%E7%BB%91%E5%AE%9Asrc%E5%B1%9E%E6%80%A7">3.v-bind:src绑定src属性:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -330,7 +336,195 @@ $ npm install vue
 </pre><h4 class="mume-header" id="3%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9Av-bind">3.属性绑定：v-bind</h4>
 
 <p>v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等</p>
+<h5 class="mume-header" id="1-v-bindclass-%E7%BB%91%E5%AE%9Aclass%E5%B1%9E%E6%80%A7%E4%BB%A5%E5%8A%A8%E6%80%81%E5%9C%B0%E5%88%87%E6%8D%A2class">1. v-bind:class 绑定class属性,以动态地切换class</h5>
 
+<p><mark>方式①：</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>./vue.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style language-css">
+        <span class="token selector"><span class="token class">.box</span></span><span class="token punctuation">{</span>
+            <span class="token property">border</span><span class="token punctuation">:</span><span class="token number">1</span>px dashed <span class="token hexcode">#f0f</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+      <span class="token selector"><span class="token class">.textColor</span></span><span class="token punctuation">{</span>
+          <span class="token property">color</span><span class="token punctuation">:</span>blue<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token selector"><span class="token class">.textSize</span></span><span class="token punctuation">{</span>
+          <span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">30</span>px<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span>class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{<span class="token punctuation">'</span>textColor<span class="token punctuation">'</span>:isColor, <span class="token punctuation">'</span>textSize<span class="token punctuation">'</span>:isSize}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>Vue<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>Angular<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>React<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    el<span class="token punctuation">:</span><span class="token string">'.box'</span><span class="token punctuation">,</span>    <span class="token comment">//vue实例对象与class=box的标签进行绑定</span>
+    data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        isColor<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span>     <span class="token comment">//当为true时，ul标签会添加textColor样式</span>
+        isSize<span class="token punctuation">:</span><span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/1.png" alt="1.png"></p>
+<p><strong>当 isColor 和 isSize 变化时，class列表将相应的更新.</strong></p>
+<p><mark>方式②：传一个数据对象给v-bind:class</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style language-css">
+      <span class="token selector"><span class="token class">.textColor</span></span><span class="token punctuation">{</span>
+          <span class="token property">color</span><span class="token punctuation">:</span>red<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token selector"><span class="token class">.textSize</span></span><span class="token punctuation">{</span>
+          <span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">30</span>px<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span>class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>classObject<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>Vue<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>Angular<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>React<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    el<span class="token punctuation">:</span>‘<span class="token punctuation">.</span>box‘<span class="token punctuation">,</span>
+    data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        classObject<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            ‘textColor‘<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span>
+            ‘textSize‘<span class="token punctuation">:</span><span class="token boolean">false</span>  
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+
+
+</pre><p><img src="../img/vue_js_img/2.png" alt="2.png"></p>
+<p><strong>把class样式写在数据对象中，在用ul标签引用这个数据对象.</strong></p>
+<p><mark>方式③：传一个数组给v-bind:class，形成一个class列表</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style language-css">
+      <span class="token selector"><span class="token class">.textColor</span></span><span class="token punctuation">{</span>
+          <span class="token property">color</span><span class="token punctuation">:</span>green<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token selector"><span class="token class">.textSize</span></span><span class="token punctuation">{</span>
+          <span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">30</span>px<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span>class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>[classA, classB]<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>Vue<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>    
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>Angular<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>React<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span><span class="token string">'.box'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+          classA<span class="token punctuation">:</span><span class="token string">'textColor'</span><span class="token punctuation">,</span>   <span class="token comment">//默认加载该样式，为true</span>
+          classB<span class="token punctuation">:</span><span class="token string">'textSize'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/3.png" alt="3.png"></p>
+<p><mark>方式④：通过三目运算符，来切换列表中的class</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name">:class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>[isA?classA:classB]<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>学习Vue<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>学习Node<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>学习React<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span><span class="token string">'.box'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            classA<span class="token punctuation">:</span><span class="token string">'textColor'</span><span class="token punctuation">,</span>
+            classB<span class="token punctuation">:</span><span class="token string">'textSize'</span><span class="token punctuation">,</span>
+            isA<span class="token punctuation">:</span><span class="token boolean">true</span> 
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><strong>首先判断isA的boolean值，如果为true，则渲染classA；如果为false，则渲染classB。</strong></p>
+<h2><font color="red">PS:</font></h2>
+<blockquote>
+<p>对于多个class，可以这么写：</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">v-bind:</span>class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>[classA, { classB: isB, classC: isC }]<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+</pre><hr>
+<h5 class="mume-header" id="2v-bindstyle%E7%BB%91%E5%AE%9Astyle%E5%B1%9E%E6%80%A7css%E5%B1%9E%E6%80%A7%E5%90%8D%E5%BF%85%E9%A1%BB%E7%94%A8%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95">2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:</h5>
+
+<h3><font color="red">CSS属性名必须用驼峰命名法</font></h3>
+<p><mark>方式①：</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span></span><span class="token style-attr language-css"><span class="token attr-name"><span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value"><span class="token punctuation">{</span><span class="token property">color</span><span class="token punctuation">:</span>activeColor, <span class="token property">fontSize</span><span class="token punctuation">:</span>size<span class="token punctuation">}</span></span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+     哈哈哈哈哈哈
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span><span class="token string">'#box'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+          activeColor<span class="token punctuation">:</span><span class="token string">'pink'</span><span class="token punctuation">,</span>
+          size<span class="token punctuation">:</span><span class="token string">'20px'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><mark>color:activeColor, fontSize:size，这里用驼峰命名法书写。</mark></p>
+<p><img src="../img/vue_js_img/4.png" alt="4.png"></p>
+<p><mark>方式②：绑定一个数据对象</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span></span><span class="token style-attr language-css"><span class="token attr-name"><span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value">styleObject</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+     哈哈哈哈哈哈
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span><span class="token string">'#box'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            styleObject<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                color<span class="token punctuation">:</span><span class="token string">'red'</span><span class="token punctuation">,</span>
+                fontSize<span class="token punctuation">:</span><span class="token string">'30px'</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><mark>方式③：绑定多个数据对象，写成数组的形式</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span></span><span class="token style-attr language-css"><span class="token attr-name"><span class="token attr-name">style</span></span><span class="token punctuation">="</span><span class="token attr-value">[styleObjectA, styleObjectB]</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+     哈哈哈哈哈哈
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span><span class="token string">'#box'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            styleObjectA<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                fontSize<span class="token punctuation">:</span><span class="token string">'36px'</span><span class="token punctuation">,</span>
+               
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            styleObjectB<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                color<span class="token punctuation">:</span><span class="token string">'blue'</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><hr>
+<h5 class="mume-header" id="3v-bindsrc%E7%BB%91%E5%AE%9Asrc%E5%B1%9E%E6%80%A7">3.v-bind:src绑定src属性:</h5>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>box<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">v-bind:</span>src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">var</span> vm<span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span><span class="token string">'.box'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+         url<span class="token punctuation">:</span><span class="token string">'~~~'</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre>
       </div>
       
       
