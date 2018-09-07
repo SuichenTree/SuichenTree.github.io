@@ -81,7 +81,7 @@ $ npm install vue
 
 <font color="blue">⑤：当一个 Vue 实例对象被创建时，它会向 html 视图中加入了其 data 属性中的值。当这些属性的值发生改变时，html 视图将也会产生相应的变化。</font>
 
-### 2. 基础语法：
+### 2. 基础起步：
 
 <font color="red">数据绑定最常见的形式就是使用 {{...}}（双大括号）的文本插值。</font>
 =={{ }} 用于输出对象属性和函数返回值。==
@@ -102,6 +102,30 @@ new Vue({
 })
 </script>
 ```
+
+=={{ }}支持javascript表达式：==
+
+```html
+<div id="app">
+    {{5+5}}<br>
+    {{ ok ? 'YES' : 'NO' }}<br>
+    {{ message.split('').reverse().join('') }}
+
+</div>
+
+<script>
+var vm=new Vue({
+    el:'#app',
+    data:{
+        ok:true,
+        message:'SUI'
+    }
+});
+</script>
+```
+
+![5](../img/vue_js_img/5.png)
+
 
 #### 2. 给标签插入html代码，并使其生效：
 
@@ -359,3 +383,279 @@ var vm= new Vue({
     })
 </script>
 ```
+
+
+### 3.指令：
+
+指令是带有 v- 前缀的特殊属性。
+指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。
+
+
+==1.参数==： 在指令名称之后以冒号表示。
+```html
+<a v-bind:href="url">...</a>
+```
+<font color="red">上面的href就是参数，通过v-bind指令把href的值与表达式url的值绑定。</font>
+
+
+#### 1.指令缩写：
+
+1. v-bind 缩写
+
+```html
+<!-- 完整语法 -->
+<a v-bind:href="url">...</a>
+
+<!-- 缩写 -->
+<a :href="url">...</a>
+```
+
+2. v-on 缩写
+
+```html
+<!-- 完整语法 -->
+<a v-on:click="doSomething">...</a>
+
+<!-- 缩写 -->
+<a @click="doSomething">...</a>
+```
+
+==: 与 @ 对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
+
+
+
+#### 2.条件语句：
+
+##### 1.v-if 指令：
+
+```html
+<div id="app">
+    <p v-if="seen">现在你看到我了</p>
+</div>
+        
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+         seen: true   //默认为true
+        }
+    })
+</script>
+```
+
+![6](../img/vue_js_img/6.png)
+
+==v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。==
+
+
+##### 2.v-else 指令：
+
+```html
+<div id="app">
+    <div v-if="Math.random() > 0.5">
+        Sorry
+    </div>
+    <div v-else>
+        Not sorry
+    </div>
+
+    <div v-if="isboolean">
+            you
+    </div>
+    <div v-else>
+            and me
+    </div>
+</div>
+    
+<script>
+new Vue({
+    el: '#app',
+    data:{
+        isboolean:true  //为flase时，显示and me
+    }
+})
+</script>
+```
+
+==随机生成一个数字，判断是否大于0.5，然后输出对应信息.==
+
+![7](../img/vue_js_img/7.png)
+
+
+##### 3.v-else-if 指令：
+
+==用作 v-if 的 else-if 块。可以链式的多次使用,
+v-else 、v-else-if 必须跟在 v-if 或者 v-else-if之后。==
+
+```html
+<div id="app">
+    <div v-if="type === 'A'">
+        A
+    </div>
+    <div v-else-if="type === 'B'">
+        B
+    </div>
+    <div v-else-if="type === 'C'">
+        C
+    </div>
+    <div v-else>
+        Not A/B/C is {{type}}
+    </div>
+</div>
+    
+<script>
+new Vue({
+    el: '#app',
+    data: {
+    type: 'D'
+    }
+})
+</script>
+```
+
+![8](../img/vue_js_img/8.png)
+
+
+#### 3.循环语句：
+
+##### 1.v-for 指令:
+
+==v-for指令需要以 todo in todos 形式的写法,
+todos是数组,todo是数组中元素迭代的别名。==
+
+>方式①：v-for 迭代数组
+
+```html
+<div id="app-4">
+    <ol>
+        <li v-for="todo in todos">
+        {{ todo.text }}
+        </li>
+    </ol>
+</div>
+    
+<script>
+var app4 = new Vue({
+  el: '#app-4',
+  data: {
+    todos: [
+      { text: '学习 JavaScript' },
+      { text: '学习 Vue' },
+      { text: '整个牛项目' }
+    ]
+  }
+})
+</script>
+
+```
+
+![9](../img/vue_js_img/9.png)
+
+
+> 方式②：v-for 迭代对象:
+==v-for 可以通过一个对象的属性来迭代数据。==
+
+```html
+
+<div id="app">
+  <ul>
+    <li v-for="value in object">
+    {{ value }}
+    </li>
+  </ul>
+</div>
+ 
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    object: {
+      name: '菜鸟教程',
+      url: 'http://www.runoob.com',
+      slogan: '学的不仅是技术，更是梦想！'
+    }
+  }
+})
+</script>
+```
+
+![10](../img/vue_js_img/10.png)
+
+
+<h2><font color="red">或者把属性名也迭代出来:</font></h2>
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="(value, key) in object">
+    {{ key }} : {{ value }}
+    </li>
+  </ul>
+</div>
+ 
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    object: {
+      name: '菜鸟教程',
+      url: 'http://www.runoob.com',
+      slogan: '学的不仅是技术，更是梦想！'
+    }
+  }
+})
+</script>
+```
+
+![11](../img/vue_js_img/11.png)
+
+
+<h2><font color="red">或者把索引也迭代出来:</font></h2>
+
+```html
+<div id="app">
+  <ul>
+    <li v-for="(value, key,index) in object">
+     {{ index }}. {{ key }} : {{ value }}
+    </li>
+  </ul>
+</div>
+ 
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    object: {
+      name: '菜鸟教程',
+      url: 'http://www.runoob.com',
+      slogan: '学的不仅是技术，更是梦想！'
+    }
+  }
+})
+</script>
+```
+
+![12](../img/vue_js_img/12.png)
+
+
+
+> 方式③：v-for 迭代整数:
+
+```html
+<div id="app">
+<ul>
+    <li v-for="n in 10">
+    {{ n }}
+    </li>
+</ul>
+</div>
+
+<script>
+new Vue({
+el: '#app'
+})
+</script>
+```
+
+
+![13](../img/vue_js_img/13.png)

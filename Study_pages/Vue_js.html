@@ -220,7 +220,7 @@ code.language-yaml {
 <li><a href="#3-%E4%BD%BF%E7%94%A8">3. 使用：</a>
 <ul>
 <li><a href="#1-%E5%88%9B%E5%BB%BAvue%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1">1. 创建vue的实例对象：</a></li>
-<li><a href="#2-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95">2. 基础语法：</a>
+<li><a href="#2-%E5%9F%BA%E7%A1%80%E8%B5%B7%E6%AD%A5">2. 基础起步：</a>
 <ul>
 <li><a href="#1-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5%E6%96%87%E6%9C%AC%E5%80%BC">1. 给标签插入文本值：</a></li>
 <li><a href="#2-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5html%E4%BB%A3%E7%A0%81%E5%B9%B6%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88">2. 给标签插入html代码，并使其生效：</a></li>
@@ -229,6 +229,23 @@ code.language-yaml {
 <li><a href="#1-v-bindclass-%E7%BB%91%E5%AE%9Aclass%E5%B1%9E%E6%80%A7%E4%BB%A5%E5%8A%A8%E6%80%81%E5%9C%B0%E5%88%87%E6%8D%A2class">1. v-bind:class 绑定class属性,以动态地切换class</a></li>
 <li><a href="#2v-bindstyle%E7%BB%91%E5%AE%9Astyle%E5%B1%9E%E6%80%A7css%E5%B1%9E%E6%80%A7%E5%90%8D%E5%BF%85%E9%A1%BB%E7%94%A8%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95">2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:</a></li>
 <li><a href="#3v-bindsrc%E7%BB%91%E5%AE%9Asrc%E5%B1%9E%E6%80%A7">3.v-bind:src绑定src属性:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3%E6%8C%87%E4%BB%A4">3.指令：</a>
+<ul>
+<li><a href="#1%E6%8C%87%E4%BB%A4%E7%BC%A9%E5%86%99">1.指令缩写：</a></li>
+<li><a href="#2%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5">2.条件语句：</a>
+<ul>
+<li><a href="#1v-if-%E6%8C%87%E4%BB%A4">1.v-if 指令：</a></li>
+<li><a href="#2v-else-%E6%8C%87%E4%BB%A4">2.v-else 指令：</a></li>
+<li><a href="#3v-else-if-%E6%8C%87%E4%BB%A4">3.v-else-if 指令：</a></li>
+</ul>
+</li>
+<li><a href="#3%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5">3.循环语句：</a>
+<ul>
+<li><a href="#1v-for-%E6%8C%87%E4%BB%A4">1.v-for 指令:</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +315,7 @@ $ npm install vue
 <p>③：<font color="red">methods用于定义函数，通过 return 来返回函数值。</font></p>
 <p><mark>④：{{ }} 用于输出对象属性和函数返回值。</mark></p>
 <p><font color="blue">⑤：当一个 Vue 实例对象被创建时，它会向 html 视图中加入了其 data 属性中的值。当这些属性的值发生改变时，html 视图将也会产生相应的变化。</font></p>
-<h3 class="mume-header" id="2-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95">2. 基础语法：</h3>
+<h3 class="mume-header" id="2-%E5%9F%BA%E7%A1%80%E8%B5%B7%E6%AD%A5">2. 基础起步：</h3>
 
 <p><font color="red">数据绑定最常见的形式就是使用 {{...}}（双大括号）的文本插值。</font><br>
 <mark>{{ }} 用于输出对象属性和函数返回值。</mark></p>
@@ -316,7 +333,25 @@ $ npm install vue
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-</pre><h4 class="mume-header" id="2-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5html%E4%BB%A3%E7%A0%81%E5%B9%B6%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88">2. 给标签插入html代码，并使其生效：</h4>
+</pre><p><mark>{{ }}支持javascript表达式：</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    {{5+5}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span>
+    {{ ok ? 'YES' : 'NO' }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span>
+    {{ message.split('').reverse().join('') }}
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">var</span> vm<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    el<span class="token punctuation">:</span><span class="token string">'#app'</span><span class="token punctuation">,</span>
+    data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        ok<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span>
+        message<span class="token punctuation">:</span><span class="token string">'SUI'</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/5.png" alt="5"></p>
+<h4 class="mume-header" id="2-%E7%BB%99%E6%A0%87%E7%AD%BE%E6%8F%92%E5%85%A5html%E4%BB%A3%E7%A0%81%E5%B9%B6%E4%BD%BF%E5%85%B6%E7%94%9F%E6%95%88">2. 给标签插入html代码，并使其生效：</h4>
 
 <blockquote>
 <p>使用 v-html 指令用于输出 html 代码</p>
@@ -524,7 +559,225 @@ $ npm install vue
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-</pre>
+</pre><h3 class="mume-header" id="3%E6%8C%87%E4%BB%A4">3.指令：</h3>
+
+<p>指令是带有 v- 前缀的特殊属性。<br>
+指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。</p>
+<p><mark>1.参数</mark>： 在指令名称之后以冒号表示。</p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name"><span class="token namespace">v-bind:</span>href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+</pre><p><font color="red">上面的href就是参数，通过v-bind指令把href的值与表达式url的值绑定。</font></p>
+<h4 class="mume-header" id="1%E6%8C%87%E4%BB%A4%E7%BC%A9%E5%86%99">1.指令缩写：</h4>
+
+<ol>
+<li>v-bind 缩写</li>
+</ol>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token comment">&lt;!-- 完整语法 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name"><span class="token namespace">v-bind:</span>href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+
+<span class="token comment">&lt;!-- 缩写 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">:href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+</pre><ol start="2">
+<li>v-on 缩写</li>
+</ol>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token comment">&lt;!-- 完整语法 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name"><span class="token namespace">v-on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>doSomething<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+
+<span class="token comment">&lt;!-- 缩写 --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>doSomething<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+</pre><p><mark>: 与 @ 对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。</mark></p>
+<h4 class="mume-header" id="2%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5">2.条件语句：</h4>
+
+<h5 class="mume-header" id="1v-if-%E6%8C%87%E4%BB%A4">1.v-if 指令：</h5>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>seen<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>现在你看到我了<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+         seen<span class="token punctuation">:</span> <span class="token boolean">true</span>   <span class="token comment">//默认为true</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/6.png" alt="6"></p>
+<p><mark>v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。</mark></p>
+<h5 class="mume-header" id="2v-else-%E6%8C%87%E4%BB%A4">2.v-else 指令：</h5>
+
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Math.random() > 0.5<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        Sorry
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-else</span><span class="token punctuation">></span></span>
+        Not sorry
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>isboolean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+            you
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-else</span><span class="token punctuation">></span></span>
+            and me
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+    data<span class="token punctuation">:</span><span class="token punctuation">{</span>
+        isboolean<span class="token punctuation">:</span><span class="token boolean">true</span>  <span class="token comment">//为flase时，显示and me</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><mark>随机生成一个数字，判断是否大于0.5，然后输出对应信息.</mark></p>
+<p><img src="../img/vue_js_img/7.png" alt="7"></p>
+<h5 class="mume-header" id="3v-else-if-%E6%8C%87%E4%BB%A4">3.v-else-if 指令：</h5>
+
+<p><mark>用作 v-if 的 else-if 块。可以链式的多次使用,<br>
+v-else 、v-else-if 必须跟在 v-if 或者 v-else-if之后。</mark></p>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>type === <span class="token punctuation">'</span>A<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        A
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-else-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>type === <span class="token punctuation">'</span>B<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        B
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-else-if</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>type === <span class="token punctuation">'</span>C<span class="token punctuation">'</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        C
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">v-else</span><span class="token punctuation">></span></span>
+        Not A/B/C is {{type}}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+    data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span> <span class="token string">'D'</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/8.png" alt="8"></p>
+<h4 class="mume-header" id="3%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5">3.循环语句：</h4>
+
+<h5 class="mume-header" id="1v-for-%E6%8C%87%E4%BB%A4">1.v-for 指令:</h5>
+
+<p><mark>v-for指令需要以 todo in todos 形式的写法,<br>
+todos是数组,todo是数组中元素迭代的别名。</mark></p>
+<blockquote>
+<p>方式①：v-for 迭代数组</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app-4<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ol</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>todo in todos<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        {{ todo.text }}
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ol</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">var</span> app4 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app-4'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    todos<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span> text<span class="token punctuation">:</span> <span class="token string">'学习 JavaScript'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> text<span class="token punctuation">:</span> <span class="token string">'学习 Vue'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> text<span class="token punctuation">:</span> <span class="token string">'整个牛项目'</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+
+</pre><p><img src="../img/vue_js_img/9.png" alt="9"></p>
+<blockquote>
+<p>方式②：v-for 迭代对象:<br>
+<mark>v-for 可以通过一个对象的属性来迭代数据。</mark></p>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html">
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>value in object<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    {{ value }}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+ 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    object<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">'菜鸟教程'</span><span class="token punctuation">,</span>
+      url<span class="token punctuation">:</span> <span class="token string">'http://www.runoob.com'</span><span class="token punctuation">,</span>
+      slogan<span class="token punctuation">:</span> <span class="token string">'学的不仅是技术，更是梦想！'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/10.png" alt="10"></p>
+<h2><font color="red">或者把属性名也迭代出来:</font></h2>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(value, key) in object<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    {{ key }} : {{ value }}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+ 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    object<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">'菜鸟教程'</span><span class="token punctuation">,</span>
+      url<span class="token punctuation">:</span> <span class="token string">'http://www.runoob.com'</span><span class="token punctuation">,</span>
+      slogan<span class="token punctuation">:</span> <span class="token string">'学的不仅是技术，更是梦想！'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/11.png" alt="11"></p>
+<h2><font color="red">或者把索引也迭代出来:</font></h2>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>(value, key,index) in object<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+     {{ index }}. {{ key }} : {{ value }}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+ 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+  data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    object<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+      name<span class="token punctuation">:</span> <span class="token string">'菜鸟教程'</span><span class="token punctuation">,</span>
+      url<span class="token punctuation">:</span> <span class="token string">'http://www.runoob.com'</span><span class="token punctuation">,</span>
+      slogan<span class="token punctuation">:</span> <span class="token string">'学的不仅是技术，更是梦想！'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/12.png" alt="12"></p>
+<blockquote>
+<p>方式③：v-for 迭代整数:</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>n in 10<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    {{ n }}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+el<span class="token punctuation">:</span> <span class="token string">'#app'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</pre><p><img src="../img/vue_js_img/13.png" alt="13"></p>
+
       </div>
       
       
