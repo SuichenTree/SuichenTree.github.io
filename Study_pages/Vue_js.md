@@ -79,7 +79,9 @@ $ npm install vue
 
 ==④：{{ }} 用于输出对象属性和函数返回值。==
 
-<font color="blue">⑤：当一个 Vue 实例对象被创建时，它会向 html 视图中加入了其 data 属性中的值。当这些属性的值发生改变时，html 视图将也会产生相应的变化。</font>
+<font color="blue">⑤：当一个 Vue 实例对象被创建时，它会向 视图中加入了其 data 属性中的值。当这些属性的值发生改变时，视图将也会产生相应的变化。</font>
+
+⑥：值得注意的是只有当vue实例被创建时 data 中存在的属性才是响应式的，实时更新的。
 
 ### 2. 基础起步：
 
@@ -145,9 +147,19 @@ new Vue({
 </script>
 ```
 
-#### 3.属性绑定：v-bind
+#### 3.样式属性绑定：v-bind指令
 
 v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等
+
+> v-bind 缩写
+
+```html
+<!-- 完整语法 -->
+<a v-bind:href="url">...</a>
+
+<!-- 缩写 -->
+<a :href="url">...</a>
+```
 
 ##### 1. v-bind:class 绑定class属性,以动态地切换class
 
@@ -217,8 +229,8 @@ var vm= new Vue({
     el:‘.box‘,
     data:{
         classObject:{
-            ‘textColor‘:true,
-            ‘textSize‘:false  
+            'textColor':true,
+            'textSize':false  
         }
     }
 })
@@ -269,7 +281,7 @@ var vm= new Vue({
 ==方式④：通过三目运算符，来切换列表中的class==
 
 ```html
-<ul class="box" :class="[isA?classA:classB]">
+<ul class="box"  v-bind:class="[isA?classA:classB]">
         <li>学习Vue</li>
         <li>学习Node</li>
         <li>学习React</li>
@@ -286,8 +298,23 @@ var vm= new Vue({
     })
 </script>
 ```
-
 **首先判断isA的boolean值，如果为true，则渲染classA；如果为false，则渲染classB。**
+
+或者
+```html
+<ul class="box"  v-bind:class="[classB,isA?classA:classB]">
+        <!--这里怎么选，都会出现classB的样式-->
+        <li>学习Vue</li>
+        <li>学习Node</li>
+        <li>学习React</li>
+</ul>
+
+....
+```
+
+
+
+
 
 <h2><font color="red">PS:</font></h2>
 
@@ -516,6 +543,61 @@ new Vue({
 ![8](../img/vue_js_img/8.png)
 
 
+##### 4.用key来复用if-else：
+
+```html
+<div id="app">
+    <div v-if="loginType==='username'">
+            <label>Username</label>
+            <input placeholder="Enter your username">
+    </div>
+    <div v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address">
+    </div>
+    <button v-on:click="changeInput">切换输入内容</button>
+</div>
+
+<script>
+var vm=new Vue({
+    el:'#app',
+    data:{
+        loginType:'username'
+    },
+    methods:{
+        changeInput:function(){
+            return this.loginType= this.loginType==='username'?'email':'username'
+            //检测当前的loginType是否为username，是：转变为email，并赋值给loginType
+        }
+    }
+})
+</script>
+```
+
+![20](../img/vue_js_img/20.png)
+
+
+> <font color="red">那么在上面的代码中点击切换按钮，将不会清除用户已经输入的内容。因为两个div使用了相同的元素，不会被替换掉——仅仅是替换了它的 placeholder。</font>
+
+
+==Vue 提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 key 属性即可：每次切换时，输入框都将被重新渲染==
+
+```html
+<div v-if="loginType==='username'">
+    <label>Username</label>
+    <input placeholder="Enter your username" key="username-input">
+</div>
+<div v-else>
+    <label>Email</label>
+    <input placeholder="Enter your email address" key="email-input">
+</div>
+
+```
+
+
+---
+
+
 #### 3.循环语句：
 
 ##### 1.v-for 指令:
@@ -659,3 +741,307 @@ el: '#app'
 
 
 ![13](../img/vue_js_img/13.png)
+
+
+#### 4.用户输入 v-model ：
+
+==input 输入框中可以使用 v-model 指令来实现表单输入和应用状态之间的双向绑定：==
+
+```html
+<div id="app">
+        <p>{{ message }}</p>
+        <input v-model="message">
+</div>
+        
+<script>
+new Vue({
+    el: '#app',
+    data: {
+    message: 'Runoob!'
+    }
+})
+</script>
+```
+
+
+![15](../img/vue_js_img/15.png)
+
+
+#### 5.事件监听器 v-on:
+
+==使用 v-on 监听事件，可以对用户的输入进行响应。==
+
+例子：在用户点击按钮后对字符串进行反转操作：
+
+```html
+<div id="app">
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">反转字符串</button>
+</div>
+        
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        message: 'Runoob!'
+    },
+    methods: {
+        reverseMessage: function () {
+            this.message = this.message.split('').reverse().join('')
+        }
+    }
+})
+</script>
+```
+
+![16](../img/vue_js_img/16.png)
+
+
+> v-on 缩写
+
+```html
+<!-- 完整语法 -->
+<a v-on:click="doSomething">...</a>
+
+<!-- 缩写 -->
+<a @click="doSomething">...</a>
+```
+
+==':'与 '@ '对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
+
+
+
+
+---
+
+
+#### 5.v-show
+
+> v-show的用法与前面的v-if类似,根据条件展示元素
+
+例子：点击一个按钮时，切换一个元素的显示或隐藏状态。
+```html
+<div id="app">
+    　<p v-show="ok">v-show可以控制元素的显隐状态，点击下面的按钮可看到效果。</p>
+    　<button v-on:click='Toggle()'>Toggle</button>
+    　<p>ok：{{ok}}</p>
+</div>
+
+<script>
+var vm=new Vue({
+　　el:'#app',
+    data:{
+　　　ok:true
+　　},
+　　methods:{
+　　　Toggle:function(){
+　　　　this.ok=!this.ok;
+　　　}
+　　}
+})
+</script>
+```
+
+![21](../img/vue_js_img/21.png)
+
+
+<font color="red" size="5px">PS:v-show与v-if的区别：</font>
+1. v-if 为false时，是以注释的形式存在在源代码中。
+2. v-if 为true时，才会被渲染。
+3. v-show 不管初始条件是什么，元素总是会被渲染，当为false时，只是执行了style="display:none",隐藏了。
+4. **如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。**
+
+
+
+
+---
+
+### 4.计算属性 computed - 把繁琐的表达式从html页面抽出来。
+
+#### 1.基础：
+
+**计算属性的由来：**
+```html
+<div id="example">
+  {{ message.split('').reverse().join('') }}
+</div>
+```
+
+<font color="red">这段代码的功能是把messgae的字符进行逆序输出.
+例如：message="Hello"，则打印输出"olleH"</font>
+
+==如果表达式存在过多逻辑，html页面就会变得臃肿不堪，难以维护。为了简单逻辑，我们可以使用计算属性。
+计算属性可以完成各种复杂的逻辑，包括运算、函数调用等，只要最终返回一个结果就可以。<font color="red">并使html页面看起来美观，简洁。</font>==
+
+
+例子：
+```html
+<div id="app">
+    <p>原始字符串: {{ message }}</p>
+    <p>计算后反转字符串: {{ reversedMessage }}</p>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Runoob!'
+        },
+        computed: {
+            reversedMessage: function () {
+            // `this` 指向 vm 实例
+            return this.message.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+```
+
+![14](../img/vue_js_img/14.png)
+
+
+#### 2.getter
+
+<font color="red">vue.js中计算属性默认只有 getter，因为是默认值所以我们也常常省略不写，如下代码：</font>
+
+```html
+<div id="app">
+    <p>原始字符串: {{ message }}</p>
+    <p>计算后反转字符串: {{ reversedMessage }}</p>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Runoob!'
+        },
+        computed: {
+            reversedMessage: function () {
+            return this.message.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+```
+
+==其实computed里的代码完整的写法应该是：==
+
+```js
+computed: {
+    reversedMessage: {
+      //getter，用于读取
+      get(){
+         return this.message.split('').reverse().join('')
+      }
+    }
+  }
+```
+
+==或者是==
+```js
+computed: {
+    reversedMessage: {
+        //getter，用于读取
+        get:function (){
+            return this.message.split('').reverse().join('')
+        }
+    }
+}
+```
+
+
+#### 3.settter
+
+==当手动修改计算属性的值时，就会触发setter函数，执行函数的自定义操作。
+同时也会触发getter函数。其执行顺序是 setter -> getter==
+
+PS: setter与getter，它们两个是相互独立的
+
+<font color="red">本例中计算属性的值为fullName</font>
+```html
+<div id="demo">
+        <p> {{ fullName }} </p>
+        <input type="text" v-model="fullName">
+        <input type="text" v-model="firstName">
+        <input type="text" v-model="lastName">
+</div>
+
+<script>
+var vm = new Vue({
+    el: '#demo',
+    data: {
+        firstName: 'zhang',
+        lastName: 'san'
+    },
+    computed: {
+        fullName: {
+        //getter 方法
+            get(){
+                console.log('computed getter...')
+                return this.firstName + ' ' + this.lastName  //把firstName与lastName拼成"zhang san"
+            },
+        //setter 方法
+            set(newValue){    //这里的newValue是fullName的值"zhang san"
+                console.log('computed setter...')
+                var names = newValue.split(' ')  //把zhang san以空格分开，分成zhang,san。放到数组names中。
+                this.firstName = names[0]
+                this.lastName = names[names.length - 1]
+                return this.firstName + ' ' + this.lastName  //把得到的firstName与lastName值返回
+            }
+        
+        }
+    }
+  
+})
+</script>
+```
+
+![17](../img/vue_js_img/17.png)
+
+
+---
+
+### 5.侦听器（侦听属性）：
+
+它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。
+
+```html
+<div id="app">
+                <p>{{ message }}</p>
+                <button v-on:click="reverseMessage">反转字符串</button>
+</div>
+                
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        message: 'Runoob!'
+    },
+    methods: {
+        reverseMessage: function () {
+            this.message = this.message.split('').reverse().join('')
+        }
+    },
+    watch:{
+        message: function (newValue, oldValue) {
+            console.log('this is watch...')
+            console.log('newValue is '+newValue,'oldValue  is '+oldValue)
+        }
+    }
+})
+</script>
+```
+
+```js
+watch:{
+        message: function (newValue, oldValue) {
+            console.log('this is watch...')
+            console.log('newValue is '+newValue,'oldValue  is '+oldValue)
+        }
+}
+```
+> ==message 是被侦听的属性值，当它发生变化，便会执行函数。==
+
+![18](../img/vue_js_img/18.png)
+![19](../img/vue_js_img/19.png)
