@@ -605,6 +605,12 @@ var vm=new Vue({
 ==v-for指令需要以 todo in todos 形式的写法,
 todos是数组,todo是数组中元素迭代的别名。==
 
+
+**可以用 of 替代 in 作为分隔符:**
+```html
+<div v-for="todo in todos"></div>
+```
+
 >方式①：v-for 迭代数组
 
 ```html
@@ -664,7 +670,7 @@ new Vue({
 ![10](../img/vue_js_img/10.png)
 
 
-<h2><font color="red">或者把属性名也迭代出来:</font></h2>
+<h2><font color="red">或者把对象的属性名也迭代出来:</font></h2>
 
 ```html
 <div id="app">
@@ -743,21 +749,28 @@ el: '#app'
 ![13](../img/vue_js_img/13.png)
 
 
-#### 4.用户输入 v-model ：
+#### 4.表单 双向数据绑定 v-model ：
 
 ==input 输入框中可以使用 v-model 指令来实现表单输入和应用状态之间的双向绑定：==
 
+##### 1.input 和 textarea 标签
 ```html
 <div id="app">
+        <p>input 元素：</p>
         <p>{{ message }}</p>
         <input v-model="message">
+
+        <p>textarea 元素：</p>
+        <p>{{ message2 }}</p>
+        <textarea v-model="message2"></textarea>
 </div>
         
 <script>
 new Vue({
     el: '#app',
     data: {
-    message: 'Runoob!'
+    message: 'Runoob!',
+    message2: '菜鸟教程\r\nhttp://www.runoob.com'
     }
 })
 </script>
@@ -767,11 +780,266 @@ new Vue({
 ![15](../img/vue_js_img/15.png)
 
 
-#### 5.事件监听器 v-on:
+##### 2.复选框：
 
-==使用 v-on 监听事件，可以对用户的输入进行响应。==
+==单个复选框，绑定到布尔值：==
 
-例子：在用户点击按钮后对字符串进行反转操作：
+```html
+<div id="app">
+  <p>单个复选框：</p>
+  <input type="checkbox" id="checkbox" v-model="checked">
+  <label for="checkbox">{{ checked }}</label>
+  
+</div>
+ 
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    checked : false //为false，表示未选状态，true为选中状态。
+  }
+})
+</script>
+
+```
+
+==多个复选框，绑定到同一个数组：==
+```html
+<div id="app">
+  <p>多个复选框：</p>
+  <input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
+  <label for="runoob">Runoob</label>
+  <input type="checkbox" id="google" value="Google" v-model="checkedNames">
+  <label for="google">Google</label>
+  <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
+  <label for="taobao">taobao</label>
+  <br>
+  <span>选择的值为: {{ checkedNames }}</span>
+</div>
+ 
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    checkedNames: []    //数组为空，表示开始没有一个复选框选中。
+  }
+})
+</script>
+```
+
+![24](../img/vue_js_img/24.png)
+
+
+##### 3.单选按钮：
+
+```html
+<div id="example-4">
+  <input type="radio" id="one" value="One" v-model="picked">
+  <label for="one">One</label>
+  <br>
+  <input type="radio" id="two" value="Two" v-model="picked">
+  <label for="two">Two</label>
+  <br>
+  <span>Picked: {{ picked }}</span>
+</div>
+ 
+<script>
+new Vue({
+  el: '#example-4',
+  data: {
+    picked: ''  //为空，表示一开始未选
+  }
+})
+</script>
+```
+
+![25](../img/vue_js_img/25.png)
+
+
+##### 4.下拉框：
+
+==单选时：==
+
+```html
+<div id="example-5">
+  <select v-model="selected">
+    <option disabled value="">请选择</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <span>Selected: {{ selected }}</span>
+</div>
+ 
+<script>
+new Vue({
+  el: '#example-5',
+  data: {
+    selected: ''    //为空，将被渲染为“未选中”状态
+  }
+})
+</script>
+```
+
+![26](../img/vue_js_img/26.png)
+
+
+==多选时 (绑定到一个数组)：==
+<font color="red">多选时，用Ctrl+鼠标左键 选中选项。</font>
+
+
+```html
+<div id="example-6">
+  <select v-model="selected" multiple style="width: 50px;">
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <br>
+  <span>Selected: {{ selected }}</span>
+</div>
+ 
+<script>
+new Vue({
+  el: '#example-6',
+  data: {
+    selected: []
+  }
+})
+</script>
+```
+
+![27](../img/vue_js_img/27.png)
+
+
+##### 5.用v-for对下拉框选项进行修饰：
+
+```html
+<div id="example-6">
+  <select v-model="selected">
+  <option disabled value="">请选择</option>
+  <option v-for="option in options" v-bind:value="option.value">
+    {{ option.text }}
+  </option>
+  </select>
+
+    <span>Selected: {{ selected }}</span>
+</div>
+ 
+<script>
+new Vue({
+  el: '#example-6',
+  data: {
+    selected: '',  //默认选A选项
+    options: [
+      { text: 'One', value: 'A' },    //A选项对于的文本值
+      { text: 'Two', value: 'B' },
+      { text: 'Three', value: 'C' }
+    ]
+  }
+})
+</script>
+```
+
+![28](../img/vue_js_img/28.png)
+
+
+##### 6.用v-bind对表单进行值绑定：
+
+==1.单选按钮：==
+
+```html
+<input type="radio" v-model="pick" v-bind:value="a">
+
+// 当选中时
+//vm.pick === vm.a
+```
+
+==2.下拉框的选项==
+
+```html
+<select v-model="selected">
+  <option v-bind:value="{ number: 123 }">123</option>
+</select>
+
+// 当选中时
+typeof vm.selected // => 'object'
+vm.selected.number // => 123
+```
+
+==3.复选框：==
+
+```html
+<input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
+
+// 当选中时
+vm.toggle === 'yes'
+// 当没有选中时
+vm.toggle === 'no'
+```
+
+##### 7.修饰符：
+
+①：.lazy
+
+在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
+```html
+<!-- 在 "change" 而不是 "input" 事件中更新 -->
+<input v-model.lazy="msg" >
+```
+
+②：.number
+
+如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值：
+```html
+<input v-model.number="age" type="number">
+```
+这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。
+
+③：.trim
+
+如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
+```html
+<input v-model.trim="msg">
+```
+
+
+---
+
+
+#### 5.事件监听 v-on:
+
+
+##### 1.基础：
+
+==使用 v-on 监听 DOM 事件，可以对用户的输入进行响应,触发时运行一些 JavaScript 代码。==
+
+<font color="red">方式①：直接把 JS 代码写在 v-on 指令中</font>
+**例子1：计数器**
+
+```html
+<body>
+<div id="example-1">
+    <button v-on:click="counter += 1">Add +1</button>
+    <p>The button above has been clicked {{ counter }} times.</p>
+</div>
+
+<script>
+var example1 = new Vue({
+  el: '#example-1',
+  data: {
+    counter: 0
+  }
+})
+</script>
+</body>
+```
+
+![22](../img/vue_js_img/22.png)
+
+
+<font color="red">方式②：把被调用方法名写在 v-on 指令中，在 methods对象中定义具体方法</font>
+**例子2：在用户点击按钮后对字符串进行反转操作：**
 
 ```html
 <div id="app">
@@ -780,21 +1048,51 @@ new Vue({
 </div>
         
 <script>
-new Vue({
+var app = new Vue({
     el: '#app',
     data: {
-        message: 'Runoob!'
+        message: 'Runoob!'   
     },
-    methods: {
-        reverseMessage: function () {
+    methods: {   //method是实例的方法对象，内部写各个具体方法。
+
+            reverseMessage: function () {   //reverseMessage是方法名
             this.message = this.message.split('').reverse().join('')
         }
     }
 })
+
+
+// 也可以用 JavaScript 直接调用方法
+app.reverseMessage() 
 </script>
+
+
+
 ```
 
 ![16](../img/vue_js_img/16.png)
+
+
+
+<font color="red">方式③：除了直接绑定到一个方法，在 v-on 指令中也可以用 JS 语句中调用方法：</font>
+```html
+<div id="example-3">
+    <button v-on:click="say('hi')">Say hi</button>
+    <button v-on:click="say('what')">Say what</button>
+</div>
+
+<script>
+new Vue({
+  el: '#example-3',
+  methods: {
+    say: function (message) {
+      alert(message)
+    }
+  }
+})
+</script>
+```
+![23](../img/vue_js_img/23.png)
 
 
 > v-on 缩写
@@ -810,10 +1108,78 @@ new Vue({
 ==':'与 '@ '对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
 
 
+##### 2.事件修饰符：
 
+**修饰符:是由点开头的指令后缀来表示的。**
+例如：
+```
+.stop
+.prevent
+.capture
+.self
+.once
+.passive
+```
+
+
+```html
+<!-- 阻止单击事件继续传播 -->
+<a v-on:click.stop="doThis"></a>
+
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+
+<!-- 修饰符可以串联 -->
+<a v-on:click.stop.prevent="doThat"></a>
+
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+
+<!-- 添加事件监听器时使用事件捕获模式 -->
+<!-- 即元素自身触发的事件先在此处理，然后才交由内部元素进行处理 -->
+<div v-on:click.capture="doThis">...</div>
+
+<!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+<!-- 即事件不是从内部元素触发的 -->
+<div v-on:click.self="doThat">...</div>
+```
+
+
+##### 3.按键修饰符：
+
+==Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：==
+
+```html
+<!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+<input v-on:keyup.13="submit">
+
+
+<!-- Vue 为最常用的按键提供了别名-->
+<input v-on:keyup.enter="submit">
+<!-- 缩写语法 -->
+<input @keyup.enter="submit">
+
+<!--
+全部的按键别名：
+.enter
+.tab
+.delete (捕获 "删除" 和 "退格" 键)
+.esc
+.space
+.up
+.down
+.left
+.right
+.ctrl
+.alt
+.shift
+.meta
+
+-->
+
+```
 
 ---
-
 
 #### 5.v-show
 
@@ -1045,3 +1411,7 @@ watch:{
 
 ![18](../img/vue_js_img/18.png)
 ![19](../img/vue_js_img/19.png)
+
+
+---
+
