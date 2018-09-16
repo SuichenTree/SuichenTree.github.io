@@ -1415,3 +1415,215 @@ watch:{
 
 ---
 
+
+### 6.组件：
+
+
+#### 1.全局组件与组件基础：
+
+
+==通过 Vue.component({...}) 全局注册的,就叫全局组件。==
+==组件是可复用的 Vue 实例,且带有一个名字。==
+
+> ①基础例子：
+
+```html
+<body>
+  <div id="components-demo">
+    <button-counter></button-counter>
+  </div>
+ 
+<script>
+// 定义一个名为 button-counter 的新组件
+Vue.component('button-counter', {
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+})
+
+//实例化该组件所在的标签（实例化组件所在的根实例）
+var vm = new Vue({
+  el:'#components-demo'
+})
+</script>
+</body>
+```
+
+![29](../img/vue_js_img/29.png)
+
+<font color="red">
+PS:
+
+1. 在这个例子中组件是 button-counter 标签.
+2. 在一个 new Vue 创建的 Vue 根实例中，组件可以作为自定义标签来使用
+3. 因为组件是可复用的 Vue 实例，所以它们与 new Vue 接收相同的选项，例如 data、computed、watch、methods 等。
+4. ==el是组件所在的根实例特有的选项。==
+5. ==所有组件必须写在根实例标签的里面才会生效。==
+6. js代码中全局组件必须写在Vue实例创建之前，才会渲染生效。
+</font>
+
+<br/>
+
+> ②：组件的 data 必须是一个函数：
+
+<font color="blue">组件的 data 选项必须是一个函数</font>，因此每个实例可以维护一份被返回对象的独立的拷贝：
+```js
+Vue.component('button-counter', {
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+})
+```
+
+<br/>
+
+> ③：组件的复用：
+
+```html
+<div id="components-demo">
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+  <button-counter></button-counter>
+</div>
+```
+
+==注意当点击按钮时，每个组件都会各自独立维护它的 count。因为你每用一次组件，就会有一个它的新实例被创建。==
+
+![30](../img/vue_js_img/30.png)
+
+
+
+
+#### 2.局部组件：
+
+==局部组件，直接在创建Vue实例里面注册。==
+
+例子：
+```html
+<div id="app1">
+  <child-component></child-component>
+</div>
+
+<script>
+  new Vue({
+    el: "#app1",
+    components:{
+      "child-component":{
+        template:"<h1>我是局部组件</h1>"
+      }
+    }
+  });
+</script>
+```
+或者：
+```html
+<script>
+  var child={
+    template:"<h1>我是局部组件</h1>"
+  };
+  new Vue({
+    el: "#app1",
+    components:{
+      "child-component":child
+    }
+  });
+</script>
+```
+
+<h3>局部组件需要注意：</h3>
+
+1. ==属性名为components，s千万别忘了;==
+2. 模板标签比较多的时候，可以把html代码抽出来，如上面一样。
+3. data属性必须是一个函数。
+
+
+#### 3.Prop：
+
+Prop 是你可以在组件上注册的一些自定义特性。**当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个类似的data属性。**
+
+
+<font color="blue">注意: prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。</font>
+
+
+##### 1.Prop静态传递数据
+
+```html
+<div id="app1">
+  <blog-post title="My journey with Vue"></blog-post>
+  <blog-post title="Blogging with Vue"></blog-post>
+  <blog-post title="Why Vue is so fun"></blog-post>
+</div>
+
+<script>
+Vue.component('blog-post', {
+  props: ['title'],
+  template: '<h3>{{ title }}</h3>'
+})
+
+new Vue({
+  el:'#app1'
+})
+</script>
+```
+
+<font color="red">
+props: ['title'],相当于给这个组件添加一个title的data属性。
+
+title="Why Vue is so fun"：是给这个标签的title属性赋值。
+</font>
+
+
+上面是全局组件的写法，下面是局部组件的写法：
+```html
+<script>
+new Vue({
+  el:'#app1',
+  components:{
+      "blog-post":{
+        props: ['title'],
+        template: '<h3>{{ title }}</h3>'
+      }
+  }
+})
+</script>
+```
+
+![31](../img/vue_js_img/31.png)
+
+
+##### 2.Prop动态传递数据：
+
+用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件。
+
+```html
+<div id="app">
+    <div>
+      <input v-model="parentMsg">
+      <br>
+      <child v-bind:message="parentMsg"></child>
+    </div>
+</div>
+ 
+<script>
+
+Vue.component('child', {
+  props: ['message'],
+  template: '<span>{{ message }}</span>'
+})
+
+new Vue({
+  el: '#app',
+  data: {
+    parentMsg: '父组件内容'
+  }
+})
+</script>
+```
+
+![32](../img/vue_js_img/32.png)
