@@ -1668,70 +1668,6 @@ strupr(字符串);
 
 
 
-### 4. 传递数组给函数(3种):
-
-==可以通过指定不带索引的数组名称来给函数传递一个指向数组的指针。==
-
-
-①：形式参数是一个指针.
-```c
-void functionName(int *param){ }
-```
-
-②：形式参数是一个已定义大小的数组.
-```c
-void functionName(int param[10]){ }
-```
-
-③：形式参数是一个未定义大小的数组.
-```c
-void functionName(int param[]){ }
-```
-
-DEMO:
-```c
-#include <stdio.h>
- 
-/* 函数声明 */
-double getAverage(int arr[], int size);
- 
-int main ()
-{
-   /* 带有 5 个元素的整型数组 */
-   int balance[5] = {1000, 2, 3, 17, 50};
-   double avg;
- 
-   /* 传递一个指向数组的指针作为参数 */
-   avg = getAverage( balance, 5 ) ;
- 
-   /* 输出返回值 */
-   printf( "平均值是： %f ", avg );
-    
-   return 0;
-}
- 
-double getAverage(int arr[], int size)
-{
-  int    i;
-  double avg;
-  double sum;
- 
-  for (i = 0; i < size; ++i)
-  {
-    sum += arr[i];
-  }
- 
-  avg = sum / size;
- 
-  return avg;
-}
-```
-
-![29](../img/C_img/29.png)
-
-
----
-
 
 ### 5. 从函数返回数组:
 
@@ -1813,29 +1749,36 @@ p = a;            //指针p 指向 数组a
 
 ==函数是一组一起执行一个特定功能的语句。每个 C 程序都至少有一个main（）主函数。==
 
+<font color="red">
+
+1. 函数间可以互相调用，但不能调用main函数。
+2. main函数是被操作系统调用的。 
+</font>
+
 
 ### 1.创建函数：
 
 语法：
 ```c
-return_type function_name( parameter list )
+函数返回类型 函数名( 形参参数列表 )
 {
-   body of the function;
+    函数体;
 
-   return return_type;    //返回返回值，类型与函数的类型相同。
+   return 函数返回值;    //类型与函数的返回类型相同。
 }
 ```
 
 <font color="red">
 注意：
 
-1. return_type  ：函数返回的值的数据类型,当 return_type 是void时，函数不需要返回值。
+1. 函数返回值  ：函数返回的值的数据类型,当 函数返回值 是void时，函数不需要返回值。
 
-2. function_name ：函数名称。函数名和参数列表要一起看。区别同名函数要看参数列表。
+2. 函数名 ：函数名称。函数名和参数列表要一起看。区别同名函数要看参数列表。
 
-3. parameter list ：参数列表，类似函数暴露在外的接口，可以通过该接口向函数传递一个值。==参数是可选的，也就是说，函数可能不包含参数。==
+3. 形参参数列表 : 类似函数暴露在外的接口，可以通过该接口向函数传递一个值。==参数是可选的，也就是说，函数列表可以不包含参数。==
 
-4.  body of the function ：函数主体包含一组执行特定功能的语句
+4. 函数体 ：函数主体包含一组执行特定功能的语句
+5. 函数的返回值是通过函数的返回值获得。
 </font>
 
 
@@ -1854,6 +1797,12 @@ int max(int num1, int num2)    //函数通过参数列表，可以从函数外�
  
    return result;            //通过返回值，把加工好的数据放到函数外。
 }
+
+
+// ------ 定义空函数A：
+
+void A(){}
+
 ```
 
 
@@ -1873,9 +1822,23 @@ int max(int num1, int num2);
 int max(int, int);
 ```
 
-### 3. 调用函数:
+### 3. 调用函数（3种）:
 
 ==通过调用函数来完成已特定的功能==
+
+语法：
+```c
+函数名(实参列表);
+```
+
+> 方式①：函数调用语句：
+`max(a, b);`
+
+> 方式②：函数表达式：
+`sum_max=max(a, b);`
+
+> 方式③：函数参数--函数可以作为另一个函数的参数：
+`d=max(a,max(b,c));`
 
 DEMO：
 ```c
@@ -1891,7 +1854,7 @@ int main ()
    int b = 200;
    int ret;
  
-   ret = max(a, b);          /* 调用函数来获取最大值 */
+   ret = max(a, b);          /* 调用max函数来获取最大值 */
  
    printf( "Max value is : %d\n", ret );
  
@@ -1914,11 +1877,111 @@ int max(int num1, int num2)
 ```
 
 
-### 4.两种向函数传递参数的方式：
+### 4. 函数调用时的数据传递:
+
+==形式参数：定义函数时括号里的参数。
+实际参数：调用函数时括号里的参数。==
+
+<font color="blue">
+
+1. 在调用函数时，形参会从实参获取对应的数值。该值在函数调用期间有效，参
+与函数内部的运算。
+2. 形参在函数未调用时，它们不占内存单元。在函数调用时，形参才会被临时分配内存单元。
+3. 调用结束，形参单元被释放。
+4. 实参与形参类型相同或赋值相容。
+
+</font>
+
+
+### 5. 数组作为函数参数:
+
+==可以通过指定不带索引的数组名称来给函数传递一个指向数组的指针。==
+
+> ①：数组元素作为函数参数：
+
+<font color="red">数组元素可以用作函数实参，但不能用作函数形参。</font>
+
+```c
+max(b,a[i]);
+```
+
+> ②：用一维数组名作为函数参数：
+
+<font color="red">用一维数组名作为函数参数，传递的是数组首元素的值或地址</font>
+
+```c
+int max(int num,int a[]);  //定义max函数时，形参数组不指定大小。
+max(b,a);
+```
+
+> ③：多维数组元素作为函数参数：
+```c
+int max(int a[][4]);
+max(a);
+```
+
+> ④：形式参数是一个已定义大小的数组.
+```c
+void functionName(int param[10]){ }
+```
+
+> ⑤：形式参数是一个未定义大小的数组.
+```c
+void functionName(int param[]){ }
+```
+
+DEMO:
+```c
+#include <stdio.h>
+ 
+/* 函数声明 */
+double getAverage(int arr[], int size);
+ 
+int main ()
+{
+   /* 带有 5 个元素的整型数组 */
+   int balance[5] = {1000, 2, 3, 17, 50};
+   double avg;
+ 
+   /* 传递一个指向数组的指针作为参数 */
+   avg = getAverage( balance, 5 ) ;
+ 
+   /* 输出返回值 */
+   printf( "平均值是： %f ", avg );
+    
+   return 0;
+}
+ 
+double getAverage(int arr[], int size)
+{
+  int    i;
+  double avg;
+  double sum;
+ 
+  for (i = 0; i < size; ++i)
+  {
+    sum += arr[i];
+  }
+ 
+  avg = sum / size;
+ 
+  return avg;
+}
+```
+
+![29](../img/C_img/29.png)
+
+
+---
+
+
+
+
+### 6.两种向函数传递参数的方式：
 
 #### 1.传值方式：
 
-==把参数的实际值复制给函数的形式参数。==
+====
 <font color="red">
 注意： 函数内形式参数值的变化不会改变用于调用函数的实际参数。
 </font>
@@ -2038,6 +2101,27 @@ void swap(int *x, int *y)
 ---
 
 
+### 7.内部函数，外部函数：
+
+==根据函数能否被其他源文件调用,将函数区分为内部函数，外部函数。==
+
+#### 1.内部函数（静态函数）：
+
+<font color="red">内部函数的作用域仅限于所在文件内。</font>
+
+形式：
+`static 类型名 函数名(形参表);`
+
+
+#### 2.外部函数：
+
+<font color="red">外部函数可供其他文件调用。C语言规定，若在定义函数时，省略static，则默认为外部函数</font>
+
+形式：
+`extern 类型名 函数名(形参表);`
+
+
+
 ## 8. 变量作用域：
 
 
@@ -2049,6 +2133,7 @@ C 语言中有三个地方可以声明变量：
 1. 在函数或块内部的声明的变量-----局部变量。
 2. 在所有函数外部的声明的变量，包括主函数main -----全局变量。
 3. 函数的形参。
+
 </font>
 
 
