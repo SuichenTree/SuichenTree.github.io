@@ -2240,28 +2240,39 @@ int sum(int a, int b)
 
 ## 9. 指针：
 
+<font color="red">
+c语言的地址包括位置信息与该数据的类型信息。
+
+地址=位置信息(内存编号))+数据类型信息。
+</font>
+
 
 ### 1. & 取地址符：
 
-==每一个变量都有一个内存位置，每一个内存位置都定义了可使用连字号（&）运算符访问的地址，它表示了在内存中的一个地址。==
+==&a,准确的说是“整型变量a的地址”，系统可能会分配2000~2003的四个字节给变量a。==
 
 ```c
-int  var1;
-printf("var1 变量的地址： %p\n", &var1  );
+int  a;
+printf("a 变量的地址： %p\n", &a  );
+//
+//系统首先通过变量名找到地址，再根据int来从该地址取出4个字节，按十进制的格式输出。
 ```
 
 ---
 
-### 2. 指针的介绍与使用：
+### 2. 指针变量
 
-==指针是一个变量，其值为另一个变量的地址，即，内存位置的直接地址。==
+==指针：将地址形象化为"指针"。意思是通过指针能找到它指向的内存单元。==
+==指针变量是存放地址的变量。指针变量的值是地址。==
 
-<font color="red">星号是用来指定一个变量是指针，不同数据类型的指针之间的区别是，指针所指向的变量或常量的数据类型不同。</font>
+> ①：定义指针变量：
+
+<font color="red">星号是用来指定一个变量是指针变量，不同数据类型的指针之间的区别是，指针所指向的变量或常量的数据类型不同。</font>
 ```c
-int    *ip;    /* 一个整型的指针 */
-double *dp;    /* 一个 double 型的指针 */
-float  *fp;    /* 一个浮点型的指针 */
-char   *ch;     /* 一个字符型的指针 */
+int    *ip;    /* 定义一个整型的指针变量ip */
+double *dp;  
+float  *fp;    
+char   *ch;   
 ```
 
 
@@ -2272,13 +2283,49 @@ char   *ch;     /* 一个字符型的指针 */
 
 
 ```C
-   int  var = 20;   /* 实际变量的声明 */
-   int  *ip;        /* 指针变量的声明 */
- 
-   ip = &var;  /* 在指针变量中存储 var 的地址 */
-   /* 使用指针访问值 */
+   int  var = 20;  
+   int  *ip;        /* 定义一个整型的指针变量ip  */
+   ip = &var;  /* 把var的地址存储在指针变量ip中 */
    printf("Value of *ip variable: %d\n", *ip );
 ```
+<font color="red">
+
+0.  第二行语句中 *ip表示ip为指针变量，*没有指向的意思。
+1.  printf输出语句中的 * 表示指向，*ip表示指针变量ip指向的变量，即变量var。
+2.  一个指针变量只能指向同一个类型。
+3. ==一个变量的指针包含两个含义：第一个：纯地址（内存编号）。第二个：存储单元的数据类型。==
+</font>
+
+
+> ②：引用指针变量：
+
+
+```c
+int *p;
+int a;
+p=&a; //把a的地址信息存储到指针变量p中。
+
+// 输出指针变量p指向的变量a的值
+printf("%d",*p);  
+
+// 以十进制的格式输出指针变量p的值，即a的地址信息。
+printf("%d",p);
+
+*p=1; //表示把1的值赋给指针变量p指向的变量a，等价于 a=1
+
+```
+
+<font color="blue">
+
+★★★★
+1. 在定义指针变量的时候：`int *p;` 中 `*p` 声明p是一个指针变量。
+2. 在其他场合中 `*p`表示指针变量p指向的对象。
+
+★★★★
+
+</font>
+
+
 
 ---
 
@@ -2336,7 +2383,7 @@ PS:
 
 #### 2. -- 递减一个指针:
 
-> 对指针进行递减运算，即把值减去其数据类型的字节数
+> 对指针进行递减运算，即把地址的值减去其数据类型的字节数
 
 
 #### 3. 指针的比较：
@@ -2421,7 +2468,7 @@ Value available at **pptr = 3000
 
 ---
 
-### 7. 传递指针给函数(通过引用或地址传递参数)：
+### 7. 指针变量作为函数参数：
 
 ==C 语言允许传递指针给函数，只需要简单地声明函数参数为指针类型即可。==
 
@@ -2433,12 +2480,10 @@ double getAverage(int *arr);
 int main ()
 {
    /* 带有 5 个元素的整型数组  */
-   int balance[5] = {1000, 2, 3, 17, 50};
+   int balance=10;
  
    /* 传递一个指向数组的指针作为参数 */
-   double avg = getAverage(balance) ;
- 
-    
+   double avg = getAverage(balance) ;   
    return 0;
 }
 
@@ -2448,8 +2493,175 @@ double getAverage(int *arr)
 }
 ```
 
+<font color="red">
 
-### 8. 函数返回指针
+1. 调用函数时，相当于执行了 int *arr=balance;
+2. 在函数执行过程中，指针变量指向的值发生变化，函数结束后，值的变化会保留下来。
+
+</font>
+
+
+### 8. 通过指针引用数组：
+
+#### 1.数组元素的指针：
+
+==数组元素的指针就是数组元素的地址。==
+
+<font color="red">数组名a代表数组首元素（a[0]）的地址,下面几句等价：</font>
+```c
+int *p;
+p=&a[0];
+p=a;
+
+int *d=a;
+int *d=&a[0];
+
+```
+
+> 数组元素指针的运算：
+```c
+
+int *p=a; //表示指向数组的第一个元素a[0]
+
+//表示指向数组的下一个元素
+p+1;  
+p++;
+++p;
+
+//表示指向数组的上一个元素
+p-1;  
+p--;
+--p;
+
+
+//表示 p1的地址值-p2的地址值 除以 数据元素的长度，
+//p1-p2 相当于它们所指元素的相对距离。
+p1-p2; 
+
+
+// p1+p2 没有实际意义的。
+```
+
+
+#### 2.通过指针引用数组元素：
+
+```c
+for(i=0;i<10;i++){
+    printf("%d",*(a+i));
+}
+
+// 或者
+
+int a[10],*p;
+
+for(p=a;p<(a+10);p++){
+  printf("%d",*p);
+}
+
+```
+
+<font color="red">
+
+注意：设 p 指向数组a的首元素：
+1. *p++ 等价 *(p++) ,  先使用 *p的值，再把 p++.
+2. *(++p) ,先是p加1，再取 *p.
+3. ++(*p) , 表示p所指的元素+1
+ 
+
+</font>
+
+
+#### 3.用数组名作函数参数：
+
+格式：
+```c
+fun(int a[],int n);
+
+//把数组作为形参，在程序中是把数组作为指针变量来处理
+//上面语句相当于：
+fun(int *a,int n);
+
+```
+
+<font color="red">
+
+1. 当用数组名作为函数参数，由于数组名是数组首元素的地址。
+因此实际上，传递的是地址。所以要用指针变量来接受地址。
+2. 实参用数组名，形参可以用数组名，也可用指针变量名。
+
+</font>
+
+
+#### 4.通过指针引用多维数组：
+
+**指针变量可以指向多维数组中的元素。**
+
+<font color="blue">
+
+注意
+1. 若a为一维数组名，则 a[i] 表示a数组中下标为i的存储单元。
+2. 若a为二维数组名，则 a[i] 表示一维数组名。是二维数组中的第i行一维数组的首元素的地址。
+3. *(a[i]+j) 或 *( *(a+i) + j) , 表示二维数组中a[i][j]的值。
+
+强调：
+1. 二维数组a中，a[i]具体是指向某一行的，那一行就是一个一维数组。
+所以 a[i]+1, 其中的 1 表示一行元素所占的字节数。
+
+</font>
+
+
+---
+
+### 9. 通过指针引用字符串：
+
+==%s :该格式符，在printf函数中，会读取字符并打印出来，直到读取到'\0'才停止。==
+
+**跟用数组名作函数参数一样。**
+
+
+---
+
+### 10. 指向函数的指针：
+
+格式：
+```c
+int (*p)(int,int);   //定义p为指向函数的指针变量。
+
+//其中指针变量p的类型为 int(*)(int,int)
+```
+
+```c
+int main(){
+
+int max(int a,int b);
+
+int (*p)(int,int);  //定义一个指向函数的指针变量p
+p=max;               //使p指向函数max
+
+(*p)(a,b);          //通过指针变量p调用函数max
+
+}
+
+int max(int a,int b){
+    ...
+}
+
+```
+
+> 指向函数的指针作函数参数：
+
+```c
+
+void fun(int(*p1)(int),int(*p2)(int)){   //fun函数的形参是指向函数的指针
+     int a,b,i=3,j=5;
+     a=(*p1)(i);        //调用p1指向的函数。i为实参
+     b=(*p2)(j);
+}
+
+
+```
+
+### 11. 函数返回指针
 
 ==C 允许您从函数返回指针,必须声明一个返回指针的函数。==
 
@@ -2472,13 +2684,10 @@ int * getRandom( )
 }
 ```
 
-
-### 9. 函数指针与回调函数(？？？)
-
-尚未更新，耐心等待！！！
-
-
 ---
+
+
+
 
 
 
@@ -2535,7 +2744,7 @@ DEMO-1:
 
 <font color="red">使用成员访问运算符（.），来访问结构体的属性。</font>
 ```c
-struct Books     //声明Books结构体
+struct Books     //定义Books结构体
 {
    int   book_id;     //这是Books的属性
    char  title[50];
@@ -2546,7 +2755,7 @@ struct Books     //声明Books结构体
 
 int main( )
 {
-   struct Books Book1;        /* 声明 Book1，类型为 Books */
+   struct Books Book1;        /* 定义 Book1变量，类型为 Books */
  
    /* Book1 详述 */
    strcpy( Book1.title, "C Programming");
@@ -2592,6 +2801,28 @@ struct Books bk;
 
 
 ![35](../img/C_img/35.png)
+
+
+
+DEMO-3：
+
+<font color="red">在定义结构体变量的同时，对其初始化。</font>
+
+```c
+struct Books    
+{
+   int   book_id;   
+   char  title[50];
+   char  author[50];
+
+}bk1={1001,'三体','地球人'}; 
+
+```
+
+==同类型的结构体变量可以相互赋值。==
+```c
+bk2=bk1; 
+```
 
 
 ---
@@ -2657,6 +2888,44 @@ void printBook( struct Books *book )
 }
 ```
 
+<font color="red">
+
+注意：
+1. c语言允许把 (*p).num 用 p->num 代替。
+2. (*p).num 的括号不能省略。
+3. 以下3中用法等价：
+    1. stu.num;
+    2. (*p).num;
+    3. p->num;
+
+</font>
+
+
+
+### 4. 结构体数组：
+
+```c
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   int   book_id;
+}bk[10];
+
+//或者：
+
+struct Books
+{
+   char  title[50];
+   char  author[50];
+   int   book_id;
+};
+
+struct Books bk[10];
+
+```
+
+
 
 
 
@@ -2677,7 +2946,7 @@ typedef struct Books
    int   book_id;
 }bk;                  //因为typedef关键字，这里的 bk相当于 struct Books
  
-
+bk a,b,c;             //定义 struct Books 类型变量 a,b,c
 ```
 
 ![36](../img/C_img/36.png)
@@ -2973,4 +3242,283 @@ int  main()
 13    
 21    
 34
+```
+
+---
+
+## 16.动态分配内存：
+
+==使用前提：添加， stdlib.h 头文件==
+
+
+### 1.用malloc函数开辟动态存储区：
+
+语法：
+```c
+void *malloc(unsigned int size);
+
+//作用：
+//1. 在内存中开辟长度为size的连续空间。
+//2. 函数的返回值为空间的第一个字节的地址。
+//3. 若失败，内存不足，则返回null
+
+
+//例如：
+malloc(100);   //开辟长度为100的临时区域，返回值为其第一个字节的地址。
+
+```
+
+
+### 2.用calloc函数开辟动态存储区 ---适合数组：
+
+语法：
+```c
+void *calloc(unsigned n,unsigned size);
+
+//作用：
+//1. 在内存中开辟n个长度为size的连续空间，总长度为 n*size。
+//2. 函数的返回值为空间的第一个字节的地址。
+//3. 若失败，内存不足，则返回null
+
+
+//例如：
+p=calloc(50,4);   //开辟50个长度为4的临时区域，把首地址给指针变量p。
+
+```
+
+### 3.用realloc函数重新分配动态存储区：
+
+语法：
+```c
+void *realloc(void *p,unsigned size);
+
+//作用：
+//1.把p所指的动态空间的大小改变为size大小。
+//2.分配失败，返回null。
+
+//例如：
+realloc(p,400);   
+
+```
+
+
+### 4.用free函数释放动态存储区：
+
+语法：
+```c
+void *free(void *p);
+
+//作用：
+//1.把p所指的动态空间释放，无返回值。
+
+//例如：
+free(p);    
+
+```
+
+
+## 17.链表：
+
+链表是动态的进行存储分配的一种存储结构。它根据需要来开辟存储单元.
+
+
+![42](../img/C_img/42.png)
+
+
+<font color="red">
+
+1. 链表中的元素，在内存的地址是不连续的。
+2. 要找一个元素，必须寻找该元素的上一个元素，因为上一个元素存储下一个元素的地址。
+3. 若不提供头指针，则整个链表无法访问。
+
+</font>
+
+
+### 1.建立静态链表：
+
+```c
+
+//静态链表,它由３个学生数据的节点组成，要求输出各节点的数据。
+#include<stdio.h>
+#include<windows.h>
+#include<string.h>
+
+struct Student
+{
+    int num;
+    float score;
+    struct Student *next;   //存放下一个节点的地址信息
+};
+
+int main()
+{
+    struct Student a, b, c, *head, *p;
+    a.num = 10101; a.score = 89.5;
+    b.num = 10103; b.score = 90;
+    c.num = 10107; c.score = 85;
+
+    head = &a;          //把第一个节点的地址给head头指针
+    a.next = &b;        //把b节点的地址赋值a节点的指针变量。相当于把 a ，b 连接起来。
+    b.next = &c;        //把 b,c 连接起来
+    c.next = NULL;      //c节点指针域不存放地址信息
+    p= head;            //使p指向a节点
+
+    do{
+        printf("%ld %5.1f\n", p->num, p->score);
+        p = p->next;         //使p指向下一个结点
+    } while (p!=NULL);
+
+
+    system("pause");
+    return 0;
+}
+
+```
+
+
+### 2.建立动态链表：
+
+建立动态链表，表示从无到有建立一个链表。
+
+
+==思路是让p1指向新开辟的结点，p2指向链表中最后一个结点，让p1指向的结点链接在p2所指向结点的后面，用p2->next = p1实现。==
+```c
+#include<stdio.h>
+typedef struct Student{
+    long num;
+    float score;
+    struct Student *next;
+} Student;
+
+int n;
+Student * create(){
+    Student *head,*p1,*p2;
+    n = 0 ;
+    
+    p1=p2=(Student *)malloc(sizeof(Student));  //开辟新结点 同时使p1 p2指向该结点
+    scanf("%d %f",&p1->num,&p1->score);
+    //此时head的指向为NULL
+    head = NULL;
+    while(p1->num != 0){
+    //n代表结点数
+        n=n+1;
+        if(n==1){
+        //n=1 说明该结点是第一个结点 使head指向该结点
+            head = p1;
+        }else{
+        //如果不是头结点 把p1所指向的结点链接在p2所指向结点的后面
+            p2->next = p1;
+        }
+        //使p2向前移 
+        p2 = p1;
+        //开辟新结点 使p1指向它
+        p1 = (Student *)malloc(sizeof(Student));
+        scanf("%d %f",&p1->num,&p1->score);
+    }
+    //循环退出之后 使p2指向NULL 因为链表的尾结点指向NULL
+    p2->next = NULL;
+    return head;
+}
+
+void main(){
+    Student *pt;
+    pt = create();
+    printf("\n num:%d\nscore:%5.1f\n",pt->num,pt->score );
+    return 0;
+}
+
+```
+
+
+### 3.输出链表：
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+struct Student{
+    long num;
+    float score;
+    struct Student *next;
+};
+int n;
+void print(struct Student *head){
+    struct Student *p;
+
+    p=head;   //使p指向第一个节点。
+    if(head!=NULL){     //若不是空表
+        do{
+            printf("%ld %.5lf \n",p->num,p->score);
+            p=p->next;      //p指向下一个节点
+        }while(p!=NULL);
+
+    }
+
+}
+```
+
+<font color="red">
+
+1. p=p->next;      使p指向p的下一个节点，p->next 表示p的下一个节点的地址。
+
+</font>
+
+---
+
+## 18.共用体：
+
+==共用体，使几个不同的变量共享一个相同的内存结构。==
+
+> 定义共用体：
+```c
+union Data
+{
+   int i;           //表示不同类型的变量 i,f 可以存放在同一段内存单元中
+   float f;
+}a,d;                  //在声明类型的同时，定义变量a,d.
+```
+
+<font color="red">
+
+共用体的特点：
+1. 一个内存段可以存放多种不同类型的变量成员，但同一时间只用到一个成员。
+2. 共用体变量中起作用的成员是最后一个被赋值的成员。
+3. 共用体的地址与其内部各成员的地址相同。
+
+</font>
+
+
+```c
+#include <stdio.h>
+#include <string.h>
+ 
+union Data
+{
+   int i;
+   float f;
+   char  str[20];
+};
+ 
+int main( )
+{
+   union Data data;        
+ 
+   data.i = 10;
+   printf( "data.i : %d\n", data.i);
+   
+   data.f = 220.5;
+   printf( "data.f : %f\n", data.f);
+   
+   strcpy( data.str, "C Programming");
+   printf( "data.str : %s\n", data.str);
+ 
+   return 0;
+}
+
+```
+
+当上面的代码被编译和执行时，它会产生下列结果：
+```
+data.i : 10
+data.f : 220.500000
+data.str : C Programming
 ```
