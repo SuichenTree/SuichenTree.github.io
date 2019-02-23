@@ -1,9 +1,11 @@
 [toc]
 # Vue.js - version : 2.5.16
 
+
 ## 1. 简介 
 Vue 是一套用于构建用户界面的渐进式框架。
 Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。
+
 
 ## 2. 引用：
 
@@ -37,19 +39,30 @@ Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方�
 # 最新稳定版
 $ npm install vue
 ```
+---
 
-
-## 3. 使用：
+## 3. 实例化Vue对象，对象中数据与方法：
 
 <font color="red">PS:先引用vue的js文件.</font>
 
-### 1. 创建vue的实例对象：
-
 ```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+ 
+</head>
+
+<body>
 <div id="vue_det">
     <h1>site : {{site}}</h1>    
     <h1>url : {{url}}</h1>
-    <h1>{{details()}}</h1>
+    <h1>方法返回值:{{hanshu()}}</h1>
+    <h1>方法返回data内的值:{{hanshu2()}}</h1>
 </div>
 
 <script type="text/javascript">
@@ -58,24 +71,30 @@ $ npm install vue
         el: '#vue_det',   //el的值表示与之绑定的标签id，例如：<div id="vue_det">
         data: {
             site: "菜鸟教程",   //对于该实例对象对于的标签的数据绑定。
-            url: "www.runoob.com",
-            alexa: "10000"
+            url: "www.runoob.com"
         },
-        methods: {
-            details: function() {
-                return  this.site + " - 学的不仅是技术，更是梦想！";
+        methods:{
+            hanshu: function() {
+                return  "这是vue对象中的hanshu方法的返回值！";
+            },
+            hanshu2:function(){
+                return  this.site;   //this.site指的是data域中的site值
             }
         }
     })
 </script>
+</body>
+</html>
 ```
+
+![0](../img/vue_js_img/0.png)
 
 ①：每个vue的实例对象都有一个el属性,它的值为标签的id值。
 <font color="red">vue的实例对象通过el属性与html标签进行绑定。对该实例对象的改动就会改动对应的标签。该标签外部不受影响。</font>
 
-②：<font color="red">data 用于定义属性</font>，实例中有三个属性分别为：site、url、alexa。
+②：<font color="red">data 用于定义属性</font>，实例中有三个属性分别为：site、url。
 
-③：<font color="red">methods用于定义函数，通过 return 来返回函数值。</font>
+③：<font color="red">methods用于定义方法（函数），通过 return 来返回函数值。</font>
 
 ==④：{{ }} 用于输出对象属性和函数返回值。==
 
@@ -83,12 +102,13 @@ $ npm install vue
 
 ⑥：值得注意的是只有当vue实例被创建时 data 中存在的属性才是响应式的，实时更新的。
 
-### 2. 基础起步：
+
+## 5.基础起步：
 
 <font color="red">数据绑定最常见的形式就是使用 {{...}}（双大括号）的文本插值。</font>
 =={{ }} 用于输出对象属性和函数返回值。==
 
-#### 1. 给标签插入文本值：
+### 1. 给标签插入文本值：
 
 ```html
 <div id="app">
@@ -129,7 +149,7 @@ var vm=new Vue({
 ![5](../img/vue_js_img/5.png)
 
 
-#### 2. 给标签插入html代码，并使其生效：
+### 2. 给标签插入html代码，并使其生效：
 
 >使用 v-html 指令用于输出 html 代码
 ```html
@@ -147,7 +167,7 @@ new Vue({
 </script>
 ```
 
-#### 3.样式属性绑定：v-bind指令
+### 3.属性绑定：v-bind指令
 
 v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等
 
@@ -161,7 +181,25 @@ v-bind 主要用于属性绑定，比方你的class属性，style属性，value�
 <a :href="url">...</a>
 ```
 
-##### 1. v-bind:class 绑定class属性,以动态地切换class
+#### 0. v-bind:href,绑定herf属性
+
+```html
+<div id="vue_det">
+    <a v-bind:href="web">baidu</a>  <!--绑定herf属性-->
+</div>
+
+<script type="text/javascript">
+
+    var vm = new Vue({
+        el: '#vue_det',   
+        data: {
+           web:"http:baidu.com"
+        }
+    })
+</script>
+```
+
+#### 1. v-bind:class 绑定class属性,以动态地切换class
 
 ==方式①：==
 
@@ -325,7 +363,7 @@ var vm= new Vue({
 
 ---
 
-##### 2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:
+#### 2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:
 
 <h3><font color="red">CSS属性名必须用驼峰命名法</font></h3>
 
@@ -396,7 +434,7 @@ var vm= new Vue({
 
 ---
 
-##### 3.v-bind:src绑定src属性:
+#### 3.v-bind:src绑定src属性:
 
 ```html
 <img class="box" v-bind:src="url" >
@@ -411,8 +449,26 @@ var vm= new Vue({
 </script>
 ```
 
+#### 4.v-bind:value 绑定表单的value值:
 
-### 3.指令：
+```html
+<div id="vue_det">
+    <input type="text" v-bind:value="val">  <!--绑定表单的value值-->
+</div>
+
+<script type="text/javascript">
+
+    var vm = new Vue({
+        el: '#vue_det',   
+        data: {
+           val:"job"
+        }
+    })
+</script>
+```
+
+
+## 6.指令：
 
 指令是带有 v- 前缀的特殊属性。
 指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。
@@ -425,7 +481,7 @@ var vm= new Vue({
 <font color="red">上面的href就是参数，通过v-bind指令把href的值与表达式url的值绑定。</font>
 
 
-#### 1.指令缩写：
+### 1.指令缩写：
 
 1. v-bind 缩写
 
@@ -451,9 +507,9 @@ var vm= new Vue({
 
 
 
-#### 2.条件语句：
+### 1.条件语句：
 
-##### 1.v-if 指令：
+#### 1.v-if 指令：
 
 ```html
 <div id="app">
@@ -475,7 +531,7 @@ var vm= new Vue({
 ==v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。==
 
 
-##### 2.v-else 指令：
+#### 2.v-else 指令：
 
 ```html
 <div id="app">
@@ -509,7 +565,7 @@ new Vue({
 ![7](../img/vue_js_img/7.png)
 
 
-##### 3.v-else-if 指令：
+#### 3.v-else-if 指令：
 
 ==用作 v-if 的 else-if 块。可以链式的多次使用,
 v-else 、v-else-if 必须跟在 v-if 或者 v-else-if之后。==
@@ -543,7 +599,7 @@ new Vue({
 ![8](../img/vue_js_img/8.png)
 
 
-##### 4.用key来复用if-else：
+#### 4.用key来复用if-else：
 
 ```html
 <div id="app">
@@ -598,9 +654,9 @@ var vm=new Vue({
 ---
 
 
-#### 3.循环语句：
+### 3.循环语句：
 
-##### 1.v-for 指令:
+#### 1.v-for 指令:
 
 ==v-for指令需要以 todo in todos 形式的写法,
 todos是数组,todo是数组中元素迭代的别名。==
@@ -749,11 +805,11 @@ el: '#app'
 ![13](../img/vue_js_img/13.png)
 
 
-#### 4.表单 双向数据绑定 v-model ：
+### 4.表单 双向数据绑定 v-model ：
 
 ==input 输入框中可以使用 v-model 指令来实现表单输入和应用状态之间的双向绑定：==
 
-##### 1.input 和 textarea 标签
+#### 1.input 和 textarea 标签
 ```html
 <div id="app">
         <p>input 元素：</p>
@@ -780,7 +836,7 @@ new Vue({
 ![15](../img/vue_js_img/15.png)
 
 
-##### 2.复选框：
+#### 2.复选框：
 
 ==单个复选框，绑定到布尔值：==
 
@@ -830,7 +886,7 @@ new Vue({
 ![24](../img/vue_js_img/24.png)
 
 
-##### 3.单选按钮：
+#### 3.单选按钮：
 
 ```html
 <div id="example-4">
@@ -856,7 +912,7 @@ new Vue({
 ![25](../img/vue_js_img/25.png)
 
 
-##### 4.下拉框：
+#### 4.下拉框：
 
 ==单选时：==
 
@@ -912,7 +968,7 @@ new Vue({
 ![27](../img/vue_js_img/27.png)
 
 
-##### 5.用v-for对下拉框选项进行修饰：
+#### 5.用v-for对下拉框选项进行修饰：
 
 ```html
 <div id="example-6">
@@ -944,7 +1000,7 @@ new Vue({
 ![28](../img/vue_js_img/28.png)
 
 
-##### 6.用v-bind对表单进行值绑定：
+#### 6.用v-bind对表单进行值绑定：
 
 ==1.单选按钮：==
 
@@ -978,7 +1034,7 @@ vm.toggle === 'yes'
 vm.toggle === 'no'
 ```
 
-##### 7.修饰符：
+#### 7.修饰符：
 
 ①：.lazy
 
@@ -1007,10 +1063,10 @@ vm.toggle === 'no'
 ---
 
 
-#### 5.事件监听 v-on:
+### 5.事件监听 v-on:
 
 
-##### 1.基础：
+#### 1.点击事件：
 
 ==使用 v-on 监听 DOM 事件，可以对用户的输入进行响应,触发时运行一些 JavaScript 代码。==
 
@@ -1108,7 +1164,7 @@ new Vue({
 ==':'与 '@ '对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
 
 
-##### 2.事件修饰符：
+#### 2.事件修饰符：
 
 **修饰符:是由点开头的指令后缀来表示的。**
 例如：
@@ -1145,7 +1201,7 @@ new Vue({
 ```
 
 
-##### 3.按键修饰符：
+#### 3.按键修饰符：
 
 ==Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：==
 
@@ -1181,7 +1237,7 @@ new Vue({
 
 ---
 
-#### 5.v-show
+### 5.v-show
 
 > v-show的用法与前面的v-if类似,根据条件展示元素
 
@@ -1222,9 +1278,9 @@ var vm=new Vue({
 
 ---
 
-### 4.计算属性 computed - 把繁琐的表达式从html页面抽出来。
+## 7.计算属性 computed - 把繁琐的表达式从html页面抽出来。
 
-#### 1.基础：
+### 1.基础：
 
 **计算属性的由来：**
 ```html
@@ -1266,7 +1322,7 @@ var vm=new Vue({
 ![14](../img/vue_js_img/14.png)
 
 
-#### 2.getter
+### 2.getter
 
 <font color="red">vue.js中计算属性默认只有 getter，因为是默认值所以我们也常常省略不写，如下代码：</font>
 
@@ -1317,7 +1373,7 @@ computed: {
 ```
 
 
-#### 3.settter
+### 3.settter
 
 ==当手动修改计算属性的值时，就会触发setter函数，执行函数的自定义操作。
 同时也会触发getter函数。其执行顺序是 setter -> getter==
@@ -1416,10 +1472,10 @@ watch:{
 ---
 
 
-### 6.组件：
+## 8.组件：
 
 
-#### 1.全局组件与组件基础：
+### 1.全局组件与组件基础：
 
 
 ==通过 Vue.component({...}) 全局注册的,就叫全局组件。==
@@ -1500,7 +1556,7 @@ Vue.component('button-counter', {
 
 
 
-#### 2.局部组件：
+### 2.局部组件：
 
 ==局部组件，直接在创建Vue实例里面注册。==
 
@@ -1543,7 +1599,7 @@ Vue.component('button-counter', {
 3. data属性必须是一个函数。
 
 
-#### 3.Prop：
+### 3.Prop：
 
 Prop 是你可以在组件上注册的一些自定义特性。**当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个类似的data属性。**
 
@@ -1551,7 +1607,7 @@ Prop 是你可以在组件上注册的一些自定义特性。**当一个值传�
 <font color="blue">注意: prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。</font>
 
 
-##### 1.Prop静态传递数据
+#### 1.Prop静态传递数据
 
 ```html
 <div id="app1">
@@ -1597,7 +1653,7 @@ new Vue({
 ![31](../img/vue_js_img/31.png)
 
 
-##### 2.Prop动态传递数据：
+#### 2.Prop动态传递数据：
 
 用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件。
 
@@ -1627,3 +1683,7 @@ new Vue({
 ```
 
 ![32](../img/vue_js_img/32.png)
+
+
+#### 3.Prop验证：
+
