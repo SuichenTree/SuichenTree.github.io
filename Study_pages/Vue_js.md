@@ -1474,29 +1474,31 @@ watch:{
 
 ## 8.组件：
 
-
 ### 1.全局组件与组件基础：
 
 
 ==通过 Vue.component({...}) 全局注册的,就叫全局组件。==
-==组件是可复用的 Vue 实例,且带有一个名字。==
+==组件是可复用的 Vue 实例对象,且带有一个名字。==
 
 > ①基础例子：
 
 ```html
 <body>
   <div id="components-demo">
+
+      <!--button-counter 标签是下面写好的组件-->
     <button-counter></button-counter>
   </div>
  
 <script>
 // 定义一个名为 button-counter 的新组件
 Vue.component('button-counter', {
-  data: function () {
+  data: function () {  //初始化组件的内容，一开始组件内容的count为0
     return {
       count: 0
     }
   },
+  //template是模板
   template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
 })
 
@@ -1687,3 +1689,53 @@ new Vue({
 
 #### 3.Prop验证：
 
+
+## 9.生命周期：
+
+<font color="red">在vue对象或组件的整个生命周期中，都有对应的函数来表示对象或组件的当前状态。每当组件或对象状态进行变化时，会触发这些函数。</font>
+
+```html
+<div id="vue_det">
+    <span>{{val}}</span>
+    <button v-on:click="change()">更改</button>
+</div>
+
+<script type="text/javascript">
+
+    var vm = new Vue({
+        el: '#vue_det',   
+        data: {
+           val:"job"
+        },
+        methods:{
+            change:function(){
+                this.val="tom";
+            }
+        },
+        beforeCreate:function(){
+            alert("组件或对象实例化前执行的beforeCreate函数");
+        },
+        created:function(){
+            alert("组件或对象实例化后执行的created函数，但页面还未显示");
+        },
+        beforeMount:function(){
+            alert("组件或对象加载前执行的beforeMount函数，但页面还未显示");
+        },
+        mounted:function(){
+            alert("组件或对象加载后执行的mounted函数，页面已经显示");
+        },
+        beforeUpdate:function(){
+            alert("组件或对象更新前执行的beforeUpdate函数，页面已经显示");
+        },
+        updated:function(){
+            alert("组件或对象更新后执行的updated函数，页面已经显示");
+        },
+        beforeDestory:function(){
+            alert("组件或对象销毁前执行的beforeDestory函数");
+        },
+        destoryed:function(){
+            alert("组件或对象销毁后执行的destoryed函数");
+        }
+    })
+</script>
+```
