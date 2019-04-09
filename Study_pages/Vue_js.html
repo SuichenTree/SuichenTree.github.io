@@ -217,7 +217,6 @@ code.language-yaml {
 <ul>
 <li><a href="#1-%E7%AE%80%E4%BB%8B">1. 简介</a></li>
 <li><a href="#2-%E5%BC%95%E7%94%A8">2. 引用：</a></li>
-<li><a href="#3-%E5%AE%9E%E4%BE%8B%E5%8C%96vue%E5%AF%B9%E8%B1%A1">3. 实例化Vue对象：</a></li>
 <li><a href="#3-%E4%BD%BF%E7%94%A8">3. 使用：</a>
 <ul>
 <li><a href="#1-%E5%88%9B%E5%BB%BAvue%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1">1. 创建vue的实例对象：</a></li>
@@ -287,7 +286,6 @@ code.language-yaml {
 <ul>
 <li><a href="#1prop%E9%9D%99%E6%80%81%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE">1.Prop静态传递数据</a></li>
 <li><a href="#2prop%E5%8A%A8%E6%80%81%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE">2.Prop动态传递数据：</a></li>
-<li><a href="#3prop%E9%AA%8C%E8%AF%81">3.Prop验证：</a></li>
 </ul>
 </li>
 </ul>
@@ -324,50 +322,7 @@ Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方�
 <p>在用 Vue 构建大型应用时推荐使用 NPM 安装。NPM 能很好地和诸如 webpack 或 Browserify 模块打包器配合使用。同时 Vue 也提供配套工具来开发单文件组件。</p>
 <pre data-role="codeBlock" data-info="" class="language-"><code># &#x6700;&#x65B0;&#x7A33;&#x5B9A;&#x7248;
 $ npm install vue
-</code></pre><h2 class="mume-header" id="3-%E5%AE%9E%E4%BE%8B%E5%8C%96vue%E5%AF%B9%E8%B1%A1">3. 实例化Vue对象：</h2>
-
-<p><font color="blue">先引用vue的js文件.</font></p>
-<pre data-role="codeBlock" data-info="html" class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>UTF-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>viewport<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>width=device-width, initial-scale=1.0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ie=edge<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Document<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>./vue.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-    <span class="token comment">&lt;!--引入vue的js文件--></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>vue_det<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>site : {{site}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>    
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span>url : {{url}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript">
-    <span class="token comment">//创建vue的实例化对象</span>
-    <span class="token keyword">var</span> vm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-        el<span class="token punctuation">:</span> <span class="token string">'#vue_det'</span><span class="token punctuation">,</span>   <span class="token comment">//el的值表示与之绑定的标签id，例如：&lt;div id="vue_det"></span>
-        data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
-            site<span class="token punctuation">:</span> <span class="token string">"菜鸟教程"</span><span class="token punctuation">,</span>   <span class="token comment">//对于该实例对象对于的标签的数据绑定。</span>
-            url<span class="token punctuation">:</span> <span class="token string">"www.runoob.com"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
-</pre><p><img src="../img/vue_js_img/33.png" alt="33"></p>
-<h3>
-<font color="red">
-PS:
-<ol>
-<li>el: element 对于的是与该vue对象绑定的根容器标签的&quot;id&quot;或&quot;class&quot;等.</li>
-<li>data: 该对象的数据域，存储数据的区域。</li>
-<li>{{ }} 显示对应的数据对象上的值或对于函数的返回值。</li>
-</ol>
-</font>
-</h3>
-<h2 class="mume-header" id="3-%E4%BD%BF%E7%94%A8">3. 使用：</h2>
+</code></pre><h2 class="mume-header" id="3-%E4%BD%BF%E7%94%A8">3. 使用：</h2>
 
 <p><font color="red">PS:先引用vue的js文件.</font></p>
 <h3 class="mume-header" id="1-%E5%88%9B%E5%BB%BAvue%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1">1. 创建vue的实例对象：</h3>
@@ -1612,8 +1567,6 @@ Vue<span class="token punctuation">.</span><span class="token function">componen
 <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 </pre><p><img src="../img/vue_js_img/32.png" alt="32"></p>
-<h5 class="mume-header" id="3prop%E9%AA%8C%E8%AF%81">3.Prop验证：</h5>
-
 
       </div>
       
