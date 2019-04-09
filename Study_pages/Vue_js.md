@@ -1417,10 +1417,16 @@ watch:{
 
 
 ### 6.组件：
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 ### 1.全局组件与组件基础：
 =======
+
+#### 1.全局组件与组件基础：
+>>>>>>> parent of bb4e05f... update
+=======
+
 
 #### 1.全局组件与组件基础：
 >>>>>>> parent of bb4e05f... update
@@ -1635,6 +1641,7 @@ new Vue({
 
 ![32](../img/vue_js_img/32.png)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 #### 3.Prop验证：
@@ -1689,5 +1696,7 @@ new Vue({
     })
 </script>
 ```
+=======
+>>>>>>> parent of bb4e05f... update
 =======
 >>>>>>> parent of bb4e05f... update
