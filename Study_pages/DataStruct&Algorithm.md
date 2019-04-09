@@ -323,9 +323,8 @@ void deletelinklist(linklist *head,int k){
 
 ![12](../img/DataStruct&Algorithm_img/12.png)
 
+### 1.栈的顺序存储结构-顺序栈：
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 <font color="red">
 
 注意：
@@ -2076,6 +2075,7 @@ ps：
 
 
 <h4>邻接矩阵的方式，进行深度遍历：</h4>
+
 ```c
 /**
  * 深度度优先搜索算法
@@ -2105,9 +2105,11 @@ ps：
 
 
 #### 2.广度优先搜索（BFS）：
+
 >从图的某一结点出发，首先依次访问该结点的所有邻接顶点 Vi1, Vi2, …, Vin,再按这些顶点被访问的先后次序依次访问与它们相邻接的所有未被访问的顶点，重复此过程，直至所有顶点均被访问为止。
 
 ![62](../img/DataStruct&Algorithm_img/62.png)
+
 
 ```c
 #include <iostream>
@@ -2467,8 +2469,8 @@ mid=low+(high-low)*(key-a[low])/(a[high]-a[low]);
 >③：若key < t->data,则进一步按先前的步骤查找左子树。 
 
 <h4>②查找算法：</h4>
-```c
 
+```c
 //二叉排序树的存储结构
 typedef struct BSTNode{
 	int data;
@@ -3032,7 +3034,3 @@ public static void main(String[] args) {
 >将所有待比较数值（正整数）统一为同样的数位长度，数位较短的数前面补零。然后，从最低位开始（例如个位开始），依次进行一次排序。这样从最低位排序一直到最高位排序完成以后，数列就变成一个有序序列。
 
 ![121](../img/DataStruct&Algorithm_img/121.png)
-=======
->>>>>>> parent of bb4e05f... update
-=======
->>>>>>> parent of bb4e05f... update
