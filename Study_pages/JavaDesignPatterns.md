@@ -102,8 +102,139 @@ public class Singleton {
 
 ---
 
-# 2.简单工程模式
+# 2.简单工厂模式
 
 简单工厂模式：定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。
 
 ![1](../img/JavaDesignPatterns_img/1.png)
+
+>简单工厂模式的使用方法：
+>①：编写一个产品类接口。
+>②：编写多个继承产品类的具体产品类。
+>③：编写工厂类，根据传入的参数不同，生产不同的产品。
+
+```java
+
+public interface Animal {
+	public void say();
+}
+
+---
+
+public class Cat implements Animal {
+	@Override
+	public void say() {
+		System.out.println("喵喵");
+	}
+}
+
+---
+
+public class Dog implements Animal {
+	@Override
+	public void say() {
+		System.out.println("旺旺");
+	}
+}
+
+---
+
+public class Factory {
+	//创建工厂类，通过输入的参数不同，生产不同的类实例
+	public static Animal getAnimal(String str) {
+		Animal animal=null;
+		if(str.equals("Cat")) {
+			animal=new Cat();				//父类引用指向子类对象
+		}else if(str.equals("Dog")) {
+			animal=new Dog();
+		}
+		return animal;
+	}
+}
+
+---
+
+public class Test {
+	public static void main(String[] args) {
+		//根据传入的数据不同，创建不同的类实例
+		Animal a=Factory.getAnimal("Cat");
+		a.say();
+		Animal b=Factory.getAnimal("Dog");
+		b.say();
+	}
+}
+
+```
+
+# 3.工厂方法模式
+
+简单工厂模式的缺点：==系统扩展不灵活，工厂类过于庞大==。当系统中需要引入新产品时，由于通过所传入参数的不同来创建不同的产品，这必定要修改工厂类的源代码，这违反了“开闭原则”。如何实现增加新产品而不影响已有代码？工厂方法模式应运而生。
+
+<font color="red">工厂方法模式不再提供一个统一的工厂类来创建所有的产品对象，而是提供一个抽象工厂接口，由其实现类来具体实现不同的工厂方法。与简单工厂模式相比，最重要的区别是引入了抽象工厂，抽象工厂可以是接口，也可以是抽象类或者具体类，</font>
+
+<font color="blue">工厂方法模式：有四个类，抽象工厂类，抽象工厂实现类，抽象产品类，抽象产品实现类。不再是由一个工厂类去实例化所有的具体产品，而是由不同的抽象工厂实现类去实例化不同的具体产品。</font>
+
+![2](../img/JavaDesignPatterns_img/2.png)
+
+```java
+//抽象产品类
+public interface Animal {
+	public void say();
+}
+//抽象工厂类
+public interface Factory {
+	public Animal createAnimal();
+}
+//具体产品类
+public class Cat implements Animal {
+	@Override
+	public void say() {
+		System.out.println("喵喵");
+	}
+}
+//具体产品类
+public class Dog implements Animal {
+	@Override
+	public void say() {
+		System.out.println("旺旺");
+	}
+}
+//具体工厂类
+public class CatFactory implements Factory{
+	//实现抽象工厂类，生产某个具体的产品
+	@Override
+	public Animal createAnimal() {
+		return new Cat();
+	}
+}
+//具体产品类
+public class DogFactory implements Factory{
+	//实现抽象工厂类，生产某个具体的产品
+	@Override
+	public Animal createAnimal() {
+		return new Dog();
+	}
+}
+//test
+public class Test {
+	public static void main(String[] args) {
+		//创建具体产品的工厂类
+		Factory cf=new CatFactory();
+		//通过该类创建某个具体的产品，并用父类引用指向子类对象
+		Animal a=cf.createAnimal();
+		a.say();
+		
+		Factory df=new DogFactory();
+		Animal b=df.createAnimal();
+		b.say();
+	}
+}
+```
+
+>总结：
+> 1.优点：在系统中加入新产品时，无须修改抽象工厂和抽象产品提供的接口，无须修改其他的具体工厂和具体产品，而只要添加一个具体工厂和具体产品就可以了。系统的可扩展性也就变得非常好，完全符合“开闭原则”。
+> 2.缺点：在添加新产品时，需要编写新的具体产品类，和与之对应的具体工厂类，系统中类的个数将成对增加。
+
+---
+
+# 4.抽象工厂模式
