@@ -8,7 +8,7 @@
 ## 在markdown中打出标签：
 常用转义字符表为：
 
-![转义字符表](../img/markdown_1.png)
+![转义字符表](../img/markdown_img/markdown_1.png)
 
 
 ## 标题:

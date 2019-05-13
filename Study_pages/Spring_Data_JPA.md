@@ -13,7 +13,7 @@
 
 <font color="blue">JPA规范的出现，其目的是统一各种ORM框架的规范，包括著名的Hibernate、TopLink等。当开发者面向JPA规范的接口，但底层的JPA实现可以任意切换：觉得Hibernate好的，可以选择Hibernate的JPA实现；觉得TopLink好的，可以选择TopLink的JPA实现……这样开发者可以避免为使用Hibernate学习一套ORM框架，为使用TopLink又要再学习一套ORM框架。</font>
 
-![spring_data_jpa_1.png](../img/spring_data_jpa_1.png)
+![spring_data_jpa_1.png](../img/springdata_img/spring_data_jpa_1.png)
 
 <br/>
 
@@ -50,7 +50,7 @@ JPA当问数据库主要工作
 2. 虽然ORM框架都实现了JPA规范，但是在不同ORM框架之间切换是需要编写的代码有一些差异，而<font color="red">通过使用Spring Data Jpa能够方便大家在不同的ORM框架中间进行切换而不要更改代码。并且Spring Data Jpa对Repository层封装的很好，可以省去不少的麻烦。</font>
 
 
-![spring_data_jpa_2.png](../img/spring_data_jpa_2.png)
+![spring_data_jpa_2.png](../img/springdata_img/spring_data_jpa_2.png)
 
 
 
@@ -439,9 +439,9 @@ public interface Repository<T, ID extends Serializable> {
 
 <h3><font color="red">Spring data jpa支持的关键字：</font></h3>
 
-![spring_data_jpa_3.png](../img/spring_data_jpa_3.png)
+![spring_data_jpa_3.png](../img/springdata_img/spring_data_jpa_3.png)
 
-![spring_data_jpa_4.png](../img/spring_data_jpa_4.png)
+![spring_data_jpa_4.png](../img/springdata_img/spring_data_jpa_4.png)
 
 
 ### 1.使用关键字的方式定义方法名：
@@ -561,7 +561,7 @@ public interface PersonRepsotory extends Repository<Person, Integer>{
 ### 3.使用 @Query,@Modifying,@Transactional注解来实现update, delete（springdata 的jpql语句不支持 insert，但可以用sql的方式编写insert）：
 
 
-![spring_data_img_5.png](../img/spring_data_jpa_5.png)
+![spring_data_img_5.png](../img/springdata_img/spring_data_jpa_5.png)
 
 <br/>
 
