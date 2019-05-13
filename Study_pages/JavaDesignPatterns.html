@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.12\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.13\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
       
       
       
@@ -443,7 +443,7 @@ pre[data-line] .line-highlight[data-end]:after {
 		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-<span class="token comment">//&#x5177;&#x4F53;&#x4EA7;&#x54C1;&#x7C7B;</span>
+<span class="token comment">//&#x5177;&#x4F53;&#x5DE5;&#x5382;&#x7C7B;</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DogFactory</span> <span class="token keyword">implements</span> <span class="token class-name">Factory</span><span class="token punctuation">{</span>
 	<span class="token comment">//&#x5B9E;&#x73B0;&#x62BD;&#x8C61;&#x5DE5;&#x5382;&#x7C7B;&#xFF0C;&#x751F;&#x4EA7;&#x67D0;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x4EA7;&#x54C1;</span>
 	<span class="token annotation punctuation">@Override</span>
@@ -473,6 +473,58 @@ pre[data-line] .line-highlight[data-end]:after {
 <hr>
 <h1 class="mume-header" id="4%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F">4.&#x62BD;&#x8C61;&#x5DE5;&#x5382;&#x6A21;&#x5F0F;</h1>
 
+<p>&#x62BD;&#x8C61;&#x5DE5;&#x5382;&#x6A21;&#x5F0F;&#x4E3A;&#x521B;&#x5EFA;&#x4E00;&#x7EC4;&#x5BF9;&#x8C61;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;<mark>&#x4E0E;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x6A21;&#x5F0F;&#x76F8;&#x6BD4;&#xFF0C;&#x62BD;&#x8C61;&#x5DE5;&#x5382;&#x6A21;&#x5F0F;&#x4E2D;&#x7684;&#x5177;&#x4F53;&#x5DE5;&#x5382;&#x4E0D;&#x53EA;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x79CD;&#x4EA7;&#x54C1;&#xFF0C;&#x5B83;&#x8D1F;&#x8D23;&#x521B;&#x5EFA;&#x4E00;&#x7CFB;&#x5217;&#x4EA7;&#x54C1;&#x3002;</mark> &#x6BCF;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x5DE5;&#x5382;&#x90FD;&#x63D0;&#x4F9B;&#x4E86;&#x591A;&#x4E2A;&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x4EA7;&#x751F;&#x591A;&#x79CD;&#x4E0D;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x4EA7;&#x54C1;&#x3002;</p>
+<p><img src="../img/JavaDesignPatterns_img/3.png" alt="3"></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token comment">//&#x62BD;&#x8C61;&#x52A8;&#x7269;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Animal</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5177;&#x4F53;&#x52A8;&#x7269;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Cat</span> <span class="token keyword">implements</span> <span class="token class-name">Animal</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x55B5;&#x55B5;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5177;&#x4F53;&#x52A8;&#x7269;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Dog</span> <span class="token keyword">implements</span> <span class="token class-name">Animal</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x65FA;&#x65FA;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x62BD;&#x8C61;&#x5DE5;&#x5382;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Factory</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token class-name">Animal</span> <span class="token function">createCat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token class-name">Animal</span> <span class="token function">createDog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5177;&#x4F53;&#x5DE5;&#x5382;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> concentrateFactory <span class="token keyword">implements</span> <span class="token class-name">Factory</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token class-name">Animal</span> <span class="token function">createCat</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Cat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token class-name">Animal</span> <span class="token function">createDog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Dog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x6D4B;&#x8BD5;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">Factory</span> factory<span class="token operator">=</span><span class="token keyword">new</span> <span class="token function">concentrateFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">Animal</span> cat <span class="token operator">=</span> factory<span class="token punctuation">.</span><span class="token function">createCat</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">Animal</span> dog <span class="token operator">=</span> factory<span class="token punctuation">.</span><span class="token function">createDog</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cat<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		dog<span class="token punctuation">.</span><span class="token function">say</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre><blockquote>
+<p>&#x603B;&#x7ED3;&#xFF1A;<br>
+1.&#x4F18;&#x70B9;&#xFF1A;&#x589E;&#x52A0;&#x65B0;&#x7684;&#x4EA7;&#x54C1;&#x5F88;&#x65B9;&#x4FBF;&#xFF0C;&#x65E0;&#x987B;&#x4FEE;&#x6539;&#x5DF2;&#x6709;&#x7CFB;&#x7EDF;&#x7ED3;&#x6784;&#x3002;<br>
+2.&#x7F3A;&#x70B9;&#xFF1A;&#x589E;&#x52A0;&#x65B0;&#x7684;&#x4EA7;&#x54C1;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x9EBB;&#x70E6;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x539F;&#x6709;&#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x8F83;&#x5927;&#x7684;&#x4FEE;&#x6539;&#xFF0C;&#x751A;&#x81F3;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x63A5;&#x53E3;&#x5C42;&#x4EE3;&#x7801;&#x3002;</p>
+</blockquote>
 
       </div>
       

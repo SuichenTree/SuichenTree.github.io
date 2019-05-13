@@ -207,7 +207,7 @@ public class CatFactory implements Factory{
 		return new Cat();
 	}
 }
-//具体产品类
+//具体工厂类
 public class DogFactory implements Factory{
 	//实现抽象工厂类，生产某个具体的产品
 	@Override
@@ -238,3 +238,59 @@ public class Test {
 ---
 
 # 4.抽象工厂模式
+
+抽象工厂模式为创建一组对象提供了一种解决方案。==与工厂方法模式相比，抽象工厂模式中的具体工厂不只是创建一种产品，它负责创建一系列产品。== 每一个具体工厂都提供了多个方法用于产生多种不同类型的产品。
+
+![3](../img/JavaDesignPatterns_img/3.png)
+
+```java
+//抽象动物类
+public interface Animal {
+	public void say();
+}
+//具体动物类
+public class Cat implements Animal {
+	@Override
+	public void say() {
+		System.out.println("喵喵");
+	}
+}
+//具体动物类
+public class Dog implements Animal {
+	@Override
+	public void say() {
+		System.out.println("旺旺");
+	}
+}
+//抽象工厂类
+public interface Factory {
+	public Animal createCat();
+	public Animal createDog();
+}
+//具体工厂类
+public class concentrateFactory implements Factory {
+	@Override
+	public Animal createCat() {
+		return new Cat();
+	}
+	@Override
+	public Animal createDog() {
+		return new Dog();
+	}
+}
+//测试类
+public class Test {
+	public static void main(String[] args) {
+		Factory factory=new concentrateFactory();
+		Animal cat = factory.createCat();
+		Animal dog = factory.createDog();
+		cat.say();
+		dog.say();
+	}
+}
+
+```
+
+>总结：
+> 1.优点：增加新的产品很方便，无须修改已有系统结构。
+> 2.缺点：增加新的产品类的方法麻烦，需要对原有系统进行较大的修改，甚至需要修改接口层代码。
