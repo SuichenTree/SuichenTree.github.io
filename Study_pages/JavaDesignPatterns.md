@@ -102,7 +102,7 @@ public class Singleton {
 
 ---
 
-# 2.简单工厂模式
+# 2.简单工厂模式-Simple Factory Pattern
 
 简单工厂模式：定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。
 
@@ -166,7 +166,7 @@ public class Test {
 
 ```
 
-# 3.工厂方法模式
+# 3.工厂方法模式-Factory Method Pattern
 
 简单工厂模式的缺点：==系统扩展不灵活，工厂类过于庞大==。当系统中需要引入新产品时，由于通过所传入参数的不同来创建不同的产品，这必定要修改工厂类的源代码，这违反了“开闭原则”。如何实现增加新产品而不影响已有代码？工厂方法模式应运而生。
 
@@ -237,7 +237,7 @@ public class Test {
 
 ---
 
-# 4.抽象工厂模式
+# 4.抽象工厂模式-Abstract Factory Pattern
 
 抽象工厂模式为创建一组对象提供了一种解决方案。==与工厂方法模式相比，抽象工厂模式中的具体工厂不只是创建一种产品，它负责创建一系列产品。== 每一个具体工厂都提供了多个方法用于产生多种不同类型的产品。
 
@@ -294,3 +294,193 @@ public class Test {
 >总结：
 > 1.优点：增加新的产品很方便，无须修改已有系统结构。
 > 2.缺点：增加新的产品类的方法麻烦，需要对原有系统进行较大的修改，甚至需要修改接口层代码。
+
+---
+
+# 5.原型模式（克隆模式）-Prototype Pattern
+
+==原型模式：可以通过一个原型对象克隆出多个一模一样的对象。== 创建克隆对象的工厂就是原型类自身。
+
+<font color="red">
+
+1.注意的是通过克隆方法所创建的对象是全新的对象，它们在内存中拥有新的地址。
+2.注意的是被克隆的Java类必须实现一个标识接口Cloneable，表示这个Java类支持被复制。如果一个类没有实现这个接口但是调用了clone()方法，Java编译器将抛出一个CloneNotSupportedException异常。
+
+</font>
+
+> 原型模式分为浅克隆与深克隆方式。
+>1. 浅克隆:若被复制对象是基本数据类型，则复制一份给克隆对象。若是引用数据类型，则把地址复制一份给克隆对象，使原型对象和克隆对象指向相同的内存地址。
+>2. 深克隆:无论原型对象的成员变量是值类型还是引用类型，都将复制一份给克隆对象。除了原型对象本身被复制外，原型对象包含的所有成员变量也将复制。
+
+![4](../img/JavaDesignPatterns_img/4.png)
+![5](../img/JavaDesignPatterns_img/5.png)
+
+
+①：浅克隆：
+
+```java
+public class Person implements Cloneable {
+	private String name;
+	private int age;
+	
+	//当clone()方法出现问题，会出现CloneNotSupportedException异常
+	public Person Clone() throws CloneNotSupportedException{
+		Object object=super.clone();
+		return (Person)object;
+	}
+}
+```
+
+①：深克隆：
+在Java语言中，如果需要实现深克隆，有两个方法。①：对原型对象附属引用类型也进行clone方法。 ②：可以通过序列化(Serialization)等方式来实现，==即原型类以及附属的引用类型需要实现Serializable接口。==
+
+```java
+
+//第一种方式
+public class Person implements Cloneable {
+	private String name;
+	private int age;
+	private Child child; 
+	
+	public Object DeepClone() throws CloneNotSupportedException{
+		Object obj = super.clone();  //直接调用object对象的clone()方法！
+        Person person = (Person) obj;
+        person.child = (Child)this.child.clone(); //把属性类child也进行克隆
+        return obj;
+	}
+	
+}
+
+class Child implements Cloneable{
+	private String childname;
+	
+	public void brith() {
+		System.out.println("小孩子的生日");
+	}
+	protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+
+
+//第二种方式
+public class Person implements Serializable {
+	private String name;
+	private int age;
+	private Child child; 
+	
+	public Person DeepClone() throws IOException,ClassNotFoundException{
+		/* 写入当前对象的二进制流 */ 
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+		ObjectOutputStream oos = new ObjectOutputStream(bos); 
+		oos.writeObject(this); 
+		/* 读出二进制流产生的新对象 */ 
+		ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray()); 
+		ObjectInputStream ois = new ObjectInputStream(bis); 
+		return (Person) ois.readObject(); 
+	}
+}
+
+class Child implements Serializable{
+	private String childname;
+	public void brith() {
+		System.out.println("小孩子需要过生日");
+	}
+}
+
+```
+
+# 6.建造者模式-Builder Pattern
+
+==建造者模式：将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同的表现。==
+建造者模式一步一步创建一个复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。
+
+![6](../img/JavaDesignPatterns_img/6.png)
+
+>在建造者模式中存在以下4个角色：
+>1. builder:==类似于抽象工厂==。为创建一个产品Product对象的各个部件指定抽象接口，一般声明两类方法，一是buildPartX()，它们用于创建复杂对象的各个部件；另一方法是getProduct()，它们用于返回复杂对象。
+>2. ConcreteBuilder:==类似于具体工厂==。实现了Builder接口，实现各个方法，也可以提供一个方法返回创建好的复杂产品对象。
+>3. Director:==类似于工厂里的工程师==。它负责安排复杂产品的建造次序。
+>4. Product:是产品，包含多个组成部件。
+
+```java
+
+//Product，把房子当作产品
+public class Product {
+	private String basic;//地基
+    private String wall;//墙
+    private String roofed;//楼顶
+    
+	public String getBasic() {
+		return basic;
+	}
+	public void setBasic(String basic) {
+		this.basic = basic;
+	}
+	public String getWall() {
+		return wall;
+	}
+	public void setWall(String wall) {
+		this.wall = wall;
+	}
+	public String getRoofed() {
+		return roofed;
+	}
+	public void setRoofed(String roofed) {
+		this.roofed = roofed;
+	}
+	@Override
+	public String toString() {
+		return "Product [basic=" + basic + ", wall=" + wall + ", roofed=" + roofed + "]";
+	}
+}
+
+//builder
+public interface Build {
+	public void build_basic();//建造地基
+	public void build_wall();
+	public void build_roofed();
+	public Product getProduct(); //返回具体产品
+}
+
+//ConcreteBuilder
+public class ConcreteBuilder implements Build {
+	private Product p;
+
+	@Override
+	public void build_basic() {
+		p.setBasic("建造地基");
+	}
+
+	@Override
+	public void build_wall() {
+		p.setWall("建造围墙");
+	}
+
+	@Override
+	public void build_roofed() {
+		p.setRoofed("建造屋顶");
+	}
+
+	@Override
+	public Product getProduct() {
+		return p;
+	}
+}
+
+//Director
+public class Director {
+	private Build builder;
+	public Product construct() {
+		builder.build_basic();   //先建造地基
+		builder.build_roofed();  //再建造屋顶
+		builder.build_wall();	 //再建造围墙
+		return builder.getProduct();
+	}
+}
+
+```
+
+>建造者模式优点缺点：
+>1. 优点：可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中。
+>2. 缺点：①：建造者模式创建的产品一般有较多的共同点，如果产品之间的差异性很大，例如很多组成部分都不相同，不适合使用建造者模式。②：同样，如果产品的内部变化复杂会导致需要定义很多具体建造者类来实现这种变化，导致系统变得很庞大。
