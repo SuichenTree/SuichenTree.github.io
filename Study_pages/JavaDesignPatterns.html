@@ -262,7 +262,7 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview   ">
       <ul>
 <li><a href="#java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">Java&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;</a></li>
-<li><a href="#1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F">1. &#x5355;&#x4F8B;&#x6A21;&#x5F0F;</a>
+<li><a href="#1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern-%E7%94%A8%E4%BA%8E%E7%A1%AE%E4%BF%9D%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%94%AF%E4%B8%80%E6%80%A7">1. &#x5355;&#x4F8B;&#x6A21;&#x5F0F;-Singleton Pattern---&#x7528;&#x4E8E;&#x786E;&#x4FDD;&#x5BF9;&#x8C61;&#x7684;&#x552F;&#x4E00;&#x6027;</a>
 <ul>
 <li><a href="#1%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%86%99%E6%B3%95">1.&#x997F;&#x6C49;&#x5F0F;&#x5199;&#x6CD5;&#xFF1A;</a></li>
 <li><a href="#2%E6%87%92%E6%B1%89%E5%BC%8F%E5%86%99%E6%B3%95%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8">2.&#x61D2;&#x6C49;&#x5F0F;&#x5199;&#x6CD5;&#xFF08;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;&#xFF09;&#xFF1A;</a></li>
@@ -272,13 +272,17 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#2%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-simple-factory-pattern">2.&#x7B80;&#x5355;&#x5DE5;&#x5382;&#x6A21;&#x5F0F;-Simple Factory Pattern</a></li>
 <li><a href="#3%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F-factory-method-pattern">3.&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x6A21;&#x5F0F;-Factory Method Pattern</a></li>
 <li><a href="#4%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-abstract-factory-pattern">4.&#x62BD;&#x8C61;&#x5DE5;&#x5382;&#x6A21;&#x5F0F;-Abstract Factory Pattern</a></li>
-<li><a href="#5%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%E5%85%8B%E9%9A%86%E6%A8%A1%E5%BC%8F-prototype-pattern">5.&#x539F;&#x578B;&#x6A21;&#x5F0F;&#xFF08;&#x514B;&#x9686;&#x6A21;&#x5F0F;&#xFF09;-Prototype Pattern</a></li>
-<li><a href="#6%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F-builder-pattern">6.&#x5EFA;&#x9020;&#x8005;&#x6A21;&#x5F0F;-Builder Pattern</a></li>
-<li><a href="#7%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-adapter-pattern">7.&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;-Adapter Pattern</a>
+<li><a href="#5%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%E5%85%8B%E9%9A%86%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%8B%E9%9A%86-prototype-pattern">5.&#x539F;&#x578B;&#x6A21;&#x5F0F;&#xFF08;&#x514B;&#x9686;&#x6A21;&#x5F0F;,&#x7528;&#x4E8E;&#x5BF9;&#x8C61;&#x7684;&#x514B;&#x9686;&#xFF09;-Prototype Pattern</a></li>
+<li><a href="#6%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E5%A4%8D%E6%9D%82%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%84%E8%A3%85%E4%B8%8E%E5%88%9B%E5%BB%BA-builder-pattern">6.&#x5EFA;&#x9020;&#x8005;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x590D;&#x6742;&#x5BF9;&#x8C61;&#x7684;&#x7EC4;&#x88C5;&#x4E0E;&#x521B;&#x5EFA;&#xFF09;-Builder Pattern</a></li>
+<li><a href="#7%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%8F%E8%B0%83-adapter-pattern">7.&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x4E0D;&#x517C;&#x5BB9;&#x7ED3;&#x6784;&#x7684;&#x534F;&#x8C03;&#xFF09;-Adapter Pattern</a>
 <ul>
-<li><a href="#1%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8">1.&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;</a></li>
+<li><a href="#1%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8">1.&#x7C7B;&#x9002;&#x914D;&#x5668;</a></li>
+<li><a href="#2%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8">2.&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;</a></li>
 </ul>
 </li>
+<li><a href="#8%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F-bridge-pattern">8.&#x6865;&#x63A5;&#x6A21;&#x5F0F;-Bridge Pattern</a></li>
+<li><a href="#9%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84%E7%9A%84%E5%A4%84%E7%90%86-composite-pattern">9.&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x7684;&#x5904;&#x7406;&#xFF09;-Composite Pattern</a></li>
+<li><a href="#10%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E6%89%A9%E5%B1%95%E5%AF%B9%E8%B1%A1%E5%8A%9F%E8%83%BD-decorator-pattern">10.&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x6269;&#x5C55;&#x5BF9;&#x8C61;&#x529F;&#x80FD;&#xFF09;-Decorator Pattern</a></li>
 </ul>
 <h1 class="mume-header" id="java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">Java&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;</h1>
 
@@ -289,7 +293,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>&#x5B66;&#x4E60;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x7684;&#x597D;&#x5904;&#xFF1F;<br>
 &#x8BA9;&#x4F60;&#x77E5;&#x9053;&#xFF0C;&#x5982;&#x4F55;&#x5C06;&#x4EE3;&#x7801;&#x5206;&#x6563;&#x5728;&#x51E0;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7C7B;&#x4E2D;&#xFF1F;&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x6709;&#x201C;&#x63A5;&#x53E3;&#x201D;&#xFF1F;&#x4EC0;&#x4E48;&#x662F;&#x5BF9;&#x62BD;&#x8C61;&#x7F16;&#x7A0B;&#xFF1F;&#x4F55;&#x65F6;&#x4E0D;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x7EE7;&#x627F;&#xFF1F;&#x5982;&#x679C;&#x4E0D;&#x4FEE;&#x6539;&#x6E90;&#x4EE3;&#x7801;&#x589E;&#x52A0;&#x65B0;&#x529F;&#x80FD;&#xFF1F;&#x540C;&#x65F6;&#x8FD8;&#x8BA9;&#x4F60;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x5730;&#x9605;&#x8BFB;&#x548C;&#x7406;&#x89E3;&#x73B0;&#x6709;&#x7C7B;&#x5E93;&#xFF08;&#x5982;JDK&#xFF09;&#x4E0E;&#x5176;&#x4ED6;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x3002;</p>
 </blockquote>
-<h1 class="mume-header" id="1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F">1. &#x5355;&#x4F8B;&#x6A21;&#x5F0F;</h1>
+<h1 class="mume-header" id="1-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-singleton-pattern-%E7%94%A8%E4%BA%8E%E7%A1%AE%E4%BF%9D%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%94%AF%E4%B8%80%E6%80%A7">1. &#x5355;&#x4F8B;&#x6A21;&#x5F0F;-Singleton Pattern---&#x7528;&#x4E8E;&#x786E;&#x4FDD;&#x5BF9;&#x8C61;&#x7684;&#x552F;&#x4E00;&#x6027;</h1>
 
 <p>&#x4E3A;&#x4E86;&#x8282;&#x7EA6;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#xFF0C;&#x6709;&#x65F6;&#x7CFB;&#x7EDF;&#x4E2D;&#x67D0;&#x4E2A;&#x7C7B;&#x53EA;&#x6709;&#x552F;&#x4E00;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x3002;&#x5F53;&#x8FD9;&#x4E2A;&#x552F;&#x4E00;&#x5B9E;&#x4F8B;&#x521B;&#x5EFA;&#x6210;&#x529F;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x65E0;&#x6CD5;&#x518D;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x540C;&#x7C7B;&#x578B;&#x7684;&#x5176;&#x4ED6;&#x5BF9;&#x8C61;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#x90FD;&#x53EA;&#x80FD;&#x57FA;&#x4E8E;&#x8FD9;&#x4E2A;&#x552F;&#x4E00;&#x5B9E;&#x4F8B;&#x3002;&#x4E3A;&#x4E86;&#x786E;&#x4FDD;&#x5BF9;&#x8C61;&#x7684;&#x552F;&#x4E00;&#x6027;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;&#x6765;&#x5B9E;&#x73B0;&#x3002;</p>
 <blockquote>
@@ -533,7 +537,7 @@ pre[data-line] .line-highlight[data-end]:after {
 2.&#x7F3A;&#x70B9;&#xFF1A;&#x589E;&#x52A0;&#x65B0;&#x7684;&#x4EA7;&#x54C1;&#x7C7B;&#x7684;&#x65B9;&#x6CD5;&#x9EBB;&#x70E6;&#xFF0C;&#x9700;&#x8981;&#x5BF9;&#x539F;&#x6709;&#x7CFB;&#x7EDF;&#x8FDB;&#x884C;&#x8F83;&#x5927;&#x7684;&#x4FEE;&#x6539;&#xFF0C;&#x751A;&#x81F3;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x63A5;&#x53E3;&#x5C42;&#x4EE3;&#x7801;&#x3002;</p>
 </blockquote>
 <hr>
-<h1 class="mume-header" id="5%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%E5%85%8B%E9%9A%86%E6%A8%A1%E5%BC%8F-prototype-pattern">5.&#x539F;&#x578B;&#x6A21;&#x5F0F;&#xFF08;&#x514B;&#x9686;&#x6A21;&#x5F0F;&#xFF09;-Prototype Pattern</h1>
+<h1 class="mume-header" id="5%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%E5%85%8B%E9%9A%86%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%8B%E9%9A%86-prototype-pattern">5.&#x539F;&#x578B;&#x6A21;&#x5F0F;&#xFF08;&#x514B;&#x9686;&#x6A21;&#x5F0F;,&#x7528;&#x4E8E;&#x5BF9;&#x8C61;&#x7684;&#x514B;&#x9686;&#xFF09;-Prototype Pattern</h1>
 
 <p><mark>&#x539F;&#x578B;&#x6A21;&#x5F0F;&#xFF1A;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x539F;&#x578B;&#x5BF9;&#x8C61;&#x514B;&#x9686;&#x51FA;&#x591A;&#x4E2A;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#x7684;&#x5BF9;&#x8C61;&#x3002;</mark> &#x521B;&#x5EFA;&#x514B;&#x9686;&#x5BF9;&#x8C61;&#x7684;&#x5DE5;&#x5382;&#x5C31;&#x662F;&#x539F;&#x578B;&#x7C7B;&#x81EA;&#x8EAB;&#x3002;</p>
 <font color="red">
@@ -614,7 +618,7 @@ pre[data-line] .line-highlight[data-end]:after {
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-</pre><h1 class="mume-header" id="6%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F-builder-pattern">6.&#x5EFA;&#x9020;&#x8005;&#x6A21;&#x5F0F;-Builder Pattern</h1>
+</pre><h1 class="mume-header" id="6%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E5%A4%8D%E6%9D%82%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%84%E8%A3%85%E4%B8%8E%E5%88%9B%E5%BB%BA-builder-pattern">6.&#x5EFA;&#x9020;&#x8005;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x590D;&#x6742;&#x5BF9;&#x8C61;&#x7684;&#x7EC4;&#x88C5;&#x4E0E;&#x521B;&#x5EFA;&#xFF09;-Builder Pattern</h1>
 
 <p><mark>&#x5EFA;&#x9020;&#x8005;&#x6A21;&#x5F0F;&#xFF1A;&#x5C06;&#x4E00;&#x4E2A;&#x590D;&#x6742;&#x5BF9;&#x8C61;&#x7684;&#x6784;&#x5EFA;&#x4E0E;&#x5B83;&#x7684;&#x8868;&#x73B0;&#x5206;&#x79BB;&#xFF0C;&#x4F7F;&#x5F97;&#x540C;&#x6837;&#x7684;&#x6784;&#x5EFA;&#x8FC7;&#x7A0B;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E0D;&#x540C;&#x7684;&#x8868;&#x73B0;&#x3002;</mark><br>
 &#x5EFA;&#x9020;&#x8005;&#x6A21;&#x5F0F;&#x4E00;&#x6B65;&#x4E00;&#x6B65;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x590D;&#x6742;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x5141;&#x8BB8;&#x7528;&#x6237;&#x53EA;&#x901A;&#x8FC7;&#x6307;&#x5B9A;&#x590D;&#x6742;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x578B;&#x548C;&#x5185;&#x5BB9;&#x5C31;&#x53EF;&#x4EE5;&#x6784;&#x5EFA;&#x5B83;&#x4EEC;&#xFF0C;&#x7528;&#x6237;&#x4E0D;&#x9700;&#x8981;&#x77E5;&#x9053;&#x5185;&#x90E8;&#x7684;&#x5177;&#x4F53;&#x6784;&#x5EFA;&#x7EC6;&#x8282;&#x3002;</p>
@@ -710,23 +714,324 @@ pre[data-line] .line-highlight[data-end]:after {
 </ol>
 </blockquote>
 <hr>
-<h1 class="mume-header" id="7%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-adapter-pattern">7.&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;-Adapter Pattern</h1>
+<h1 class="mume-header" id="7%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E4%B8%8D%E5%85%BC%E5%AE%B9%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%8F%E8%B0%83-adapter-pattern">7.&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x4E0D;&#x517C;&#x5BB9;&#x7ED3;&#x6784;&#x7684;&#x534F;&#x8C03;&#xFF09;-Adapter Pattern</h1>
 
 <p><img src="../img/JavaDesignPatterns_img/7.png" alt="7"></p>
 <p>&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#xFF1A;<mark>&#x5728;&#x8F6F;&#x4EF6;&#x5F00;&#x53D1;&#x4E2D;&#xFF0C;&#x6709;&#x65F6;&#x4E5F;&#x5B58;&#x5728;&#x7C7B;&#x4F3C;&#x8FD9;&#x79CD;&#x4E0D;&#x517C;&#x5BB9;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x50CF;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x7535;&#x6E90;&#x9002;&#x914D;&#x5668;&#x4E00;&#x6837;&#x5F15;&#x5165;&#x4E00;&#x4E2A;&#x79F0;&#x4E4B;&#x4E3A;&#x9002;&#x914D;&#x5668;&#x7684;&#x89D2;&#x8272;&#x6765;&#x534F;&#x8C03;&#x8FD9;&#x4E9B;&#x5B58;&#x5728;&#x4E0D;&#x517C;&#x5BB9;&#x7684;&#x7ED3;&#x6784;&#x3002;</mark></p>
-<p>&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#x53EF;&#x5206;&#x4E3A;&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x548C;&#x7C7B;&#x9002;&#x914D;&#x5668;&#x4E24;&#x79CD;&#x3002;<mark>&#x5728;&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x4E2D;&#xFF0C;&#x9002;&#x914D;&#x5668;&#x4E0E;&#x9002;&#x914D;&#x8005;&#x4E4B;&#x95F4;&#x662F;&#x5173;&#x8054;&#x5173;&#x7CFB;&#xFF1B;&#x5728;&#x7C7B;&#x9002;&#x914D;&#x5668;&#x4E2D;&#xFF0C;&#x9002;&#x914D;&#x5668;&#x4E0E;&#x9002;&#x914D;&#x8005;&#x4E4B;&#x95F4;&#x662F;&#x7EE7;&#x627F;&#xFF08;&#x6216;&#x5B9E;&#x73B0;&#xFF09;&#x5173;&#x7CFB;&#x3002;</mark></p>
-<h2 class="mume-header" id="1%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8">1.&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;</h2>
-
-<p><img src="../img/JavaDesignPatterns_img/8.png" alt="8"></p>
+<p>&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#x6709;&#x4E09;&#x79CD;&#xFF1A;&#x7C7B;&#x9002;&#x914D;&#x5668;&#x3001;&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x3001;&#x63A5;&#x53E3;&#x9002;&#x914D;&#x5668;&#x3002;<mark>&#x5728;&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x4E2D;&#xFF0C;&#x9002;&#x914D;&#x5668;&#x4E0E;&#x9002;&#x914D;&#x8005;&#x4E4B;&#x95F4;&#x662F;&#x5173;&#x8054;&#x5173;&#x7CFB;&#xFF1B;&#x5728;&#x7C7B;&#x9002;&#x914D;&#x5668;&#x4E2D;&#xFF0C;&#x9002;&#x914D;&#x5668;&#x4E0E;&#x9002;&#x914D;&#x8005;&#x4E4B;&#x95F4;&#x662F;&#x7EE7;&#x627F;&#xFF08;&#x6216;&#x5B9E;&#x73B0;&#xFF09;&#x5173;&#x7CFB;&#x3002;</mark></p>
 <blockquote>
-<p>&#x5728;&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x4E2D;&#x5305;&#x542B;&#x5982;&#x4E0B;&#x89D2;&#x8272;&#xFF1A;</p>
+<p>&#x5728;&#x9002;&#x914D;&#x5668;&#x4E2D;&#x5305;&#x542B;&#x5982;&#x4E0B;&#x89D2;&#x8272;&#xFF1A;</p>
 <ol>
 <li>Target&#xFF08;&#x76EE;&#x6807;&#x62BD;&#x8C61;&#x7C7B;&#xFF09;&#xFF1A;&#x7528;&#x6765;&#x5B9A;&#x4E49;&#x5BA2;&#x6237;&#x6240;&#x9700;&#x63A5;&#x53E3;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#x6216;&#x63A5;&#x53E3;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5177;&#x4F53;&#x7C7B;&#x3002;</li>
 <li>Adaptee&#xFF08;&#x9002;&#x914D;&#x8005;&#x7C7B;&#xFF09;&#xFF1A;&#x88AB;&#x9002;&#x914D;&#x7684;&#x89D2;&#x8272;&#xFF0C;&#x5B83;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x9700;&#x8981;&#x88AB;&#x9002;&#x914D;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x9002;&#x914D;&#x8005;&#x7C7B;&#x4E00;&#x822C;&#x662F;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7C7B;&#xFF0C;&#x5305;&#x542B;&#x4E86;&#x5BA2;&#x6237;&#x5E0C;&#x671B;&#x4F7F;&#x7528;&#x7684;&#x4E1A;&#x52A1;&#x65B9;&#x6CD5;&#x3002;&#x5728;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x53EF;&#x80FD;&#x6CA1;&#x6709;&#x9002;&#x914D;&#x8005;&#x7C7B;&#x7684;&#x6E90;&#x4EE3;&#x7801;&#x3002;</li>
 <li>Adapter&#xFF08;&#x9002;&#x914D;&#x5668;&#x7C7B;&#xFF09;&#xFF1A;&#x9002;&#x914D;&#x5668;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x8F6C;&#x6362;&#x5668;&#xFF0C;&#x5BF9;Adaptee&#x548C;Target&#x8FDB;&#x884C;&#x9002;&#x914D;&#x3002;<mark>&#x5728;&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x4E2D;&#xFF0C;&#x5B83;&#x901A;&#x8FC7;&#x7EE7;&#x627F;Target&#x5E76;&#x5173;&#x8054;&#x4E00;&#x4E2A;Adaptee&#x5BF9;&#x8C61;&#x4F7F;&#x4E8C;&#x8005;&#x4EA7;&#x751F;&#x8054;&#x7CFB;&#x3002;</mark></li>
 </ol>
 </blockquote>
-<pre data-role="codeBlock" data-info="java" class="language-java">
+<h2 class="mume-header" id="1%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8">1.&#x7C7B;&#x9002;&#x914D;&#x5668;</h2>
+
+<p><img src="../img/JavaDesignPatterns_img/9.png" alt="9"></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token comment">// &#x5DF2;&#x5B58;&#x5728;&#x7684;&#x3001;&#x5177;&#x6709;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#x3001;&#x4F46;&#x4E0D;&#x7B26;&#x5408;&#x6211;&#x4EEC;&#x65E2;&#x6709;&#x7684;&#x6807;&#x51C6;&#x63A5;&#x53E3;&#x7684;&#x7C7B;  </span>
+<span class="token keyword">class</span> <span class="token class-name">Adaptee</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">specificRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x88AB;&#x9002;&#x914D;&#x7C7B;&#x5177;&#x6709; &#x7279;&#x6B8A;&#x529F;&#x80FD;...&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>  
+<span class="token comment">// &#x76EE;&#x6807;&#x63A5;&#x53E3;&#xFF0C;&#x6216;&#x79F0;&#x4E3A;&#x6807;&#x51C6;&#x63A5;&#x53E3;  </span>
+<span class="token keyword">interface</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token punctuation">}</span>  
+<span class="token comment">// &#x5177;&#x4F53;&#x76EE;&#x6807;&#x7C7B;&#xFF0C;&#x53EA;&#x63D0;&#x4F9B;&#x666E;&#x901A;&#x529F;&#x80FD;  </span>
+<span class="token keyword">class</span> <span class="token class-name">ConcreteTarget</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x666E;&#x901A;&#x7C7B; &#x5177;&#x6709; &#x666E;&#x901A;&#x529F;&#x80FD;...&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>   
+<span class="token comment">// &#x9002;&#x914D;&#x5668;&#x7C7B;&#xFF0C;&#x7EE7;&#x627F;&#x4E86;&#x88AB;&#x9002;&#x914D;&#x7C7B;&#xFF0C;&#x540C;&#x65F6;&#x5B9E;&#x73B0;&#x6807;&#x51C6;&#x63A5;&#x53E3;  </span>
+<span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">extends</span> <span class="token class-name">Adaptee</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span><span class="token punctuation">{</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">specificRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>   
+<span class="token comment">// &#x6D4B;&#x8BD5;&#x7C7B;  </span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment">// &#x4F7F;&#x7528;&#x666E;&#x901A;&#x529F;&#x80FD;&#x7C7B;  </span>
+        <span class="token class-name">Target</span> concreteTarget <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteTarget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        concreteTarget<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token comment">// &#x4F7F;&#x7528;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#x7C7B;&#xFF0C;&#x5373;&#x9002;&#x914D;&#x7C7B;  </span>
+        <span class="token class-name">Target</span> adapter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        adapter<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>  
+
+</pre><blockquote>
+<p>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;<br>
+&#x666E;&#x901A;&#x7C7B; &#x5177;&#x6709; &#x666E;&#x901A;&#x529F;&#x80FD;...<br>
+&#x88AB;&#x9002;&#x914D;&#x7C7B;&#x5177;&#x6709; &#x7279;&#x6B8A;&#x529F;&#x80FD;...</p>
+</blockquote>
+<h2 class="mume-header" id="2%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8">2.&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;</h2>
+
+<p><img src="../img/JavaDesignPatterns_img/8.png" alt="8"></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token comment">// &#x9002;&#x914D;&#x5668;&#x7C7B;&#xFF0C;&#x76F4;&#x63A5;&#x5173;&#x8054;&#x88AB;&#x9002;&#x914D;&#x7C7B;&#xFF0C;&#x540C;&#x65F6;&#x5B9E;&#x73B0;&#x6807;&#x51C6;&#x63A5;&#x53E3;  </span>
+<span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span><span class="token punctuation">{</span>  
+    <span class="token comment">// &#x76F4;&#x63A5;&#x5173;&#x8054;&#x88AB;&#x9002;&#x914D;&#x7C7B;  </span>
+    <span class="token keyword">private</span> <span class="token class-name">Adaptee</span> adaptee<span class="token punctuation">;</span>  
+    <span class="token comment">// &#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6784;&#x9020;&#x51FD;&#x6570;&#x4F20;&#x5165;&#x5177;&#x4F53;&#x9700;&#x8981;&#x9002;&#x914D;&#x7684;&#x88AB;&#x9002;&#x914D;&#x7C7B;&#x5BF9;&#x8C61;  </span>
+    <span class="token keyword">public</span> <span class="token class-name">Adapter</span> <span class="token punctuation">(</span><span class="token class-name">Adaptee</span> adaptee<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token keyword">this</span><span class="token punctuation">.</span>adaptee <span class="token operator">=</span> adaptee<span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment">// &#x8FD9;&#x91CC;&#x662F;&#x4F7F;&#x7528;&#x59D4;&#x6258;&#x7684;&#x65B9;&#x5F0F;&#x5B8C;&#x6210;&#x7279;&#x6B8A;&#x529F;&#x80FD;  </span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>adaptee<span class="token punctuation">.</span><span class="token function">specificRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>  
+<span class="token comment">// &#x6D4B;&#x8BD5;&#x7C7B;  </span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+        <span class="token comment">// &#x4F7F;&#x7528;&#x666E;&#x901A;&#x529F;&#x80FD;&#x7C7B;  </span>
+        <span class="token class-name">Target</span> concreteTarget <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteTarget</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        concreteTarget<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        
+		<span class="token comment">// &#x4F7F;&#x7528;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#x7C7B;&#xFF0C;&#x5373;&#x9002;&#x914D;&#x7C7B;&#xFF0C;  </span>
+        <span class="token comment">// &#x9700;&#x8981;&#x5148;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x88AB;&#x9002;&#x914D;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;  </span>
+        <span class="token class-name">Target</span> adapter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Adaptee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        adapter<span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>  
+</pre><blockquote>
+<p>&#x6D4B;&#x8BD5;&#x7ED3;&#x679C;&#xFF1A;<br>
+&#x666E;&#x901A;&#x7C7B; &#x5177;&#x6709; &#x666E;&#x901A;&#x529F;&#x80FD;...<br>
+&#x88AB;&#x9002;&#x914D;&#x7C7B;&#x5177;&#x6709; &#x7279;&#x6B8A;&#x529F;&#x80FD;...</p>
+</blockquote>
+<hr>
+<h1 class="mume-header" id="8%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F-bridge-pattern">8.&#x6865;&#x63A5;&#x6A21;&#x5F0F;-Bridge Pattern</h1>
+
+<p><a href="http://www.jasongj.com/design_pattern/bridge/">&#x53C2;&#x8003;&#x94FE;&#x63A5;</a></p>
+<p><mark>&#x6865;&#x63A5;&#x6A21;&#x5F0F;&#xFF1A;&#x5C06;&#x53EF;&#x62BD;&#x8C61;&#x90E8;&#x5206;&#x4E0E;&#x5B83;&#x7684;&#x53EF;&#x5B9E;&#x73B0;&#x90E8;&#x5206;&#x5206;&#x79BB;&#xFF0C;&#x4F7F;&#x5B83;&#x4EEC;&#x90FD;&#x53EF;&#x4EE5;&#x72EC;&#x7ACB;&#x5730;&#x53D8;&#x5316;</mark>&#x3002;</p>
+<p><img src="../img/JavaDesignPatterns_img/10.png" alt="10"></p>
+<h3>&#x4E3E;&#x4F8B;&#xFF1A;</h3>
+<p>&#x6C7D;&#x8F66;&#x53EF;&#x6309;&#x54C1;&#x724C;&#x5206;&#xFF08;BMT&#xFF0C;BenZ&#xFF0C;LandRover&#xFF09;&#xFF0C;&#x4E5F;&#x53EF;&#x6309;&#x624B;&#x52A8;&#x6863;&#x3001;&#x81EA;&#x52A8;&#x6863;&#x6765;&#x5206;&#x3002;&#x5982;&#x679C;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x79CD;&#x8F66;&#x90FD;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7C7B;&#xFF0C;&#x5219;&#x4E00;&#x5171;&#x8981;&#x5B9E;&#x73B0;3*3=9&#x4E2A;&#x7C7B;&#x3002;</p>
+<p><img src="../img/JavaDesignPatterns_img/11.png" alt="11"></p>
+<blockquote>
+<p><font color="red">&#x5F53;&#x5BF9;&#x8FD9;&#x4E2A;&#x7EE7;&#x627F;&#x7ED3;&#x6784;&#x56FE;&#x4F7F;&#x7528;&#x6865;&#x63A5;&#x6A21;&#x5F0F;&#x91CD;&#x65B0;&#x8BBE;&#x8BA1;&#x540E;&#xFF1A;</font></p>
+</blockquote>
+<p><img src="../img/JavaDesignPatterns_img/12.png" alt="12"></p>
+<p><font color="blue">&#x56FE;&#x4E2D;&#x628A;&#x6574;&#x4E2A;&#x7ED3;&#x6784;&#x56FE;&#x5206;&#x4E3A;&#x54C1;&#x724C;&#x548C;&#x9A7E;&#x9A76;&#x65B9;&#x5F0F;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x5F53;&#x589E;&#x52A0;&#x8F66;&#x54C1;&#x724C;&#x65F6;&#x548C;&#x589E;&#x52A0;&#x8F66;&#x7684;&#x9A7E;&#x9A76;&#x65B9;&#x5F0F;&#x65F6;&#xFF0C;&#x65B9;&#x4FBF;&#x540E;&#x7EED;&#x7684;&#x66F4;&#x65B0;&#x3002;</font></p>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token comment">//&#x8F66;&#x7684;&#x54C1;&#x724C;&#x62BD;&#x8C61;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractCar</span> <span class="token punctuation">{</span>
+	<span class="token keyword">protected</span> <span class="token class-name">Tranmisson</span> tranmisson<span class="token punctuation">;</span>  <span class="token comment">//&#x65B9;&#x4FBF;&#x5B50;&#x7C7B;&#x7EE7;&#x627F;&#x8BE5;&#x5C5E;&#x6027;</span>
+	
+	<span class="token keyword">public</span> <span class="token class-name">Tranmisson</span> <span class="token function">getTranmisson</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> tranmisson<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setTranmisson</span><span class="token punctuation">(</span><span class="token class-name">Tranmisson</span> tranmisson<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>tranmisson <span class="token operator">=</span> tranmisson<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BenZCar</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractCar</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x8FD9;&#x662F;BenZCar&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BMWCar</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractCar</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x8FD9;&#x662F;BMW &#x8F66;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//.....</span>
+<span class="token comment">//&#x8F66;&#x7684;&#x9A7E;&#x9A76;&#x65B9;&#x5F0F;&#x62BD;&#x8C61;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Tranmisson</span> <span class="token punctuation">{</span>
+	<span class="token keyword">protected</span> <span class="token class-name">AbstractCar</span> abstractCar<span class="token punctuation">;</span>   <span class="token comment">//&#x65B9;&#x4FBF;&#x5B50;&#x7C7B;&#x7EE7;&#x627F;&#x8BE5;&#x5C5E;&#x6027;</span>
+
+	<span class="token keyword">public</span> <span class="token class-name">AbstractCar</span> <span class="token function">getAbstractCar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> abstractCar<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAbstractCar</span><span class="token punctuation">(</span><span class="token class-name">AbstractCar</span> abstractCar<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>abstractCar <span class="token operator">=</span> abstractCar<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">gear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Manual</span> <span class="token keyword">extends</span> <span class="token class-name">Tranmisson</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">gear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x8FD9;&#x662F;&#x624B;&#x52A8;&#x6863;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Auto</span> <span class="token keyword">extends</span> <span class="token class-name">Tranmisson</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">gear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x8FD9;&#x662F;&#x81EA;&#x52A8;&#x6321;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token comment">//</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">AbstractCar</span> benz<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">BenZCar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">AbstractCar</span> bmw<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">BMWCar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">AbstractCar</span> landr<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">LandRoverCar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">Tranmisson</span> auto<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Auto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token class-name">Tranmisson</span> manual<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">Manual</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		benz<span class="token punctuation">.</span><span class="token function">setTranmisson</span><span class="token punctuation">(</span>auto<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//&#x8BBE;&#x7F6E;&#x5954;&#x9A70;&#x8F66;&#x7684;&#x9A7E;&#x9A76;&#x65B9;&#x5F0F;&#x4E3A;&#x81EA;&#x52A8;&#x6863;</span>
+		benz<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		bmw<span class="token punctuation">.</span><span class="token function">setTranmisson</span><span class="token punctuation">(</span>manual<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x8BBE;&#x7F6E;&#x5B9D;&#x9A6C;&#x4E3A;&#x624B;&#x52A8;&#x6863;</span>
+		bmw<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+</pre><hr>
+<h1 class="mume-header" id="9%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84%E7%9A%84%E5%A4%84%E7%90%86-composite-pattern">9.&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x7684;&#x5904;&#x7406;&#xFF09;-Composite Pattern</h1>
+
+<p>&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x5728;&#x8F6F;&#x4EF6;&#x4E2D;&#x968F;&#x5904;&#x53EF;&#x89C1;&#xFF0C;&#x4F8B;&#x5982;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x3001;&#x5E94;&#x7528;&#x8F6F;&#x4EF6;&#x4E2D;&#x7684;&#x83DC;&#x5355;&#x3001;&#x529E;&#x516C;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x516C;&#x53F8;&#x7EC4;&#x7EC7;&#x7ED3;&#x6784;&#x7B49;&#x7B49;&#xFF0C;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x4E3A;&#x5904;&#x7406;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x8F83;&#x4E3A;&#x5B8C;&#x7F8E;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+<p>&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#xFF1A;&#x7EC4;&#x5408;&#x591A;&#x4E2A;&#x5BF9;&#x8C61;&#x5F62;&#x6210;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x4EE5;&#x8868;&#x793A;&#x5177;&#x6709;&#x201C;&#x6574;&#x4F53;&#x2014;&#x90E8;&#x5206;&#x201D;&#x5173;&#x7CFB;&#x7684;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#x3002;</p>
+<p><img src="../img/JavaDesignPatterns_img/13.png" alt="13"></p>
+<blockquote>
+<p>&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x7ED3;&#x6784;&#x56FE;&#x4E2D;&#x5305;&#x542B;&#x5982;&#x4E0B;&#x51E0;&#x4E2A;&#x89D2;&#x8272;:</p>
+<ol>
+<li>Component&#xFF1A;&#x5B83;&#x53EF;&#x4EE5;&#x662F;&#x63A5;&#x53E3;&#x6216;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x4E3A;&#x53F6;&#x5B50;&#x6784;&#x4EF6;&#x548C;&#x5BB9;&#x5668;&#x6784;&#x4EF6;&#x516C;&#x5171;&#x7236;&#x7C7B;&#x6216;&#x63A5;&#x53E3;&#xFF0C;&#x5728;&#x8BE5;&#x89D2;&#x8272;&#x4E2D;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x6240;&#x6709;&#x5B50;&#x7C7B;&#x5171;&#x6709;&#x884C;&#x4E3A;&#x7684;&#x58F0;&#x660E;&#x548C;&#x5B9E;&#x73B0;&#x3002;&#x5982;&#x589E;&#x52A0;&#x5B50;&#x6784;&#x4EF6;&#x3001;&#x5220;&#x9664;&#x5B50;&#x6784;&#x4EF6;&#x3001;&#x83B7;&#x53D6;&#x5B50;&#x6784;&#x4EF6;&#x7B49;&#x3002;</li>
+<li>Leaf&#xFF1A;&#x8868;&#x793A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x5BF9;&#x8C61;&#xFF0C;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x6CA1;&#x6709;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;Component&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x884C;&#x4E3A;&#x3002;&#x5BF9;&#x4E8E;&#x90A3;&#x4E9B;&#x8BBF;&#x95EE;&#x53CA;&#x7BA1;&#x7406;&#x5B50;&#x6784;&#x4EF6;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5F02;&#x5E38;&#x7B49;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;</li>
+<li>Composite&#xFF08;&#x5BB9;&#x5668;&#x6784;&#x4EF6;&#xFF09;&#xFF1A;&#x8868;&#x793A;&#x5BB9;&#x5668;&#x8282;&#x70B9;&#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x5B50;&#x8282;&#x70B9;&#xFF0C;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;Component&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x5305;&#x62EC;&#x90A3;&#x4E9B;&#x8BBF;&#x95EE;&#x53CA;&#x7BA1;&#x7406;&#x5B50;&#x6784;&#x4EF6;&#x7684;&#x65B9;&#x6CD5;.</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token comment">//&#x6839;&#x8282;&#x70B9;</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span>  <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">Component</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x589E;&#x52A0;&#x6210;&#x5458;</span>
+	<span class="token keyword">public</span>  <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span><span class="token class-name">Component</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x5220;&#x9664;&#x6210;&#x5458;</span>
+	<span class="token keyword">public</span>  <span class="token class-name">Component</span> <span class="token function">getChild</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x83B7;&#x53D6;&#x6210;&#x5458;</span>
+	<span class="token keyword">public</span>  <span class="token keyword">void</span> <span class="token function">operation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//&#x4E1A;&#x52A1;&#x65B9;&#x6CD5;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5BB9;&#x5668;&#x8282;&#x70B9;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Composite</span> <span class="token keyword">implements</span> <span class="token class-name">Component</span><span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Component</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Component</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//&#x5BB9;&#x5668;&#x4E2D;&#x53EF;&#x4EE5;&#x5B58;&#x5728;&#x5BB9;&#x5668;&#x6216;&#x53F6;&#x5B50;&#x8282;&#x70B9;</span>
+	
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">Component</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span><span class="token class-name">Component</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		list<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token class-name">Component</span> <span class="token function">getChild</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">Component</span><span class="token punctuation">)</span>list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token class-name">Object</span> obj<span class="token operator">:</span>list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">Component</span><span class="token punctuation">)</span>obj<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">operation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x53F6;&#x5B50;&#x8282;&#x70B9;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Leaf</span> <span class="token keyword">implements</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token class-name">Component</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x589E;&#x52A0;&#x8282;&#x70B9;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span><span class="token class-name">Component</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x79FB;&#x9664;&#x8282;&#x70B9;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token class-name">Component</span> <span class="token function">getChild</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x64CD;&#x4F5C;&#x8282;&#x70B9;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</pre><blockquote>
+<p>&#x4F18;&#x70B9;&#x7F3A;&#x70B9;&#xFF1A;</p>
+<ol>
+<li>&#x4F18;&#x70B9;&#xFF1A;&#x2460;&#x5728;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x4E2D;&#x589E;&#x52A0;&#x65B0;&#x7684;&#x5BB9;&#x5668;&#x6784;&#x4EF6;&#x548C;&#x53F6;&#x5B50;&#x6784;&#x4EF6;&#x90FD;&#x5F88;&#x65B9;&#x4FBF;&#xFF0C;&#x65E0;&#x987B;&#x5BF9;&#x73B0;&#x6709;&#x7C7B;&#x5E93;&#x8FDB;&#x884C;&#x4EFB;&#x4F55;&#x4FEE;&#x6539;&#xFF0C;&#x2461;&#x901A;&#x8FC7;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x548C;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;&#x7684;&#x9012;&#x5F52;&#x7EC4;&#x5408;&#xFF0C;&#x53EF;&#x4EE5;&#x5F62;&#x6210;&#x590D;&#x6742;&#x7684;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#xFF0C;&#x4F46;&#x5BF9;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x7684;&#x63A7;&#x5236;&#x5374;&#x975E;&#x5E38;&#x7B80;&#x5355;&#x3002;</li>
+<li>&#x7F3A;&#x70B9;&#xFF1A;&#x589E;&#x52A0;&#x65B0;&#x6784;&#x4EF6;&#x65F6;&#x5F88;&#x96BE;&#x5BF9;&#x5BB9;&#x5668;&#x4E2D;&#x7684;&#x6784;&#x4EF6;&#x7C7B;&#x578B;&#x8FDB;&#x884C;&#x9650;&#x5236;&#x3002;</li>
+</ol>
+</blockquote>
+<hr>
+<h1 class="mume-header" id="10%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F%E7%94%A8%E4%BA%8E%E6%89%A9%E5%B1%95%E5%AF%B9%E8%B1%A1%E5%8A%9F%E8%83%BD-decorator-pattern">10.&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#xFF08;&#x7528;&#x4E8E;&#x6269;&#x5C55;&#x5BF9;&#x8C61;&#x529F;&#x80FD;&#xFF09;-Decorator Pattern</h1>
+
+<p>&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x662F;&#x5904;&#x7406;&#x5982;&#x4F55;&#x8BA9;&#x7CFB;&#x7EDF;&#x4E2D;&#x7684;&#x7C7B;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x6269;&#x5C55;&#x4F46;&#x662F;&#x53C8;&#x4E0D;&#x4F1A;&#x5BFC;&#x81F4;&#x7C7B;&#x6570;&#x76EE;&#x7684;&#x6025;&#x5267;&#x589E;&#x52A0;&#x7684;&#x95EE;&#x9898;&#x3002;<br>
+<mark>&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x6539;&#x53D8;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x672C;&#x8EAB;&#x529F;&#x80FD;&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x7ED9;&#x5BF9;&#x8C61;&#x589E;&#x52A0;&#x989D;&#x5916;&#x7684;&#x65B0;&#x884C;&#x4E3A;&#x3002;&#x53EF;&#x4EE5;&#x5728;&#x4E0D;&#x9700;&#x8981;&#x521B;&#x9020;&#x66F4;&#x591A;&#x5B50;&#x7C7B;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5C06;&#x5BF9;&#x8C61;&#x7684;&#x529F;&#x80FD;&#x52A0;&#x4EE5;&#x6269;&#x5C55;&#x3002;</mark></p>
+<p><img src="../img/JavaDesignPatterns_img/14.png" alt="14"></p>
+<blockquote>
+<p>&#x5728;&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x7ED3;&#x6784;&#x56FE;&#x4E2D;&#x5305;&#x542B;&#x5982;&#x4E0B;&#x51E0;&#x4E2A;&#x89D2;&#x8272;&#xFF1A;</p>
+<ol>
+<li>Component&#xFF08;&#x62BD;&#x8C61;&#x6784;&#x4EF6;&#xFF09;&#xFF1A;&#x5B83;&#x662F;&#x5177;&#x4F53;&#x6784;&#x4EF6;&#x548C;&#x62BD;&#x8C61;&#x88C5;&#x9970;&#x7C7B;&#x7684;&#x5171;&#x540C;&#x7236;&#x7C7B;&#xFF0C;&#x58F0;&#x660E;&#x4E86;&#x5728;&#x5177;&#x4F53;&#x6784;&#x4EF6;&#x4E2D;&#x5B9E;&#x73B0;&#x7684;&#x4E1A;&#x52A1;&#x65B9;&#x6CD5;&#x3002;</li>
+<li>ConcreteComponent&#xFF08;&#x5177;&#x4F53;&#x6784;&#x4EF6;&#xFF09;&#xFF1A;&#x7528;&#x4E8E;&#x5B9A;&#x4E49;&#x5177;&#x4F53;&#x7684;&#x6784;&#x4EF6;&#x5BF9;&#x8C61;&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x5728;&#x62BD;&#x8C61;&#x6784;&#x4EF6;&#x4E2D;&#x58F0;&#x660E;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x88C5;&#x9970;&#x5668;&#x53EF;&#x4EE5;&#x7ED9;&#x5B83;&#x589E;&#x52A0;&#x989D;&#x5916;&#x7684;&#x804C;&#x8D23;&#xFF08;&#x65B9;&#x6CD5;&#xFF09;&#x3002;</li>
+<li>Decorator&#xFF08;&#x62BD;&#x8C61;&#x88C5;&#x9970;&#x7C7B;&#xFF09;&#xFF1A;&#x7528;&#x4E8E;&#x7ED9;&#x5177;&#x4F53;&#x6784;&#x4EF6;&#x589E;&#x52A0;&#x804C;&#x8D23;&#xFF0C;&#x4F46;&#x662F;&#x5177;&#x4F53;&#x65B9;&#x6CD5;&#x5728;&#x5176;&#x5B50;&#x7C7B;&#x4E2D;&#x5B9E;&#x73B0;&#x3002;&#x5B83;&#x6709;&#x4E00;&#x4E2A;&#x6307;&#x5411;&#x7236;&#x7C7B;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x901A;&#x8FC7;&#x8BE5;&#x5F15;&#x7528;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x6784;&#x4EF6;&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x901A;&#x8FC7;&#x5176;&#x5B50;&#x7C7B;&#x6269;&#x5C55;&#x8BE5;&#x65B9;&#x6CD5;&#xFF0C;&#x4EE5;&#x8FBE;&#x5230;&#x88C5;&#x9970;&#x7684;&#x76EE;&#x7684;&#x3002;</li>
+<li>ConcreteDecorator&#xFF08;&#x5177;&#x4F53;&#x88C5;&#x9970;&#x7C7B;&#xFF09;&#xFF1A;&#x8D1F;&#x8D23;&#x5411;&#x6784;&#x4EF6;&#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x88C5;&#x9970;&#x3002;&#x6BCF;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x88C5;&#x9970;&#x7C7B;&#x90FD;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E9B;&#x65B0;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x5728;&#x7236;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x53EF;&#x4EE5;&#x589E;&#x52A0;&#x65B0;&#x7684;&#x65B9;&#x6CD5;&#x7528;&#x4EE5;&#x6269;&#x5145;&#x5BF9;&#x8C61;&#x7684;&#x884C;&#x4E3A;&#x3002;</li>
+</ol>
+</blockquote>
+<h3>&#x4E3E;&#x4F8B;&#xFF1A;&#x4EBA;&#x7C7B;&#x662F;&#x53EF;&#x4EE5;&#x8DD1;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x80FD;&#x98DE;&#x3002;&#x73B0;&#x5728;&#xFF0C;&#x7ED9;&#x4EBA;&#x7C7B;&#x8FDB;&#x884C;&#x88C5;&#x9970;&#xFF0C;&#x8981;&#x4EBA;&#x7C7B;&#x4F1A;&#x98DE;&#x3002;</h3>
+<pre data-role="codeBlock" data-info="java" class="language-java"><span class="token comment">//&#x88AB;&#x88C5;&#x9970;&#x5BF9;&#x8C61;&#x7684;&#x62BD;&#x8C61;&#x63A5;&#x53E3;</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Human</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//&#x5177;&#x4F53;&#x7684;&#x88AB;&#x88C5;&#x9970;&#x5BF9;&#x8C61;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Man</span> <span class="token keyword">implements</span> <span class="token class-name">Human</span> <span class="token punctuation">{</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x4EBA;&#x4F1A;&#x8DD1;&#x6B65;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//&#x62BD;&#x8C61;&#x88C5;&#x9970;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractDecorator</span> <span class="token keyword">implements</span> <span class="token class-name">Human</span><span class="token punctuation">{</span>
+	<span class="token comment">//&#x88AB;&#x88C5;&#x9970;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528; </span>
+	<span class="token keyword">private</span> <span class="token class-name">Human</span> human<span class="token punctuation">;</span>
+	<span class="token comment">//&#x6784;&#x9020;&#x51FD;&#x6570;&#x6CE8;&#x5165;&#x88AB;&#x88C5;&#x9970;&#x8005;</span>
+	<span class="token keyword">public</span> <span class="token class-name">AbstractDecorator</span><span class="token punctuation">(</span><span class="token class-name">Human</span> human<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">this</span><span class="token punctuation">.</span>human <span class="token operator">=</span> human<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//&#x8C03;&#x7528;&#x88AB;&#x88C5;&#x9970;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		human<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//&#x5177;&#x4F53;&#x88C5;&#x9970;&#x7C7B;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ManDecorator</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractDecorator</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token class-name">ManDecorator</span><span class="token punctuation">(</span><span class="token class-name">Human</span> human<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment">//&#x8C03;&#x7528;&#x7236;&#x7C7B;&#x7684;&#x6784;&#x9020;&#x65B9;&#x6CD5;</span>
+		<span class="token keyword">super</span><span class="token punctuation">(</span>human<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//&#x88C5;&#x9970;&#x7C7B;&#x589E;&#x52A0;&#x7684;&#x529F;&#x80FD;</span>
+	<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">fly</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&#x4EBA;&#x53EF;&#x4EE5;&#x98DE;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">//&#x589E;&#x5F3A;&#x4E86;&#x529F;&#x80FD;&#x7684;run&#x65B9;&#x6CD5;</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">fly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">//&#x6D4B;&#x8BD5;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment">//&#x521B;&#x5EFA;&#x88AB;&#x88C5;&#x9970;&#x7684;&#x7C7B;</span>
+		<span class="token class-name">Human</span> human <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Man</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment">//&#x521B;&#x5EFA;&#x88C5;&#x9970;&#x7684;&#x7C7B;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x88AB;&#x88C5;&#x9970;&#x7C7B;&#x7684;&#x5F15;&#x7528;</span>
+		<span class="token class-name">Human</span> superMan <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ManDecorator</span><span class="token punctuation">(</span>human<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment">//&#x6267;&#x884C;&#x589E;&#x5F3A;&#x540E;&#x7684;run&#x65B9;&#x6CD5;</span>
+		superMan<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 </pre>
       </div>
       

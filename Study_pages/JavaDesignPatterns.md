@@ -12,7 +12,7 @@ Java、C#、C++等编程语言，Eclipse、Visual Studio等开发工具，JSP、
 >学习设计模式的好处？
 >让你知道，如何将代码分散在几个不同的类中？为什么要有“接口”？什么是对抽象编程？何时不应该使用继承？如果不修改源代码增加新功能？同时还让你能够更好地阅读和理解现有类库（如JDK）与其他系统中的源代码。
 
-# 1. 单例模式
+# 1. 单例模式-Singleton Pattern---用于确保对象的唯一性
 
 为了节约系统资源，有时系统中某个类只有唯一一个实例。当这个唯一实例创建成功之后，我们无法再创建一个同类型的其他对象，所有的操作都只能基于这个唯一实例。为了确保对象的唯一性，我们可以通过单例模式来实现。
 
@@ -297,7 +297,7 @@ public class Test {
 
 ---
 
-# 5.原型模式（克隆模式）-Prototype Pattern
+# 5.原型模式（克隆模式,用于对象的克隆）-Prototype Pattern
 
 ==原型模式：可以通过一个原型对象克隆出多个一模一样的对象。== 创建克隆对象的工厂就是原型类自身。
 
@@ -390,7 +390,7 @@ class Child implements Serializable{
 
 ```
 
-# 6.建造者模式-Builder Pattern
+# 6.建造者模式（用于复杂对象的组装与创建）-Builder Pattern
 
 ==建造者模式：将一个复杂对象的构建与它的表现分离，使得同样的构建过程可以创建不同的表现。==
 建造者模式一步一步创建一个复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。
@@ -487,25 +487,346 @@ public class Director {
 
 ---
 
-# 7.适配器模式-Adapter Pattern
+# 7.适配器模式（用于不兼容结构的协调）-Adapter Pattern
 
 ![7](../img/JavaDesignPatterns_img/7.png)
 
 适配器模式：==在软件开发中，有时也存在类似这种不兼容的情况，我们也可以像引入一个电源适配器一样引入一个称之为适配器的角色来协调这些存在不兼容的结构。==
 
-适配器模式可分为对象适配器和类适配器两种。==在对象适配器中，适配器与适配者之间是关联关系；在类适配器中，适配器与适配者之间是继承（或实现）关系。==
+适配器模式有三种：类适配器、对象适配器、接口适配器。==在对象适配器中，适配器与适配者之间是关联关系；在类适配器中，适配器与适配者之间是继承（或实现）关系。==
 
-## 1.对象适配器
-
-![8](../img/JavaDesignPatterns_img/8.png)
-
->在对象适配器中包含如下角色：
+>在适配器中包含如下角色：
 >1. Target（目标抽象类）：用来定义客户所需接口，可以是一个抽象类或接口，也可以是具体类。
 >2. Adaptee（适配者类）：被适配的角色，它定义了一个需要被适配的接口，适配者类一般是一个具体类，包含了客户希望使用的业务方法。在某些情况下可能没有适配者类的源代码。
 >3. Adapter（适配器类）：适配器可以作为一个转换器，对Adaptee和Target进行适配。==在对象适配器中，它通过继承Target并关联一个Adaptee对象使二者产生联系。==
 
+
+## 1.类适配器
+
+![9](../img/JavaDesignPatterns_img/9.png)
+
+```java
+// 已存在的、具有特殊功能、但不符合我们既有的标准接口的类  
+class Adaptee {  
+    public void specificRequest() {  
+        System.out.println("被适配类具有 特殊功能...");  
+    }  
+}  
+// 目标接口，或称为标准接口  
+interface Target {  
+    public void request();  
+}  
+// 具体目标类，只提供普通功能  
+class ConcreteTarget implements Target {  
+    public void request() {  
+        System.out.println("普通类 具有 普通功能...");  
+    }  
+}   
+// 适配器类，继承了被适配类，同时实现标准接口  
+class Adapter extends Adaptee implements Target{  
+    public void request() {  
+        super.specificRequest();  
+    }  
+}   
+// 测试类  
+public class Client {  
+    public static void main(String[] args) {  
+        // 使用普通功能类  
+        Target concreteTarget = new ConcreteTarget();  
+        concreteTarget.request();  
+        // 使用特殊功能类，即适配类  
+        Target adapter = new Adapter();  
+        adapter.request();  
+    }  
+}  
+
+```
+
+>测试结果：
+普通类 具有 普通功能...
+被适配类具有 特殊功能... 
+
+## 2.对象适配器
+
+![8](../img/JavaDesignPatterns_img/8.png)
+
 ```java
 
+// 适配器类，直接关联被适配类，同时实现标准接口  
+class Adapter implements Target{  
+    // 直接关联被适配类  
+    private Adaptee adaptee;  
+    // 可以通过构造函数传入具体需要适配的被适配类对象  
+    public Adapter (Adaptee adaptee) {  
+        this.adaptee = adaptee;  
+    }  
+    public void request() {  
+        // 这里是使用委托的方式完成特殊功能  
+        this.adaptee.specificRequest();  
+    }  
+}  
+// 测试类  
+public class Client {  
+    public static void main(String[] args) {  
+        // 使用普通功能类  
+        Target concreteTarget = new ConcreteTarget();  
+        concreteTarget.request();  
+        
+		// 使用特殊功能类，即适配类，  
+        // 需要先创建一个被适配类的对象作为参数  
+        Target adapter = new Adapter(new Adaptee());  
+        adapter.request();  
+    }  
+}  
+```
+
+>测试结果：
+普通类 具有 普通功能...
+被适配类具有 特殊功能... 
+
+---
+
+# 8.桥接模式-Bridge Pattern
+
+[参考链接](http://www.jasongj.com/design_pattern/bridge/)
+
+==桥接模式：将可抽象部分与它的可实现部分分离，使它们都可以独立地变化==。
+
+![10](../img/JavaDesignPatterns_img/10.png)
+
+<h3>举例：</h3>
+
+汽车可按品牌分（BMT，BenZ，LandRover），也可按手动档、自动档来分。如果对于每一种车都实现一个具体类，则一共要实现3*3=9个类。
+
+![11](../img/JavaDesignPatterns_img/11.png)
+
+> <font color="red">当对这个继承结构图使用桥接模式重新设计后：</font>
+
+![12](../img/JavaDesignPatterns_img/12.png)
+
+<font color="blue">图中把整个结构图分为品牌和驾驶方式两个部分，当增加车品牌时和增加车的驾驶方式时，方便后续的更新。</font>
+
+```java
+
+//车的品牌抽象类
+public abstract class AbstractCar {
+	protected Tranmisson tranmisson;  //方便子类继承该属性
+	
+	public Tranmisson getTranmisson() {
+		return tranmisson;
+	}
+	public void setTranmisson(Tranmisson tranmisson) {
+		this.tranmisson = tranmisson;
+	}
+	public abstract void run();
+}
+//
+public class BenZCar extends AbstractCar {
+	@Override
+	public void run() {
+		System.out.println("这是BenZCar");
+	}
+}
+//
+public class BMWCar extends AbstractCar {
+	@Override
+	public void run() {
+		System.out.println("这是BMW 车");
+	}
+}
+//.....
+//车的驾驶方式抽象类
+public abstract class Tranmisson {
+	protected AbstractCar abstractCar;   //方便子类继承该属性
+
+	public AbstractCar getAbstractCar() {
+		return abstractCar;
+	}
+	public void setAbstractCar(AbstractCar abstractCar) {
+		this.abstractCar = abstractCar;
+	}
+	public abstract void gear();
+}
+//
+public class Manual extends Tranmisson {
+	@Override
+	public void gear() {
+		System.out.println("这是手动档");
+	}
+}
+//
+public class Auto extends Tranmisson {
+	@Override
+	public void gear() {
+		System.out.println("这是自动挡");
+	}
+}
 
 
+//
+public class Test {
+	public static void main(String[] args) {
+		AbstractCar benz=new BenZCar();
+		AbstractCar bmw=new BMWCar();
+		AbstractCar landr=new LandRoverCar();
+		Tranmisson auto=new Auto();
+		Tranmisson manual=new Manual();
+		
+		benz.setTranmisson(auto);   //设置奔驰车的驾驶方式为自动档
+		benz.run();
+		
+		bmw.setTranmisson(manual); //设置宝马为手动档
+		bmw.run();
+	}
+}
+
+
+```
+
+---
+
+# 9.组合模式（用于树形结构的处理）-Composite Pattern
+
+树形结构在软件中随处可见，例如操作系统中的目录结构、应用软件中的菜单、办公系统中的公司组织结构等等，组合模式为处理树形结构提供了一种较为完美的解决方案。
+
+组合模式：组合多个对象形成树形结构以表示具有“整体—部分”关系的层次结构。
+
+![13](../img/JavaDesignPatterns_img/13.png)
+
+>组合模式结构图中包含如下几个角色:
+>1. Component：它可以是接口或抽象类，为叶子构件和容器构件公共父类或接口，在该角色中可以包含所有子类共有行为的声明和实现。如增加子构件、删除子构件、获取子构件等。
+>2. Leaf：表示叶子节点对象，叶子节点没有子节点，它实现了Component中定义的行为。对于那些访问及管理子构件的方法，可以通过异常等方式进行处理。
+>3. Composite（容器构件）：表示容器节点对象，它提供一个集合用于存储子节点，它实现了Component中定义的行为，包括那些访问及管理子构件的方法.
+
+```java
+//根节点
+public interface Component {
+	public  void add(Component c); //增加成员
+	public  void remove(Component c); //删除成员
+	public  Component getChild(int i); //获取成员
+	public  void operation(); //业务方法
+}
+//容器节点
+public class Composite implements Component{
+	private ArrayList<Component> list = new ArrayList<Component>();  //容器中可以存在容器或叶子节点
+	
+	@Override
+	public void add(Component c) {
+		list.add(c);
+	}
+	@Override
+	public void remove(Component c) {
+		list.remove(c);
+	}
+	@Override
+	public Component getChild(int i) {
+		return (Component)list.get(i);
+	}
+	@Override
+	public void operation() {
+		for(Object obj:list) {
+			((Component)obj).operation();
+		}
+	}
+}
+//叶子节点
+public class Leaf implements Component {
+	public void add(Component c) {
+		System.out.println("增加节点");
+	}
+	public void remove(Component c) {
+		System.out.println("移除节点");
+	}
+	public Component getChild(int i) {
+		return null;
+	}
+	public void operation() {
+		System.out.println("操作节点");
+	}
+}
+
+```
+
+>优点缺点：
+>1. 优点：①在组合模式中增加新的容器构件和叶子构件都很方便，无须对现有类库进行任何修改，②通过叶子对象和容器对象的递归组合，可以形成复杂的树形结构，但对树形结构的控制却非常简单。
+>2. 缺点：增加新构件时很难对容器中的构件类型进行限制。
+
+---
+
+# 10.装饰模式（用于扩展对象功能）-Decorator Pattern
+
+装饰模式是处理如何让系统中的类可以进行扩展但是又不会导致类数目的急剧增加的问题。
+==装饰模式可以在不改变一个对象本身功能的基础上给对象增加额外的新行为。可以在不需要创造更多子类的情况下，将对象的功能加以扩展。==
+
+![14](../img/JavaDesignPatterns_img/14.png)
+
+
+>在装饰模式结构图中包含如下几个角色：
+>1. Component（抽象构件）：它是具体构件和抽象装饰类的共同父类，声明了在具体构件中实现的业务方法。
+>2. ConcreteComponent（具体构件）：用于定义具体的构件对象，实现了在抽象构件中声明的方法，装饰器可以给它增加额外的职责（方法）。
+>3. Decorator（抽象装饰类）：用于给具体构件增加职责，但是具体方法在其子类中实现。它有一个指向父类的引用，通过该引用可以调用构件对象，并通过其子类扩展该方法，以达到装饰的目的。
+>4. ConcreteDecorator（具体装饰类）：负责向构件添加新的装饰。每一个具体装饰类都定义了一些新的行为，它可以调用在父类中定义的方法，并可以增加新的方法用以扩充对象的行为。
+
+<h3>举例：人类是可以跑的，但是不能飞。现在，给人类进行装饰，要人类会飞。</h3>
+
+```java
+//被装饰对象的抽象接口
+public interface Human {
+	public void run();
+}
+
+//具体的被装饰对象
+public class Man implements Human {
+	@Override
+	public void run() {
+		System.out.println("人会跑步");
+	}
+}
+
+//抽象装饰类
+public abstract class AbstractDecorator implements Human{
+	//被装饰对象的引用 
+	private Human human;
+	//构造函数注入被装饰者
+	public AbstractDecorator(Human human) {
+		this.human = human;
+	}
+	//调用被装饰对象的方法
+	@Override
+	public void run() {
+		human.run();
+	}
+}
+
+//具体装饰类
+public class ManDecorator extends AbstractDecorator {
+	public ManDecorator(Human human) {
+		//调用父类的构造方法
+		super(human);
+	}
+	//装饰类增加的功能
+	private void fly() {
+		System.out.println("人可以飞");
+	}
+	//增强了功能的run方法
+	@Override
+	public void run() {
+		super.run();
+		fly();
+	}
+}
+
+//测试
+public class Test {
+	public static void main(String[] args) {
+		//创建被装饰的类
+		Human human = new Man();
+		
+		//创建装饰的类，并添加被装饰类的引用
+		Human superMan = new ManDecorator(human);
+		
+		//执行增强后的run方法
+		superMan.run();
+	}
+}
 ```
