@@ -1345,8 +1345,7 @@ class ConcreteClass extends AbstractClass{
 ![24](../img/JavaDesignPatterns_img/24.png)
 
 >在状态模式结构图中包含如下几个角色：
-* Context（环境类）：它是拥有多种状态的对象。由于环境类的状态存在多样性且在不同状态下对象的行为有所不同，因此将状态独立出去形成单独的状态类。在环境类中维护一个抽象状态类State的实例，这个实例定义当前状态，在具体实现时，
-它是一个State子类的对象。
+* Context（环境类）：它是拥有多种状态的对象。由于环境类的状态存在多样性且在不同状态下对象的行为有所不同，因此将状态独立出去形成单独的状态类。在环境类中维护一个抽象状态类State的实例，这个实例定义当前状态，在具体实现时，它是一个State子类的对象。
 * State（抽象状态类）：它用于定义一个接口以封装与环境类的一个特定状态相关的行为。其中声明了各种不同状态对应的方法，而在其子类中实现类这些方法。
 * ConcreteState（具体状态类）：它是抽象状态类的子类，每一个子类实现一个与环境类的一个状态相关的行为，每一个具体状态类对应环境的一个具体状态，不同的具体状态类其行为有所不同。
 
@@ -1383,3 +1382,253 @@ class Context {
 >状态模式的优缺点：
 >优点：状态模式可以让我们避免使用庞大的条件语句来将业务方法和状态转换代码交织在一起。
 >缺点：状态模式的使用必然会增加系统中类和对象的个数，导致系统运行开销增大。
+
+---
+
+# 19.职责链模式（用于请求的链式处理）-Chain of Responsibility Pattern
+
+职责链模式可以将请求的处理者组织成一条链，并让请求沿着链传递，由链上的处理者对请求进行相应的处理，客户端无须关心请求的处理细节以及请求的传递，只需将请求发送到链上即可，实现请求发送者和请求处理者解耦。
+
+![25](../img/JavaDesignPatterns_img/25.png)
+
+>在职责链模式中包含如下几个角色：
+* Handler（抽象处理者）：它定义了一个处理请求的接口，在其中定义了抽象请求处理方法。因为每一个处理者的下家还是一个处理者，因此在抽象处理者中定义了一个抽象处理者类型的对象（如结构图中的successor），作为其对下家的引用。通过该引用，处理者可以连成一条链。
+* ConcreteHandler（具体处理者）：是抽象处理者的子类，实现了抽象处理者中定义的抽象请求处理方法，在处理请求之前需要进行判断，看是否有相应的处理权限，如果可以处理请求就处理它，否则将请求转发给后继者；在具体处理者中可以访问链中下一个对象，以便请求的转发。
+
+```java
+
+abstract class Handler {
+	//对下一个处理者的引用
+	protected Handler successor;
+	//注入对象
+	public void setSuccessor(Handler successor) {
+		this.successor=successor;
+	}
+	//请求处理方法
+	public abstract void handleRequest(String request);
+}
+
+class ConcreteHandler extends Handler {
+	public void handleRequest(String request) {
+		if (请求满足条件) {
+			//具体处理请求
+		}else {
+			this.successor.handleRequest(request); //转发请求
+		}
+	}
+}
+
+```
+
+>职责链模式的优缺点：
+>优点：请求处理对象仅需维持一个指向其后继者的引用，而不需要维持它对所有的候选处理者的引用，可简化对象的相互连接。
+>缺点：对于比较长的职责链，请求的处理可能涉及到多个处理对象。
+
+---
+
+# 20.中介者模式（用于协调多个对象之间的交互）-Mediator Pattern
+
+==中介者模式是来协调某些类或对象之间的复杂关系。以降低系统的耦合度。又称为调停者模式，它是一种对象行为型模式。==
+
+![26](../img/JavaDesignPatterns_img/26.png)
+
+![27](../img/JavaDesignPatterns_img/27.png)
+
+>如果在一个系统中对象之间存在多对多的相互关系，可以将对象之间的一些交互行为从各个对象中分离出来，并集中封装在一个中介者对象中，并由该中介者进行统一协调，这样对象之间多对多的复杂关系就转化为相对简单的一对多关系。通过引入中介者来简化对象之间的复杂交互。
+
+![28](../img/JavaDesignPatterns_img/28.png)
+
+>在中介者模式结构图中包含如下几个角色：
+* Mediator（抽象中介者）：它定义一个接口，该接口用于与各同事对象之间进行通信。
+* ConcreteMediator（具体中介者）：通过协调各个同事对象来实现协作行为，它有对各个同事对象的引用。
+* Colleague（抽象同事类）：它定义各个同事类公有的方法，并声明了一些抽象方法来供子类实现，同时它有一个对抽象中介者类的引用，其子类可以通过该引用来与中介者通信。
+* ConcreteColleague（具体同事类）：它是抽象同事类的子类；==每一个同事对象在需要和其他同事对象通信时，先与中介者通信，通过中介者来间接完成与其他同事类的通信==；在具体同事类中实现了在抽象同事类中声明的抽象方法。
+
+```java
+
+abstract class Mediator {
+	protected ArrayList<Colleague> colleagues; //用于存储同事对象
+	
+	//注册方法，用于增加同事对象
+	public void register(Colleague colleague) {
+		colleagues.add(colleague);
+	}
+	//声明抽象的业务方法
+	public abstract void operation();
+}
+
+class ConcreteMediator extends Mediator {
+	//实现业务方法，封装同事之间的调用
+	public void operation() {
+		//通过中介者调用同事类的方法
+	}
+}
+
+abstract class Colleague {
+	protected Mediator mediator; //维持一个抽象中介者的引用
+
+	public abstract void method1(); //声明自身方法，处理自己的行为
+	public Colleague(Mediator mediator) {
+		this.mediator=mediator;
+	}
+	//定义依赖方法，与中介者进行通信
+	public void method2() {
+		mediator.operation();
+	}
+}
+
+class ConcreteColleague extends Colleague {
+	public ConcreteColleague(Mediator mediator) {
+		super(mediator);
+	}
+	//实现自身方法
+	public void method1() {
+		......
+	}
+}
+
+```
+
+>中介者模式的优缺点：
+>优点：简化了对象之间的交互，它用中介者和同事的一对多交互代替了原来同事之间的多对多交互。增加新的中介者和新的同事类都比较方便。
+>缺点：在具体中介者类中包含了大量同事之间的交互细节，可能会导致具体中介者类非常复杂。
+
+---
+
+# 21.备忘录模式（用于撤销功能的实现）-Memento Pattern
+
+==备忘录模式可以使系统恢复到某一特定的历史状态。==
+
+<font color="blue">备忘录模式的定义：在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。它是一种对象行为型模式，其别名为Token。</font>
+
+![29](../img/JavaDesignPatterns_img/29.png)
+
+>备忘录模式结构图中包含如下几个角色：
+* Originator（原发器）：一个普通类，==一般将需要保存内部状态的类设计为原发器。==
+* Memento（备忘录)：存储原发器的内部状态，根据原发器来决定保存哪些内部状态。一般参考原发器的设计，根据实际需要确定备忘录类中的属性。==需要注意的是，除了原发器本身与负责人类之外，备忘录对象不能直接供其他类使用==。
+* Caretaker（负责人）：负责人又称为管理者，==它负责保存备忘录，但是不能对备忘录的内容进行操作或检查==。在负责人类中可以存储一个或多个备忘录对象，它只负责存储对象，而不能修改对象，也无须知道对象的实现细节。
+
+```java
+
+public class Originator {
+	private String state;
+	
+	public Originator(){}
+	// 创建一个备忘录对象
+	public Memento createMemento() {
+		return new Memento(this);
+	}
+	// 根据备忘录对象恢复原发器状态
+	public void restoreMemento(Memento m) {
+		state = m.state;
+	}
+	public void setState(String state) {
+		this.state=state;
+	}
+	public String getState() {
+		return this.state;
+	}
+}
+
+//除了Originator类，若允许其他类来调用备忘录类Memento的构造函数与相关方法，将导致在备忘录中保存的历史状态发生改变，
+//通过撤销操作所恢复的状态就不再是真实的历史状态。
+class Memento {
+	private String state;
+	
+	public Memento(Originator o) {
+		state = o.getState();
+	}
+	public void setState(String state) {
+		this.state=state;
+	}
+	public String getState() {
+		return this.state;
+	}
+}
+
+//Caretaker类中不应该直接调用Memento中的状态改变方法，它的作用仅仅用于存储备忘录对象。
+//将原发器备份生成的备忘录对象存储在其中，当用户需要对原发器进行恢复时再将存储在其中的备忘录对象取出。
+
+public class Caretaker {
+	private Memento memento;
+	
+	public Memento getMemento() {
+		return memento;
+	}
+	public void setMemento(Memento memento) {
+		this.memento=memento;
+	}
+}
+
+```
+
+>备忘录模式的优缺点：
+>优点：它提供了一种状态恢复的实现机制，使得用户可以方便地回到一个特定的历史步骤。
+>缺点：资源消耗过大，如果需要保存的原发器类的成员变量太多，就不可避免需要占用大量的存储空间，每保存一次对象的状态都需要消耗一定的系统资源。
+
+---
+
+# 22.访问者模式（用于操作复杂对象结构）-Visitor Pattern
+
+访问者模式，它包含访问者和被访问元素两个主要组成部分。被访问的元素通常具有不同的类型，且不同的访问者可以对它们进行不同的访问操作。==例如处方单中的各种药品信息就是被访问的元素，而划价人员和药房工作人员就是访问者==。访问者模式使得用户可以在不修改现有系统的情况下扩展系统的功能，为这些不同类型的元素增加新的操作。
+
+<font color="blue">使用访问者模式时，被访问元素通常不是单独存在的，它们存储在一个集合中，这个集合被称为“对象结构”，访问者通过遍历对象结构实现对其中存储的元素的逐个操作。</font>
+
+![30](../img/JavaDesignPatterns_img/30.png)
+
+>访问者模式结构图中包含如下几个角色：
+* Vistor（抽象访问者）：抽象访问者为对象结构中每一个具体元素类ConcreteElement声明一个访问操作，具体访问者需要实现这些操作方法，定义对这些元素的访问操作。
+* ConcreteVisitor（具体访问者）：具体访问者实现了每个由抽象访问者声明的操作，每一个操作用于访问对象结构中一种类型的元素。
+* Element（抽象元素）：它定义一个accept()方法，该方法通常以一个抽象访问者作为参数。
+* ConcreteElement（具体元素）：具体元素实现了accept()方法，在accept()方法中调用访问者的访问方法以便完成对一个元素的操作。
+* ObjectStructure（对象结构）：对象结构是一个元素的集合，它用于存放元素对象，并且提供了遍历其内部元素的方法。它可以结合组合模式来实现，也可以是一个简单的集合对象，如一个List对象或一个Set对象。
+
+```java
+
+abstract class Visitor{
+	public abstract void visit(ConcreteElementA elementA);
+	public abstract void visit(ConcreteElementB elementB);
+	public void visit(ConcreteElementC elementC)
+	{
+		//元素ConcreteElementC操作代码
+	}
+}
+
+class ConcreteVisitor extends Visitor{
+	public void visit(ConcreteElementA elementA)
+	{
+		//元素ConcreteElementA操作代码
+	}
+	public void visit(ConcreteElementB elementB)
+	{
+		//元素ConcreteElementB操作代码
+	}
+}
+
+interface Element{
+	public void accept(Visitor visitor);
+}
+
+class ConcreteElementA implements Element
+{
+	public void accept(Visitor visitor)
+	{
+		visitor.visit(this);
+	}
+	public void operationA()
+	{
+		//业务方法
+	}
+}
+
+```
+
+>其具体执行过程如下：
+(1) 调用具体元素类的accept(Visitor visitor)方法，并将Visitor子类对象作为其参数；
+(2) 在具体元素类accept(Visitor visitor)方法内部调用传入的Visitor对象的visit()方法，如
+visit(ConcreteElementA elementA)，将当前具体元素类对象(this)作为参数，如visitor.visit(this)；
+(3) 执行Visitor对象的visit()方法，在其中还可以调用具体元素对象的业务方法。
+
+>访问者模式的优缺点：
+>优点：增加新的访问操作很方便。将有关元素对象的访问行为集中到一个访问者对象中，而不是分散在一个个的元素类中。
+>缺点：在访问者模式中，每增加一个新的元素类都意味着要在抽象访问者角色中增加一个新的抽象操作。
