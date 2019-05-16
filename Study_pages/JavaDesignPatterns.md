@@ -830,3 +830,202 @@ public class Test {
 	}
 }
 ```
+
+---
+
+# 11.外观模式-Facade Pattern
+
+==外观模式又称为门面模式，为子系统中的提供一个统一的入口。这个入口使得这一子系统更加容易使用。子系统类通常是一些业务类，实现了一些具体的、独立的业务功能。==
+
+![15](../img/JavaDesignPatterns_img/15.png)
+
+>外观模式包含如下两个角色：
+>(1) Facade（外观角色）：==其可以是普通类，也可以是接口==。用户可以调用它的方法，在外观角色中可以知道子系统的功能和责任；在正常情况下，它将所有从客户端发来的请求委派到相应的子系统去，传递给相应的子系统对象处理。
+>(2) SubSystem（子系统角色）：可以有一个或者多个子系统角色，每一个子系统可以不是一个单独的类，而是一个类的集合，它实现子系统的功能；每一个子系统都可以被客户端直接调用，或者被外观角色调用，==它处理由外观类传过来的请求；子系统并不知道外观的存在，对于子系统而言，外观角色仅仅是另外一个客户端而已。==
+
+```java
+
+//子系统A
+class SubSystemA
+{   
+	public void MethodA(){
+	//业务实现代码
+	}
+}
+//子系统B
+class SubSystemB
+{   
+	public void MethodB(){
+	//业务实现代码
+	}
+}
+//子系统C
+class SubSystemC
+{
+	public void MethodC(){
+	//业务实现代码
+	}
+}
+
+//外观类
+class Facade
+{
+	private SubSystemA obj1 = new SubSystemA();
+	private SubSystemB obj2 = new SubSystemB();
+	private SubSystemC obj3 = new SubSystemC();
+	public void Method(){
+	obj1.MethodA();
+	obj2.MethodB();
+	obj3.MethodC();
+	}
+}
+
+//测试
+class Program
+{
+	static void Main(string[] args){
+		Facade facade = new Facade();
+		facade.Method();
+	}
+}
+
+```
+
+>外观模式的优缺点：
+>优点：实现了子系统与客户端之间的松耦合关系，一个子系统的修改对其他子系统没有任何影响，而且子系统内部变化也不会影响到外观对象。
+>缺点：不能很好地限制客户端直接使用子系统类。如果设计不当，增加新的子系统可能需要修改外观类的源代码，违背了开闭原则。
+
+---
+
+# 12.享元模式（用于节约内存使用空间）-Flyweight Pattern
+
+==享元模式主要实现对同或者相似对象的共享访问，从而节约内存使用空间。==
+
+<h3>举例</h3>
+一个文本字符串中存在很多重复的字符，若每个字符代表一个对象，将会出现大量的对象，从而浪费系统资源？而享元模式通过建立享元池来解决这个问题。
+
+![16](../img/JavaDesignPatterns_img/16.png)
+
+>享元对象能做到共享的关键是区分了内部状态和外部状态.
+>1. 内部状态：是存储在享元对象内部并且不会随环境改变而改变的状态，内部状态可以共享。==例如字符内容。==
+>2. 外部状态：是随环境改变而改变的、不可以共享的状态。其通常由客户端保存，并在享元对象被创建之后，需要使用的时候再传入到享元对象内部。==例如字符大小与颜色。==
+
+<font color="red">
+
+享元模式的实现过程：
+1. 将具有相同内部状态的对象存储在享元池中.
+2. 需要的时候就将对象从享元池中取出，实现对象的复用。
+3. 通过向取出的对象注入不同的外部状态，可以得到一系列相似的对象,而这些对象在内存中实际上只存储一份。
+
+</font>
+
+![17](../img/JavaDesignPatterns_img/17.png)
+
+>享元模式角色划分
+FlyWeightFactory 享元工厂类，将各种类型的具体享元对象存储在一个享元池中
+FlyWeight 享元接口或者（抽象享元类），声明了具体享元类公共的方法
+ConcreteFlyWeight 具体享元类，其实例称为享元对象
+UnSharedConcreteFlyWeight 非共享享元实现类
+
+```java
+//享元工厂
+class FlyweightFactory {
+	//定义一个HashMap用于存储享元对象，实现享元池
+	private HashMap flyweights = new HashMap();
+	
+	public Flyweight getFlyweight(String key){
+		//如果对象存在，则直接从享元池获取
+		if(flyweights.containsKey(key)){
+			return(Flyweight)flyweights.get(key);
+		}else {
+			//如果对象不存在，先创建一个新的对象添加到享元池中，然后返回
+
+			Flyweight fw = new ConcreteFlyweight();
+			flyweights.put(key,fw);
+			return fw;
+		}
+	}
+}
+
+//
+public interface FlyWeight {
+  void operation(String externalState);
+}
+
+//
+public class ConcreteFlyWeight implements FlyWeight {
+		//内部状态intrinsicState作为成员变量，同一个享元对象其内部状态是一致的
+		private String intrinsicState;
+		
+		public Flyweight(String intrinsicState) {
+		this.intrinsicState=intrinsicState;
+		}
+		
+		//外部状态extrinsicState在使用时由外部设置，不保存在享元对象中，即使是同一个对象，在每一次调用时也可以传入不同的外部状态
+		public void operation(String extrinsicState) {
+				....
+		}
+}
+
+```
+
+>享元模式的优缺点：
+>优点：极大减少内存中对象的数量，使得相同或相似对象在内存中只保存一份。
+>缺点：使得系统变得复杂，需要分离出内部状态和外部状态。
+
+---
+
+# 13.代理模式-Proxy Pattern
+
+==代理模式：给某一个对象提供一个代理或占位符，并由代理对象来控制对原对象的访问。代理对象起到中介的作用，它可以为客户去掉一些服务或者增添额外的服务。==
+
+![18](../img/JavaDesignPatterns_img/18.png)
+
+>代理模式角色划分
+(1) Subject（抽象角色）：是代理角色和真实角色的父接口。
+(2) Proxy（代理角色）：==它包含了对真实角色的引用==，
+(3) RealSubject（真实角色）：它定义了代理角色所代表的真实对象，在真实角色中实现了真实的业务操作，客户可以通过代理角色间接调用真实角色。
+
+```java
+
+abstract class Subject
+{
+	public abstract void Request();
+}
+//
+class RealSubject extends Subject
+{
+	public override void Request()
+	{
+		//业务方法具体实现代码
+	}
+}
+//代理类
+class Proxy extends Subject
+{
+		private RealSubject realSubject = new RealSubject(); //维持一个对真实主题对象的引用
+		public void PreRequest(){    //代理类添加的多余方法
+			…...
+		}
+		public override void Request(){
+			PreRequest();
+			realSubject.Request(); //调用真实对象的方法，执行目标对象的方法
+			PostRequest();
+		}
+		public void PostRequest(){  //代理类添加的多余方法
+			……
+		}
+}
+
+//测试
+public class Client {
+	public static void main(String[] args) {
+		Subject subject = new Proxy();  //父类引用指向子类对象
+		subject.Request();      		//这个方法被代理进行修饰
+	}
+}
+```
+
+>代理模式的优缺点：
+>优点：协调调用者和被调用者，在一定程度上降低了系统的耦合度。
+>缺点：代理模式可能会造成请求的处理速度变慢。
