@@ -1029,3 +1029,357 @@ public class Client {
 >代理模式的优缺点：
 >优点：协调调用者和被调用者，在一定程度上降低了系统的耦合度。
 >缺点：代理模式可能会造成请求的处理速度变慢。
+
+---
+
+# 14.命令模式（用于请求发送者与接收者解耦）-Command Pattern
+
+==命令模式：将请求发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求。==
+
+**发送者与接收者之间存在第三方（命令者），通过命令者来执行请求。**
+
+![19](../img/JavaDesignPatterns_img/19.png)
+
+>在命令模式结构图中包含如下几个角色：
+* Command（抽象命令类）：是一个抽象类或接口，声明了用于执行请求的execute()等方法.
+* ConcreteCommand（具体命令类）：是抽象命令类的子类，实现了在抽象命令类中声明的方法，在实现execute()方法时，将调用接收者对象的相关操作(Action)。
+* Invoker（调用者）：调用者即请求发送者，它通过命令对象来执行请求。在程序运行时可以将一个具体命令对象注入其中，再调用具体命令对象的execute()方法，从而实现间接调用请求接收者的相关操作。
+* Receiver（接收者）：接收者执行与请求相关的操作，它具体实现对请求的业务处理。
+
+```java
+//抽象命令类
+public interface Command {
+	public void excute();
+}
+//具体命令类
+public class ConcreteCommand implements Command {
+	public Reciver r;
+	
+	public ConcreteCommand(Reciver r){   //把接受者用构造方法注入到类中
+		this.r=r;
+	}
+	@Override
+	public void excute() {
+		System.out.println("具体命令，让接受者执行请求");
+		r.run();      
+	}
+}
+//调用者，发送请求者
+public class Invoker {
+	private Command command;
+	//构造注入
+	public Invoker(Command command) {
+		this.command = command;
+	}
+	//设值注入
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+	//业务方法，用于调用命令类的execute()方法
+	public void call() {
+		command.excute();
+	}
+}
+//接受请求者
+public class Reciver {
+	public void run() {
+		System.out.println("接受者执行请求");
+	}
+}
+//测试
+public class Test {
+	public static void main(String[] args) {
+		Reciver reciver=new Reciver();
+		Command c=new ConcreteCommand(reciver);   //父类引用指向子类对象
+		Invoker invoker=new Invoker(c);   //把命令类注入到发送者类中
+		invoker.call();         		//发送者执行请求，实际是命令对象执行请求
+	}
+}
+
+```
+
+>运行结果：
+具体命令，让接受者执行请求
+接受者执行请求
+
+
+>命令模式的优缺点：
+>优点：新的命令可以很容易地加入到系统中，无须修改原有系统源代码。
+>缺点：可能会导致某些系统有过多的具体命令类。
+
+
+---
+
+# 15.迭代器模式（用于遍历对象中的元素）-Iterator Pattern
+
+迭代器模式：提供一种方法来访问对象，而不用暴露这个对象的内部方法表示，其别名为游标(Cursor)。
+
+![20](../img/JavaDesignPatterns_img/20.png)
+
+>在迭代器模式结构图中包含如下几个角色：
+* Iterator（抽象迭代器）：它定义了访问和遍历元素的接口，声明了用于遍历数据元素的方法。
+* ConcreteIterator（具体迭代器）：它实现了抽象迭代器接口，在具体迭代器中通过游标来记录在聚合对象中所处的当前位置，游标通常是一个表示位置的非负整数。
+* Aggregate（抽象聚合类）：它用于存储和管理元素对象，声明一个createIterator()方法用于创建一个迭代器对象，充当抽象迭代器工厂角色。
+* ConcreteAggregate（具体聚合类）：它实现了createIterator()方法，该方法返回一个与该具体聚合类对应的具体迭代器ConcreteIterator实例。
+
+```java
+
+//抽象迭代器
+interface Iterator {
+	public void first(); //将游标指向第一个元素
+	public void next(); //将游标指向下一个元素
+	public boolean hasNext(); //判断是否存在下一个元素
+	public Object currentItem(); //获取游标指向的当前元素
+}
+//抽象聚合类
+interface Aggregate {
+Iterator createIterator();
+}
+//具体聚合类
+class ConcreteAggregate implements Aggregate {
+	......
+		public Iterator createIterator() {
+			return new ConcreteIterator(this);
+		}
+	......
+}
+
+//具体迭代器
+class ConcreteIterator implements Iterator {
+	private ConcreteAggregate objects; //对具体聚合对象的引用，以便于访问存储在聚合对象中的数据
+	private int cursor; //定义一个游标，用于记录当前访问位置
+	//构造函数注入
+	public ConcreteIterator(ConcreteAggregate objects) {
+		this.objects=objects;
+	}
+	public void first() { ...... }
+	public void next() { ...... }
+	public boolean hasNext() { ...... }
+	public Object currentItem() { ...... }
+}
+
+```
+
+>迭代器模式的优缺点：
+>优点：对同一个聚合对象上可以定义多种遍历方式，增加新的聚合类和迭代器类都很方便。
+>缺点：增加新的聚合类需要对应增加新的迭代器类，类的个数成对增加。
+
+---
+
+# 16.观察者模式(用于对象间的联动)-Observer Pattern
+
+==一个对象的状态或行为的变化将导致其他对象的状态或行为也发生改变，它们之间将产生联动。为了更好地描述对象之间的联动，观察者模式定义了对象之间一对多（包括一对一）的依赖关系，让一个对象的改变能够影响其他对象。==
+
+<font color="red">观察者模式的定义：观察者模式定义了对象之间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。</font>
+
+![21](../img/JavaDesignPatterns_img/21.png)
+
+>在观察者模式结构图中包含如下几个角色：
+* Subject（目标）:被观察的对象。它提供一系列方法来增加和删除观察者对象，同时它定义了通知方法notify()。
+* ConcreteSubject（具体目标）：是目标类的子类，当它的状态发生改变时，向它的各个观察者发出通知；同时它还实现了在目标类中定义的抽象业务逻辑方法。
+* Observer（观察者）：观察者将对观察目标的改变做出反应，观察者一般定义为接口，该接口声明了更新数据的方法update()，因此又称为抽象观察者。
+* ConcreteObserver（具体观察者）：在具体观察者中有一个指向具体目标的引用，它实现了在抽象观察者Observer中定义的update()方法。通常在实现时，调用具体目标类的attach()方法将自己添加到目标类的集合中或通过detach()方法将自己从目标类的集合中删除。
+
+```java
+
+abstract class Subject {
+	//定义一个观察者集合用于存储所有观察者对象
+	protected ArrayList observers<Observer> = new ArrayList();
+	//注册方法，用于向观察者集合中增加一个观察者
+	public void attach(Observer observer) {
+	observers.add(observer);
+	}
+	//注销方法，用于在观察者集合中删除一个观察者
+	public void detach(Observer observer) {
+	observers.remove(observer);
+	}
+	//声明抽象通知方法
+	public abstract void notify();
+}
+
+class ConcreteSubject extends Subject {
+	//实现通知方法
+		public void notify() {
+		//遍历观察者集合，调用每一个观察者的响应方法
+			for(Object obs:observers) {
+				((Observer)obs).update();
+			}
+		}
+}
+
+interface Observer {
+	//声明响应方法
+	public void update();
+}
+
+class ConcreteObserver implements Observer {
+	//实现响应方法
+	public void update() {
+	//具体响应代码
+	}
+}
+
+```
+
+>观察者模式的优缺点：
+>优点：观察者模式可以实现表示层和数据逻辑层的分离，增加新的具体观察者无须修改原有系统代码。
+>缺点：如果一个观察目标对象有很多直接和间接观察者，将所有的观察者都通知到会花费很多时间。
+
+---
+
+# 16.策略模式（用于算法的封装与切换）-Strategy Pattern
+
+==策略模式： 定义一系列算法类，将每一个算法封装起来，并让它们可以相互替换。策略模式的主要目的是将算法的定义与使用分开。==
+
+![22](../img/JavaDesignPatterns_img/22.png)
+
+>在策略模式结构图中包含如下几个角色：
+* Context（环境类）：是使用算法的角色，它在解决某个问题时可以采用多种策略。其有一个对抽象策略类的引用实例，用于定义所采用的策略。
+* Strategy（抽象策略类）：它为所支持的算法声明了抽象方法，是所有策略类的父类。
+* ConcreteStrategy（具体策略类）：它实现了在抽象策略类中声明的算法，在运行时，使用一种具体的算法实现某个业务处理。
+
+```java
+
+abstract class AbstractStrategy {
+	public abstract void algorithm(); //声明抽象算法
+}
+
+class ConcreteStrategyA extends AbstractStrategy {
+	//算法的具体实现
+	public void algorithm() {
+		//算法A
+	}
+}
+//环境类
+class Context {
+	private AbstractStrategy strategy; //有一个对抽象策略类的引用
+	//运用构造方法进行注入操作
+	public void setStrategy(AbstractStrategy strategy) {
+		this.strategy= strategy;
+	}
+	//调用策略类中的算法
+	public void algorithm() {
+		strategy.algorithm();
+	}
+}
+//测试类
+public class Test {
+	public static void main(String[] args) {
+		Context context = new Context();
+		AbstractStrategy strategy;
+		strategy = new ConcreteStrategyA(); //可在运行时指定类型
+		context.setStrategy(strategy);
+		context.algorithm();
+	}
+}
+
+```
+
+>策略模式的优缺点：
+>优点：用户可以在不修改原有系统的基础上选择算法或行为，也可以灵活地增加新的算法或行为。使用策略模式可以避免多重条件选择语句。
+>缺点：策略模式将造成系统产生很多具体策略类。
+
+---
+
+# 17.模板方法模式（用于提高代码的复用性）-Template Method Pattern
+
+<h3>举例：</h3>
+
+**对于 点单 -> 吃东西 -> 买单 这一流程来说**
+
+在模板方法模式中，可以将相同的代码放在父类中，例如将方法“点单”以及“买单”的实现放在父类中，而对于方法“吃东西”，在父类中只做一个声明，将其具体实现放在不同的子类中，在一个子类中提供“吃面条”的实现，而另一个子类提供“吃饭”的实现。
+
+![23](../img/JavaDesignPatterns_img/23.png)
+
+>模板方法模式包含如下两个角色：
+* (1) AbstractClass（抽象类）：在抽象类中定义了一系列基本操作.每一个基本操作对应算法的一个步骤，在其子类中可以重定义或实现这些步骤。同时，在抽象类中实现了一个模板方法，用于定义一个算法的框架，模板方法不仅可以调用在抽象类中实现的基本方法，也可以调用在抽象类的子类中实现的基本方法，还可以调用其他对象中的方法。
+* (2) ConcreteClass（具体子类）：它是抽象类的子类，用于实现在父类中声明的抽象基本操作以完成子类特定算法的步骤，也可以覆盖在父类中已经实现的具体基本操作。
+
+```java
+
+abstract class AbstractClass
+{
+	//模板方法,可以调用在抽象类中实现的基本方法
+	public void TemplateMethod()
+	{
+		PrimitiveOperation1();
+		PrimitiveOperation2();
+		PrimitiveOperation3();
+	}
+	//基本方法—具体方法
+	public void PrimitiveOperation1(){
+		//实现代码
+	}
+	
+	//基本方法—抽象方法
+	public abstract void PrimitiveOperation2();
+	
+	//基本方法—钩子方法
+	public virtual void PrimitiveOperation3(){ 
+		//实现代码
+	}
+}
+
+class ConcreteClass extends AbstractClass{
+	public override void PrimitiveOperation2(){
+	//实现代码
+	}
+	//对方法3的重写
+	public override void PrimitiveOperation3(){
+	//实现代码
+	}
+}
+
+```
+
+>模板方法模式的优缺点：
+>优点：模板方法模式是一种代码复用技术，可实现一种反向控制结构，通过子类覆盖父类的钩子方法来决定某一特定步骤是否需要执行。
+>缺点：如果父类中可变的基本方法太多，将会导致类的个数增加，系统更加庞大。此时，可结合桥接模式来进行设计。
+
+---
+
+# 18.状态模式（用于处理对象的多种状态及其相互转换）-State Pattern
+
+==在状态模式中，把对象在每一个状态下的行为和状态转移语句封装在一个个状态类中，通过这些状态类来分散冗长的条件转移语句，让系统具有更好的灵活性和可扩展性。用于解决系统中复杂对象的状态转换以及不同状态下行为的封装问题==
+
+![24](../img/JavaDesignPatterns_img/24.png)
+
+>在状态模式结构图中包含如下几个角色：
+* Context（环境类）：它是拥有多种状态的对象。由于环境类的状态存在多样性且在不同状态下对象的行为有所不同，因此将状态独立出去形成单独的状态类。在环境类中维护一个抽象状态类State的实例，这个实例定义当前状态，在具体实现时，
+它是一个State子类的对象。
+* State（抽象状态类）：它用于定义一个接口以封装与环境类的一个特定状态相关的行为。其中声明了各种不同状态对应的方法，而在其子类中实现类这些方法。
+* ConcreteState（具体状态类）：它是抽象状态类的子类，每一个子类实现一个与环境类的一个状态相关的行为，每一个具体状态类对应环境的一个具体状态，不同的具体状态类其行为有所不同。
+
+```java
+
+abstract class State {
+	//声明抽象业务方法，不同的具体状态类可以不同的实现
+	public abstract void handle();
+}
+
+class ConcreteState extends State {
+	public void handle() {
+	//方法具体实现代码
+	}
+}
+
+class Context {
+	private State state; //维持一个对抽象状态对象的引用
+	private int value; //其他属性值，该属性值的变化可能会导致对象状态发生变化
+	
+	//设置状态对象
+	public void setState(State state) {
+		this.state = state;
+	}
+	public void request() {
+		//其他代码
+		state.handle(); //调用状态对象的业务方法
+		//其他代码
+	}
+}
+
+```
+
+>状态模式的优缺点：
+>优点：状态模式可以让我们避免使用庞大的条件语句来将业务方法和状态转换代码交织在一起。
+>缺点：状态模式的使用必然会增加系统中类和对象的个数，导致系统运行开销增大。
