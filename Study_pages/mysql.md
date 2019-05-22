@@ -340,8 +340,65 @@ join 按照功能大致分为如下三类：
 
 ---
 
+## 6.UNION 操作符(用于连接两个以上的 SELECT 语句的结果组合到一个结果集合中)
 
-## 6. 备份数据库:
+语法格式：
+
+```sql
+SELECT expression1, expression2, ... expression_n
+FROM tables
+[WHERE conditions]
+UNION [ALL]
+SELECT expression1, expression2, ... expression_n
+FROM tables
+[WHERE conditions];
+```
+
+>默认情况下 UNION 操作符已经删除了重复数据
+>ALL: 可选，返回所有结果集，包含重复数据。
+
+
+<h3>UNION 实例</h3>
+
+```sql
+SELECT country FROM t1
+UNION
+SELECT country FROM t2
+ORDER BY country; 
+```
+
+>从 "t1" 和 "t2" 表中选取所有不同的country（只有不同的值,排除重复值）：
+
+<h3>UNION ALL 实例</h3>
+
+```sql
+SELECT country FROM t1
+UNION ALL
+SELECT country FROM t2
+ORDER BY country;
+```
+
+>从 "t1" 和 "t2" 表中选取所有的country（包含重复的值）：
+
+<h3>带有 WHERE 的UNION ALL 实例</h3>
+
+```sql
+SELECT country, name FROM t1
+WHERE country='CN'
+UNION ALL
+SELECT country, app_name FROM t2
+WHERE country='CN'
+ORDER BY country; 
+```
+
+>从 "t1" 和 "t2" 表中选取所有的CN的数据（也有重复的值）：
+
+
+
+
+---
+
+## 7. 备份数据库:
 
 ### 1. 导出整个数据库:
 

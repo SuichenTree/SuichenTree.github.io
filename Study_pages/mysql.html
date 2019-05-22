@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-  <html>
-    <head>
+<!DOCTYPE html><html><head>
       <title>mysql</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.5\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
-      
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.13\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
       
       
       
@@ -206,6 +203,57 @@ code.language-yaml {
 /* Bash */
 .language-bash .token.keyword {
   color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
 }html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
  
       </style>
@@ -215,71 +263,72 @@ code.language-yaml {
       <ul>
 <li><a href="#mysql">MySQL</a>
 <ul>
-<li><a href="#1-mysql%E5%91%BD%E4%BB%A4windows-%E4%B8%8B">1. Mysql命令（windows 下）:</a>
+<li><a href="#1-mysql%E5%91%BD%E4%BB%A4windows-%E4%B8%8B">1. Mysql&#x547D;&#x4EE4;&#xFF08;windows &#x4E0B;&#xFF09;:</a>
 <ul>
-<li><a href="#1-%E8%BF%9E%E6%8E%A5mysql">1. 连接Mysql:</a></li>
-<li><a href="#2-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81">2. 修改密码:</a></li>
-<li><a href="#3-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">3. 创建数据库：</a></li>
-<li><a href="#4-%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81">4. 显示数据库，修改数据库默认编码:</a></li>
-<li><a href="#5-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93">5. 删除数据库：</a></li>
-<li><a href="#6-%E8%BF%9E%E6%8E%A5%E6%88%96%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E4%BA%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E5%AF%B9%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">6. 连接或切换数据库(用于在命令行中对其他数据库进行操作)：</a></li>
-<li><a href="#7-select%E5%91%BD%E4%BB%A4">7. SELECT命令:</a>
+<li><a href="#1-%E8%BF%9E%E6%8E%A5mysql">1. &#x8FDE;&#x63A5;Mysql:</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81">2. &#x4FEE;&#x6539;&#x5BC6;&#x7801;:</a></li>
+<li><a href="#3-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">3. &#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;&#xFF1A;</a></li>
+<li><a href="#4-%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81">4. &#x663E;&#x793A;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4FEE;&#x6539;&#x6570;&#x636E;&#x5E93;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;:</a></li>
+<li><a href="#5-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93">5. &#x5220;&#x9664;&#x6570;&#x636E;&#x5E93;&#xFF1A;</a></li>
+<li><a href="#6-%E8%BF%9E%E6%8E%A5%E6%88%96%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E4%BA%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E5%AF%B9%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">6. &#x8FDE;&#x63A5;&#x6216;&#x5207;&#x6362;&#x6570;&#x636E;&#x5E93;(&#x7528;&#x4E8E;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x5BF9;&#x5176;&#x4ED6;&#x6570;&#x636E;&#x5E93;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;)&#xFF1A;</a></li>
+<li><a href="#7-select%E5%91%BD%E4%BB%A4">7. SELECT&#x547D;&#x4EE4;:</a>
 <ul>
-<li><a href="#1-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0">1. 显示当前使用的数据库名称：</a></li>
-<li><a href="#2-%E6%98%BE%E7%A4%BAmysql%E7%9A%84%E7%89%88%E6%9C%AC">2. 显示MYSQL的版本：</a></li>
-<li><a href="#3-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4">3. 显示当前时间:</a></li>
-<li><a href="#4-%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2">4. 显示字符串：</a></li>
-<li><a href="#5-%E5%BD%93%E8%AE%A1%E7%AE%97%E5%99%A8%E7%94%A8">5. 当计算器用:</a></li>
+<li><a href="#1-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0">1. &#x663E;&#x793A;&#x5F53;&#x524D;&#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#xFF1A;</a></li>
+<li><a href="#2-%E6%98%BE%E7%A4%BAmysql%E7%9A%84%E7%89%88%E6%9C%AC">2. &#x663E;&#x793A;MYSQL&#x7684;&#x7248;&#x672C;&#xFF1A;</a></li>
+<li><a href="#3-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4">3. &#x663E;&#x793A;&#x5F53;&#x524D;&#x65F6;&#x95F4;:</a></li>
+<li><a href="#4-%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2">4. &#x663E;&#x793A;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;</a></li>
+<li><a href="#5-%E5%BD%93%E8%AE%A1%E7%AE%97%E5%99%A8%E7%94%A8">5. &#x5F53;&#x8BA1;&#x7B97;&#x5668;&#x7528;:</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#2-%E5%AF%B9%E8%A1%A8%E6%A0%BC%E6%93%8D%E4%BD%9C">2 对表格操作:</a>
+<li><a href="#2-%E5%AF%B9%E8%A1%A8%E6%A0%BC%E6%93%8D%E4%BD%9C">2 &#x5BF9;&#x8868;&#x683C;&#x64CD;&#x4F5C;:</a>
 <ul>
-<li><a href="#1%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8">1.创建数据表：</a></li>
-<li><a href="#2%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">2.展示表的结构：</a></li>
-<li><a href="#3%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE">3.删除数据表的结构与数据：</a></li>
-<li><a href="#4%E4%BD%BF%E7%94%A8-alter-table-add-%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5-int%E7%B1%BB%E5%9E%8B%E7%9A%84-id%E9%95%BF%E5%BA%A6%E4%B8%BA4%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%BA0">4.使用 alter table ... add 来为数据表中添加字段 int类型的 id,长度为4，默认值为0：</a></li>
-<li><a href="#5-%E4%BD%BF%E7%94%A8-alter-table-drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">5. 使用 alter table ... drop来删除表的 id 字段：</a></li>
-<li><a href="#6-%E4%BD%BF%E7%94%A8-alter-table-modify-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B">6. 使用 alter table ...  modify 修改字段类型:</a></li>
-<li><a href="#7-%E4%BD%BF%E7%94%A8-alter-table-change-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%90%8D%E7%A7%B0%E4%B8%8E%E7%B1%BB%E5%9E%8B">7. 使用 alter table ... change 修改字段类型名称与类型:</a></li>
-<li><a href="#8-%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8%E6%A0%BC%E5%90%8D">8. 重命名表格名:</a></li>
-<li><a href="#9-%E4%BD%BF%E7%94%A8-alter-table-add-index-%E4%B8%BA%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95">9. 使用 alter table ... add index 为字段加索引</a></li>
-<li><a href="#10-%E5%8A%A0%E4%B8%BB%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%B4%A2%E5%BC%95">10. 加主关键字的索引</a></li>
-<li><a href="#11-%E5%8A%A0%E5%94%AF%E4%B8%80%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%B4%A2%E5%BC%95">11. 加唯一限制条件的索引</a></li>
-<li><a href="#12-%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%AA%E7%B4%A2%E5%BC%95">12. 删除某个索引</a></li>
+<li><a href="#1%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8">1.&#x521B;&#x5EFA;&#x6570;&#x636E;&#x8868;&#xFF1A;</a></li>
+<li><a href="#2%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">2.&#x5C55;&#x793A;&#x8868;&#x7684;&#x7ED3;&#x6784;&#xFF1A;</a></li>
+<li><a href="#3%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE">3.&#x5220;&#x9664;&#x6570;&#x636E;&#x8868;&#x7684;&#x7ED3;&#x6784;&#x4E0E;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#4%E4%BD%BF%E7%94%A8-alter-table-add-%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5-int%E7%B1%BB%E5%9E%8B%E7%9A%84-id%E9%95%BF%E5%BA%A6%E4%B8%BA4%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%BA0">4.&#x4F7F;&#x7528; alter table ... add &#x6765;&#x4E3A;&#x6570;&#x636E;&#x8868;&#x4E2D;&#x6DFB;&#x52A0;&#x5B57;&#x6BB5; int&#x7C7B;&#x578B;&#x7684; id,&#x957F;&#x5EA6;&#x4E3A;4&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;0&#xFF1A;</a></li>
+<li><a href="#5-%E4%BD%BF%E7%94%A8-alter-table-drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">5. &#x4F7F;&#x7528; alter table ... drop&#x6765;&#x5220;&#x9664;&#x8868;&#x7684; id &#x5B57;&#x6BB5;&#xFF1A;</a></li>
+<li><a href="#6-%E4%BD%BF%E7%94%A8-alter-table-modify-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B">6. &#x4F7F;&#x7528; alter table ...  modify &#x4FEE;&#x6539;&#x5B57;&#x6BB5;&#x7C7B;&#x578B;:</a></li>
+<li><a href="#7-%E4%BD%BF%E7%94%A8-alter-table-change-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%90%8D%E7%A7%B0%E4%B8%8E%E7%B1%BB%E5%9E%8B">7. &#x4F7F;&#x7528; alter table ... change &#x4FEE;&#x6539;&#x5B57;&#x6BB5;&#x7C7B;&#x578B;&#x540D;&#x79F0;&#x4E0E;&#x7C7B;&#x578B;:</a></li>
+<li><a href="#8-%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8%E6%A0%BC%E5%90%8D">8. &#x91CD;&#x547D;&#x540D;&#x8868;&#x683C;&#x540D;:</a></li>
+<li><a href="#9-%E4%BD%BF%E7%94%A8-alter-table-add-index-%E4%B8%BA%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95">9. &#x4F7F;&#x7528; alter table ... add index &#x4E3A;&#x5B57;&#x6BB5;&#x52A0;&#x7D22;&#x5F15;</a></li>
+<li><a href="#10-%E5%8A%A0%E4%B8%BB%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%B4%A2%E5%BC%95">10. &#x52A0;&#x4E3B;&#x5173;&#x952E;&#x5B57;&#x7684;&#x7D22;&#x5F15;</a></li>
+<li><a href="#11-%E5%8A%A0%E5%94%AF%E4%B8%80%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%B4%A2%E5%BC%95">11. &#x52A0;&#x552F;&#x4E00;&#x9650;&#x5236;&#x6761;&#x4EF6;&#x7684;&#x7D22;&#x5F15;</a></li>
+<li><a href="#12-%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%AA%E7%B4%A2%E5%BC%95">12. &#x5220;&#x9664;&#x67D0;&#x4E2A;&#x7D22;&#x5F15;</a></li>
 </ul>
 </li>
-<li><a href="#3%E5%AF%B9%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">3.对表格中的数据操作：</a>
+<li><a href="#3%E5%AF%B9%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">3.&#x5BF9;&#x8868;&#x683C;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#xFF1A;</a>
 <ul>
-<li><a href="#1-%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">1. 删除表的数据：</a></li>
-<li><a href="#2-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">2. 插入数据：</a></li>
-<li><a href="#3-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">3. 修改数据：</a></li>
-<li><a href="#4-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">4. 查询数据：</a>
+<li><a href="#1-%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">1. &#x5220;&#x9664;&#x8868;&#x7684;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#2-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">2. &#x63D2;&#x5165;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#3-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">3. &#x4FEE;&#x6539;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#4-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">4. &#x67E5;&#x8BE2;&#x6570;&#x636E;&#xFF1A;</a>
 <ul>
-<li><a href="#1%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%85%A8%E9%83%A8%E6%95%B0%E6%8D%AE">①：查询表中全部数据：</a></li>
-<li><a href="#2-%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%89%8D%E5%87%A0%E8%A1%8C%E6%95%B0%E6%8D%AE">②: 查询表中前几行数据</a></li>
-<li><a href="#3%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%95%B0%E6%8D%AE">③：查询表中特定字段的数据：</a></li>
-<li><a href="#4%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">④：查询多个表的数据：</a></li>
-<li><a href="#5-%E4%BD%BF%E7%94%A8-like-%E5%AD%90%E5%8F%A5%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">⑤: 使用 LIKE 子句模糊查询：</a></li>
-<li><a href="#6%E4%BD%BF%E7%94%A8-order-by-%E5%AD%90%E5%8F%A5%E5%B0%86%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E5%90%8E%E5%86%8D%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE">⑥：使用 order by 子句将查询数据排序后再返回数据:</a></li>
-<li><a href="#7-group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">⑦： group by 语句根据一个或多个列对结果集进行分组：</a></li>
+<li><a href="#1%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%85%A8%E9%83%A8%E6%95%B0%E6%8D%AE">&#x2460;&#xFF1A;&#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x5168;&#x90E8;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#2-%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%89%8D%E5%87%A0%E8%A1%8C%E6%95%B0%E6%8D%AE">&#x2461;: &#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x524D;&#x51E0;&#x884C;&#x6570;&#x636E;</a></li>
+<li><a href="#3%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%95%B0%E6%8D%AE">&#x2462;&#xFF1A;&#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x7279;&#x5B9A;&#x5B57;&#x6BB5;&#x7684;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#4%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">&#x2463;&#xFF1A;&#x67E5;&#x8BE2;&#x591A;&#x4E2A;&#x8868;&#x7684;&#x6570;&#x636E;&#xFF1A;</a></li>
+<li><a href="#5-%E4%BD%BF%E7%94%A8-like-%E5%AD%90%E5%8F%A5%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">&#x2464;: &#x4F7F;&#x7528; LIKE &#x5B50;&#x53E5;&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#xFF1A;</a></li>
+<li><a href="#6%E4%BD%BF%E7%94%A8-order-by-%E5%AD%90%E5%8F%A5%E5%B0%86%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E5%90%8E%E5%86%8D%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE">&#x2465;&#xFF1A;&#x4F7F;&#x7528; order by &#x5B50;&#x53E5;&#x5C06;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x6392;&#x5E8F;&#x540E;&#x518D;&#x8FD4;&#x56DE;&#x6570;&#x636E;:</a></li>
+<li><a href="#7-group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">&#x2466;&#xFF1A; group by &#x8BED;&#x53E5;&#x6839;&#x636E;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5217;&#x5BF9;&#x7ED3;&#x679C;&#x96C6;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF1A;</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#4-join-%E7%9A%84%E4%BD%BF%E7%94%A8-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8">4. join 的使用---连接多个表:</a>
+<li><a href="#4-join-%E7%9A%84%E4%BD%BF%E7%94%A8-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8">4. join &#x7684;&#x4F7F;&#x7528;---&#x8FDE;&#x63A5;&#x591A;&#x4E2A;&#x8868;:</a>
 <ul>
-<li><a href="#1inner-join-%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E8%A1%A8">1.inner join --- 连接两个表:</a></li>
+<li><a href="#1inner-join-%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E8%A1%A8">1.inner join --- &#x8FDE;&#x63A5;&#x4E24;&#x4E2A;&#x8868;:</a></li>
 <li><a href="#2left-join">2.left join:</a></li>
 <li><a href="#3right-join">3.right join:</a></li>
 </ul>
 </li>
-<li><a href="#5-null-%E5%80%BC%E5%A4%84%E7%90%86">5. NULL 值处理：</a></li>
-<li><a href="#6-%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%BA%93">6. 备份数据库:</a>
+<li><a href="#5-null-%E5%80%BC%E5%A4%84%E7%90%86">5. NULL &#x503C;&#x5904;&#x7406;&#xFF1A;</a></li>
+<li><a href="#6union-%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%94%A8%E4%BA%8E%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E4%BB%A5%E4%B8%8A%E7%9A%84-select-%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%BB%93%E6%9E%9C%E7%BB%84%E5%90%88%E5%88%B0%E4%B8%80%E4%B8%AA%E7%BB%93%E6%9E%9C%E9%9B%86%E5%90%88%E4%B8%AD">6.UNION &#x64CD;&#x4F5C;&#x7B26;(&#x7528;&#x4E8E;&#x8FDE;&#x63A5;&#x4E24;&#x4E2A;&#x4EE5;&#x4E0A;&#x7684; SELECT &#x8BED;&#x53E5;&#x7684;&#x7ED3;&#x679C;&#x7EC4;&#x5408;&#x5230;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;&#x96C6;&#x5408;&#x4E2D;)</a></li>
+<li><a href="#7-%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%BA%93">7. &#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;:</a>
 <ul>
-<li><a href="#1-%E5%AF%BC%E5%87%BA%E6%95%B4%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93">1. 导出整个数据库:</a></li>
-<li><a href="#2-%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E8%A1%A8">2. 导出一个表：</a></li>
+<li><a href="#1-%E5%AF%BC%E5%87%BA%E6%95%B4%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93">1. &#x5BFC;&#x51FA;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x5E93;:</a></li>
+<li><a href="#2-%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E8%A1%A8">2. &#x5BFC;&#x51FA;&#x4E00;&#x4E2A;&#x8868;&#xFF1A;</a></li>
 </ul>
 </li>
 </ul>
@@ -287,110 +336,110 @@ code.language-yaml {
 </ul>
 <h1 class="mume-header" id="mysql">MySQL</h1>
 
-<p>知识链接：</p>
-<p><a href="https://www.cnblogs.com/jhf57101/p/6008049.html">LIKE模糊查询的通配符</a></p>
-<p><a href="https://www.cnblogs.com/zhangzhu/p/3172486.html">Mysql命令大全</a></p>
-<h2 class="mume-header" id="1-mysql%E5%91%BD%E4%BB%A4windows-%E4%B8%8B">1. Mysql命令（windows 下）:</h2>
+<p>&#x77E5;&#x8BC6;&#x94FE;&#x63A5;&#xFF1A;</p>
+<p><a href="https://www.cnblogs.com/jhf57101/p/6008049.html">LIKE&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#x7684;&#x901A;&#x914D;&#x7B26;</a></p>
+<p><a href="https://www.cnblogs.com/zhangzhu/p/3172486.html">Mysql&#x547D;&#x4EE4;&#x5927;&#x5168;</a></p>
+<h2 class="mume-header" id="1-mysql%E5%91%BD%E4%BB%A4windows-%E4%B8%8B">1. Mysql&#x547D;&#x4EE4;&#xFF08;windows &#x4E0B;&#xFF09;:</h2>
 
-<h3 class="mume-header" id="1-%E8%BF%9E%E6%8E%A5mysql">1. 连接Mysql:</h3>
+<h3 class="mume-header" id="1-%E8%BF%9E%E6%8E%A5mysql">1. &#x8FDE;&#x63A5;Mysql:</h3>
 
 <blockquote>
-<p>格式： mysql -h主机地址 -u用户名 －p用户密码</p>
+<p>&#x683C;&#x5F0F;&#xFF1A; mysql -h&#x4E3B;&#x673A;&#x5730;&#x5740; -u&#x7528;&#x6237;&#x540D; &#xFF0D;p&#x7528;&#x6237;&#x5BC6;&#x7801;</p>
 </blockquote>
-<p>①：连接到本机上的MYSQL:</p>
+<p>&#x2460;&#xFF1A;&#x8FDE;&#x63A5;&#x5230;&#x672C;&#x673A;&#x4E0A;&#x7684;MYSQL:</p>
 <blockquote>
 <p>mysql -u root -p<br>
-Enter password:密码</p>
+Enter password:&#x5BC6;&#x7801;</p>
 </blockquote>
-<p><font color="red">注意-u 与 root之间可以有空格也可以没有空格，但是密码前必须没有空格</font></p>
-<p>②：连接到远程主机上的MYSQL（<mark>如果远程主机的IP为110.110.110.110，用户名为root,密码为abcd123</mark>）：</p>
+<p><font color="red">&#x6CE8;&#x610F;-u &#x4E0E; root&#x4E4B;&#x95F4;&#x53EF;&#x4EE5;&#x6709;&#x7A7A;&#x683C;&#x4E5F;&#x53EF;&#x4EE5;&#x6CA1;&#x6709;&#x7A7A;&#x683C;&#xFF0C;&#x4F46;&#x662F;&#x5BC6;&#x7801;&#x524D;&#x5FC5;&#x987B;&#x6CA1;&#x6709;&#x7A7A;&#x683C;</font></p>
+<p>&#x2461;&#xFF1A;&#x8FDE;&#x63A5;&#x5230;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x4E0A;&#x7684;MYSQL&#xFF08;<mark>&#x5982;&#x679C;&#x8FDC;&#x7A0B;&#x4E3B;&#x673A;&#x7684;IP&#x4E3A;110.110.110.110&#xFF0C;&#x7528;&#x6237;&#x540D;&#x4E3A;root,&#x5BC6;&#x7801;&#x4E3A;abcd123</mark>&#xFF09;&#xFF1A;</p>
 <blockquote>
 <p>mysql -h110.110.110.110 -u root -p 123;</p>
 </blockquote>
-<p>③：退出MYSQL命令：<code>exit</code>（回车）</p>
-<h3 class="mume-header" id="2-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81">2. 修改密码:</h3>
+<p>&#x2462;&#xFF1A;&#x9000;&#x51FA;MYSQL&#x547D;&#x4EE4;&#xFF1A;<code>exit</code>&#xFF08;&#x56DE;&#x8F66;&#xFF09;</p>
+<h3 class="mume-header" id="2-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81">2. &#x4FEE;&#x6539;&#x5BC6;&#x7801;:</h3>
 
 <blockquote>
-<p>格式：mysqladmin -u用户名 -p旧密码 password 新密码</p>
+<p>&#x683C;&#x5F0F;&#xFF1A;mysqladmin -u&#x7528;&#x6237;&#x540D; -p&#x65E7;&#x5BC6;&#x7801; password &#x65B0;&#x5BC6;&#x7801;</p>
 </blockquote>
-<h3 class="mume-header" id="3-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">3. 创建数据库：</h3>
+<h3 class="mume-header" id="3-%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">3. &#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;&#xFF1A;</h3>
 
 <blockquote>
-<p>create database 数据库名;</p>
+<p>create database &#x6570;&#x636E;&#x5E93;&#x540D;;</p>
 </blockquote>
-<h3 class="mume-header" id="4-%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81">4. 显示数据库，修改数据库默认编码:</h3>
+<h3 class="mume-header" id="4-%E6%98%BE%E7%A4%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81">4. &#x663E;&#x793A;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4FEE;&#x6539;&#x6570;&#x636E;&#x5E93;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;:</h3>
 
 <blockquote>
 <p>mysql&gt; show databases;</p>
 </blockquote>
-<p><font color="red">注意：为了不再显示的时候中文乱码，要修改数据库默认编码。</font></p>
-<p><mark>①：修改MYSQL的配置文件</mark>：</p>
-<p>my.ini文件里面修改default-character-set=gbk</p>
-<p><mark>②：代码运行时修改</mark>：</p>
-<p>Java代码方式(test为数据库名字)：<br>
+<p><font color="red">&#x6CE8;&#x610F;&#xFF1A;&#x4E3A;&#x4E86;&#x4E0D;&#x518D;&#x663E;&#x793A;&#x7684;&#x65F6;&#x5019;&#x4E2D;&#x6587;&#x4E71;&#x7801;&#xFF0C;&#x8981;&#x4FEE;&#x6539;&#x6570;&#x636E;&#x5E93;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x3002;</font></p>
+<p><mark>&#x2460;&#xFF1A;&#x4FEE;&#x6539;MYSQL&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</mark>&#xFF1A;</p>
+<p>my.ini&#x6587;&#x4EF6;&#x91CC;&#x9762;&#x4FEE;&#x6539;default-character-set=gbk</p>
+<p><mark>&#x2461;&#xFF1A;&#x4EE3;&#x7801;&#x8FD0;&#x884C;&#x65F6;&#x4FEE;&#x6539;</mark>&#xFF1A;</p>
+<p>Java&#x4EE3;&#x7801;&#x65B9;&#x5F0F;(test&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x540D;&#x5B57;)&#xFF1A;<br>
 <code>jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf8</code></p>
-<h3 class="mume-header" id="5-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93">5. 删除数据库：</h3>
+<h3 class="mume-header" id="5-%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93">5. &#x5220;&#x9664;&#x6570;&#x636E;&#x5E93;&#xFF1A;</h3>
 
 <blockquote>
-<p>mysql&gt; drop database 数据库名;</p>
+<p>mysql&gt; drop database &#x6570;&#x636E;&#x5E93;&#x540D;;</p>
 </blockquote>
-<h3 class="mume-header" id="6-%E8%BF%9E%E6%8E%A5%E6%88%96%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E4%BA%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E5%AF%B9%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">6. 连接或切换数据库(用于在命令行中对其他数据库进行操作)：</h3>
+<h3 class="mume-header" id="6-%E8%BF%9E%E6%8E%A5%E6%88%96%E5%88%87%E6%8D%A2%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E4%BA%8E%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E5%AF%B9%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C">6. &#x8FDE;&#x63A5;&#x6216;&#x5207;&#x6362;&#x6570;&#x636E;&#x5E93;(&#x7528;&#x4E8E;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x5BF9;&#x5176;&#x4ED6;&#x6570;&#x636E;&#x5E93;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;)&#xFF1A;</h3>
 
 <blockquote>
-<p>mysql&gt; use 数据库名;</p>
+<p>mysql&gt; use &#x6570;&#x636E;&#x5E93;&#x540D;;</p>
 </blockquote>
-<h3 class="mume-header" id="7-select%E5%91%BD%E4%BB%A4">7. SELECT命令:</h3>
+<h3 class="mume-header" id="7-select%E5%91%BD%E4%BB%A4">7. SELECT&#x547D;&#x4EE4;:</h3>
 
-<h4 class="mume-header" id="1-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0">1. 显示当前使用的数据库名称：</h4>
+<h4 class="mume-header" id="1-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E7%A7%B0">1. &#x663E;&#x793A;&#x5F53;&#x524D;&#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x5E93;&#x540D;&#x79F0;&#xFF1A;</h4>
 
 <blockquote>
 <p>mysql&gt; select database();</p>
 </blockquote>
-<h4 class="mume-header" id="2-%E6%98%BE%E7%A4%BAmysql%E7%9A%84%E7%89%88%E6%9C%AC">2. 显示MYSQL的版本：</h4>
+<h4 class="mume-header" id="2-%E6%98%BE%E7%A4%BAmysql%E7%9A%84%E7%89%88%E6%9C%AC">2. &#x663E;&#x793A;MYSQL&#x7684;&#x7248;&#x672C;&#xFF1A;</h4>
 
 <blockquote>
 <p>mysql&gt; select version();</p>
 </blockquote>
-<h4 class="mume-header" id="3-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4">3. 显示当前时间:</h4>
+<h4 class="mume-header" id="3-%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4">3. &#x663E;&#x793A;&#x5F53;&#x524D;&#x65F6;&#x95F4;:</h4>
 
 <blockquote>
 <p>mysql&gt; select now();</p>
 </blockquote>
-<p><font color="red">显示年月日：</font></p>
+<p><font color="red">&#x663E;&#x793A;&#x5E74;&#x6708;&#x65E5;&#xFF1A;</font></p>
 <blockquote>
 <p>mysql&gt; SELECT YEAR(CURRENT_DATE);<br>
 mysql&gt; SELECT MONTH(CURRENT_DATE);<br>
 mysql&gt; SELECT DAYOFMONTH(CURRENT_DATE);</p>
 </blockquote>
-<h4 class="mume-header" id="4-%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2">4. 显示字符串：</h4>
+<h4 class="mume-header" id="4-%E6%98%BE%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2">4. &#x663E;&#x793A;&#x5B57;&#x7B26;&#x4E32;&#xFF1A;</h4>
 
 <blockquote>
 <p>mysql&gt; SELECT &quot;welecome to my blog!&quot;;</p>
 </blockquote>
-<h4 class="mume-header" id="5-%E5%BD%93%E8%AE%A1%E7%AE%97%E5%99%A8%E7%94%A8">5. 当计算器用:</h4>
+<h4 class="mume-header" id="5-%E5%BD%93%E8%AE%A1%E7%AE%97%E5%99%A8%E7%94%A8">5. &#x5F53;&#x8BA1;&#x7B97;&#x5668;&#x7528;:</h4>
 
 <blockquote>
 <p>select ((4 * 4) / 10 ) + 25;</p>
 </blockquote>
 <hr>
-<h2 class="mume-header" id="2-%E5%AF%B9%E8%A1%A8%E6%A0%BC%E6%93%8D%E4%BD%9C">2 对表格操作:</h2>
+<h2 class="mume-header" id="2-%E5%AF%B9%E8%A1%A8%E6%A0%BC%E6%93%8D%E4%BD%9C">2 &#x5BF9;&#x8868;&#x683C;&#x64CD;&#x4F5C;:</h2>
 
-<h3 class="mume-header" id="1%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8">1.创建数据表：</h3>
+<h3 class="mume-header" id="1%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8">1.&#x521B;&#x5EFA;&#x6570;&#x636E;&#x8868;&#xFF1A;</h3>
 
 <blockquote>
-<p>create table 表名 ( &lt;字段名1&gt; &lt;类型1&gt; [,..&lt;字段名n&gt; &lt;类型n&gt;]);</p>
+<p>create table &#x8868;&#x540D; ( &lt;&#x5B57;&#x6BB5;&#x540D;1&gt; &lt;&#x7C7B;&#x578B;1&gt; [,..&lt;&#x5B57;&#x6BB5;&#x540D;n&gt; &lt;&#x7C7B;&#x578B;n&gt;]);</p>
 </blockquote>
-<h3>例如：创建如下表</h3>
+<h3>&#x4F8B;&#x5982;&#xFF1A;&#x521B;&#x5EFA;&#x5982;&#x4E0B;&#x8868;</h3>
 <table>
 <thead>
 <tr>
-<th>字段名</th>
-<th>数字类型</th>
-<th>数据宽度</th>
-<th>是否为空</th>
-<th>是否主键</th>
-<th>自动增加</th>
-<th>默认值</th>
+<th>&#x5B57;&#x6BB5;&#x540D;</th>
+<th>&#x6570;&#x5B57;&#x7C7B;&#x578B;</th>
+<th>&#x6570;&#x636E;&#x5BBD;&#x5EA6;</th>
+<th>&#x662F;&#x5426;&#x4E3A;&#x7A7A;</th>
+<th>&#x662F;&#x5426;&#x4E3B;&#x952E;</th>
+<th>&#x81EA;&#x52A8;&#x589E;&#x52A0;</th>
+<th>&#x9ED8;&#x8BA4;&#x503C;</th>
 </tr>
 </thead>
 <tbody>
@@ -398,7 +447,7 @@ mysql&gt; SELECT DAYOFMONTH(CURRENT_DATE);</p>
 <td>id</td>
 <td>int</td>
 <td>4</td>
-<td>否</td>
+<td>&#x5426;</td>
 <td>primary key</td>
 <td>auto_increment</td>
 <td></td>
@@ -407,7 +456,7 @@ mysql&gt; SELECT DAYOFMONTH(CURRENT_DATE);</p>
 <td>name</td>
 <td>char</td>
 <td>20</td>
-<td>否</td>
+<td>&#x5426;</td>
 <td></td>
 <td></td>
 <td></td>
@@ -416,7 +465,7 @@ mysql&gt; SELECT DAYOFMONTH(CURRENT_DATE);</p>
 <td>sex</td>
 <td>int</td>
 <td>4</td>
-<td>否</td>
+<td>&#x5426;</td>
 <td>0</td>
 <td></td>
 <td></td>
@@ -425,262 +474,303 @@ mysql&gt; SELECT DAYOFMONTH(CURRENT_DATE);</p>
 <td>degree</td>
 <td>double</td>
 <td>16</td>
-<td>是</td>
+<td>&#x662F;</td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<pre data-role="codeBlock" data-info="" class="language-"><code>mysql&gt; create table MyClass( id int(4) not null primary key auto_increment,
+<pre data-role="codeBlock" data-info class="language-"><code>mysql&gt; create table MyClass( id int(4) not null primary key auto_increment,
 &gt; name char(20) not null,
 &gt; sex int(4) not null default &apos;0&apos;,
 &gt; degree double(16,2)
 &gt; );
-</code></pre><h3 class="mume-header" id="2%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">2.展示表的结构：</h3>
+</code></pre><h3 class="mume-header" id="2%E5%B1%95%E7%A4%BA%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84">2.&#x5C55;&#x793A;&#x8868;&#x7684;&#x7ED3;&#x6784;&#xFF1A;</h3>
 
 <blockquote>
 <p><font color="red">show columns</font> from table_name;</p>
 </blockquote>
-<h3 class="mume-header" id="3%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE">3.删除数据表的结构与数据：</h3>
+<h3 class="mume-header" id="3%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE">3.&#x5220;&#x9664;&#x6570;&#x636E;&#x8868;&#x7684;&#x7ED3;&#x6784;&#x4E0E;&#x6570;&#x636E;&#xFF1A;</h3>
 
 <blockquote>
-<p>drop table 表名</p>
+<p>drop table &#x8868;&#x540D;</p>
 </blockquote>
-<p><font color="red">DROP TABLE用于删除一个或多个表。您必须有每个表的DROP权限。所有的表数据和表定义会被删除。</font></p>
-<h3 class="mume-header" id="4%E4%BD%BF%E7%94%A8-alter-table-add-%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5-int%E7%B1%BB%E5%9E%8B%E7%9A%84-id%E9%95%BF%E5%BA%A6%E4%B8%BA4%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%BA0">4.使用 alter table ... add 来为数据表中添加字段 int类型的 id,长度为4，默认值为0：</h3>
+<p><font color="red">DROP TABLE&#x7528;&#x4E8E;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x8868;&#x3002;&#x60A8;&#x5FC5;&#x987B;&#x6709;&#x6BCF;&#x4E2A;&#x8868;&#x7684;DROP&#x6743;&#x9650;&#x3002;&#x6240;&#x6709;&#x7684;&#x8868;&#x6570;&#x636E;&#x548C;&#x8868;&#x5B9A;&#x4E49;&#x4F1A;&#x88AB;&#x5220;&#x9664;&#x3002;</font></p>
+<h3 class="mume-header" id="4%E4%BD%BF%E7%94%A8-alter-table-add-%E6%9D%A5%E4%B8%BA%E6%95%B0%E6%8D%AE%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%AD%97%E6%AE%B5-int%E7%B1%BB%E5%9E%8B%E7%9A%84-id%E9%95%BF%E5%BA%A6%E4%B8%BA4%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%BA0">4.&#x4F7F;&#x7528; alter table ... add &#x6765;&#x4E3A;&#x6570;&#x636E;&#x8868;&#x4E2D;&#x6DFB;&#x52A0;&#x5B57;&#x6BB5; int&#x7C7B;&#x578B;&#x7684; id,&#x957F;&#x5EA6;&#x4E3A;4&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;0&#xFF1A;</h3>
 
 <blockquote>
-<p><font color="red">alter table</font> 表名 <font color="red">add</font> id int(4) default '0';</p>
+<p><font color="red">alter table</font> &#x8868;&#x540D; <font color="red">add</font> id int(4) default &apos;0&apos;;</p>
 </blockquote>
-<h3 class="mume-header" id="5-%E4%BD%BF%E7%94%A8-alter-table-drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">5. 使用 alter table ... drop来删除表的 id 字段：</h3>
+<h3 class="mume-header" id="5-%E4%BD%BF%E7%94%A8-alter-table-drop%E6%9D%A5%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84-id-%E5%AD%97%E6%AE%B5">5. &#x4F7F;&#x7528; alter table ... drop&#x6765;&#x5220;&#x9664;&#x8868;&#x7684; id &#x5B57;&#x6BB5;&#xFF1A;</h3>
 
 <blockquote>
-<p><font color="red">alter table</font> 表名 <font color="red">drop</font> id;</p>
+<p><font color="red">alter table</font> &#x8868;&#x540D; <font color="red">drop</font> id;</p>
 </blockquote>
-<h3 class="mume-header" id="6-%E4%BD%BF%E7%94%A8-alter-table-modify-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B">6. 使用 alter table ...  modify 修改字段类型:</h3>
+<h3 class="mume-header" id="6-%E4%BD%BF%E7%94%A8-alter-table-modify-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B">6. &#x4F7F;&#x7528; alter table ...  modify &#x4FEE;&#x6539;&#x5B57;&#x6BB5;&#x7C7B;&#x578B;:</h3>
 
-<p>把字段 c 的类型从 CHAR(1) 改为 CHAR(10):</p>
+<p>&#x628A;&#x5B57;&#x6BB5; c &#x7684;&#x7C7B;&#x578B;&#x4ECE; CHAR(1) &#x6539;&#x4E3A; CHAR(10):</p>
 <blockquote>
-<p><font color="red">alter table</font> 表名 <font color="red">modify</font> c CHAR(10);</p>
+<p><font color="red">alter table</font> &#x8868;&#x540D; <font color="red">modify</font> c CHAR(10);</p>
 </blockquote>
-<h3 class="mume-header" id="7-%E4%BD%BF%E7%94%A8-alter-table-change-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%90%8D%E7%A7%B0%E4%B8%8E%E7%B1%BB%E5%9E%8B">7. 使用 alter table ... change 修改字段类型名称与类型:</h3>
+<h3 class="mume-header" id="7-%E4%BD%BF%E7%94%A8-alter-table-change-%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B%E5%90%8D%E7%A7%B0%E4%B8%8E%E7%B1%BB%E5%9E%8B">7. &#x4F7F;&#x7528; alter table ... change &#x4FEE;&#x6539;&#x5B57;&#x6BB5;&#x7C7B;&#x578B;&#x540D;&#x79F0;&#x4E0E;&#x7C7B;&#x578B;:</h3>
 
-<p>在 change 关键字之后，紧跟着的是你要修改的字段名，然后指定新字段的类型及名称(<mark>i是旧字段名，j是新字段名，int为j的数据类型</mark>):</p>
+<p>&#x5728; change &#x5173;&#x952E;&#x5B57;&#x4E4B;&#x540E;&#xFF0C;&#x7D27;&#x8DDF;&#x7740;&#x7684;&#x662F;&#x4F60;&#x8981;&#x4FEE;&#x6539;&#x7684;&#x5B57;&#x6BB5;&#x540D;&#xFF0C;&#x7136;&#x540E;&#x6307;&#x5B9A;&#x65B0;&#x5B57;&#x6BB5;&#x7684;&#x7C7B;&#x578B;&#x53CA;&#x540D;&#x79F0;(<mark>i&#x662F;&#x65E7;&#x5B57;&#x6BB5;&#x540D;&#xFF0C;j&#x662F;&#x65B0;&#x5B57;&#x6BB5;&#x540D;&#xFF0C;int&#x4E3A;j&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;</mark>):</p>
 <blockquote>
-<p><font color="red">alter table</font> 表名 <font color="red">change</font> i j int;</p>
+<p><font color="red">alter table</font> &#x8868;&#x540D; <font color="red">change</font> i j int;</p>
 </blockquote>
-<h3 class="mume-header" id="8-%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8%E6%A0%BC%E5%90%8D">8. 重命名表格名:</h3>
+<h3 class="mume-header" id="8-%E9%87%8D%E5%91%BD%E5%90%8D%E8%A1%A8%E6%A0%BC%E5%90%8D">8. &#x91CD;&#x547D;&#x540D;&#x8868;&#x683C;&#x540D;:</h3>
 
-<p>①：</p>
+<p>&#x2460;&#xFF1A;</p>
 <blockquote>
-<p><font color="red">alter table</font> 旧表名 <font color="red">rename to</font> 新表名;</p>
+<p><font color="red">alter table</font> &#x65E7;&#x8868;&#x540D; <font color="red">rename to</font> &#x65B0;&#x8868;&#x540D;;</p>
 </blockquote>
-<p>②：</p>
+<p>&#x2461;&#xFF1A;</p>
 <blockquote>
-<p>rename table 原表名 to 新表名;</p>
+<p>rename table &#x539F;&#x8868;&#x540D; to &#x65B0;&#x8868;&#x540D;;</p>
 </blockquote>
-<h3 class="mume-header" id="9-%E4%BD%BF%E7%94%A8-alter-table-add-index-%E4%B8%BA%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95">9. 使用 alter table ... add index 为字段加索引</h3>
+<h3 class="mume-header" id="9-%E4%BD%BF%E7%94%A8-alter-table-add-index-%E4%B8%BA%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95">9. &#x4F7F;&#x7528; alter table ... add index &#x4E3A;&#x5B57;&#x6BB5;&#x52A0;&#x7D22;&#x5F15;</h3>
 
-<p>mysql&gt; alter table 表名 add index 索引名 (字段名1[，字段名2 …]);</p>
+<p>mysql&gt; alter table &#x8868;&#x540D; add index &#x7D22;&#x5F15;&#x540D; (&#x5B57;&#x6BB5;&#x540D;1[&#xFF0C;&#x5B57;&#x6BB5;&#x540D;2 &#x2026;]);</p>
 <blockquote>
 <p>mysql&gt; <font color="red">alter table</font> employee <font color="red"> add index </font> emp_name (name);</p>
 </blockquote>
-<h3 class="mume-header" id="10-%E5%8A%A0%E4%B8%BB%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%B4%A2%E5%BC%95">10. 加主关键字的索引</h3>
+<h3 class="mume-header" id="10-%E5%8A%A0%E4%B8%BB%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%B4%A2%E5%BC%95">10. &#x52A0;&#x4E3B;&#x5173;&#x952E;&#x5B57;&#x7684;&#x7D22;&#x5F15;</h3>
 
-<p>mysql&gt; alter table 表名 add primary key (字段名);</p>
+<p>mysql&gt; alter table &#x8868;&#x540D; add primary key (&#x5B57;&#x6BB5;&#x540D;);</p>
 <blockquote>
 <p>mysql&gt; alter table employee add primary key(id);</p>
 </blockquote>
-<h3 class="mume-header" id="11-%E5%8A%A0%E5%94%AF%E4%B8%80%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%B4%A2%E5%BC%95">11. 加唯一限制条件的索引</h3>
+<h3 class="mume-header" id="11-%E5%8A%A0%E5%94%AF%E4%B8%80%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%B4%A2%E5%BC%95">11. &#x52A0;&#x552F;&#x4E00;&#x9650;&#x5236;&#x6761;&#x4EF6;&#x7684;&#x7D22;&#x5F15;</h3>
 
-<p>mysql&gt; alter table 表名 add unique 索引名 (字段名);</p>
+<p>mysql&gt; alter table &#x8868;&#x540D; add unique &#x7D22;&#x5F15;&#x540D; (&#x5B57;&#x6BB5;&#x540D;);</p>
 <blockquote>
 <p>mysql&gt; alter table employee add unique emp_name2(cardnumber);</p>
 </blockquote>
-<h3 class="mume-header" id="12-%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%AA%E7%B4%A2%E5%BC%95">12. 删除某个索引</h3>
+<h3 class="mume-header" id="12-%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%AA%E7%B4%A2%E5%BC%95">12. &#x5220;&#x9664;&#x67D0;&#x4E2A;&#x7D22;&#x5F15;</h3>
 
-<p>mysql&gt; alter table 表名 drop index 索引名;</p>
+<p>mysql&gt; alter table &#x8868;&#x540D; drop index &#x7D22;&#x5F15;&#x540D;;</p>
 <blockquote>
 <p>mysql&gt;alter table employee drop index emp_name;</p>
 </blockquote>
 <hr>
-<h2 class="mume-header" id="3%E5%AF%B9%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">3.对表格中的数据操作：</h2>
+<h2 class="mume-header" id="3%E5%AF%B9%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C">3.&#x5BF9;&#x8868;&#x683C;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#xFF1A;</h2>
 
-<h3 class="mume-header" id="1-%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">1. 删除表的数据：</h3>
+<h3 class="mume-header" id="1-%E5%88%A0%E9%99%A4%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">1. &#x5220;&#x9664;&#x8868;&#x7684;&#x6570;&#x636E;&#xFF1A;</h3>
 
 <blockquote>
-<p>mysql&gt; delete from student [where 条件]</p>
+<p>mysql&gt; delete from student [where &#x6761;&#x4EF6;]</p>
 </blockquote>
-<p>①如果没有指定 WHERE 子句，表中的所有记录将被删除（不删除表的结构，表还存在数据库中，只是没有了数据）。<br>
-②你可以在 WHERE 子句中指定任何条件<br>
-③您可以在单个表中一次性删除记录。</p>
-<h3 class="mume-header" id="2-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">2. 插入数据：</h3>
+<p>&#x2460;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A; WHERE &#x5B50;&#x53E5;&#xFF0C;&#x8868;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x8BB0;&#x5F55;&#x5C06;&#x88AB;&#x5220;&#x9664;&#xFF08;&#x4E0D;&#x5220;&#x9664;&#x8868;&#x7684;&#x7ED3;&#x6784;&#xFF0C;&#x8868;&#x8FD8;&#x5B58;&#x5728;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#xFF0C;&#x53EA;&#x662F;&#x6CA1;&#x6709;&#x4E86;&#x6570;&#x636E;&#xFF09;&#x3002;<br>
+&#x2461;&#x4F60;&#x53EF;&#x4EE5;&#x5728; WHERE &#x5B50;&#x53E5;&#x4E2D;&#x6307;&#x5B9A;&#x4EFB;&#x4F55;&#x6761;&#x4EF6;<br>
+&#x2462;&#x60A8;&#x53EF;&#x4EE5;&#x5728;&#x5355;&#x4E2A;&#x8868;&#x4E2D;&#x4E00;&#x6B21;&#x6027;&#x5220;&#x9664;&#x8BB0;&#x5F55;&#x3002;</p>
+<h3 class="mume-header" id="2-%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">2. &#x63D2;&#x5165;&#x6570;&#x636E;&#xFF1A;</h3>
 
-<p>语法：</p>
+<p>&#x8BED;&#x6CD5;&#xFF1A;</p>
 <blockquote>
-<p>insert into &lt;表名&gt; [( &lt;字段名1&gt;[,..&lt;字段名n &gt; ])] values ( 值1 )[, ( 值n )]</p>
-</blockquote>
-<blockquote>
-<p>insert into 表名 (sid, sname,sgender,... ) values ( 1, 'jim','男',...);</p>
-</blockquote>
-<p><font color="red">注意：字符数据，统一用单引号（' '）,引起来。</font></p>
-<h3 class="mume-header" id="3-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">3. 修改数据：</h3>
-
-<p>语法：</p>
-<blockquote>
-<p>update 表名 set 字段=新值,… where 条件</p>
+<p>insert into &lt;&#x8868;&#x540D;&gt; [( &lt;&#x5B57;&#x6BB5;&#x540D;1&gt;[,..&lt;&#x5B57;&#x6BB5;&#x540D;n &gt; ])] values ( &#x503C;1 )[, ( &#x503C;n )]</p>
 </blockquote>
 <blockquote>
-<p>update 表名 set sid=value1,sname=value2.... [where 条件]</p>
+<p>insert into &#x8868;&#x540D; (sid, sname,sgender,... ) values ( 1, &apos;jim&apos;,&apos;&#x7537;&apos;,...);</p>
+</blockquote>
+<p><font color="red">&#x6CE8;&#x610F;&#xFF1A;&#x5B57;&#x7B26;&#x6570;&#x636E;&#xFF0C;&#x7EDF;&#x4E00;&#x7528;&#x5355;&#x5F15;&#x53F7;&#xFF08;&apos; &apos;&#xFF09;,&#x5F15;&#x8D77;&#x6765;&#x3002;</font></p>
+<h3 class="mume-header" id="3-%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE">3. &#x4FEE;&#x6539;&#x6570;&#x636E;&#xFF1A;</h3>
+
+<p>&#x8BED;&#x6CD5;&#xFF1A;</p>
+<blockquote>
+<p>update &#x8868;&#x540D; set &#x5B57;&#x6BB5;=&#x65B0;&#x503C;,&#x2026; where &#x6761;&#x4EF6;</p>
+</blockquote>
+<blockquote>
+<p>update &#x8868;&#x540D; set sid=value1,sname=value2.... [where &#x6761;&#x4EF6;]</p>
 </blockquote>
 <font color="red">
-<p>①你可以同时更新一个或多个字段。<br>
-②你可以在 WHERE 子句中指定任何条件。<br>
-③你可以在一个单独表中同时更新数据。</p>
+<p>&#x2460;&#x4F60;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x66F4;&#x65B0;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5B57;&#x6BB5;&#x3002;<br>
+&#x2461;&#x4F60;&#x53EF;&#x4EE5;&#x5728; WHERE &#x5B50;&#x53E5;&#x4E2D;&#x6307;&#x5B9A;&#x4EFB;&#x4F55;&#x6761;&#x4EF6;&#x3002;<br>
+&#x2462;&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x4E2A;&#x5355;&#x72EC;&#x8868;&#x4E2D;&#x540C;&#x65F6;&#x66F4;&#x65B0;&#x6570;&#x636E;&#x3002;</p>
 </font>
-<h3 class="mume-header" id="4-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">4. 查询数据：</h3>
+<h3 class="mume-header" id="4-%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE">4. &#x67E5;&#x8BE2;&#x6570;&#x636E;&#xFF1A;</h3>
 
-<h4 class="mume-header" id="1%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%85%A8%E9%83%A8%E6%95%B0%E6%8D%AE">①：查询表中全部数据：</h4>
+<h4 class="mume-header" id="1%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%85%A8%E9%83%A8%E6%95%B0%E6%8D%AE">&#x2460;&#xFF1A;&#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x5168;&#x90E8;&#x6570;&#x636E;&#xFF1A;</h4>
 
 <blockquote>
-<p>select * from 表名;</p>
+<p>select * from &#x8868;&#x540D;;</p>
 </blockquote>
-<p><font color="red">* 表示全部的意思</font></p>
-<h4 class="mume-header" id="2-%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%89%8D%E5%87%A0%E8%A1%8C%E6%95%B0%E6%8D%AE">②: 查询表中前几行数据</h4>
+<p><font color="red">* &#x8868;&#x793A;&#x5168;&#x90E8;&#x7684;&#x610F;&#x601D;</font></p>
+<h4 class="mume-header" id="2-%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E5%89%8D%E5%87%A0%E8%A1%8C%E6%95%B0%E6%8D%AE">&#x2461;: &#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x524D;&#x51E0;&#x884C;&#x6570;&#x636E;</h4>
 
 <blockquote>
-<p>select * from 表名 order by id limit 0,2;</p>
+<p>select * from &#x8868;&#x540D; order by id limit 0,2;</p>
 </blockquote>
-<p><font color="red">查询表中前2行的数据</font></p>
-<h4 class="mume-header" id="3%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%95%B0%E6%8D%AE">③：查询表中特定字段的数据：</h4>
+<p><font color="red">&#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x524D;2&#x884C;&#x7684;&#x6570;&#x636E;</font></p>
+<h4 class="mume-header" id="3%E6%9F%A5%E8%AF%A2%E8%A1%A8%E4%B8%AD%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E6%95%B0%E6%8D%AE">&#x2462;&#xFF1A;&#x67E5;&#x8BE2;&#x8868;&#x4E2D;&#x7279;&#x5B9A;&#x5B57;&#x6BB5;&#x7684;&#x6570;&#x636E;&#xFF1A;</h4>
 
-<p>语法：</p>
+<p>&#x8BED;&#x6CD5;&#xFF1A;</p>
 <blockquote>
-<p>select &lt;字段1，字段2，...&gt; from &lt; 表名 &gt; where &lt; 表达式 &gt;</p>
+<p>select &lt;&#x5B57;&#x6BB5;1&#xFF0C;&#x5B57;&#x6BB5;2&#xFF0C;...&gt; from &lt; &#x8868;&#x540D; &gt; where &lt; &#x8868;&#x8FBE;&#x5F0F; &gt;</p>
 </blockquote>
 <blockquote>
 <p>select sid,sname,.. from student where sid&gt;10;</p>
 </blockquote>
-<h4 class="mume-header" id="4%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">④：查询多个表的数据：</h4>
+<h4 class="mume-header" id="4%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE">&#x2463;&#xFF1A;&#x67E5;&#x8BE2;&#x591A;&#x4E2A;&#x8868;&#x7684;&#x6570;&#x636E;&#xFF1A;</h4>
 
 <blockquote>
-<p>select 字段1,字段2, ...字段N from 表名1,表名2...where 条件1 [and /or] 条件2.....</p>
+<p>select &#x5B57;&#x6BB5;1,&#x5B57;&#x6BB5;2, ...&#x5B57;&#x6BB5;N from &#x8868;&#x540D;1,&#x8868;&#x540D;2...where &#x6761;&#x4EF6;1 [and /or] &#x6761;&#x4EF6;2.....</p>
 </blockquote>
-<h4 class="mume-header" id="5-%E4%BD%BF%E7%94%A8-like-%E5%AD%90%E5%8F%A5%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">⑤: 使用 LIKE 子句模糊查询：</h4>
+<h4 class="mume-header" id="5-%E4%BD%BF%E7%94%A8-like-%E5%AD%90%E5%8F%A5%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">&#x2464;: &#x4F7F;&#x7528; LIKE &#x5B50;&#x53E5;&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#xFF1A;</h4>
 
-<p><mark>LIKE模糊查询的通配符:</mark></p>
+<p><mark>LIKE&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#x7684;&#x901A;&#x914D;&#x7B26;:</mark></p>
 <table>
 <thead>
 <tr>
-<th>通配符</th>
-<th>说明</th>
-<th>举例</th>
+<th>&#x901A;&#x914D;&#x7B26;</th>
+<th>&#x8BF4;&#x660E;</th>
+<th>&#x4E3E;&#x4F8B;</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>%</td>
-<td>包含<mark>零个或多个</mark>字符的任意字符串。</td>
-<td>WHERE bookname LIKE '%computer%' 将查找在书名中任意位置包含单词 &quot;computer&quot; 的所有书名。</td>
+<td>&#x5305;&#x542B;<mark>&#x96F6;&#x4E2A;&#x6216;&#x591A;&#x4E2A;</mark>&#x5B57;&#x7B26;&#x7684;&#x4EFB;&#x610F;&#x5B57;&#x7B26;&#x4E32;&#x3002;</td>
+<td>WHERE bookname LIKE &apos;%computer%&apos; &#x5C06;&#x67E5;&#x627E;&#x5728;&#x4E66;&#x540D;&#x4E2D;&#x4EFB;&#x610F;&#x4F4D;&#x7F6E;&#x5305;&#x542B;&#x5355;&#x8BCD; &quot;computer&quot; &#x7684;&#x6240;&#x6709;&#x4E66;&#x540D;&#x3002;</td>
 </tr>
 <tr>
-<td>_（下划线）</td>
-<td>任何<mark>单个</mark>字符。</td>
-<td>WHERE name LIKE '_ean' 将查找以 ean结尾的所有 4 个字母的名字（例如 Dean、Sean等）</td>
+<td>_&#xFF08;&#x4E0B;&#x5212;&#x7EBF;&#xFF09;</td>
+<td>&#x4EFB;&#x4F55;<mark>&#x5355;&#x4E2A;</mark>&#x5B57;&#x7B26;&#x3002;</td>
+<td>WHERE name LIKE &apos;_ean&apos; &#x5C06;&#x67E5;&#x627E;&#x4EE5; ean&#x7ED3;&#x5C3E;&#x7684;&#x6240;&#x6709; 4 &#x4E2A;&#x5B57;&#x6BCD;&#x7684;&#x540D;&#x5B57;&#xFF08;&#x4F8B;&#x5982; Dean&#x3001;Sean&#x7B49;&#xFF09;</td>
 </tr>
 <tr>
 <td>[ ]</td>
-<td>指定范围 ([a-f]) 或集合([abcdef]) 中的任何单个字符。</td>
-<td>WHERE name LIKE '[C-P]arsen' 将查找以 arsen 结尾并且以介于 C 与 P 之间的任何<mark>单个</mark>字符开始的作者姓氏，（例如Carsen、Larsen、Karsen 等。）</td>
+<td>&#x6307;&#x5B9A;&#x8303;&#x56F4; ([a-f]) &#x6216;&#x96C6;&#x5408;([abcdef]) &#x4E2D;&#x7684;&#x4EFB;&#x4F55;&#x5355;&#x4E2A;&#x5B57;&#x7B26;&#x3002;</td>
+<td>WHERE name LIKE &apos;[C-P]arsen&apos; &#x5C06;&#x67E5;&#x627E;&#x4EE5; arsen &#x7ED3;&#x5C3E;&#x5E76;&#x4E14;&#x4EE5;&#x4ECB;&#x4E8E; C &#x4E0E; P &#x4E4B;&#x95F4;&#x7684;&#x4EFB;&#x4F55;<mark>&#x5355;&#x4E2A;</mark>&#x5B57;&#x7B26;&#x5F00;&#x59CB;&#x7684;&#x4F5C;&#x8005;&#x59D3;&#x6C0F;&#xFF0C;&#xFF08;&#x4F8B;&#x5982;Carsen&#x3001;Larsen&#x3001;Karsen &#x7B49;&#x3002;&#xFF09;</td>
 </tr>
 <tr>
 <td>[^]</td>
-<td>不属于指定范围 ([a-f]) 或集合([abcdef]) 的任何<mark>单个</mark>字符。</td>
-<td>WHERE au_lname LIKE 'de[^l]%' 将查找以de 开始并且其后的字母不为 l 的所有作者的姓氏。</td>
+<td>&#x4E0D;&#x5C5E;&#x4E8E;&#x6307;&#x5B9A;&#x8303;&#x56F4; ([a-f]) &#x6216;&#x96C6;&#x5408;([abcdef]) &#x7684;&#x4EFB;&#x4F55;<mark>&#x5355;&#x4E2A;</mark>&#x5B57;&#x7B26;&#x3002;</td>
+<td>WHERE au_lname LIKE &apos;de[^l]%&apos; &#x5C06;&#x67E5;&#x627E;&#x4EE5;de &#x5F00;&#x59CB;&#x5E76;&#x4E14;&#x5176;&#x540E;&#x7684;&#x5B57;&#x6BCD;&#x4E0D;&#x4E3A; l &#x7684;&#x6240;&#x6709;&#x4F5C;&#x8005;&#x7684;&#x59D3;&#x6C0F;&#x3002;</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>select 字段1, 字段2,...字段N 表名1,表名2...where 字段1 like 条件1 [and /or] 字段2 = 条件2</p>
+<p>select &#x5B57;&#x6BB5;1, &#x5B57;&#x6BB5;2,...&#x5B57;&#x6BB5;N &#x8868;&#x540D;1,&#x8868;&#x540D;2...where &#x5B57;&#x6BB5;1 like &#x6761;&#x4EF6;1 [and /or] &#x5B57;&#x6BB5;2 = &#x6761;&#x4EF6;2</p>
 </blockquote>
 <font color="red">
-<p>①如果没有使用百分号(%), LIKE 子句与等号（=）的效果是一样的。<br>
-② % 表示任意多个字符，_ 表示任意单个字符。</p>
+<p>&#x2460;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x767E;&#x5206;&#x53F7;(%), LIKE &#x5B50;&#x53E5;&#x4E0E;&#x7B49;&#x53F7;&#xFF08;=&#xFF09;&#x7684;&#x6548;&#x679C;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;<br>
+&#x2461; % &#x8868;&#x793A;&#x4EFB;&#x610F;&#x591A;&#x4E2A;&#x5B57;&#x7B26;&#xFF0C;_ &#x8868;&#x793A;&#x4EFB;&#x610F;&#x5355;&#x4E2A;&#x5B57;&#x7B26;&#x3002;</p>
 </font>
-<h4 class="mume-header" id="6%E4%BD%BF%E7%94%A8-order-by-%E5%AD%90%E5%8F%A5%E5%B0%86%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E5%90%8E%E5%86%8D%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE">⑥：使用 order by 子句将查询数据排序后再返回数据:</h4>
+<h4 class="mume-header" id="6%E4%BD%BF%E7%94%A8-order-by-%E5%AD%90%E5%8F%A5%E5%B0%86%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F%E5%90%8E%E5%86%8D%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE">&#x2465;&#xFF1A;&#x4F7F;&#x7528; order by &#x5B50;&#x53E5;&#x5C06;&#x67E5;&#x8BE2;&#x6570;&#x636E;&#x6392;&#x5E8F;&#x540E;&#x518D;&#x8FD4;&#x56DE;&#x6570;&#x636E;:</h4>
 
 <blockquote>
-<p>select 字段1, 字段2,...字段N from 表名1, 表名2...<br>
-order by 字段1, [字段2...] [asc [desc]]</p>
+<p>select &#x5B57;&#x6BB5;1, &#x5B57;&#x6BB5;2,...&#x5B57;&#x6BB5;N from &#x8868;&#x540D;1, &#x8868;&#x540D;2...<br>
+order by &#x5B57;&#x6BB5;1, [&#x5B57;&#x6BB5;2...] [asc [desc]]</p>
 </blockquote>
 <font color="red">
-<p>①你可以<mark>使用任何字段来作为排序的条件</mark>，从而返回排序后的查询结果。<br>
-②你可以设定多个字段来排序。<br>
-③ASC : 升序 。 DESC ：降序。 默认情况下，它是按升序排列。<br>
-④你可以添加 WHERE...LIKE 子句来设置条件。</p>
+<p>&#x2460;&#x4F60;&#x53EF;&#x4EE5;<mark>&#x4F7F;&#x7528;&#x4EFB;&#x4F55;&#x5B57;&#x6BB5;&#x6765;&#x4F5C;&#x4E3A;&#x6392;&#x5E8F;&#x7684;&#x6761;&#x4EF6;</mark>&#xFF0C;&#x4ECE;&#x800C;&#x8FD4;&#x56DE;&#x6392;&#x5E8F;&#x540E;&#x7684;&#x67E5;&#x8BE2;&#x7ED3;&#x679C;&#x3002;<br>
+&#x2461;&#x4F60;&#x53EF;&#x4EE5;&#x8BBE;&#x5B9A;&#x591A;&#x4E2A;&#x5B57;&#x6BB5;&#x6765;&#x6392;&#x5E8F;&#x3002;<br>
+&#x2462;ASC : &#x5347;&#x5E8F; &#x3002; DESC &#xFF1A;&#x964D;&#x5E8F;&#x3002; &#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5B83;&#x662F;&#x6309;&#x5347;&#x5E8F;&#x6392;&#x5217;&#x3002;<br>
+&#x2463;&#x4F60;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0; WHERE...LIKE &#x5B50;&#x53E5;&#x6765;&#x8BBE;&#x7F6E;&#x6761;&#x4EF6;&#x3002;</p>
 </font>
-<h4 class="mume-header" id="7-group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">⑦： group by 语句根据一个或多个列对结果集进行分组：</h4>
+<h4 class="mume-header" id="7-group-by-%E8%AF%AD%E5%8F%A5%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%88%97%E5%AF%B9%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84">&#x2466;&#xFF1A; group by &#x8BED;&#x53E5;&#x6839;&#x636E;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x5217;&#x5BF9;&#x7ED3;&#x679C;&#x96C6;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF1A;</h4>
 
-<p>使用 GROUP BY 语句 把表按名字进行分组，并统计每个人有多少条记录：</p>
+<p>&#x4F7F;&#x7528; GROUP BY &#x8BED;&#x53E5; &#x628A;&#x8868;&#x6309;&#x540D;&#x5B57;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x5E76;&#x7EDF;&#x8BA1;&#x6BCF;&#x4E2A;&#x4EBA;&#x6709;&#x591A;&#x5C11;&#x6761;&#x8BB0;&#x5F55;&#xFF1A;</p>
 <blockquote>
 <p>SELECT sname, COUNT(*) FROM  student group by sname;</p>
 </blockquote>
 <hr>
-<h2 class="mume-header" id="4-join-%E7%9A%84%E4%BD%BF%E7%94%A8-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8">4. join 的使用---连接多个表:</h2>
+<h2 class="mume-header" id="4-join-%E7%9A%84%E4%BD%BF%E7%94%A8-%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E8%A1%A8">4. join &#x7684;&#x4F7F;&#x7528;---&#x8FDE;&#x63A5;&#x591A;&#x4E2A;&#x8868;:</h2>
 
-<p>join 按照功能大致分为如下三类：<br>
-①： inner join（内连接,或等值连接）：获取两个表中字段匹配关系的记录。<br>
-②： left join（左连接）：获取左表所有记录，即使右表没有对应匹配的记录。<br>
-③： right join（右连接）：用于获取右表所有记录，即使左表没有对应匹配的记录。</p>
-<h3 class="mume-header" id="1inner-join-%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E8%A1%A8">1.inner join --- 连接两个表:</h3>
+<p>join &#x6309;&#x7167;&#x529F;&#x80FD;&#x5927;&#x81F4;&#x5206;&#x4E3A;&#x5982;&#x4E0B;&#x4E09;&#x7C7B;&#xFF1A;<br>
+&#x2460;&#xFF1A; inner join&#xFF08;&#x5185;&#x8FDE;&#x63A5;,&#x6216;&#x7B49;&#x503C;&#x8FDE;&#x63A5;&#xFF09;&#xFF1A;&#x83B7;&#x53D6;&#x4E24;&#x4E2A;&#x8868;&#x4E2D;&#x5B57;&#x6BB5;&#x5339;&#x914D;&#x5173;&#x7CFB;&#x7684;&#x8BB0;&#x5F55;&#x3002;<br>
+&#x2461;&#xFF1A; left join&#xFF08;&#x5DE6;&#x8FDE;&#x63A5;&#xFF09;&#xFF1A;&#x83B7;&#x53D6;&#x5DE6;&#x8868;&#x6240;&#x6709;&#x8BB0;&#x5F55;&#xFF0C;&#x5373;&#x4F7F;&#x53F3;&#x8868;&#x6CA1;&#x6709;&#x5BF9;&#x5E94;&#x5339;&#x914D;&#x7684;&#x8BB0;&#x5F55;&#x3002;<br>
+&#x2462;&#xFF1A; right join&#xFF08;&#x53F3;&#x8FDE;&#x63A5;&#xFF09;&#xFF1A;&#x7528;&#x4E8E;&#x83B7;&#x53D6;&#x53F3;&#x8868;&#x6240;&#x6709;&#x8BB0;&#x5F55;&#xFF0C;&#x5373;&#x4F7F;&#x5DE6;&#x8868;&#x6CA1;&#x6709;&#x5BF9;&#x5E94;&#x5339;&#x914D;&#x7684;&#x8BB0;&#x5F55;&#x3002;</p>
+<h3 class="mume-header" id="1inner-join-%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E8%A1%A8">1.inner join --- &#x8FDE;&#x63A5;&#x4E24;&#x4E2A;&#x8868;:</h3>
 
-<p>例如：读取 tbl表中所有 author字段在tb2表对应的 count字段值：</p>
+<p>&#x4F8B;&#x5982;&#xFF1A;&#x8BFB;&#x53D6; tbl&#x8868;&#x4E2D;&#x6240;&#x6709; author&#x5B57;&#x6BB5;&#x5728;tb2&#x8868;&#x5BF9;&#x5E94;&#x7684; count&#x5B57;&#x6BB5;&#x503C;&#xFF1A;</p>
 <blockquote>
 <p>select <a href="http://a.id">a.id</a>, a.author, b.count <font color="red">from</font> tbl a <font color="red">inner join</font> tb2 b <font color="red">on</font> a.author = b.author;</p>
 </blockquote>
 <h3 class="mume-header" id="2left-join">2.left join:</h3>
 
-<p>以 tbl 为左表，tb2 为右表:</p>
+<p>&#x4EE5; tbl &#x4E3A;&#x5DE6;&#x8868;&#xFF0C;tb2 &#x4E3A;&#x53F3;&#x8868;:</p>
 <blockquote>
 <p>select <a href="http://a.id">a.id</a>, a.author, b.count <font color="red">from</font> tbl a  <font color="red">left join</font> tb2 b <font color="red">on</font> a.author = b.author;</p>
 </blockquote>
 <h3 class="mume-header" id="3right-join">3.right join:</h3>
 
-<p>以 tbl 为左表，tb2 为右表:</p>
+<p>&#x4EE5; tbl &#x4E3A;&#x5DE6;&#x8868;&#xFF0C;tb2 &#x4E3A;&#x53F3;&#x8868;:</p>
 <blockquote>
 <p>select <a href="http://b.id">b.id</a>, b.author, a.count <font color="red">from</font>    tbl a <font color="red">right join</font> tb2 b <font color="red">on</font> a.author = b.author;</p>
 </blockquote>
 <hr>
-<h2 class="mume-header" id="5-null-%E5%80%BC%E5%A4%84%E7%90%86">5. NULL 值处理：</h2>
+<h2 class="mume-header" id="5-null-%E5%80%BC%E5%A4%84%E7%90%86">5. NULL &#x503C;&#x5904;&#x7406;&#xFF1A;</h2>
 
-<p>① is null: 当列的值是NULL,此运算符返回true。<br>
-② is not null: 当列的值不为NULL, 运算符返回true。<br>
-③ &lt;=&gt;: 比较操作符（不同于=运算符），当比较的的两个值为NULL时返回true。<br>
-<mark>④ 不能使用 = NULL 或 != NULL 在列中查找 NULL 值 。</mark></p>
+<p>&#x2460; is null: &#x5F53;&#x5217;&#x7684;&#x503C;&#x662F;NULL,&#x6B64;&#x8FD0;&#x7B97;&#x7B26;&#x8FD4;&#x56DE;true&#x3002;<br>
+&#x2461; is not null: &#x5F53;&#x5217;&#x7684;&#x503C;&#x4E0D;&#x4E3A;NULL, &#x8FD0;&#x7B97;&#x7B26;&#x8FD4;&#x56DE;true&#x3002;<br>
+&#x2462; &lt;=&gt;: &#x6BD4;&#x8F83;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;&#x4E0D;&#x540C;&#x4E8E;=&#x8FD0;&#x7B97;&#x7B26;&#xFF09;&#xFF0C;&#x5F53;&#x6BD4;&#x8F83;&#x7684;&#x7684;&#x4E24;&#x4E2A;&#x503C;&#x4E3A;NULL&#x65F6;&#x8FD4;&#x56DE;true&#x3002;<br>
+<mark>&#x2463; &#x4E0D;&#x80FD;&#x4F7F;&#x7528; = NULL &#x6216; != NULL &#x5728;&#x5217;&#x4E2D;&#x67E5;&#x627E; NULL &#x503C; &#x3002;</mark></p>
 <blockquote>
-<p>⑤在MySQL中，NULL值与任何其它值的比较（即使是NULL）永远返回false，即 NULL = NULL 返回false 。</p>
+<p>&#x2464;&#x5728;MySQL&#x4E2D;&#xFF0C;NULL&#x503C;&#x4E0E;&#x4EFB;&#x4F55;&#x5176;&#x5B83;&#x503C;&#x7684;&#x6BD4;&#x8F83;&#xFF08;&#x5373;&#x4F7F;&#x662F;NULL&#xFF09;&#x6C38;&#x8FDC;&#x8FD4;&#x56DE;false&#xFF0C;&#x5373; NULL = NULL &#x8FD4;&#x56DE;false &#x3002;</p>
 </blockquote>
-<p>⑥MySQL中<mark>处理NULL使用is null和is not null运算符</mark>。</p>
+<p>&#x2465;MySQL&#x4E2D;<mark>&#x5904;&#x7406;NULL&#x4F7F;&#x7528;is null&#x548C;is not null&#x8FD0;&#x7B97;&#x7B26;</mark>&#x3002;</p>
 <hr>
-<h2 class="mume-header" id="6-%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%BA%93">6. 备份数据库:</h2>
+<h2 class="mume-header" id="6union-%E6%93%8D%E4%BD%9C%E7%AC%A6%E7%94%A8%E4%BA%8E%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E4%BB%A5%E4%B8%8A%E7%9A%84-select-%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%BB%93%E6%9E%9C%E7%BB%84%E5%90%88%E5%88%B0%E4%B8%80%E4%B8%AA%E7%BB%93%E6%9E%9C%E9%9B%86%E5%90%88%E4%B8%AD">6.UNION &#x64CD;&#x4F5C;&#x7B26;(&#x7528;&#x4E8E;&#x8FDE;&#x63A5;&#x4E24;&#x4E2A;&#x4EE5;&#x4E0A;&#x7684; SELECT &#x8BED;&#x53E5;&#x7684;&#x7ED3;&#x679C;&#x7EC4;&#x5408;&#x5230;&#x4E00;&#x4E2A;&#x7ED3;&#x679C;&#x96C6;&#x5408;&#x4E2D;)</h2>
 
-<h3 class="mume-header" id="1-%E5%AF%BC%E5%87%BA%E6%95%B4%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93">1. 导出整个数据库:</h3>
-
-<p><mark>导出文件默认是存在mysql\bin目录下</mark></p>
-<blockquote>
-<p>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名</p>
+<p>&#x8BED;&#x6CD5;&#x683C;&#x5F0F;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">SELECT</span> expression1<span class="token punctuation">,</span> expression2<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> expression_n
+<span class="token keyword">FROM</span> <span class="token keyword">tables</span>
+<span class="token punctuation">[</span><span class="token keyword">WHERE</span> conditions<span class="token punctuation">]</span>
+<span class="token keyword">UNION</span> <span class="token punctuation">[</span><span class="token keyword">ALL</span><span class="token punctuation">]</span>
+<span class="token keyword">SELECT</span> expression1<span class="token punctuation">,</span> expression2<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> expression_n
+<span class="token keyword">FROM</span> <span class="token keyword">tables</span>
+<span class="token punctuation">[</span><span class="token keyword">WHERE</span> conditions<span class="token punctuation">]</span><span class="token punctuation">;</span>
+</pre><blockquote>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B; UNION &#x64CD;&#x4F5C;&#x7B26;&#x5DF2;&#x7ECF;&#x5220;&#x9664;&#x4E86;&#x91CD;&#x590D;&#x6570;&#x636E;<br>
+ALL: &#x53EF;&#x9009;&#xFF0C;&#x8FD4;&#x56DE;&#x6240;&#x6709;&#x7ED3;&#x679C;&#x96C6;&#xFF0C;&#x5305;&#x542B;&#x91CD;&#x590D;&#x6570;&#x636E;&#x3002;</p>
 </blockquote>
-<p>例子：</p>
+<h3>UNION &#x5B9E;&#x4F8B;</h3>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">SELECT</span> country <span class="token keyword">FROM</span> t1
+<span class="token keyword">UNION</span>
+<span class="token keyword">SELECT</span> country <span class="token keyword">FROM</span> t2
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> country<span class="token punctuation">;</span> 
+</pre><blockquote>
+<p>&#x4ECE; &quot;t1&quot; &#x548C; &quot;t2&quot; &#x8868;&#x4E2D;&#x9009;&#x53D6;&#x6240;&#x6709;&#x4E0D;&#x540C;&#x7684;country&#xFF08;&#x53EA;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x503C;,&#x6392;&#x9664;&#x91CD;&#x590D;&#x503C;&#xFF09;&#xFF1A;</p>
+</blockquote>
+<h3>UNION ALL &#x5B9E;&#x4F8B;</h3>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">SELECT</span> country <span class="token keyword">FROM</span> t1
+<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
+<span class="token keyword">SELECT</span> country <span class="token keyword">FROM</span> t2
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> country<span class="token punctuation">;</span>
+</pre><blockquote>
+<p>&#x4ECE; &quot;t1&quot; &#x548C; &quot;t2&quot; &#x8868;&#x4E2D;&#x9009;&#x53D6;&#x6240;&#x6709;&#x7684;country&#xFF08;&#x5305;&#x542B;&#x91CD;&#x590D;&#x7684;&#x503C;&#xFF09;&#xFF1A;</p>
+</blockquote>
+<h3>&#x5E26;&#x6709; WHERE &#x7684;UNION ALL &#x5B9E;&#x4F8B;</h3>
+<pre data-role="codeBlock" data-info="sql" class="language-sql"><span class="token keyword">SELECT</span> country<span class="token punctuation">,</span> name <span class="token keyword">FROM</span> t1
+<span class="token keyword">WHERE</span> country<span class="token operator">=</span><span class="token string">&apos;CN&apos;</span>
+<span class="token keyword">UNION</span> <span class="token keyword">ALL</span>
+<span class="token keyword">SELECT</span> country<span class="token punctuation">,</span> app_name <span class="token keyword">FROM</span> t2
+<span class="token keyword">WHERE</span> country<span class="token operator">=</span><span class="token string">&apos;CN&apos;</span>
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> country<span class="token punctuation">;</span> 
+</pre><blockquote>
+<p>&#x4ECE; &quot;t1&quot; &#x548C; &quot;t2&quot; &#x8868;&#x4E2D;&#x9009;&#x53D6;&#x6240;&#x6709;&#x7684;CN&#x7684;&#x6570;&#x636E;&#xFF08;&#x4E5F;&#x6709;&#x91CD;&#x590D;&#x7684;&#x503C;&#xFF09;&#xFF1A;</p>
+</blockquote>
+<hr>
+<h2 class="mume-header" id="7-%E5%A4%87%E4%BB%BD%E6%95%B0%E6%8D%AE%E5%BA%93">7. &#x5907;&#x4EFD;&#x6570;&#x636E;&#x5E93;:</h2>
+
+<h3 class="mume-header" id="1-%E5%AF%BC%E5%87%BA%E6%95%B4%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93">1. &#x5BFC;&#x51FA;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x5E93;:</h3>
+
+<p><mark>&#x5BFC;&#x51FA;&#x6587;&#x4EF6;&#x9ED8;&#x8BA4;&#x662F;&#x5B58;&#x5728;mysql\bin&#x76EE;&#x5F55;&#x4E0B;</mark></p>
+<blockquote>
+<p>mysqldump -u &#x7528;&#x6237;&#x540D; -p &#x6570;&#x636E;&#x5E93;&#x540D; &gt; &#x5BFC;&#x51FA;&#x7684;&#x6587;&#x4EF6;&#x540D;</p>
+</blockquote>
+<p>&#x4F8B;&#x5B50;&#xFF1A;</p>
 <blockquote>
 <p>mysqldump -u user_name -p123456 database_name &gt; outfile_name.sql</p>
 </blockquote>
-<h3 class="mume-header" id="2-%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E8%A1%A8">2. 导出一个表：</h3>
+<h3 class="mume-header" id="2-%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA%E8%A1%A8">2. &#x5BFC;&#x51FA;&#x4E00;&#x4E2A;&#x8868;&#xFF1A;</h3>
 
 <blockquote>
-<p>mysqldump -u 用户名 -p 数据库名 表名&gt; 导出的文件名</p>
+<p>mysqldump -u &#x7528;&#x6237;&#x540D; -p &#x6570;&#x636E;&#x5E93;&#x540D; &#x8868;&#x540D;&gt; &#x5BFC;&#x51FA;&#x7684;&#x6587;&#x4EF6;&#x540D;</p>
 </blockquote>
-<p>例子：</p>
+<p>&#x4F8B;&#x5B50;&#xFF1A;</p>
 <blockquote>
 <p>mysqldump -u user_name -p database_name table_name &gt; outfile_name.sql</p>
 </blockquote>
@@ -688,7 +778,6 @@ order by 字段1, [字段2...] [asc [desc]]</p>
       </div>
       
       
-    </body>
     
     
     
@@ -696,4 +785,6 @@ order by 字段1, [字段2...] [asc [desc]]</p>
     
     
     
-  </html>
+    
+  
+    </body></html>
