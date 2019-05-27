@@ -1,0 +1,610 @@
+<!DOCTYPE html><html><head>
+      <title>Redis</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\&#x675F;&#x6C38;&#x7965;\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.3.13\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+ 
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <ul>
+<li><a href="#redis">Redis</a>
+<ul>
+<li><a href="#1-nosql">1. NOSQL</a></li>
+<li><a href="#2redis%E7%9A%84%E4%BB%8B%E7%BB%8D">2.Redis&#x7684;&#x4ECB;&#x7ECD;</a></li>
+<li><a href="#3redis%E7%9A%84%E5%AE%89%E8%A3%85">3.Redis&#x7684;&#x5B89;&#x88C5;</a></li>
+<li><a href="#4redis-%E5%9F%BA%E7%A1%80">4.Redis &#x57FA;&#x7840;</a>
+<ul>
+<li><a href="#1redis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">1.Redis&#x57FA;&#x7840;&#x77E5;&#x8BC6;</a></li>
+<li><a href="#2redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4">2.Redis&#x57FA;&#x7840;&#x547D;&#x4EE4;</a></li>
+</ul>
+</li>
+<li><a href="#5%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">5.&#x4E94;&#x5927;&#x6570;&#x636E;&#x7C7B;&#x578B;</a>
+<ul>
+<li><a href="#1string%E5%AD%97%E7%AC%A6%E4%B8%B2">1.string(&#x5B57;&#x7B26;&#x4E32;)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 class="mume-header" id="redis">Redis</h1>
+
+<h2 class="mume-header" id="1-nosql">1. NOSQL</h2>
+
+<p><mark>nosql&#x4E00;&#x822C;&#x6307;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x3002;nosql&#x6570;&#x636E;&#x5E93;&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x5927;&#x89C4;&#x6A21;&#x6570;&#x636E;&#x96C6;&#x5408;&#x7684;&#x5B58;&#x50A8;&#x95EE;&#x9898;&#x3002;</mark></p>
+<p>NOSQL&#x6570;&#x636E;&#x5E93;&#x76F8;&#x6BD4;&#x4F20;&#x7EDF;&#x7684;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x6709;&#x8BB8;&#x591A;&#x4F18;&#x70B9;&#xFF1A;</p>
+<ol>
+<li>&#x6613;&#x6269;&#x5C55;&#xFF0C;nosql&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x6570;&#x636E;&#x4E0E;&#x6570;&#x636E;&#x4E4B;&#x95F4;&#x65E0;&#x5173;&#x7CFB;&#xFF0C;&#x5BFC;&#x81F4;&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5BB9;&#x6613;&#x6269;&#x5C55;&#x3002;</li>
+<li>&#x5927;&#x6570;&#x636E;&#x91CF;&#x9AD8;&#x6027;&#x80FD;&#xFF1A;nosql&#x6570;&#x636E;&#x5E93;&#x7531;&#x4E8E;&#x6570;&#x636E;&#x4E4B;&#x95F4;&#x7684;&#x65E0;&#x5173;&#x7CFB;&#x6027;&#xFF0C;&#x56E0;&#x6B64;&#x5728;&#x5927;&#x6570;&#x636E;&#x91CF;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x6709;&#x975E;&#x5E38;&#x9AD8;&#x7684;&#x8BFB;&#x5199;&#x6027;&#x80FD;&#x3002;</li>
+<li>&#x7075;&#x6D3B;&#x7684;&#x6570;&#x636E;&#x6A21;&#x578B;&#xFF1A;nosql&#x65E0;&#x987B;&#x4E3A;&#x5B58;&#x50A8;&#x7684;&#x6570;&#x636E;&#x5EFA;&#x7ACB;&#x5B57;&#x6BB5;&#x3002;&#x968F;&#x65F6;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x65B0;&#x7684;&#x6570;&#x636E;&#x683C;&#x5F0F;&#x3002;</li>
+</ol>
+<h2 class="mume-header" id="2redis%E7%9A%84%E4%BB%8B%E7%BB%8D">2.Redis&#x7684;&#x4ECB;&#x7ECD;</h2>
+
+<p>Redis: Remote Dictionary Server (&#x8FDC;&#x7A0B;&#x5B57;&#x5178;&#x670D;&#x52A1;&#x5668;)<br>
+Redis&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x7684;&#x3001;&#x4F7F;&#x7528;C&#x8BED;&#x8A00;&#x7F16;&#x5199;&#x7684;&#x3001;&#x652F;&#x6301;&#x7F51;&#x7EDC;&#x4EA4;&#x4E92;&#x7684;&#x3001;&#x53EF;&#x57FA;&#x4E8E;&#x5185;&#x5B58;&#x4E5F;&#x53EF;&#x6301;&#x4E45;&#x5316;&#x7684;Key-Value&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x662F;NOsql&#x6570;&#x636E;&#x5E93;&#x4E4B;&#x4E00;&#x3002;</p>
+<p>Redis&#x7684;&#x7279;&#x70B9;&#xFF1A;</p>
+<ol>
+<li>&#x652F;&#x6301;&#x6570;&#x636E;&#x6301;&#x4E45;&#x5316;&#xFF0C;&#x628A;&#x5185;&#x5B58;&#x7684;&#x6570;&#x636E;&#x4FDD;&#x5B58;&#x5728;&#x78C1;&#x76D8;&#x4E2D;&#xFF0C;&#x91CD;&#x542F;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x518D;&#x6B21;&#x52A0;&#x8F7D;&#x51FA;&#x6765;&#x3002;</li>
+<li>&#x4E0D;&#x4EC5;&#x4EC5;&#x652F;&#x6301; key-value&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD8;&#x652F;&#x6301;list,set,zset,hash&#x7B49;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x7684;&#x5B58;&#x50A8;&#x3002;</li>
+<li>redis&#x652F;&#x6301;&#x6570;&#x636E;&#x5907;&#x4EFD;&#xFF0C;&#x5373;&#x4E3B;&#x4ECE;&#x6A21;&#x5F0F;&#x7684;&#x6570;&#x636E;&#x5907;&#x4EFD;&#x3002;</li>
+</ol>
+<h2 class="mume-header" id="3redis%E7%9A%84%E5%AE%89%E8%A3%85">3.Redis&#x7684;&#x5B89;&#x88C5;</h2>
+
+<ol>
+<li>&#x4ECE;redis&#x5B98;&#x7F51;&#x4E2D;&#x4E0B;&#x8F7D;&#x7684;redis&#x6E90;&#x7801;&#x5305; &#x201C;redis-5.0.4.tar.gz&#x201D;</li>
+<li>&#x628A;&#x6E90;&#x7801;&#x5305;&#x653E;&#x5230;linux&#x7CFB;&#x7EDF;&#x4E0B;&#x7684;&#x4E13;&#x95E8;&#x5B58;&#x653E;&#x7B2C;&#x4E09;&#x65B9;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x7684;&#x6587;&#x4EF6;&#x5939; /usr &#x6216; /opt &#x4E0B;&#x3002;</li>
+<li>&#x89E3;&#x538B;&#x6E90;&#x7801;&#x5305;&#x540E;&#x4F1A;&#x51FA;&#x73B0;&#x6587;&#x4EF6;&#x5939;redis-5.0.4&#x3002;</li>
+<li>&#x8FDB;&#x5165;&#x5230;&#x89E3;&#x538B;&#x540E;&#x7684;redis-5.0.4&#x6587;&#x4EF6;&#x540E;&#xFF0C;&#x6253;&#x5F00;&#x7EC8;&#x7AEF;&#xFF0C;<mark>&#x5728;redis-5.0.4&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x4E0B;&#x8FD0;&#x884C; make &#x547D;&#x4EE4;,&#x5F00;&#x59CB;&#x7F16;&#x8BD1;redis-5.0.4&#x6587;&#x4EF6;&#xFF0C;&#x628A;&#x5B83;&#x7F16;&#x8BD1;&#x4E3A;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x636E;&#x5305;&#x3002;</mark></li>
+<li>&#x63A5;&#x7740;&#x6267;&#x884C; make install &#x547D;&#x4EE4;&#xFF0C;&#x4E00;&#x822C;&#x7F16;&#x8BD1;&#x540E;&#x7684;redis&#x6587;&#x4EF6;&#x4F1A;&#x653E;&#x5728; /usr/local &#x76EE;&#x5F55;&#x4E0B;&#x3002;</li>
+<li>&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;myredis&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x628A;redis-5.0.4 &#x6587;&#x4EF6;&#x4E2D;&#x7684;redis.conf &#x62F7;&#x8D1D;&#x5230;myredis&#x6587;&#x4EF6;&#x4E2D;&#x3002;</li>
+<li>&#x7528;Vim&#x6587;&#x672C;&#x7F16;&#x8F91;&#x5668;&#x4FEE;&#x6539;myredis&#x6587;&#x4EF6;&#x4E2D;redis.conf&#x3002;&#x547D;&#x4EE4;&#xFF1A;&#x201C; vim redis.conf &#x201D;&#x3002;<br>
+&#x6CE8;&#x610F;&#xFF0C;&#x8BE5;redis.conf&#x53EF;&#x80FD;&#x4E3A;&#x53EA;&#x8BFB;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x7528;sudo&#x547D;&#x4EE4;&#x6765;&#x6253;&#x5F00;vim&#x8FDB;&#x884C;&#x7F16;&#x8F91;<br>
+&quot; sudo vim redis.conf &quot;</li>
+<li>&#x628A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x7684; daemonize no &#x6539;&#x4E3A; daemonize yes</li>
+<li>&#x9000;&#x51FA;vim&#x7F16;&#x8F91;&#x5668;&#xFF0C;&#x5E76;&#x4FDD;&#x5B58;&#x6587;&#x4EF6;&#x3002;&#x547D;&#x4EE4;&#x201C; &#xFF1A;wq &#x201D;</li>
+</ol>
+<h4>Redis &#x7684;&#x542F;&#x52A8;&#xFF1A;</h4>
+<p>&#x8FDB;&#x5165;&#x5148;&#x524D;&#x7F16;&#x8BD1;&#x7684;redis-5.0.4/bin/ &#x76EE;&#x5F55;&#x4E0B;</p>
+<h5>&#x524D;&#x7AEF;&#x542F;&#x52A8;&#xFF1A;</h5>
+<p>&#x76F4;&#x63A5;&#x8F93;&#x5165;&#x547D;&#x4EE4;&#xFF1A;&#x201C; ./redis-server &#x201D;,&#x542F;&#x52A8;&#x6548;&#x679C;&#x5982;&#x4E0B;&#x3002;</p>
+<p><img src="../img/redis_img/1.png" alt="1"></p>
+<p>&#x524D;&#x7AEF;&#x542F;&#x52A8;&#x7684;&#x7F3A;&#x70B9;&#x662F;&#x542F;&#x52A8;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x4E0D;&#x80FD;&#x518D;&#x8FDB;&#x884C;&#x5176;&#x4ED6;&#x64CD;&#x4F5C;&#xFF0C;&#x5982;&#x679C;&#x64CD;&#x4F5C;&#x5FC5;&#x987B;&#x4F7F;&#x7528;ctrl+c&#xFF0C;&#x540C;&#x65F6;redis-server&#x7A0B;&#x5E8F;&#x7ED3;&#x675F;&#xFF0C;&#x4E0D;&#x63A8;&#x8350;&#x8FD9;&#x79CD;&#x5F00;&#x542F;&#x65B9;&#x5F0F;&#x3002;</p>
+<h5>&#x540E;&#x7AEF;&#x542F;&#x52A8;&#xFF1A;</h5>
+<p>&#x6267;&#x884C;&#x547D;&#x4EE4;&#x201C; ./redis-server ../myredis/redis.conf&#x201D;&#xFF0C;&#x5373;&#x53EF;&#x542F;&#x52A8;redis&#x670D;&#x52A1;&#x7AEF;.<br>
+&#x7136;&#x540E;&#x8F93;&#x5165;&#x547D;&#x4EE4;&quot; ./redis-cli &quot; &#x5373;&#x53EF;&#x8FDB;&#x5165;&#x5BA2;&#x6237;&#x7AEF;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;<br>
+&#x518D;&#x8F93;&#x5165;&#x547D;&#x4EE4;&quot; ping &quot;,&#x5982;&#x679C;redis &#x56DE;&#x5E94; &quot; pong &quot;,&#x8868;&#x793A;redis&#x542F;&#x52A8;&#x6210;&#x529F;</p>
+<p><font color="red">../myredis/redis.conf &#x662F;&#x5B58;&#x653E;&#x5907;&#x4EFD;&#x7684;redis&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x52A8;&#x539F;&#x6709;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</font></p>
+<p><img src="../img/redis_img/2.png" alt="2"></p>
+<h4>&#x9000;&#x51FA;redis</h4>
+<p>&#x4ECE;&#x5BA2;&#x6237;&#x7AEF;&#x8FDB;&#x5165;redis&#x4E4B;&#x540E;&#xFF0C;&#x8F93;&#x5165;exit&#x9000;&#x51FA;</p>
+<hr>
+<h2 class="mume-header" id="4redis-%E5%9F%BA%E7%A1%80">4.Redis &#x57FA;&#x7840;</h2>
+
+<h3 class="mume-header" id="1redis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">1.Redis&#x57FA;&#x7840;&#x77E5;&#x8BC6;</h3>
+
+<ol>
+<li>redis&#x7684;&#x9ED8;&#x8BA4;&#x7AEF;&#x53E3;&#x662F;6379</li>
+<li>&#x9ED8;&#x8BA4;&#x6709;16&#x4E2A;&#x6570;&#x636E;&#x5E93;&#xFF08;0-15&#xFF09;&#xFF0C;&#x521D;&#x8BD5;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;0&#x53F7;&#x6570;&#x636E;&#x5E93;</li>
+<li>16&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5BC6;&#x7801;&#x76F8;&#x540C;&#x3002;</li>
+<li>&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x7F13;&#x5B58;&#xFF0C;&#x53D6;&#x6700;&#x65B0;N&#x4E2A;&#x6570;&#x636E;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x6392;&#x884C;&#x699C;&#x5E94;&#x7528;,&#x53D6;TOP N &#x64CD;&#x4F5C;&#x7B49;</li>
+</ol>
+<h3 class="mume-header" id="2redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4">2.Redis&#x57FA;&#x7840;&#x547D;&#x4EE4;</h3>
+
+<ol>
+<li>set &#x547D;&#x4EE4;&#xFF1A;&#x5728;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x952E;&#x503C;&#x5BF9;&#x3002;&#x4E4B;&#x524D;&#x6709;&#x7684;&#x4F1A;&#x8986;&#x76D6;</li>
+</ol>
+<blockquote>
+<p>set k1 hello<br>
+//&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A; key=&quot;k1&quot;,value=&quot;hello&quot;&#x7684;&#x952E;&#x503C;&#x5BF9;</p>
+</blockquote>
+<ol start="2">
+<li>get &#x547D;&#x4EE4;&#xFF1A;&#x901A;&#x8FC7;key&#x503C;&#xFF0C;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;&#x5BF9;&#x4E8E;&#x7684;value&#x503C;&#x3002;</li>
+</ol>
+<blockquote>
+<p>get k1<br>
+&quot;hello&quot;</p>
+</blockquote>
+<ol start="3">
+<li>select &#x547D;&#x4EE4;&#xFF1A;&#x5207;&#x6362;&#x6570;&#x636E;&#x5E93;&#x3002;&#x4E00;&#x5171;&#x6709;16&#x4E2A;&#x6570;&#x636E;&#x5E93;&#xFF08;0-15&#xFF09;</li>
+</ol>
+<blockquote>
+<p>select 2<br>
+//&#x5207;&#x6362;&#x5230;2&#x53F7;&#x6570;&#x636E;&#x5E93;</p>
+</blockquote>
+<ol start="4">
+<li>dbsize &#x547D;&#x4EE4;&#xFF1A;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;key&#x7684;&#x6570;&#x91CF;&#x3002;</li>
+</ol>
+<blockquote>
+<p>dbsize<br>
+1<br>
+//&#x8868;&#x793A;&#x5F53;&#x524D;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x53EA;&#x6709;&#x4E00;&#x4E2A;&#x952E;&#x503C;&#x5BF9;</p>
+</blockquote>
+<ol start="5">
+<li>flushdb &#x547D;&#x4EE4;&#xFF1A;&#x5220;&#x9664;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6240;&#x4EE5;key-value</li>
+</ol>
+<blockquote>
+<p>flushdb</p>
+</blockquote>
+<ol start="6">
+<li>flushdb &#x547D;&#x4EE4;&#xFF1A;&#x5220;&#x9664;&#x6240;&#x4EE5;&#xFF08;16&#x4E2A;&#xFF09;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6240;&#x4EE5;key-value</li>
+</ol>
+<blockquote>
+<p>flushall</p>
+</blockquote>
+<ol start="7">
+<li>keys * &#x547D;&#x4EE4;&#xFF1A;&#x67E5;&#x8BE2;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;&#x6240;&#x4EE5;&#x952E;&#x503C;&#x5BF9;</li>
+</ol>
+<blockquote>
+<p>keys *<br>
+&quot;ks&quot;<br>
+&quot;k1&quot;<br>
+&quot;k2&quot;<br>
+&quot;qwe&quot;<br>
+//&#x8868;&#x793A;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x6709;&quot;ks&quot;&#x3002;</p>
+</blockquote>
+<ol start="8">
+<li>keys &#xFF1F; &#x547D;&#x4EE4;&#xFF1A;&#x901A;&#x8FC7;&#x5360;&#x4F4D;&#x7B26;&#x67E5;&#x8BE2;&#x7279;&#x5B9A;&#x7684;key</li>
+</ol>
+<blockquote>
+<p>keys k?<br>
+&quot;ks&quot;<br>
+&quot;k1&quot;<br>
+&quot;k2&quot;<br>
+//&#x67E5;&#x8BE2;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;&#x7684;&#x4EE5;k&#x4E3A;&#x9996;&#x5B57;&#x7B26;&#x7684;key</p>
+</blockquote>
+<p><strong>&#x5176;&#x4ED6;&#x57FA;&#x7840;&#x547D;&#x4EE4;</strong></p>
+<table>
+<thead>
+<tr>
+<th>&#x547D;&#x4EE4;</th>
+<th>&#x529F;&#x80FD;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEL key</td>
+<td>&#x6B64;&#x547D;&#x4EE4;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x6307;&#x5B9A;&#x952E;(&#x5982;&#x679C;&#x5B58;&#x5728;)&#x3002;</td>
+</tr>
+<tr>
+<td>DUMP key</td>
+<td>&#x6B64;&#x547D;&#x4EE4;&#x8FD4;&#x56DE;&#x5B58;&#x50A8;&#x5728;&#x6307;&#x5B9A;&#x952E;&#x7684;&#x503C;&#x7684;&#x5E8F;&#x5217;&#x5316;&#x7248;&#x672C;&#x3002;</td>
+</tr>
+<tr>
+<td>EXISTS key</td>
+<td>&#x6B64;&#x547D;&#x4EE4;&#x68C0;&#x67E5;&#x952E;&#x662F;&#x5426;&#x5B58;&#x5728;&#x3002;</td>
+</tr>
+<tr>
+<td>TTL key</td>
+<td>&#x4EE5;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;&#xFF0C;&#x8FD4;&#x56DE;&#x7ED9;&#x5B9A; key &#x7684;&#x5269;&#x4F59;&#x751F;&#x5B58;&#x65F6;&#x95F4;(TTL, time to live)&#x3002;-1&#x8868;&#x793A;&#x6C38;&#x4E0D;&#x8FC7;&#x671F;&#xFF0C;-2&#x8868;&#x793A;&#x5DF2;&#x7ECF;&#x8FC7;&#x671F;&#x3002;</td>
+</tr>
+<tr>
+<td>TYPE key</td>
+<td>&#x8FD4;&#x56DE;&#x5B58;&#x50A8;&#x5728;&#x952E;&#x4E2D;&#x7684;&#x503C;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;</td>
+</tr>
+<tr>
+<td>KEYS pattern</td>
+<td>&#x67E5;&#x627E;&#x4E0E;&#x6307;&#x5B9A;&#x6A21;&#x5F0F;&#x5339;&#x914D;&#x7684;&#x6240;&#x6709;&#x952E;&#x3002;</td>
+</tr>
+<tr>
+<td>MOVE key db</td>
+<td>&#x5C06;&#x952E;&#x79FB;&#x52A8;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x3002;</td>
+</tr>
+<tr>
+<td>PERSIST key</td>
+<td>&#x5220;&#x9664;&#x6307;&#x5B9A;&#x952E;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x5F97;&#x6C38;&#x751F;&#x3002;</td>
+</tr>
+<tr>
+<td>RANDOMKEY</td>
+<td>&#x4ECE;Redis&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x968F;&#x673A;&#x7684;&#x952E;&#x3002;</td>
+</tr>
+<tr>
+<td>RENAME key newkey</td>
+<td>&#x66F4;&#x6539;&#x952E;&#x7684;&#x540D;&#x79F0;&#x3002;</td>
+</tr>
+<tr>
+<td>PTTL key</td>
+<td>&#x4EE5;&#x6BEB;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;&#x8FD4;&#x56DE; key &#x7684;&#x5269;&#x4F59;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x3002;</td>
+</tr>
+<tr>
+<td>RENAMENX key newkey</td>
+<td>&#x5982;&#x679C;&#x65B0;&#x952E;&#x4E0D;&#x5B58;&#x5728;&#xFF0C;&#x91CD;&#x547D;&#x540D;&#x952E;&#x3002;</td>
+</tr>
+<tr>
+<td>EXPIRE key seconds</td>
+<td>&#x8BBE;&#x7F6E;&#x952E;&#x5728;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x79D2;&#x6570;&#x4E4B;&#x540E;&#x5230;&#x671F;/&#x8FC7;&#x671F;&#x3002;</td>
+</tr>
+<tr>
+<td>EXPIREAT key timestamp</td>
+<td>&#x8BBE;&#x7F6E;&#x5728;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x6233;&#x4E4B;&#x540E;&#x952E;&#x5230;&#x671F;/&#x8FC7;&#x671F;&#x3002;&#x8FD9;&#x91CC;&#x7684;&#x65F6;&#x95F4;&#x662F;Unix&#x65F6;&#x95F4;&#x6233;&#x683C;&#x5F0F;&#x3002;</td>
+</tr>
+<tr>
+<td>PEXPIRE key milliseconds</td>
+<td>&#x8BBE;&#x7F6E;&#x952E;&#x7684;&#x5230;&#x671F;&#x65F6;&#x95F4;(&#x4EE5;&#x6BEB;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;)&#x3002;</td>
+</tr>
+<tr>
+<td>PEXPIREAT key milliseconds-timestamp</td>
+<td>&#x4EE5;Unix&#x65F6;&#x95F4;&#x6233;&#x5F62;&#x5F0F;&#x6765;&#x8BBE;&#x7F6E;&#x952E;&#x7684;&#x5230;&#x671F;&#x65F6;&#x95F4;(&#x4EE5;&#x6BEB;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;)&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 class="mume-header" id="5%E4%BA%94%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">5.&#x4E94;&#x5927;&#x6570;&#x636E;&#x7C7B;&#x578B;</h2>
+
+<h3 class="mume-header" id="1string%E5%AD%97%E7%AC%A6%E4%B8%B2">1.string(&#x5B57;&#x7B26;&#x4E32;)</h3>
+
+<p>string&#x7C7B;&#x578B;&#x662F;redis&#x652F;&#x6301;&#x7684;&#x6700;&#x57FA;&#x672C;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;redis&#x7684;string&#x6570;&#x636E;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x5B58;&#x50A8;&#x56FE;&#x7247;&#x6216;&#x5E8F;&#x5217;&#x5316;&#x5BF9;&#x8C61;&#x3002;&#x5E76;&#x4E14;redis&#x7684;&#x6BCF;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x7684;value&#x6700;&#x591A;&#x53EF;&#x4EE5;&#x5B58;&#x50A8;512M.</p>
+<h4>redis&#x5B57;&#x7B26;&#x4E32;&#x547D;&#x4EE4;</h4>
+<table>
+<thead>
+<tr>
+<th>&#x547D;&#x4EE4;</th>
+<th>&#x529F;&#x80FD;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>append key value</td>
+<td>&#x5982;&#x679C; key &#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x5E76;&#x4E14;&#x662F;&#x4E00;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x8BE5;&#x547D;&#x4EE4;&#x5C06;&#x6307;&#x5B9A;&#x7684; value &#x8FFD;&#x52A0;&#x5230;&#x8BE5; key &#x539F;&#x6765;&#x503C;&#xFF08;value&#xFF09;&#x7684;&#x672B;&#x5C3E;&#x3002;</td>
+</tr>
+<tr>
+<td>strlen key</td>
+<td>&#x8FD4;&#x56DE; key &#x6240;&#x50A8;&#x5B58;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x503C;&#x7684;&#x957F;&#x5EA6;&#x3002;</td>
+</tr>
+<tr>
+<td>getset key value</td>
+<td>&#x5148;get&#x8FD4;&#x56DE;key&#x7684;&#x65E7;&#x503C;,&#x518D;&#x8986;&#x76D6; key &#x7684;&#x503C;&#x4E3A; value&#x3002;</td>
+</tr>
+<tr>
+<td>incr key</td>
+<td>&#x5C06; key &#x4E2D;&#x50A8;&#x5B58;&#x7684;&#x6570;&#x5B57;&#x503C;&#x589E;&#x4E00;&#x3002;(<mark>&#x6CE8;&#x610F;&#x5FC5;&#x987B;&#x662F;&#x6570;&#x5B57;&#x624D;&#x80FD;&#x8FDB;&#x884C;&#x52A0;&#x51CF;</mark>)</td>
+</tr>
+<tr>
+<td>incrby key num</td>
+<td>&#x5C06; key &#x6240;&#x50A8;&#x5B58;&#x7684;&#x503C;&#x52A0;&#x4E0A;&#x7ED9;&#x5B9A;&#x7684;num&#x503C;&#x3002;(<mark>&#x6CE8;&#x610F;&#x5FC5;&#x987B;&#x662F;&#x6570;&#x5B57;&#x624D;&#x80FD;&#x8FDB;&#x884C;&#x52A0;&#x51CF;</mark>)</td>
+</tr>
+<tr>
+<td>decr key</td>
+<td>&#x5C06; key &#x4E2D;&#x50A8;&#x5B58;&#x7684;&#x6570;&#x5B57;&#x503C;&#x51CF;&#x4E00;&#x3002;(<mark>&#x6CE8;&#x610F;&#x5FC5;&#x987B;&#x662F;&#x6570;&#x5B57;&#x624D;&#x80FD;&#x8FDB;&#x884C;&#x52A0;&#x51CF;</mark>)</td>
+</tr>
+<tr>
+<td>decrby key num</td>
+<td>key &#x6240;&#x50A8;&#x5B58;&#x7684;&#x503C;&#x51CF;&#x53BB;&#x7ED9;&#x5B9A;&#x7684;num&#x503C; &#x3002; (<mark>&#x6CE8;&#x610F;&#x5FC5;&#x987B;&#x662F;&#x6570;&#x5B57;&#x624D;&#x80FD;&#x8FDB;&#x884C;&#x52A0;&#x51CF;</mark>)</td>
+</tr>
+<tr>
+<td>getrange key num1 num2</td>
+<td>&#x83B7;&#x53D6;&#x6307;&#x5B9A;&#x533A;&#x95F4;&#x8303;&#x56F4;&#xFF08;num1-num2&#xFF09;&#x7684;&#x503C;</td>
+</tr>
+<tr>
+<td>setrange key offset value</td>
+<td>&#x4ECE;&#x504F;&#x79FB;&#x91CF; offset &#x5F00;&#x59CB;,&#x91CD;&#x65B0;&#x8BBE;&#x7F6E;key&#x7684;&#x503C;&#xFF08;&#x4F1A;&#x8986;&#x76D6;&#xFF09;&#x3002;</td>
+</tr>
+<tr>
+<td>setex key seconds value</td>
+<td>&#x8BBE;&#x7F6E;&#x952E;&#x503C;&#x5BF9; &#xFF0C;&#x5E76;&#x5C06; key &#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x8BBE;&#x4E3A; seconds (&#x4EE5;&#x79D2;&#x4E3A;&#x5355;&#x4F4D;)&#x3002;</td>
+</tr>
+<tr>
+<td>setnx key value</td>
+<td>&#x5F53;key&#x4E0D;&#x5B58;&#x5728;&#x65F6;&#xFF0C;&#x8BBE;&#x7F6E;&#x952E;&#x503C;&#x5BF9;&#x3002;<mark>&#x7528;&#x4E8E;&#x907F;&#x514D;set&#x547D;&#x4EE4;&#x5BFC;&#x81F4;&#x7684;&#x8986;&#x76D6;</mark></td>
+</tr>
+<tr>
+<td>mget key1 [key2..]</td>
+<td>&#x8FD4;&#x56DE;(&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;) key &#x7684;&#x503C;&#x3002;</td>
+</tr>
+<tr>
+<td>mset key value [key value ...]</td>
+<td>&#x540C;&#x65F6;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; key-value&#x3002;</td>
+</tr>
+<tr>
+<td>msetnx key value [key value ...]</td>
+<td>&#x540C;&#x65F6;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; key-value &#x5BF9;&#xFF0C;&#x5F53;&#x4E14;&#x4EC5;&#x5F53;&#x6240;&#x6709;&#x7ED9;&#x5B9A; key &#x90FD;&#x4E0D;&#x5B58;&#x5728;&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<pre data-role="codeBlock" data-info class="language-"><code>127.0.0.1:6379&gt; set k1 qwe
+127.0.0.1:6379&gt; append k1 rt
+127.0.0.1:6379&gt; get k1
+&quot;qwert&quot;
+
+127.0.0.1:6379&gt; strlen k1
+(integer) 5
+
+127.0.0.1:6379&gt; getset k1 abc
+&quot;qwert&quot;
+127.0.0.1:6379&gt; get k1
+&quot;abc&quot;
+
+127.0.0.1:6379&gt; getrange k1 0 1
+&quot;ab&quot;
+
+127.0.0.1:6379&gt; setrange k1 0 xx
+127.0.0.1:6379&gt; get k1
+&quot;xxc&quot;
+
+127.0.0.1:6379&gt; mset k2 v2 k3 v3
+OK
+127.0.0.1:6379&gt; mget k1 k2 k3
+1) &quot;xxc&quot;
+2) &quot;v2&quot;
+3) &quot;v3&quot;
+
+127.0.0.1:6379&gt; set k4 10
+OK
+127.0.0.1:6379&gt; incr k4
+(integer) 11
+127.0.0.1:6379&gt; incr k4
+(integer) 12
+127.0.0.1:6379&gt; decr k4
+(integer) 11
+
+127.0.0.1:6379&gt; incrby k4 5
+(integer) 16
+127.0.0.1:6379&gt; decrby k4 5
+(integer) 11
+
+</code></pre>
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
