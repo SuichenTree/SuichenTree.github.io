@@ -782,3 +782,132 @@ Reading messages... (press Ctrl-C to quit)
 ```
 
 ![3](../img/redis_img/3.png)
+
+
+---
+
+## 10.Redis主从复制
+
+主从复制：即主机数据进行更新后，根据配置和策略。自动将主机的数据同步到从机上的master/slaver机制。==其中主机以写入数据为主，从机以读取数据为主。==
+
+主从复制的几种方式：
+
+![4](../img/redis_img/4.png)
+
+![5](../img/redis_img/5.png)
+
+![6](../img/redis_img/6.png)
+
+
+
+
+<font color="blue">
+以一主两从的方式为举例：
+
+1. 当主机死了，这是两个从机还是slave的身份。若主机又活力，从机还是slave身份。
+2. 当从机死了，当重启从机时，从机会变成 master身份。需要重新与主机建立主从联系。
+   除非之前已经把主机信息，写进了从机的配置文件中。
+
+</font>
+
+
+
+<h3>主从reids的配置：</h3>
+
+> 1. 主机redis 配置
+
+无需特殊配置。默认为6379端口。
+
+> 2. 从机redis配置
+
+1. 复制两个redis.conf文件，并命名为redis6380.conf和redis6381.conf。这是两个从机的配置文件。
+2. 设置daemonize，和pid文件。
+3. 更改从配置文件的指定端口，分别为6380，6381
+4. 更改log文件。
+5. 更改从机的备份文件
+
+```
+#这是6380从机的配置文件更改
+daemonize yes
+pidfile /var/run/redis6380.pid
+port 6380
+logfile 6380.log
+dbfilename dump6380.rdb
+```
+
+> 3. 建立从机与主机的关联
+
+方式①：
+
+在从机的配置文件（redis6380.conf和redis6381.conf）中配置这一行。
+
+```
+slaveof 主机IP 主机端口
+
+#例如：slaveof 127.0.0.1 6379。
+#说明当前该从 redis 服务器所对应的主 redis 是127.0.0.1，端口是6379。
+```
+
+
+
+方式②：打开从机的redis 命令行，输入 slaveof host port 命令，然后同步就会开始：
+
+```
+127.0.0.1:6380> slaveof 127.0.0.1 6379
+ok
+```
+
+==主从复制建立后，从节点默认使用”slave-read-only=yes”配置为只读模式，如果修改从节点的只读配置，会导致主从数据不一致。==
+
+
+> 4. 查看redis的的主从复制信息。输入命令```info replication```
+
+```
+#主机查看信息
+127.0.0.1:6379> info replication
+# Replication
+role:master
+...
+
+#从机6380查看信息
+127.0.0.1:6380> info replication
+# Replication
+role:slave
+...
+
+#从机6381查看信息
+127.0.0.1:6381> info replication
+# Replication
+role:slave
+...
+
+```
+
+> 5. 主从联系断开
+
+在从机命令窗口中输入命令：
+```
+127.0.0.1:6380> slaveof no one
+#就可以端口这个6380从机与主机的关联
+```
+
+<font color="red">
+
+1. 若主节点故障，从节点执行 slaveof no one 后将会变成新主节点；
+2. 这时其它的节点成为新主节点的从节点，并从新节点复制数据；
+
+</font>
+
+
+
+ 
+> 6. 主从复制中切主操作
+
+在从机命令窗口中输入命令：
+```
+127.0.0.1:6380> slave newMasterIP newMmasterPort
+# slave 127.0.0.1 6381
+# 切换6381为新主redis
+```
+
+主从复制切主命令同建立主从复制的命令一样，切主后从节点会清空之前所有的数据。在生产生谨慎使用。

@@ -290,6 +290,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </li>
 <li><a href="#8redis%E4%BA%8B%E5%8A%A1">8.Redis&#x4E8B;&#x52A1;</a></li>
 <li><a href="#9%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85">9.&#x53D1;&#x5E03;&#x8BA2;&#x9605;</a></li>
+<li><a href="#10redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6">10.Redis&#x4E3B;&#x4ECE;&#x590D;&#x5236;</a></li>
 </ul>
 </li>
 </ul>
@@ -1458,6 +1459,109 @@ Reading messages... (press Ctrl-C to quit)
 2) &quot;c1&quot;
 3) &quot;hello c1&quot;
 </code></pre><p><img src="../img/redis_img/3.png" alt="3"></p>
+<hr>
+<h2 class="mume-header" id="10redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6">10.Redis&#x4E3B;&#x4ECE;&#x590D;&#x5236;</h2>
+
+<p>&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#xFF1A;&#x5373;&#x4E3B;&#x673A;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#x540E;&#xFF0C;&#x6839;&#x636E;&#x914D;&#x7F6E;&#x548C;&#x7B56;&#x7565;&#x3002;&#x81EA;&#x52A8;&#x5C06;&#x4E3B;&#x673A;&#x7684;&#x6570;&#x636E;&#x540C;&#x6B65;&#x5230;&#x4ECE;&#x673A;&#x4E0A;&#x7684;master/slaver&#x673A;&#x5236;&#x3002;<mark>&#x5176;&#x4E2D;&#x4E3B;&#x673A;&#x4EE5;&#x5199;&#x5165;&#x6570;&#x636E;&#x4E3A;&#x4E3B;&#xFF0C;&#x4ECE;&#x673A;&#x4EE5;&#x8BFB;&#x53D6;&#x6570;&#x636E;&#x4E3A;&#x4E3B;&#x3002;</mark></p>
+<p>&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x7684;&#x51E0;&#x79CD;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<p><img src="../img/redis_img/4.png" alt="4"></p>
+<p><img src="../img/redis_img/5.png" alt="5"></p>
+<p><img src="../img/redis_img/6.png" alt="6"></p>
+<font color="blue">
+&#x4EE5;&#x4E00;&#x4E3B;&#x4E24;&#x4ECE;&#x7684;&#x65B9;&#x5F0F;&#x4E3A;&#x4E3E;&#x4F8B;&#xFF1A;
+<ol>
+<li>&#x5F53;&#x4E3B;&#x673A;&#x6B7B;&#x4E86;&#xFF0C;&#x8FD9;&#x662F;&#x4E24;&#x4E2A;&#x4ECE;&#x673A;&#x8FD8;&#x662F;slave&#x7684;&#x8EAB;&#x4EFD;&#x3002;&#x82E5;&#x4E3B;&#x673A;&#x53C8;&#x6D3B;&#x529B;&#xFF0C;&#x4ECE;&#x673A;&#x8FD8;&#x662F;slave&#x8EAB;&#x4EFD;&#x3002;</li>
+<li>&#x5F53;&#x4ECE;&#x673A;&#x6B7B;&#x4E86;&#xFF0C;&#x5F53;&#x91CD;&#x542F;&#x4ECE;&#x673A;&#x65F6;&#xFF0C;&#x4ECE;&#x673A;&#x4F1A;&#x53D8;&#x6210; master&#x8EAB;&#x4EFD;&#x3002;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x4E0E;&#x4E3B;&#x673A;&#x5EFA;&#x7ACB;&#x4E3B;&#x4ECE;&#x8054;&#x7CFB;&#x3002;<br>
+&#x9664;&#x975E;&#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x628A;&#x4E3B;&#x673A;&#x4FE1;&#x606F;&#xFF0C;&#x5199;&#x8FDB;&#x4E86;&#x4ECE;&#x673A;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x3002;</li>
+</ol>
+</font>
+<h3>&#x4E3B;&#x4ECE;reids&#x7684;&#x914D;&#x7F6E;&#xFF1A;</h3>
+<blockquote>
+<ol>
+<li>&#x4E3B;&#x673A;redis &#x914D;&#x7F6E;</li>
+</ol>
+</blockquote>
+<p>&#x65E0;&#x9700;&#x7279;&#x6B8A;&#x914D;&#x7F6E;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A;6379&#x7AEF;&#x53E3;&#x3002;</p>
+<blockquote>
+<ol start="2">
+<li>&#x4ECE;&#x673A;redis&#x914D;&#x7F6E;</li>
+</ol>
+</blockquote>
+<ol>
+<li>&#x590D;&#x5236;&#x4E24;&#x4E2A;redis.conf&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x547D;&#x540D;&#x4E3A;redis6380.conf&#x548C;redis6381.conf&#x3002;&#x8FD9;&#x662F;&#x4E24;&#x4E2A;&#x4ECE;&#x673A;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</li>
+<li>&#x8BBE;&#x7F6E;daemonize&#xFF0C;&#x548C;pid&#x6587;&#x4EF6;&#x3002;</li>
+<li>&#x66F4;&#x6539;&#x4ECE;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x6307;&#x5B9A;&#x7AEF;&#x53E3;&#xFF0C;&#x5206;&#x522B;&#x4E3A;6380&#xFF0C;6381</li>
+<li>&#x66F4;&#x6539;log&#x6587;&#x4EF6;&#x3002;</li>
+<li>&#x66F4;&#x6539;&#x4ECE;&#x673A;&#x7684;&#x5907;&#x4EFD;&#x6587;&#x4EF6;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>#&#x8FD9;&#x662F;6380&#x4ECE;&#x673A;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x66F4;&#x6539;
+daemonize yes
+pidfile /var/run/redis6380.pid
+port 6380
+logfile 6380.log
+dbfilename dump6380.rdb
+</code></pre><blockquote>
+<ol start="3">
+<li>&#x5EFA;&#x7ACB;&#x4ECE;&#x673A;&#x4E0E;&#x4E3B;&#x673A;&#x7684;&#x5173;&#x8054;</li>
+</ol>
+</blockquote>
+<p>&#x65B9;&#x5F0F;&#x2460;&#xFF1A;</p>
+<p>&#x5728;&#x4ECE;&#x673A;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF08;redis6380.conf&#x548C;redis6381.conf&#xFF09;&#x4E2D;&#x914D;&#x7F6E;&#x8FD9;&#x4E00;&#x884C;&#x3002;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>slaveof &#x4E3B;&#x673A;IP &#x4E3B;&#x673A;&#x7AEF;&#x53E3;
+
+#&#x4F8B;&#x5982;&#xFF1A;slaveof 127.0.0.1 6379&#x3002;
+#&#x8BF4;&#x660E;&#x5F53;&#x524D;&#x8BE5;&#x4ECE; redis &#x670D;&#x52A1;&#x5668;&#x6240;&#x5BF9;&#x5E94;&#x7684;&#x4E3B; redis &#x662F;127.0.0.1&#xFF0C;&#x7AEF;&#x53E3;&#x662F;6379&#x3002;
+</code></pre><p>&#x65B9;&#x5F0F;&#x2461;&#xFF1A;&#x6253;&#x5F00;&#x4ECE;&#x673A;&#x7684;redis &#x547D;&#x4EE4;&#x884C;&#xFF0C;&#x8F93;&#x5165; slaveof host port &#x547D;&#x4EE4;&#xFF0C;&#x7136;&#x540E;&#x540C;&#x6B65;&#x5C31;&#x4F1A;&#x5F00;&#x59CB;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>127.0.0.1:6380&gt; slaveof 127.0.0.1 6379
+ok
+</code></pre><p><mark>&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x5EFA;&#x7ACB;&#x540E;&#xFF0C;&#x4ECE;&#x8282;&#x70B9;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x201D;slave-read-only=yes&#x201D;&#x914D;&#x7F6E;&#x4E3A;&#x53EA;&#x8BFB;&#x6A21;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x4FEE;&#x6539;&#x4ECE;&#x8282;&#x70B9;&#x7684;&#x53EA;&#x8BFB;&#x914D;&#x7F6E;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x4E3B;&#x4ECE;&#x6570;&#x636E;&#x4E0D;&#x4E00;&#x81F4;&#x3002;</mark></p>
+<blockquote>
+<ol start="4">
+<li>&#x67E5;&#x770B;redis&#x7684;&#x7684;&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x4FE1;&#x606F;&#x3002;&#x8F93;&#x5165;&#x547D;&#x4EE4;<code>info replication</code></li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>#&#x4E3B;&#x673A;&#x67E5;&#x770B;&#x4FE1;&#x606F;
+127.0.0.1:6379&gt; info replication
+# Replication
+role:master
+...
+
+#&#x4ECE;&#x673A;6380&#x67E5;&#x770B;&#x4FE1;&#x606F;
+127.0.0.1:6380&gt; info replication
+# Replication
+role:slave
+...
+
+#&#x4ECE;&#x673A;6381&#x67E5;&#x770B;&#x4FE1;&#x606F;
+127.0.0.1:6381&gt; info replication
+# Replication
+role:slave
+...
+
+</code></pre><blockquote>
+<ol start="5">
+<li>&#x4E3B;&#x4ECE;&#x8054;&#x7CFB;&#x65AD;&#x5F00;</li>
+</ol>
+</blockquote>
+<p>&#x5728;&#x4ECE;&#x673A;&#x547D;&#x4EE4;&#x7A97;&#x53E3;&#x4E2D;&#x8F93;&#x5165;&#x547D;&#x4EE4;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>127.0.0.1:6380&gt; slaveof no one
+#&#x5C31;&#x53EF;&#x4EE5;&#x7AEF;&#x53E3;&#x8FD9;&#x4E2A;6380&#x4ECE;&#x673A;&#x4E0E;&#x4E3B;&#x673A;&#x7684;&#x5173;&#x8054;
+</code></pre><font color="red">
+<ol>
+<li>&#x82E5;&#x4E3B;&#x8282;&#x70B9;&#x6545;&#x969C;&#xFF0C;&#x4ECE;&#x8282;&#x70B9;&#x6267;&#x884C; slaveof no one &#x540E;&#x5C06;&#x4F1A;&#x53D8;&#x6210;&#x65B0;&#x4E3B;&#x8282;&#x70B9;&#xFF1B;</li>
+<li>&#x8FD9;&#x65F6;&#x5176;&#x5B83;&#x7684;&#x8282;&#x70B9;&#x6210;&#x4E3A;&#x65B0;&#x4E3B;&#x8282;&#x70B9;&#x7684;&#x4ECE;&#x8282;&#x70B9;&#xFF0C;&#x5E76;&#x4ECE;&#x65B0;&#x8282;&#x70B9;&#x590D;&#x5236;&#x6570;&#x636E;&#xFF1B;</li>
+</ol>
+</font>
+<blockquote>
+<ol start="6">
+<li>&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x4E2D;&#x5207;&#x4E3B;&#x64CD;&#x4F5C;</li>
+</ol>
+</blockquote>
+<p>&#x5728;&#x4ECE;&#x673A;&#x547D;&#x4EE4;&#x7A97;&#x53E3;&#x4E2D;&#x8F93;&#x5165;&#x547D;&#x4EE4;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>127.0.0.1:6380&gt; slave newMasterIP newMmasterPort
+# slave 127.0.0.1 6381
+# &#x5207;&#x6362;6381&#x4E3A;&#x65B0;&#x4E3B;redis
+</code></pre><p>&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x5207;&#x4E3B;&#x547D;&#x4EE4;&#x540C;&#x5EFA;&#x7ACB;&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x7684;&#x547D;&#x4EE4;&#x4E00;&#x6837;&#xFF0C;&#x5207;&#x4E3B;&#x540E;&#x4ECE;&#x8282;&#x70B9;&#x4F1A;&#x6E05;&#x7A7A;&#x4E4B;&#x524D;&#x6240;&#x6709;&#x7684;&#x6570;&#x636E;&#x3002;&#x5728;&#x751F;&#x4EA7;&#x751F;&#x8C28;&#x614E;&#x4F7F;&#x7528;&#x3002;</p>
 
       </div>
       
