@@ -266,11 +266,13 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#1%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">1.&#x4EC0;&#x4E48;&#x662F;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#xFF1F;</a></li>
 <li><a href="#2nginx-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8">2.Nginx &#x7684;&#x5B89;&#x88C5;&#x4E0E;&#x542F;&#x52A8;</a></li>
 <li><a href="#3nginx%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4">3.Nginx&#x7684;&#x57FA;&#x672C;&#x8FD0;&#x884C;&#x547D;&#x4EE4;</a></li>
+<li><a href="#4nginx%E7%9A%84%E9%85%8D%E7%BD%AE">4.nginx&#x7684;&#x914D;&#x7F6E;</a></li>
 </ul>
 </li>
 </ul>
 <h1 class="mume-header" id="nginx">Nginx</h1>
 
+<p><font color="red">&#x57FA;&#x4E8E;&#x5F53;&#x524D;nginx 1.16.0 &#x7248;&#x672C;&#x6240;&#x8FF0;&#x3002;</font></p>
 <p>Nginx&#x662F;&#x4E00;&#x6B3E;&#x8F7B;&#x91CF;&#x7EA7;&#x7684;Web &#x670D;&#x52A1;&#x5668;,<mark>&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;</mark>,&#x7535;&#x5B50;&#x90AE;&#x4EF6;&#xFF08;IMAP/POP3&#xFF09;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;</p>
 <blockquote>
 <p>Nginx&#x7684;&#x5E94;&#x7528;&#x573A;&#x666F;</p>
@@ -286,6 +288,21 @@ pre[data-line] .line-highlight[data-end]:after {
 &#x5747;&#x8861;&#xFF1A;Nginx&#x5C06;&#x6536;&#x5230;&#x7684;&#x8BF7;&#x6C42;&#x6309;&#x7167;&#x4E00;&#x5B9A;&#x7684;&#x89C4;&#x5219;&#x5206;&#x53D1;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x670D;&#x52A1;&#x5668;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;</p>
 </blockquote>
 <p><img src="../img/Nginx_img/8.png" alt="8"></p>
+<p>nginx&#x652F;&#x6301;&#x7684;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>
+<p>weight&#x8F6E;&#x8BE2;&#xFF08;&#x9ED8;&#x8BA4;&#xFF09;&#xFF1A;&#x628A;&#x63A5;&#x6536;&#x5230;&#x7684;&#x8BF7;&#x6C42;&#x6309;&#x7167;&#x987A;&#x5E8F;&#x9010;&#x4E00;&#x5206;&#x914D;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#xFF0C;&#x5373;&#x4F7F;&#x67D0;&#x4E00;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x5B95;&#x673A;&#xFF0C;nginx&#x4F1A;&#x81EA;&#x52A8;&#x5C06;&#x8BE5;&#x670D;&#x52A1;&#x5668;&#x5254;&#x9664;&#x51FA;&#x961F;&#x5217;&#xFF0C;&#x8BF7;&#x6C42;&#x53D7;&#x7406;&#x60C5;&#x51B5;&#x4E0D;&#x4F1A;&#x53D7;&#x5230;&#x4EFB;&#x4F55;&#x5F71;&#x54CD;&#x3002; &#x6216;&#x8005;&#x53EF;&#x4EE5;&#x7ED9;&#x4E0D;&#x540C;&#x7684;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x6743;&#x91CD;&#x503C;&#xFF08;weight&#xFF09;&#xFF0C;&#x6743;&#x91CD;&#x6570;&#x636E;&#x8D8A;&#x5927;&#xFF0C;&#x88AB;&#x5206;&#x914D;&#x5230;&#x8BF7;&#x6C42;&#x7684;&#x51E0;&#x7387;&#x8D8A;&#x5927;&#x3002;</p>
+</li>
+<li>
+<p>ip_hash&#xFF1A;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x6309;&#x7167;&#x53D1;&#x8D77;&#x5BA2;&#x6237;&#x7AEF;&#x7684;ip&#x7684;hash&#x7ED3;&#x679C;&#x8FDB;&#x884C;&#x5339;&#x914D;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x7B97;&#x6CD5;&#x4E0B;&#x4E00;&#x4E2A;&#x56FA;&#x5B9A;ip&#x5730;&#x5740;&#x7684;&#x5BA2;&#x6237;&#x7AEF;&#x603B;&#x4F1A;&#x8BBF;&#x95EE;&#x5230;&#x540C;&#x4E00;&#x4E2A;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x3002;</p>
+</li>
+<li>
+<p>fair&#xFF1A;&#x667A;&#x80FD;&#x8C03;&#x6574;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;&#xFF0C;&#x52A8;&#x6001;&#x7684;&#x6839;&#x636E;&#x540E;&#x7AEF;&#x670D;&#x52A1;&#x5668;&#x7684;&#x8BF7;&#x6C42;&#x5904;&#x7406;&#x5230;&#x54CD;&#x5E94;&#x7684;&#x65F6;&#x95F4;&#x8FDB;&#x884C;&#x5747;&#x8861;&#x5206;&#x914D;&#xFF0C;&#x54CD;&#x5E94;&#x65F6;&#x95F4;&#x77ED;&#x5904;&#x7406;&#x6548;&#x7387;&#x9AD8;&#x7684;&#x670D;&#x52A1;&#x5668;&#x5206;&#x914D;&#x5230;&#x8BF7;&#x6C42;&#x7684;&#x6982;&#x7387;&#x9AD8;&#xFF0C;&#x54CD;&#x5E94;&#x65F6;&#x95F4;&#x957F;&#x5904;&#x7406;&#x6548;&#x7387;&#x4F4E;&#x7684;&#x670D;&#x52A1;&#x5668;&#x5206;&#x914D;&#x5230;&#x7684;&#x8BF7;&#x6C42;&#x5C11;&#xFF1B;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;nginx&#x9ED8;&#x8BA4;&#x4E0D;&#x652F;&#x6301;fair&#x7B97;&#x6CD5;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;&#xFF0C;&#x8BF7;&#x5B89;&#x88C5;upstream_fair&#x6A21;&#x5757;</p>
+</li>
+<li>
+<p>url_hash&#xFF1A;&#x6309;&#x7167;&#x8BBF;&#x95EE;&#x7684;url&#x7684;hash&#x7ED3;&#x679C;&#x5206;&#x914D;&#x8BF7;&#x6C42;&#xFF0C;&#x6BCF;&#x4E2A;&#x8BF7;&#x6C42;&#x7684;url&#x4F1A;&#x6307;&#x5411;&#x540E;&#x7AEF;&#x56FA;&#x5B9A;&#x7684;&#x67D0;&#x4E2A;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;nginx&#x4F5C;&#x4E3A;&#x9759;&#x6001;&#x670D;&#x52A1;&#x5668;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x63D0;&#x9AD8;&#x7F13;&#x5B58;&#x6548;&#x7387;&#x3002;&#x540C;&#x6837;&#x6CE8;&#x610F;nginx&#x9ED8;&#x8BA4;&#x4E0D;&#x652F;&#x6301;&#x8FD9;&#x79CD;&#x8C03;&#x5EA6;&#x7B97;&#x6CD5;&#xFF0C;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x8BDD;&#x9700;&#x8981;&#x5B89;&#x88C5;nginx&#x7684;hash&#x8F6F;&#x4EF6;&#x5305;</p>
+</li>
+</ol>
 <h2 class="mume-header" id="1%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">1.&#x4EC0;&#x4E48;&#x662F;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#xFF1F;</h2>
 
 <h4>&#x6B63;&#x5411;&#x4EE3;&#x7406;</h4>
@@ -298,8 +315,11 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><mark>&#x5728;&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x77E5;&#x9053;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x7684;IP&#x5730;&#x5740;&#xFF0C;&#x800C;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x53EA;&#x77E5;&#x9053;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x7684;IP&#x5730;&#x5740;&#x800C;&#x4E0D;&#x77E5;&#x9053;&#x5BA2;&#x6237;&#x7AEF;&#x7684;IP&#x5730;&#x5740;&#x3002;&#x6240;&#x4EE5;&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x53EF;&#x4EE5;&#x5C4F;&#x853D;&#x6216;&#x9690;&#x85CF;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x6240;&#x4EE5;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x662F;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x4F5C;&#x4EE3;&#x7406;&#x4EBA;&#xFF0C;&#x5B83;&#x662F;&#x7AD9;&#x5728;&#x5BA2;&#x6237;&#x7AEF;&#x8FD9;&#x8FB9;&#x7684;</mark></p>
 <p><img src="../img/Nginx_img/9.png" alt="9"></p>
 <h4>&#x53CD;&#x5411;&#x4EE3;&#x7406;</h4>
-<p><font color="red">&#x7531;&#x4E8E;&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x662F;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x4F5C;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4EE3;&#x7406;&#x4EBA;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x4EE3;&#x7406;&#x662F;&#x4E00;&#x4F19;&#x7684;&#xFF09;&#x3002;&#x800C;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x662F;&#x6307;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x4F5C;&#x4E3A;&#x670D;&#x52A1;&#x5668;&#x7684;&#x4EE3;&#x7406;&#x4EBA;&#xFF08;&#x4EE3;&#x7406;&#x4E0E;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x662F;&#x4E00;&#x4F19;&#x7684;&#xFF09;&#x3002;&#x5E76;&#x4E14;&#x5728;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5BF9;&#x5916;&#x5C4F;&#x853D;&#x4E86;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x7684;&#x4FE1;&#x606F;</font></p>
+<p><font color="red">&#x7531;&#x4E8E;&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x662F;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x4F5C;&#x4E3A;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x4EE3;&#x7406;&#x4EBA;&#xFF08;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x4EE3;&#x7406;&#x662F;&#x4E00;&#x4F19;&#x7684;&#xFF09;&#x3002;&#x800C;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x662F;&#x6307;&#x4EE3;&#x7406;&#x670D;&#x52A1;&#x5668;&#x4F5C;&#x4E3A;&#x670D;&#x52A1;&#x5668;&#x7684;&#x4EE3;&#x7406;&#x4EBA;&#xFF08;&#x4EE3;&#x7406;&#x4E0E;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x662F;&#x4E00;&#x4F19;&#x7684;&#xFF09;&#x3002;&#x5E76;&#x4E14;&#x5728;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x5C4F;&#x853D;&#x6216;&#x9690;&#x85CF;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x7684;&#x4FE1;&#x606F;</font></p>
 <p><img src="../img/Nginx_img/10.png" alt="10"></p>
+<h4>&#x4E00;&#x822C;&#x5728;&#x9879;&#x76EE;&#x573A;&#x666F;&#x4E2D;</h4>
+<p>&#x5728;&#x5B9E;&#x9645;&#x9879;&#x76EE;&#x4E2D;&#xFF0C;&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x548C;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x5F88;&#x6709;&#x53EF;&#x80FD;&#x4F1A;&#x5B58;&#x5728;&#x5728;&#x4E00;&#x4E2A;&#x5E94;&#x7528;&#x573A;&#x666F;&#x4E2D;&#xFF0C;&#x6B63;&#x5411;&#x4EE3;&#x7406;&#x4EE3;&#x7406;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8BF7;&#x6C42;&#x53BB;&#x8BBF;&#x95EE;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x76EE;&#x6807;&#x670D;&#x52A1;&#x5668;&#x662F;&#x4E00;&#x4E2A;&#x53CD;&#x5411;&#x5355;&#x5229;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x4E86;&#x591A;&#x53F0;&#x771F;&#x5B9E;&#x7684;&#x4E1A;&#x52A1;&#x5904;&#x7406;&#x670D;&#x52A1;&#x5668;&#x3002;</p>
+<p><img src="../img/Nginx_img/11.png" alt="11"></p>
 <h2 class="mume-header" id="2nginx-%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8">2.Nginx &#x7684;&#x5B89;&#x88C5;&#x4E0E;&#x542F;&#x52A8;</h2>
 
 <p>Nginx &#x7684;&#x4F18;&#x70B9;:</p>
@@ -341,12 +361,17 @@ cd CodingEnvironment\nginx-1.16.0   #&#x8FDB;&#x5165;&#x5230;nginx&#x6587;&#x4EF
 <ol start="2">
 <li>&#x8FD0;&#x884C;&#x547D;&#x4EE4;&#xFF1A;</li>
 </ol>
-<pre data-role="codeBlock" data-info class="language-"><code>start nginx     #&#x542F;&#x52A8;nginx&#x670D;&#x52A1;&#x5668;
+<pre data-role="codeBlock" data-info class="language-"><code>start nginx     #&#x542F;&#x52A8;nginx&#x670D;&#x52A1;&#x5668;,&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x8F93;&#x5B8C;&#x540E;&#xFF0C;&#x547D;&#x4EE4;&#x7A97;&#x53E3;&#x4F1A;&#x95EA;&#x4E00;&#x4E0B;&#x3002;
+
+## &#x6216;&#x8005;&#x76F4;&#x63A5;&#x8F93;&#x5165;nginx&#x547D;&#x4EE4;&#xFF0C;&#x4E5F;&#x4F1A;&#x542F;&#x52A8;
+
+nginx
 
 </code></pre><ol start="3">
 <li>&#x5728;&#x4EFB;&#x52A1;&#x7BA1;&#x7406;&#x5668;&#xFF0C;&#x770B;&#x5230;nginx&#x670D;&#x52A1;&#x5668;&#x7684;&#x6807;&#x5FD7;&#xFF0C;&#x5C31;&#x8868;&#x793A;&#x5DF2;&#x7ECF;&#x542F;&#x52A8;&#x3002;</li>
 </ol>
 <p><img src="../img/Nginx_img/5.png" alt="5"></p>
+<p>&#x5728;nginx&#x8FDB;&#x7A0B;&#x5728;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x9644;&#x5E26;&#x4E00;&#x4E2A;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#xFF0C;&#x7528;&#x4E8E;&#x4FDD;&#x62A4;&#x6B63;&#x5F0F;&#x8FDB;&#x7A0B;&#x4E0D;&#x88AB;&#x5F02;&#x5E38;&#x7EC8;&#x6B62;&#xFF1B;&#x5982;&#x679C;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#x4E00;&#x65E6;&#x8FD4;&#x73B0;nginx&#x7EE7;&#x627F;&#x88AB;&#x7EC8;&#x6B62;&#x4E86;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x91CD;&#x542F;&#x8BE5;&#x8FDB;&#x7A0B;&#x3002;</p>
 <ol start="4">
 <li>&#x6D4F;&#x89C8;&#x5668;&#x8BBF;&#x95EE; localhost&#xFF0C;&#x5373;&#x53EF;&#x770B;&#x5230;Nginx &#x6B22;&#x8FCE;&#x9875;</li>
 </ol>
@@ -367,14 +392,242 @@ nginx -s quit    #&#x4F18;&#x96C5;&#x7684;&#x5173;&#x673A;
 <blockquote>
 <p>&#x5F53;nginx&#x542F;&#x52A8;&#x540E;,&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528; -s &#x53C2;&#x6570;&#x8C03;&#x7528;&#x53EF;&#x6267;&#x884C;&#x6587;&#x4EF6;&#x6765;&#x63A7;&#x5236;&#x5B83;&#x3002;</p>
 </blockquote>
-<pre data-role="codeBlock" data-info class="language-"><code>nginx -s stop    #&#x5FEB;&#x901F;&#x5173;&#x95ED;&#x670D;&#x52A1;
-nginx -s quit    #&#x6B63;&#x5E38;&#x5173;&#x95ED;&#x670D;&#x52A1;
+<pre data-role="codeBlock" data-info class="language-"><code>nginx           #&#x542F;&#x52A8;nginx&#x670D;&#x52A1;&#x5668;
+start nginx     #&#x542F;&#x52A8;nginx&#x670D;&#x52A1;&#x5668;
+nginx -s stop    #&#x5F3A;&#x5236;&#x505C;&#x6B62;nginx&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x672A;&#x5904;&#x7406;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4E22;&#x5F03;
+nginx -s quit    #&#x6B63;&#x5E38;&#x5173;&#x95ED;&#x670D;&#x52A1;&#x5668;&#x3002;&#x5982;&#x679C;&#x6709;&#x672A;&#x5904;&#x7406;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x7B49;&#x5F85;&#x5904;&#x7406;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x505C;&#x6B62;
 nginx -s reload  #&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x914D;&#x7F6E;&#x6587;&#x4EF6;
 nginx -s reopen  #&#x91CD;&#x65B0;&#x6253;&#x5F00;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;
 nginx -v         #&#x663E;&#x793A; nginx &#x7684;&#x7248;&#x672C;&#x3002;
 nginx -V         #&#x663E;&#x793A; nginx &#x7684;&#x7248;&#x672C;&#xFF0C;&#x7F16;&#x8BD1;&#x5668;&#x7248;&#x672C;&#x548C;&#x914D;&#x7F6E;&#x53C2;&#x6570;&#x3002;
 nginx -c filename  #&#x4E3A; Nginx &#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x6765;&#x4EE3;&#x66FF;&#x7F3A;&#x7701;&#x7684;.
 nginx -t          #&#x4E0D;&#x8FD0;&#x884C;&#xFF0C;&#x800C;&#x4EC5;&#x4EC5;&#x6D4B;&#x8BD5;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x68C0;&#x67E5;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x662F;&#x5426;&#x6709;&#x9519;&#x3002;
+</code></pre><hr>
+<h2 class="mume-header" id="4nginx%E7%9A%84%E9%85%8D%E7%BD%AE">4.nginx&#x7684;&#x914D;&#x7F6E;</h2>
+
+<p>nginx&#x4F7F;&#x7528;&#x6700;&#x591A;&#x7684;&#x4E09;&#x4E2A;&#x6838;&#x5FC3;&#x529F;&#x80FD;&#x662F;&#x53CD;&#x5411;&#x4EE3;&#x7406;&#x3001;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x548C;&#x9759;&#x6001;&#x670D;&#x52A1;&#x5668;&#x3002;&#x8FD9;&#x4E09;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x529F;&#x80FD;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x90FD;&#x8981;&#x4ECE;nginx&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;nginx.conf&#x4E2D;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;</p>
+<p><mark>&#x5B8C;&#x6574;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</mark></p>
+<pre data-role="codeBlock" data-info class="language-"><code>#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+    #                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+    #                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache&apos;s document root
+        # concurs with nginx&apos;s one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+}
+
+</code></pre><p>&#x4E0A;&#x9762;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7531;5&#x4E2A;&#x90E8;&#x5206;&#x7EC4;&#x6210;&#xFF1A;</p>
+<p>main&#x6A21;&#x5757;&#xFF1A;&#x7528;&#x4E8E;nginx&#x5168;&#x5C40;&#x4FE1;&#x606F;&#x7684;&#x914D;&#x7F6E;,&#x4E0D;&#x5728;event.http&#x62EC;&#x53F7;&#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x4FE1;&#x606F;<br>
+events&#x6A21;&#x5757;&#xFF1A;&#x7528;&#x4E8E;nginx&#x5DE5;&#x4F5C;&#x6A21;&#x5F0F;&#x7684;&#x914D;&#x7F6E;<br>
+http&#x6A21;&#x5757;&#xFF1A;&#x7528;&#x4E8E;http&#x534F;&#x8BAE;&#x4FE1;&#x606F;&#x7684;&#x4E00;&#x4E9B;&#x914D;&#x7F6E;<br>
+server&#x6A21;&#x5757;&#xFF1A;&#x7528;&#x4E8E;&#x670D;&#x52A1;&#x5668;&#x8BBF;&#x95EE;&#x4FE1;&#x606F;&#x7684;&#x914D;&#x7F6E;<br>
+location&#x6A21;&#x5757;&#xFF1A;&#x7528;&#x4E8E;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#x8DEF;&#x7531;&#x7684;&#x914D;&#x7F6E;</p>
+<blockquote>
+<ol>
+<li>&#x5168;&#x5C40;&#x4FE1;&#x606F;&#x914D;&#x7F6E;&#xFF08;main&#x6A21;&#x5757;&#xFF09;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>#user  nobody;              #&#x7528;&#x6765;&#x6307;&#x5B9A;nginx&#x8FDB;&#x7A0B;&#x8FD0;&#x884C;&#x7528;&#x6237;&#x4EE5;&#x53CA;&#x7528;&#x6237;&#x7EC4;
+worker_processes  1;        #&#x6307;&#x5B9A;nginx&#x8981;&#x5F00;&#x542F;&#x7684;&#x5B50;&#x8FDB;&#x7A0B;&#x6570;&#x91CF;.
+
+#error_log  logs/error.log;         #&#x9519;&#x8BEF;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x7684;&#x4F4D;&#x7F6E;
+                                    #&#x9519;&#x8BEF;&#x65E5;&#x5FD7;&#x7684;&#x8F93;&#x51FA;&#x7EA7;&#x522B;[debug / info / notice / warn / error / crit]
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;     #&#x6307;&#x5B9A;&#x8FDB;&#x7A0B;id&#x7684;&#x5B58;&#x50A8;&#x6587;&#x4EF6;&#x7684;&#x4F4D;&#x7F6E;
+
+</code></pre><blockquote>
+<ol start="2">
+<li>event &#x6A21;&#x5757;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;nginx&#x5DE5;&#x4F5C;&#x6A21;&#x5F0F;&#x7684;&#x914D;&#x7F6E;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>events {
+    worker_connections  1024;   #&#x6307;&#x5B9A;&#x6700;&#x5927;&#x540C;&#x65F6;&#x63A5;&#x6536;&#x7684;&#x8FDE;&#x63A5;&#x6570;&#x91CF;&#x3002;&#x6CE8;&#x610F;&#x6700;&#x5927;&#x8FDE;&#x63A5;&#x6570;&#x91CF;&#x662F;&#x548C;worker processes&#x5171;&#x540C;&#x51B3;&#x5B9A;&#x7684;&#x3002;
+}
+</code></pre><blockquote>
+<ol start="3">
+<li>http&#x6A21;&#x5757;&#xFF0C;&#x7528;&#x4E8E;http&#x534F;&#x8BAE;&#x4FE1;&#x606F;&#x7684;&#x4E00;&#x4E9B;&#x914D;&#x7F6E;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>http {
+    include       mime.types;                   #&#x6307;&#x5B9A;&#x5728;&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x4E2D;&#x5305;&#x542B;&#x53E6;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x7684;&#x6307;&#x4EE4;
+    default_type  application/octet-stream;     #&#x6307;&#x5B9A;&#x9ED8;&#x8BA4;&#x5904;&#x7406;&#x7684;&#x6587;&#x4EF6;&#x7C7B;&#x578B;&#x53EF;&#x4EE5;&#x662F;&#x4E8C;&#x8FDB;&#x5236;
+
+    #log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+    #                  &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+    #                  &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;
+
+    #access_log  logs/access.log  main;         #&#x8BBE;&#x7F6E;&#x5B58;&#x50A8;&#x8BBF;&#x95EE;&#x8BB0;&#x5F55;&#x7684;&#x65E5;&#x5FD7;
+
+    sendfile        on;          #on&#x662F;&#x8BA9;sendfile&#x53D1;&#x6325;&#x4F5C;&#x7528;&#xFF0C;&#x5C06;&#x6587;&#x4EF6;&#x7684;&#x56DE;&#x5199;&#x8FC7;&#x7A0B;&#x4EA4;&#x7ED9;&#x6570;&#x636E;&#x7F13;&#x51B2;&#x53BB;&#x53BB;&#x5B8C;&#x6210;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x653E;&#x5728;&#x5E94;&#x7528;&#x4E2D;&#x5B8C;&#x6210;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x5728;&#x6027;&#x80FD;&#x63D0;&#x5347;&#x6709;&#x6709;&#x597D;&#x5904;
+
+    #tcp_nopush     on;          #&#x8BA9;nginx&#x5728;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5305;&#x4E2D;&#x53D1;&#x9001;&#x6240;&#x6709;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x5355;&#x72EC;&#x53D1;
+
+    #keepalive_timeout  0;       #&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x5206;&#x914D;&#x8FDE;&#x63A5;&#x8D85;&#x65F6;&#x65F6;&#x95F4;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4F1A;&#x5728;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x8FC7;&#x540E;&#x5173;&#x95ED;&#x8FDE;&#x63A5;&#x3002;
+    keepalive_timeout  65;
+
+    #gzip  on;                   #&#x8BA9;nginx&#x91C7;&#x7528;gzip&#x538B;&#x7F29;&#x7684;&#x5F62;&#x5F0F;&#x53D1;&#x9001;&#x6570;&#x636E;&#x3002;&#x8FD9;&#x5C06;&#x4F1A;&#x51CF;&#x5C11;&#x6211;&#x4EEC;&#x53D1;&#x9001;&#x7684;&#x6570;&#x636E;&#x91CF;&#x3002;
+
+    server {                      
+        ~
+    }
+}
+</code></pre><blockquote>
+<ol start="4">
+<li>server&#x6A21;&#x5757;&#x662F;http&#x6A21;&#x5757;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5B50;&#x6A21;&#x5757;&#xFF0C;&#x7528;&#x4E8E;&#x670D;&#x52A1;&#x5668;&#x8BBF;&#x95EE;&#x4FE1;&#x606F;&#x7684;&#x914D;&#x7F6E;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>server {                      #&#x4E00;&#x4E2A;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x4E00;&#x4E2A;http&#x4E2D;&#x53EF;&#x4EE5;&#x914D;&#x7F6E;&#x591A;&#x4E2A;server
+        listen       80;
+        server_name  localhost;    #&#x6307;&#x5B9A;ip&#x5730;&#x5740;&#x6216;&#x8005;&#x57DF;&#x540D;&#xFF0C;&#x591A;&#x4E2A;&#x914D;&#x7F6E;&#x4E4B;&#x95F4;&#x7528;&#x7A7A;&#x683C;&#x5206;&#x9694;
+
+        #charset koi8-r;              #&#x7528;&#x4E8E;&#x8BBE;&#x7F6E;www/&#x8DEF;&#x5F84;&#x4E2D;&#x914D;&#x7F6E;&#x7684;&#x7F51;&#x9875;&#x7684;&#x9ED8;&#x8BA4;&#x7F16;&#x7801;&#x683C;&#x5F0F;
+
+        #access_log  logs/host.access.log  main;        #&#x7528;&#x4E8E;&#x6307;&#x5B9A;&#x8BE5;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x670D;&#x52A1;&#x5668;&#x4E2D;&#x7684;&#x8BBF;&#x95EE;&#x8BB0;&#x5F55;&#x65E5;&#x5FD7;&#x5B58;&#x653E;&#x8DEF;&#x5F84;
+
+        location / {
+            root   html;               #&#x8868;&#x793A;&#x6574;&#x4E2A;server&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x5185;&#x7684;&#x6839;&#x76EE;&#x5F55;&#xFF0C;&#x6240;&#x6709;&#x5F53;&#x524D;&#x4E3B;&#x673A;&#x4E2D;web&#x9879;&#x76EE;&#x7684;&#x6839;&#x76EE;&#x5F55;
+            index  index.html index.htm;        #&#x7528;&#x6237;&#x8BBF;&#x95EE;web&#x7F51;&#x7AD9;&#x65F6;&#x7684;&#x5168;&#x5C40;&#x9996;&#x9875;
+        }
+
+        #error_page  404              /404.html;     #&#x9519;&#x8BEF;&#x9875;&#x9762;
+    }
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;    #&#x8BBE;&#x7F6E;&#x534F;&#x5546;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;&#x65F6;&#xFF0C;&#x4F18;&#x5148;&#x4F7F;&#x7528;&#x6211;&#x4EEC;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x52A0;&#x5BC6;&#x5957;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x5BA2;&#x6237;&#x7AEF;&#x6D4F;&#x89C8;&#x5668;&#x7684;&#x52A0;&#x5BC6;&#x5957;&#x4EF6;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+</code></pre><blockquote>
+<ol start="5">
+<li>location&#x6A21;&#x5757;&#x662F;server&#x6A21;&#x5757;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x5B50;&#x6A21;&#x5757;&#xFF0C;&#x7528;&#x4E8E;&#x8FDB;&#x884C;&#x8BBF;&#x95EE;&#x8DEF;&#x7531;&#x7684;&#x914D;&#x7F6E;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>location / {                           # /&#x8868;&#x793A;&#x5339;&#x914D;&#x8BBF;&#x95EE;&#x6839;&#x76EE;&#x5F55;
+            root   html;               #&#x7528;&#x4E8E;&#x6307;&#x5B9A;&#x8BBF;&#x95EE;&#x6839;&#x76EE;&#x5F55;&#x65F6;&#xFF0C;&#x8BBF;&#x95EE;&#x865A;&#x62DF;&#x4E3B;&#x673A;&#x7684;web&#x76EE;&#x5F55;
+            index  index.html index.htm;        #&#x5728;&#x4E0D;&#x6307;&#x5B9A;&#x8BBF;&#x95EE;&#x5177;&#x4F53;&#x8D44;&#x6E90;&#x65F6;&#xFF0C;&#x9ED8;&#x8BA4;&#x5C55;&#x793A;&#x7684;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x5217;&#x8868;
+        }
 </code></pre>
       </div>
       
