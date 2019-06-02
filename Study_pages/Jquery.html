@@ -634,10 +634,105 @@ css() - &#x8BBE;&#x7F6E;&#x6216;&#x8FD4;&#x56DE;&#x6837;&#x5F0F;&#x5C5E;&#x6027;
 <p>ajax()&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x901A;&#x8FC7;&#x540E;&#x53F0;HTTP&#x8BF7;&#x6C42;&#x52A0;&#x8F7D;&#x8FDC;&#x7A0B;&#x6570;&#x636E;&#x3002;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x8BE5;&#x8BF7;&#x6C42;&#x7684;jqXHR&#x5BF9;&#x8C61;&#x3002;</p>
 <pre data-role="codeBlock" data-info="js" class="language-javascript">jQuery<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span> url <span class="token punctuation">[</span>settings<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//&#x4E00;&#x4E2A;&#x4EE5;&quot;{&#x952E;:&#x503C;}&quot;&#x7EC4;&#x6210;&#x7684;&#x8BF7;&#x6C42;&#x8BBE;&#x7F6E;&#x3002;&#x6240;&#x6709;&#x9009;&#x9879;&#x90FD;&#x662F;&#x53EF;&#x9009;&#x7684;</span>
 jQuery<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">[</span>settings<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-</pre><p>&#x4E0B;&#x56FE;&#x662F;settings</p>
+</pre><p>&#x4E0B;&#x56FE;&#x662F;settings&#x914D;&#x7F6E;&#x5BF9;&#x8C61;&#x5C5E;&#x6027;</p>
 <p><img src="../img/jquery_img/8.png" alt="8"><br>
 <img src="../img/jquery_img/9.png" alt="9"></p>
+<pre data-role="codeBlock" data-info class="language-"><code>(1).acceptsObject:
 
+&#x53D1;&#x9001;&#x7684;&#x5185;&#x5BB9;&#x7C7B;&#x578B;&#x8BF7;&#x6C42;&#x5934;&#xFF0C;&#x7528;&#x4E8E;&#x544A;&#x8BC9;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x6D4F;&#x89C8;&#x5668;&#x53EF;&#x4EE5;&#x63A5;&#x6536;&#x670D;&#x52A1;&#x5668;&#x8FD4;&#x56DE;&#x4F55;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x54CD;&#x5E94;&#x3002;
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;&#x53D6;&#x51B3;&#x4E8E;dataType&#x5C5E;&#x6027;&#x3002;
+
+&#xFF08;2&#xFF09;.async&#xFF1A;
+
+&#x6307;&#x793A;&#x662F;&#x5426;&#x662F;&#x5F02;&#x6B65;&#x8BF7;&#x6C42;&#x3002;&#x540C;&#x6B65;&#x8BF7;&#x6C42;&#x5C06;&#x9501;&#x5B9A;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x76F4;&#x5230;&#x83B7;&#x53D6;&#x5230;&#x8FDC;&#x7A0B;&#x6570;&#x636E;&#x540E;&#x624D;&#x80FD;&#x6267;&#x884C;&#x5176;&#x4ED6;&#x64CD;&#x4F5C;&#x3002;
+&#x9ED8;&#x8BA4;&#x503C;:true&#x3002;
+
+&#xFF08;3&#xFF09;.beforeSend:
+
+&#x6307;&#x5B9A;&#x5728;&#x8BF7;&#x6C42;&#x53D1;&#x9001;&#x524D;&#x9700;&#x8981;&#x6267;&#x884C;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;&#x8BE5;&#x51FD;&#x6570;&#x8FD8;&#x6709;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF1A;&#x7B2C;&#x4E00;&#x4E2A;&#x662F;jqXHR&#x5BF9;&#x8C61;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x662F;&#x5F53;&#x524D;settings&#x5BF9;&#x8C61;&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;Ajax&#x4E8B;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x51FD;&#x6570;&#x8FD4;&#x56DE;false&#xFF0C;&#x5C06;&#x53D6;&#x6D88;&#x672C;&#x6B21;ajax&#x8BF7;&#x6C42;&#x3002;
+
+&#xFF08;4&#xFF09;.cache:
+
+&#x6307;&#x793A;&#x662F;&#x5426;&#x7F13;&#x5B58;URL&#x8BF7;&#x6C42;&#x3002;&#x5982;&#x679C;&#x8BBE;&#x4E3A;false&#x5C06;&#x5F3A;&#x5236;&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x7F13;&#x5B58;&#x5F53;&#x524D;URL&#x8BF7;&#x6C42;&#x3002;&#x8BE5;&#x53C2;&#x6570;&#x53EA;&#x5BF9;HEAD&#x3001;GET&#x8BF7;&#x6C42;&#x6709;&#x6548;(POST&#x8BF7;&#x6C42;&#x672C;&#x8EAB;&#x5C31;&#x4E0D;&#x4F1A;&#x7F13;&#x5B58;)&#x3002;
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;true(dataType&#x4E3A;&apos;script&apos;&#x6216;&apos;jsonp&apos;&#x65F6;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4E3A;false)&#x3002;
+
+&#xFF08;5&#xFF09;.complete:
+
+&#x6307;&#x5B9A;&#x8BF7;&#x6C42;&#x5B8C;&#x6210;(&#x65E0;&#x8BBA;&#x6210;&#x529F;&#x6216;&#x5931;&#x8D25;)&#x540E;&#x9700;&#x8981;&#x6267;&#x884C;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;&#x8BE5;&#x51FD;&#x6570;&#x8FD8;&#x6709;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF1A;&#x4E00;&#x4E2A;&#x662F;jqXHR&#x5BF9;&#x8C61;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x8868;&#x793A;&#x8BF7;&#x6C42;&#x72B6;&#x6001;&#x7684;&#x5B57;&#x7B26;&#x4E32;(&apos;success&apos;&#x3001; &apos;notmodified&apos;&#x3001; &apos;error&apos;&#x3001; &apos;timeout&apos;&#x3001; &apos;abort&apos;&#x6216;&apos;parsererror&apos;)&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;Ajax&#x4E8B;&#x4EF6;&#x3002;
+
+&#x4ECE;jQuery 1.5&#x5F00;&#x59CB;&#xFF0C;&#x8BE5;&#x5C5E;&#x6027;&#x503C;&#x53EF;&#x4EE5;&#x662F;&#x6570;&#x7EC4;&#x5F62;&#x5F0F;&#x7684;&#x591A;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x90FD;&#x5C06;&#x88AB;&#x56DE;&#x8C03;&#x6267;&#x884C;&#x3002;
+
+&#xFF08;6&#xFF09;.contents:
+
+&#x4E00;&#x4E2A;&#x4EE5;&quot;{&#x5B57;&#x7B26;&#x4E32;:&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F;}&quot;&#x914D;&#x5BF9;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x7528;&#x6765;&#x786E;&#x5B9A;jQuery&#x5C06;&#x5982;&#x4F55;&#x89E3;&#x6790;&#x54CD;&#x5E94;&#xFF0C;&#x7ED9;&#x5B9A;&#x5176;&#x5185;&#x5BB9;&#x7C7B;&#x578B;&#x3002;
+
+&#xFF08;7&#xFF09;.contentType:
+
+&#x4F7F;&#x7528;&#x6307;&#x5B9A;&#x7684;&#x5185;&#x5BB9;&#x7F16;&#x7801;&#x7C7B;&#x578B;&#x5C06;&#x6570;&#x636E;&#x53D1;&#x9001;&#x7ED9;&#x670D;&#x52A1;&#x5668;&#x3002;W3C&#x7684;XMLHttpRequest&#x89C4;&#x8303;&#x89C4;&#x5B9A;charset&#x59CB;&#x7EC8;&#x662F;UTF-8&#xFF0C;&#x4F60;&#x5982;&#x679C;&#x5C06;&#x5176;&#x6539;&#x4E3A;&#x5176;&#x4ED6;&#x5B57;&#x7B26;&#x96C6;&#xFF0C;&#x4E5F;&#x65E0;&#x6CD5;&#x5F3A;&#x5236;&#x6D4F;&#x89C8;&#x5668;&#x66F4;&#x6539;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#x3002;
+
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;&apos;application/x-www-form-urlencoded; charset=UTF-8&apos;&#x3002;
+
+&#xFF08;8&#xFF09;.context&#xFF1A;
+
+&#x7528;&#x4E8E;&#x8BBE;&#x7F6E;Ajax&#x76F8;&#x5173;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x4E0A;&#x4E0B;&#x6587;&#x5BF9;&#x8C61;(&#x4E5F;&#x5C31;&#x662F;&#x51FD;&#x6570;&#x5185;&#x7684;this&#x6307;&#x9488;)&#x3002;
+
+&#xFF08;9&#xFF09;.converters:
+
+&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x5668;&#x3002;&#x6BCF;&#x4E2A;&#x8F6C;&#x6362;&#x5668;&#x7684;&#x503C;&#x90FD;&#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x7528;&#x4E8E;&#x8FD4;&#x56DE;&#x54CD;&#x5E94;&#x8F6C;&#x5316;&#x540E;&#x7684;&#x503C;&#x3002;
+
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;{&apos;* text&apos;: window.String, &apos;text html&apos;: true, &apos;text json&apos;: jQuery.parseJSON, &apos;text xml&apos;: jQuery.parseXML}&#x3002;
+
+&#xFF08;10&#xFF09;.crossDomain:
+
+&#x6307;&#x793A;&#x662F;&#x5426;&#x662F;&#x8DE8;&#x57DF;&#x8BF7;&#x6C42;&#x3002;&#x5982;&#x679C;&#x4F60;&#x60F3;&#x5728;&#x540C;&#x4E00;&#x57DF;&#x4E2D;&#x5F3A;&#x5236;&#x8DE8;&#x57DF;&#x8BF7;&#x6C42;(&#x5982;JSONP&#x5F62;&#x5F0F;)&#xFF0C;&#x8BF7;&#x8BBE;&#x7F6E;&#x4E3A;true&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x8FD9;&#x5141;&#x8BB8;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x91CD;&#x5B9A;&#x5411;&#x5230;&#x53E6;&#x4E00;&#x4E2A;&#x57DF;&#x3002;
+
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;&#x540C;&#x57DF;&#x8BF7;&#x6C42;&#x4E3A;false&#xFF0C;&#x8DE8;&#x57DF;&#x8BF7;&#x6C42;&#x4E3A;true&#x3002;
+
+&#xFF08;11&#xFF09;.data:
+
+&#x4EFB;&#x610F;&#x7C7B;&#x578B;&#xFF1B;&#x53D1;&#x9001;&#x5230;&#x670D;&#x52A1;&#x5668;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5B83;&#x5C06;&#x88AB;&#x81EA;&#x52A8;&#x8F6C;&#x4E3A;&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;&#x3002;&#x5982;&#x679C;&#x662F;GET&#x8BF7;&#x6C42;&#xFF0C;&#x5B83;&#x5C06;&#x88AB;&#x9644;&#x52A0;&#x5230;URL&#x540E;&#x9762;&#x3002;
+
+&#xFF08;12&#xFF09;.dataFilter:
+
+Function&#x7C7B;&#x578B;&#xFF1B;&#x6307;&#x5B9A;&#x5904;&#x7406;&#x54CD;&#x5E94;&#x7684;&#x539F;&#x59CB;&#x6570;&#x636E;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;&#x8BE5;&#x51FD;&#x6570;&#x8FD8;&#x6709;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF1A;&#x5176;&#x4E00;&#x8868;&#x793A;&#x54CD;&#x5E94;&#x7684;&#x539F;&#x59CB;&#x6570;&#x636E;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x5176;&#x4E8C;&#x662F;dataType&#x5C5E;&#x6027;&#x5B57;&#x7B26;&#x4E32;&#x3002;
+
+&#xFF08;13&#xFF09;.dataType:&#x5B57;&#x7B26;&#x4E32;&#x7C7B;&#x578B;&#x3002;
+
+&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;
+
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;jQuery&#x667A;&#x80FD;&#x731C;&#x6D4B;&#xFF0C;&#x731C;&#x6D4B;&#x8303;&#x56F4;(xml&#x3001; json&#x3001; script&#x6216;html)
+
+&#x8BE5;&#x5C5E;&#x6027;&#x503C;&#x53EF;&#x4EE5;&#x4E3A;&#xFF1A;
+
+&lt;1&gt;.&apos;xml&apos; :&#x8FD4;&#x56DE;XML&#x6587;&#x6863;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;jQuery&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;
+
+&lt;2&gt;.&apos;html&apos;: &#x8FD4;&#x56DE;HTML&#x5B57;&#x7B26;&#x4E32;&#x3002;
+
+&lt;3&gt;.&apos;script&apos;: &#x8FD4;&#x56DE;JavaScript&#x4EE3;&#x7801;&#x3002;&#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x7F13;&#x5B58;&#x7ED3;&#x679C;&#x3002;&#x9664;&#x975E;&#x8BBE;&#x7F6E;&#x4E86;cache&#x53C2;&#x6570;&#x3002;&#x6CE8;&#x610F;&#xFF1A;&#x5728;&#x8FDC;&#x7A0B;&#x8BF7;&#x6C42;&#x65F6;(&#x4E0D;&#x5728;&#x540C;&#x4E00;&#x4E2A;&#x57DF;&#x4E0B;)&#xFF0C;&#x6240;&#x6709;POST&#x8BF7;&#x6C42;&#x90FD;&#x5C06;&#x8F6C;&#x4E3A;GET&#x8BF7;&#x6C42;&#x3002;(&#x56E0;&#x4E3A;&#x5C06;&#x4F7F;&#x7528;DOM&#x7684;script&#x6807;&#x7B7E;&#x6765;&#x52A0;&#x8F7D;)&#x3002;
+
+&lt;4&gt;.&apos;json&apos;: &#x8FD4;&#x56DE;JSON&#x6570;&#x636E;&#x3002;JSON&#x6570;&#x636E;&#x5C06;&#x4F7F;&#x7528;&#x4E25;&#x683C;&#x7684;&#x8BED;&#x6CD5;&#x8FDB;&#x884C;&#x89E3;&#x6790;(&#x5C5E;&#x6027;&#x540D;&#x5FC5;&#x987B;&#x52A0;&#x53CC;&#x5F15;&#x53F7;&#xFF0C;&#x6240;&#x6709;&#x5B57;&#x7B26;&#x4E32;&#x4E5F;&#x5FC5;&#x987B;&#x7528;&#x53CC;&#x5F15;&#x53F7;)&#xFF0C;&#x5982;&#x679C;&#x89E3;&#x6790;&#x5931;&#x8D25;&#x5C06;&#x629B;&#x51FA;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x3002;&#x4ECE;jQuery 1.9&#x5F00;&#x59CB;&#xFF0C;&#x7A7A;&#x5185;&#x5BB9;&#x7684;&#x54CD;&#x5E94;&#x5C06;&#x8FD4;&#x56DE;null&#x6216;{}&#x3002;
+
+&lt;5&gt;.&apos;jsonp&apos;: JSONP&#x683C;&#x5F0F;&#x3002;&#x4F7F;&#x7528;JSONP&#x5F62;&#x5F0F;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x65F6;&#xFF0C;&#x5982;&quot;url?callback=?&quot;&#xFF0C;jQuery&#x5C06;&#x81EA;&#x52A8;&#x66FF;&#x6362;&#x7B2C;&#x4E8C;&#x4E2A;?&#x4E3A;&#x6B63;&#x786E;&#x7684;&#x51FD;&#x6570;&#x540D;&#xFF0C;&#x4EE5;&#x6267;&#x884C;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;
+
+&lt;6&gt;.&apos;text&apos;: &#x8FD4;&#x56DE;&#x7EAF;&#x6587;&#x672C;&#x5B57;&#x7B26;&#x4E32;&#x3002;
+
+&#xFF08;14&#xFF09;.error:  Function&#x6216;&#x8005;Array&#x7C7B;&#x578B;&#x3002;
+
+&#x6307;&#x5B9A;&#x8BF7;&#x6C42;&#x5931;&#x8D25;&#x65F6;&#x6267;&#x884C;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x3002;&#x8BE5;&#x51FD;&#x6570;&#x6709;3&#x4E2A;&#x53C2;&#x6570;&#xFF1A;jqXHR&#x5BF9;&#x8C61;&#x3001; &#x8BF7;&#x6C42;&#x72B6;&#x6001;&#x5B57;&#x7B26;&#x4E32;(null&#x3001; &apos;timeout&apos;&#x3001; &apos;error&apos;&#x3001; &apos;abort&apos;&#x548C;&apos;parsererror&apos;)&#x3001; &#x9519;&#x8BEF;&#x4FE1;&#x606F;&#x5B57;&#x7B26;&#x4E32;(&#x54CD;&#x5E94;&#x72B6;&#x6001;&#x7684;&#x6587;&#x672C;&#x63CF;&#x8FF0;&#x90E8;&#x5206;&#xFF0C;&#x4F8B;&#x5982;&apos;Not Found&apos;&#x6216;&apos;Internal Server Error&apos;)&#x3002;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;Ajax&#x4E8B;&#x4EF6;&#x3002;&#x8DE8;&#x57DF;&#x811A;&#x672C;&#x548C;&#x8DE8;&#x57DF;JSONP&#x8BF7;&#x6C42;&#x4E0D;&#x4F1A;&#x8C03;&#x7528;&#x8BE5;&#x51FD;&#x6570;&#x3002;
+
+&#x4ECE;jQuery 1.5&#x5F00;&#x59CB;&#xFF0C;&#x8BE5;&#x5C5E;&#x6027;&#x503C;&#x53EF;&#x4EE5;&#x662F;&#x6570;&#x7EC4;&#x5F62;&#x5F0F;&#x7684;&#x591A;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x90FD;&#x5C06;&#x88AB;&#x56DE;&#x8C03;&#x6267;&#x884C;&#x3002;
+
+&#xFF08;15&#xFF09;.global:
+
+&#x6307;&#x793A;&#x662F;&#x5426;&#x89E6;&#x53D1;&#x5168;&#x5C40;Ajax&#x4E8B;&#x4EF6;&#x3002;&#x5C06;&#x8BE5;&#x503C;&#x8BBE;&#x4E3A;false&#x5C06;&#x963B;&#x6B62;&#x5168;&#x5C40;&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x51FD;&#x6570;&#x88AB;&#x89E6;&#x53D1;&#xFF0C;&#x4F8B;&#x5982;ajaxStart()&#x548C;ajaxStop()&#x3002;&#x5B83;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x63A7;&#x5236;&#x5404;&#x79CD;Ajax&#x4E8B;&#x4EF6;&#x3002;
+&#x9ED8;&#x8BA4;&#x503C;&#xFF1A;true&#x3002;
+
+&#xFF08;16&#xFF09;.headers:
+
+&#x4EE5;&#x5BF9;&#x8C61;&#x5F62;&#x5F0F;&#x6307;&#x5B9A;&#x9644;&#x52A0;&#x7684;&#x8BF7;&#x6C42;&#x5934;&#x4FE1;&#x606F;&#x3002;&#x8BF7;&#x6C42;&#x5934;X-Requested-With: XMLHttpRequest&#x5C06;&#x59CB;&#x7EC8;&#x88AB;&#x6DFB;&#x52A0;&#xFF0C;&#x5F53;&#x7136;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x6B64;&#x5904;&#x4FEE;&#x6539;&#x9ED8;&#x8BA4;&#x7684;XMLHttpRequest&#x503C;&#x3002;headers&#x4E2D;&#x7684;&#x503C;&#x53EF;&#x4EE5;&#x8986;&#x76D6;beforeSend&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4E2D;&#x8BBE;&#x7F6E;&#x7684;&#x8BF7;&#x6C42;&#x5934;(&#x610F;&#x5373;beforeSend&#x5148;&#x88AB;&#x8C03;&#x7528;)&#x3002;
+
+
+</code></pre>
       </div>
       
       
