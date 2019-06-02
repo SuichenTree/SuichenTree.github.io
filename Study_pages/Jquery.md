@@ -427,3 +427,115 @@ toggleClass() - 对被选元素进行添加/删除类的切换操作
 css() - 设置或返回样式属性
 
 ## 7.jq操控ajax
+
+### 1.ajax()方法
+
+ajax()方法用于通过后台HTTP请求加载远程数据。返回当前该请求的jqXHR对象。
+
+```js
+jQuery.ajax( url [settings]);   //一个以"{键:值}"组成的请求设置。所有选项都是可选的
+jQuery.ajax([settings]); 
+```
+
+下图是settings配置对象属性
+
+![8](../img/jquery_img/8.png)
+![9](../img/jquery_img/9.png)
+
+```
+(1).acceptsObject:
+
+发送的内容类型请求头，用于告诉服务器，浏览器可以接收服务器返回何种类型的响应。
+默认值：取决于dataType属性。
+
+（2）.async：
+
+指示是否是异步请求。同步请求将锁定浏览器，直到获取到远程数据后才能执行其他操作。
+默认值:true。
+
+（3）.beforeSend:
+
+指定在请求发送前需要执行的回调函数。该函数还有两个参数：第一个是jqXHR对象，第二个是当前settings对象。这是一个Ajax事件，如果该函数返回false，将取消本次ajax请求。
+
+（4）.cache:
+
+指示是否缓存URL请求。如果设为false将强制浏览器不缓存当前URL请求。该参数只对HEAD、GET请求有效(POST请求本身就不会缓存)。
+默认值：true(dataType为'script'或'jsonp'时，则默认为false)。
+
+（5）.complete:
+
+指定请求完成(无论成功或失败)后需要执行的回调函数。该函数还有两个参数：一个是jqXHR对象，一个是表示请求状态的字符串('success'、 'notmodified'、 'error'、 'timeout'、 'abort'或'parsererror')。这是一个Ajax事件。
+
+从jQuery 1.5开始，该属性值可以是数组形式的多个函数，每个函数都将被回调执行。
+
+（6）.contents:
+
+一个以"{字符串:正则表达式}"配对的对象，用来确定jQuery将如何解析响应，给定其内容类型。
+
+（7）.contentType:
+
+使用指定的内容编码类型将数据发送给服务器。W3C的XMLHttpRequest规范规定charset始终是UTF-8，你如果将其改为其他字符集，也无法强制浏览器更改字符编码。
+
+默认值：'application/x-www-form-urlencoded; charset=UTF-8'。
+
+（8）.context：
+
+用于设置Ajax相关回调函数的上下文对象(也就是函数内的this指针)。
+
+（9）.converters:
+
+一个数据类型转换器。每个转换器的值都是一个函数，用于返回响应转化后的值。
+
+默认值：{'* text': window.String, 'text html': true, 'text json': jQuery.parseJSON, 'text xml': jQuery.parseXML}。
+
+（10）.crossDomain:
+
+指示是否是跨域请求。如果你想在同一域中强制跨域请求(如JSONP形式)，请设置为true。例如，这允许服务器端重定向到另一个域。
+
+默认值：同域请求为false，跨域请求为true。
+
+（11）.data:
+
+任意类型；发送到服务器的数据，它将被自动转为字符串类型。如果是GET请求，它将被附加到URL后面。
+
+（12）.dataFilter:
+
+Function类型；指定处理响应的原始数据的回调函数。该函数还有两个参数：其一表示响应的原始数据的字符串，其二是dataType属性字符串。
+
+（13）.dataType:字符串类型。
+
+指定返回的数据类型。
+
+默认值：jQuery智能猜测，猜测范围(xml、 json、 script或html)
+
+该属性值可以为：
+
+<1>.'xml' :返回XML文档，可使用jQuery进行处理。
+
+<2>.'html': 返回HTML字符串。
+
+<3>.'script': 返回JavaScript代码。不会自动缓存结果。除非设置了cache参数。注意：在远程请求时(不在同一个域下)，所有POST请求都将转为GET请求。(因为将使用DOM的script标签来加载)。
+
+<4>.'json': 返回JSON数据。JSON数据将使用严格的语法进行解析(属性名必须加双引号，所有字符串也必须用双引号)，如果解析失败将抛出一个错误。从jQuery 1.9开始，空内容的响应将返回null或{}。
+
+<5>.'jsonp': JSONP格式。使用JSONP形式调用函数时，如"url?callback=?"，jQuery将自动替换第二个?为正确的函数名，以执行回调函数。
+
+<6>.'text': 返回纯文本字符串。
+
+（14）.error:  Function或者Array类型。
+
+指定请求失败时执行的回调函数。该函数有3个参数：jqXHR对象、 请求状态字符串(null、 'timeout'、 'error'、 'abort'和'parsererror')、 错误信息字符串(响应状态的文本描述部分，例如'Not Found'或'Internal Server Error')。这是一个Ajax事件。跨域脚本和跨域JSONP请求不会调用该函数。
+
+从jQuery 1.5开始，该属性值可以是数组形式的多个函数，每个函数都将被回调执行。
+
+（15）.global:
+
+指示是否触发全局Ajax事件。将该值设为false将阻止全局事件处理函数被触发，例如ajaxStart()和ajaxStop()。它可以用来控制各种Ajax事件。
+默认值：true。
+
+（16）.headers:
+
+以对象形式指定附加的请求头信息。请求头X-Requested-With: XMLHttpRequest将始终被添加，当然你也可以在此处修改默认的XMLHttpRequest值。headers中的值可以覆盖beforeSend回调函数中设置的请求头(意即beforeSend先被调用)。
+
+
+```
