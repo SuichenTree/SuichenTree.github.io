@@ -340,6 +340,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 </li>
 <li><a href="#9%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">9.&#x751F;&#x547D;&#x5468;&#x671F;&#xFF1A;</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-vue-cli%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7-%E5%88%9B%E5%BB%BAvue%E9%A1%B9%E7%9B%AE">??.&#x4F7F;&#x7528; vue-cli&#x6784;&#x5EFA;&#x5DE5;&#x5177; &#x521B;&#x5EFA;vue&#x9879;&#x76EE;</a></li>
 </ul>
 </li>
 </ul>
@@ -1712,7 +1713,128 @@ Vue<span class="token punctuation">.</span><span class="token function">componen
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span>
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
-</pre>
+</pre><h2 class="mume-header" id="%E4%BD%BF%E7%94%A8-vue-cli%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7-%E5%88%9B%E5%BB%BAvue%E9%A1%B9%E7%9B%AE">??.&#x4F7F;&#x7528; vue-cli&#x6784;&#x5EFA;&#x5DE5;&#x5177; &#x521B;&#x5EFA;vue&#x9879;&#x76EE;</h2>
+
+<h3>&#x4EC0;&#x4E48;&#x662F;vue-cli&#xFF1F;</h3>
+<p>vue-cli(vue-command line interface),vue&#x547D;&#x4EE4;&#x884C;&#x754C;&#x9762;&#x3002;<br>
+vue-cli&#x662F;&#x4E00;&#x4E2A;&#x5B98;&#x65B9;&#x7684;cli,&#x80FD;&#x4E3A;&#x5355;&#x9875;&#x9762;&#x5E94;&#x7528; (SPA) &#x5FEB;&#x901F;&#x642D;&#x5EFA;&#x7E41;&#x6742;&#x7684;&#x811A;&#x624B;&#x67B6;&#x3002;&#x53EA;&#x9700;&#x8981;&#x51E0;&#x5206;&#x949F;&#x7684;&#x65F6;&#x95F4;&#x5C31;&#x53EF;&#x4EE5;&#x6784;&#x5EFA;&#x4E00;&#x4E2A;&#x5E26;&#x6709;&#x70ED;&#x91CD;&#x8F7D;&#x3001;&#x4FDD;&#x5B58;&#x65F6; lint &#x6821;&#x9A8C;&#xFF0C;&#x4EE5;&#x53CA;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x53EF;&#x7528;&#x7684;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x3002;</p>
+<h3>&#x4EC0;&#x4E48;&#x662F;webpack&#xFF1F;</h3>
+<p>webpack&#x662F;&#x4E00;&#x6B3E;&#x6A21;&#x5757;&#x52A0;&#x8F7D;&#x5668;&#x517C;&#x6253;&#x5305;&#x5DE5;&#x5177;,&#x80FD;&#x628A;less/sass&#x6587;&#x4EF6;,json&#x6587;&#x4EF6;&#xFF0C;&#x4E43;&#x81F3;css&#x6587;&#x4EF6;&#xFF0C;&#x5168;&#x90FD;&#x6253;&#x5305;&#x6210;&#x6D4F;&#x89C8;&#x5668;&#x8BC6;&#x522B;&#x7684;js&#x6587;&#x4EF6;&#x548C;&#x9759;&#x6001;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x3002;</p>
+<p><font color="red">&#x6CE8;&#x610F;&#xFF1A;&#x6D4F;&#x89C8;&#x5668;&#x672C;&#x8EAB;&#x4E0D;&#x80FD;&#x8BC6;&#x522B;less/sass&#x7B49;&#x6587;&#x4EF6;&#x3002;webpack&#x5C31;&#x662F;&#x628A;&#x8FD9;&#x4E9B;&#x6587;&#x4EF6;&#x8FDB;&#x884C;&#x6253;&#x5305;&#xFF0C;&#x7F16;&#x8BD1;&#xFF0C;&#x53D8;&#x6210;&#x6D4F;&#x89C8;&#x5668;&#x80FD;&#x8BC6;&#x522B;&#x7684;js,html&#x6587;&#x4EF6;</font></p>
+<p><mark>&#x5728;&#x4F7F;&#x7528;vue-cli&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x4E4B;&#x524D;&#xFF0C;&#x9700;&#x8981;&#x4E4B;&#x524D;&#x5B89;&#x88C5; node.js + npm(&#x4E00;&#x822C;&#x5B89;&#x88C5;node.js&#xFF0C;&#x5C31;&#x5B89;&#x88C5;&#x4E86;npm)</mark></p>
+<blockquote>
+<ol>
+<li>&#x7528;npm &#x5168;&#x5C40;&#x5B89;&#x88C5; vue-cli&#x3002;&#xFF08;&#x6700;&#x65B0;&#x7248;&#x672C;&#x7684;vue-cli&#xFF0C;&#x672C;&#x8EAB;&#x5C31;&#x5185;&#x90E8;&#x5C01;&#x88C5;&#x4E86;webpack&#x3002;&#x6240;&#x6709;&#x5B89;&#x88C5;vue-cli,&#x5C31;&#x5B89;&#x88C5;&#x4E86;webpack&#xFF09;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>npm install -g vue-cli   #&#x6700;&#x65B0;&#x7248;&#x672C;&#x7684;vue-cli&#xFF0C;&#x672C;&#x8EAB;&#x5C31;&#x5185;&#x90E8;&#x5C01;&#x88C5;&#x4E86;webpack&#x3002;&#x6240;&#x6709;&#x5B89;&#x88C5;vue-cli,&#x5C31;&#x5B89;&#x88C5;&#x4E86;webpack
+</code></pre><blockquote>
+<ol start="2">
+<li>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x4F7F;&#x7528;cmd &#x547D;&#x4EE4;&#x8FDB;&#x5165;&#x5230;&#x6587;&#x4EF6;&#x5939;&#x3002;&#x521B;&#x5EFA;vue&#x9879;&#x76EE;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>##&#x53EF;&#x4EE5;&#x521B;&#x5EFA;&#x4E94;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x6A21;&#x677F;
+
+vue init webpack &lt;project-name&gt;  # &#x4E00;&#x4E2A;&#x5168;&#x9762;&#x7684;webpack+vue-loader&#x7684;&#x6A21;&#x677F;&#xFF0C;&#x529F;&#x80FD;&#x5305;&#x62EC;&#x70ED;&#x52A0;&#x8F7D;&#xFF0C;linting,&#x68C0;&#x6D4B;&#x548C;CSS&#x6269;&#x5C55;&#x3002;
+vue init webpack-simple &lt;project-name&gt;  # &#x4E00;&#x4E2A;&#x7B80;&#x5355;webpack+vue-loader&#x7684;&#x6A21;&#x677F;&#xFF0C;&#x4E0D;&#x5305;&#x542B;&#x5176;&#x4ED6;&#x529F;&#x80FD;&#xFF0C;&#x8BA9;&#x4F60;&#x5FEB;&#x901F;&#x7684;&#x642D;&#x5EFA;vue&#x7684;&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x3002;
+vue init browserify &lt;project-name&gt;  # &#x4E00;&#x4E2A;&#x5168;&#x9762;&#x7684;Browserify+vueify &#x7684;&#x6A21;&#x677F;&#xFF0C;&#x529F;&#x80FD;&#x5305;&#x62EC;&#x70ED;&#x52A0;&#x8F7D;&#xFF0C;linting,&#x5355;&#x5143;&#x68C0;&#x6D4B;&#x3002;
+vue init browserify-simple &lt;project-name&gt;  # &#x4E00;&#x4E2A;&#x7B80;&#x5355;Browserify+vueify&#x7684;&#x6A21;&#x677F;&#xFF0C;&#x4E0D;&#x5305;&#x542B;&#x5176;&#x4ED6;&#x529F;&#x80FD;&#xFF0C;&#x8BA9;&#x4F60;&#x5FEB;&#x901F;&#x7684;&#x642D;&#x5EFA;vue&#x7684;&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x3002;
+vue init simple &lt;project-name&gt;  # &#x4E00;&#x4E2A;&#x6700;&#x7B80;&#x5355;&#x7684;&#x5355;&#x9875;&#x5E94;&#x7528;&#x6A21;&#x677F;&#x3002;
+
+</code></pre><p>&#x6837;&#x4F8B;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>D:\iview\demo&gt;vue init webpack demo3
+
+? Project name demo3   //&#x9879;&#x76EE;&#x540D;&#x79F0; &#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;&#x66F4;&#x6539;&#x76F4;&#x63A5;&#x56DE;&#x8F66;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x6CE8;&#x610F;&#xFF1A;&#x8FD9;&#x91CC;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;&#x5927;&#x5199;&#x5B57;&#x6BCD;
+? Project description A Vue.js project   //&#x9879;&#x76EE;&#x63CF;&#x8FF0;&#xFF0C;&#x9ED8;&#x8BA4;&#x5C31;&#x56DE;&#x8F66;
+? Author suichen      //&#x4F5C;&#x8005;
+? Vue build standalone       
+? Install vue-router? Yes     //&#x662F;&#x5426;&#x5B89;&#x88C5;vue&#x7684;&#x8DEF;&#x7531;&#x63D2;&#x4EF6;&#xFF0C;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x5B89;&#x88C5;&#xFF0C;&#x6240;&#x4EE5;&#x9009;&#x62E9;Y
+? Use ESLint to lint your code? No   //&#x662F;&#x5426;&#x7528;ESLint&#x6765;&#x9650;&#x5236;&#x4F60;&#x7684;&#x4EE3;&#x7801;&#x9519;&#x8BEF;&#x548C;&#x98CE;&#x683C;&#x3002;&#x5355;&#x4EBA;&#x5F00;&#x53D1;&#x4E00;&#x822C;&#x4E0D;&#x9700;&#x8981;&#xFF0C;&#x56E2;&#x961F;&#x4E00;&#x822C;&#x5C31;&#x9700;&#x8981;
+? Set up unit tests No     //&#x662F;&#x5426;&#x9700;&#x8981;&#x5B89;&#x88C5;&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x5DE5;&#x5177;
+? Setup e2e tests with Nightwatch? No   //&#x662F;&#x5426;&#x5B89;&#x88C5;e2e&#x6765;&#x8FDB;&#x884C;&#x7528;&#x6237;&#x884C;&#x4E3A;&#x6A21;&#x62DF;&#x6D4B;&#x8BD5;
+? Should we run `npm install` for you after the project has been created? (recommended) npm                    
+
+   vue-cli &#xB7; Generated &quot;demo3&quot;.
+
+~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~
+</code></pre><p><img src="../img/vue_js_img/33.png" alt="33"></p>
+<blockquote>
+<ol start="3">
+<li>&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x53EF;&#x4EE5;&#x8FDB;&#x5165;&#x5230;&#x521B;&#x5EFA;&#x597D;&#x7684;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#xFF0C;&#x6253;&#x5F00;&#x547D;&#x4EE4;&#x884C;&#xFF0C;&#x8FD0;&#x884C;&#x9879;&#x76EE;&#x3002;</li>
+</ol>
+</blockquote>
+<p>&#x8FD0;&#x884C;&#x547D;&#x4EE4;&#xFF1A;<code>npm run dev</code></p>
+<pre data-role="codeBlock" data-info class="language-"><code>D:\iview\demo\demo3&gt;npm run dev
+
+&gt; demo3@1.0.0 dev D:\iview\demo\demo3
+&gt; webpack-dev-server --inline --progress --config build/webpack.dev.conf.js
+
+ 12% building modules 22/29 modules 7 active ...o\demo3\src\components\HelloWorld.vue{ parser: &quot;babylon&quot; } is deprecated; we now treat it as { parser: &quot; 95% emitting
+
+ DONE  Compiled successfully in 9162ms          23:14:11
+
+ I  Your application is running here: http://localhost:8080
+</code></pre><blockquote>
+<ol start="4">
+<li>&#x6253;&#x5F00;http://localhost:8080&#x5730;&#x5740;,ctrl+c &#x5173;&#x4E8E;&#x9879;&#x76EE;&#x8FD0;&#x884C;</li>
+</ol>
+</blockquote>
+<p><img src="../img/vue_js_img/34.png" alt="34"></p>
+<blockquote>
+<ol start="5">
+<li>vue&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x7684;&#x7ED3;&#x6784;</li>
+</ol>
+</blockquote>
+<p><img src="../img/vue_js_img/35.png" alt="35"></p>
+<p>build:&#x5173;&#x4E8E;&#x6253;&#x5305;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x6240;&#x5728;&#x6587;&#x4EF6;&#x5939;<br>
+config&#xFF1A;&#x76F8;&#x5173;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x6587;&#x4EF6;&#x5939;<br>
+node_modules : &#x4F9D;&#x8D56;&#x7684;node&#x5DE5;&#x5177;&#x5305;&#x76EE;&#x5F55;<br>
+src&#xFF1A;&#x524D;&#x7AEF;&#x6E90;&#x7801;&#x6587;&#x4EF6;<br>
+-- assets : &#x516C;&#x5171;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#x5939;<br>
+-- router : &#x8DEF;&#x7531;&#x6587;&#x4EF6;&#x5939;<br>
+-- components : &#x7EC4;&#x4EF6;&#x6587;&#x4EF6;&#x5939;<br>
+-- App.vue:&#x9879;&#x76EE;&#x5165;&#x53E3;&#x7EC4;&#x4EF6;&#xFF0C;.vue&#x7ED3;&#x5C3E;&#x7684;&#x90FD;&#x662F;&#x7EC4;&#x4EF6;<br>
+-- main.js&#xFF1A;&#x9879;&#x76EE;&#x5165;&#x53E3;js<br>
+static&#xFF1A;&#x5B58;&#x653E;&#x9759;&#x6001;&#x8D44;&#x6E90;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;&#x56FE;&#x7247;&#x7B49;<br>
+baletrc: es6&#x89E3;&#x6790;&#x914D;&#x7F6E;&#xFF0C;&#x7528;&#x4E8E;&#x89E3;&#x6790;&#x6700;&#x65B0;&#x7684;es6&#x8BED;&#x6CD5;<br>
+editorconfig&#xFF1A;&#x7F16;&#x8F91;&#x5668;&#x914D;&#x7F6E;&#x6587;&#x4EF6;<br>
+gitignore&#xFF1A;git&#x5FFD;&#x7565;&#x914D;&#x7F6E;&#xFF0C;&#x9879;&#x76EE;&#x5C06;&#x4E0D;&#x4F1A;&#x8FDB;&#x884C;&#x63D0;&#x4EA4;&#x6709;&#x5173;git&#x7684;&#x6587;&#x4EF6;<br>
+index.html:&#x5355;&#x9875;&#x9762;&#x5165;&#x53E3;<br>
+package.json:&#x9879;&#x76EE;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x9879;&#x76EE;&#x63CF;&#x8FF0;&#xFF0C;&#x9879;&#x76EE;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x9879;&#x76EE;&#x4F9D;&#x8D56;&#x5B89;&#x88C5;&#x5E93;&#x7B49;</p>
+<blockquote>
+<p>6.vue&#x9879;&#x76EE;&#x8FDB;&#x884C;&#x6253;&#x5305;, <code>npm run build</code>&#x3002;&#x6253;&#x5305;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x9879;&#x76EE;&#x7ED3;&#x6784;&#x4F1A;&#x51FA;&#x73B0;dist&#x6587;&#x4EF6;&#x5939;&#x3002;</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>D:\iview\demo\demo3&gt;npm run build
+
+&gt; demo3@1.0.0 build D:\iview\demo\demo3
+&gt; node build/build.js
+
+Hash: 811a1826f96982d65b8d
+Version: webpack 3.12.0
+Time: 5734ms
+                                                  Asset       Size  Chunks             Chunk Names
+               static/js/vendor.eefaac73d06c156e050b.js     120 kB       0  [emitted]  vendor
+                  static/js/app.b22ce679862c47a75225.js    11.6 kB       1  [emitted]  app
+             static/js/manifest.2ae2e69a05c33dfc65f8.js  857 bytes       2  [emitted]  manifest
+    static/css/app.30790115300ab27614ce176899523b62.css  432 bytes       1  [emitted]  app
+static/css/app.30790115300ab27614ce176899523b62.css.map  828 bytes          [emitted]
+           static/js/vendor.eefaac73d06c156e050b.js.map     602 kB       0  [emitted]  vendor
+              static/js/app.b22ce679862c47a75225.js.map    22.2 kB       1  [emitted]  app
+         static/js/manifest.2ae2e69a05c33dfc65f8.js.map    4.97 kB       2  [emitted]  manifest
+                                             index.html  507 bytes          [emitted]
+
+  Build complete.
+
+  Tip: built files are meant to be served over an HTTP server.
+  Opening index.html over file:// won&apos;t work.
+
+
+D:\iview\demo\demo3&gt;
+</code></pre><p><img src="../img/vue_js_img/36.png" alt="36"></p>
+<p>&#x9879;&#x76EE;&#x4E0A;&#x7EBF;&#x65F6;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5C06; dist &#x6587;&#x4EF6;&#x5939;&#x653E;&#x5230;&#x670D;&#x52A1;&#x5668;&#x4E2D;&#x8FD0;&#x884C;&#x5C31;&#x884C;&#x4E86;&#x3002;</p>
+
       </div>
       
       

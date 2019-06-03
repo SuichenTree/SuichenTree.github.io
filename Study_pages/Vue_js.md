@@ -1739,3 +1739,139 @@ new Vue({
     })
 </script>
 ```
+
+
+
+## ??.使用 vue-cli构建工具 创建vue项目
+
+<h3>什么是vue-cli？</h3>
+
+vue-cli(vue-command line interface),vue命令行界面。
+vue-cli是一个官方的cli,能为单页面应用 (SPA) 快速搭建繁杂的脚手架。只需要几分钟的时间就可以构建一个带有热重载、保存时 lint 校验，以及生产环境可用的项目文件。
+
+<h3>什么是webpack？</h3>
+
+webpack是一款模块加载器兼打包工具,能把less/sass文件,json文件，乃至css文件，全都打包成浏览器识别的js文件和静态资源文件。
+
+<font color="red">注意：浏览器本身不能识别less/sass等文件。webpack就是把这些文件进行打包，编译，变成浏览器能识别的js,html文件</font>
+
+
+
+==在使用vue-cli创建项目之前，需要之前安装 node.js + npm(一般安装node.js，就安装了npm)==
+
+>1. 用npm 全局安装 vue-cli。（最新版本的vue-cli，本身就内部封装了webpack。所有安装vue-cli,就安装了webpack）
+
+```
+npm install -g vue-cli   #最新版本的vue-cli，本身就内部封装了webpack。所有安装vue-cli,就安装了webpack
+```
+
+>2. 创建一个文件夹，使用cmd 命令进入到文件夹。创建vue项目
+
+```
+##可以创建五种不同的模板
+
+vue init webpack <project-name>  # 一个全面的webpack+vue-loader的模板，功能包括热加载，linting,检测和CSS扩展。
+vue init webpack-simple <project-name>  # 一个简单webpack+vue-loader的模板，不包含其他功能，让你快速的搭建vue的开发环境。
+vue init browserify <project-name>  # 一个全面的Browserify+vueify 的模板，功能包括热加载，linting,单元检测。
+vue init browserify-simple <project-name>  # 一个简单Browserify+vueify的模板，不包含其他功能，让你快速的搭建vue的开发环境。
+vue init simple <project-name>  # 一个最简单的单页应用模板。
+
+```
+
+样例：
+```
+D:\iview\demo>vue init webpack demo3
+
+? Project name demo3   //项目名称 ，如果不需要更改直接回车就可以了。注意：这里不能使用大写字母
+? Project description A Vue.js project   //项目描述，默认就回车
+? Author suichen      //作者
+? Vue build standalone       
+? Install vue-router? Yes     //是否安装vue的路由插件，这里需要安装，所以选择Y
+? Use ESLint to lint your code? No   //是否用ESLint来限制你的代码错误和风格。单人开发一般不需要，团队一般就需要
+? Set up unit tests No     //是否需要安装单元测试工具
+? Setup e2e tests with Nightwatch? No   //是否安装e2e来进行用户行为模拟测试
+? Should we run `npm install` for you after the project has been created? (recommended) npm                    
+
+   vue-cli · Generated "demo3".
+
+~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~
+```
+
+![33](../img/vue_js_img/33.png)
+
+> 3. 安装完成后，可以进入到创建好的项目文件夹中，打开命令行，运行项目。
+
+运行命令：`npm run dev`
+```
+D:\iview\demo\demo3>npm run dev
+
+> demo3@1.0.0 dev D:\iview\demo\demo3
+> webpack-dev-server --inline --progress --config build/webpack.dev.conf.js
+
+ 12% building modules 22/29 modules 7 active ...o\demo3\src\components\HelloWorld.vue{ parser: "babylon" } is deprecated; we now treat it as { parser: " 95% emitting
+
+ DONE  Compiled successfully in 9162ms          23:14:11
+
+ I  Your application is running here: http://localhost:8080
+```
+
+> 4. 打开http://localhost:8080地址,ctrl+c 关于项目运行
+
+![34](../img/vue_js_img/34.png)
+
+> 5. vue项目文件的结构
+
+![35](../img/vue_js_img/35.png)
+
+build:关于打包的配置文件所在文件夹
+config：相关配置文件的文件夹
+node_modules : 依赖的node工具包目录
+src：前端源码文件
+-- assets : 公共资源文件夹
+-- router : 路由文件夹
+-- components : 组件文件夹
+-- App.vue:项目入口组件，.vue结尾的都是组件
+-- main.js：项目入口js
+static：存放静态资源，例如：图片等
+baletrc: es6解析配置，用于解析最新的es6语法
+editorconfig：编辑器配置文件
+gitignore：git忽略配置，项目将不会进行提交有关git的文件
+index.html:单页面入口
+package.json:项目配置文件，项目描述，项目版本号，项目依赖安装库等
+
+> 6.vue项目进行打包, `npm run build`。打包完成后，项目结构会出现dist文件夹。
+
+```
+D:\iview\demo\demo3>npm run build
+
+> demo3@1.0.0 build D:\iview\demo\demo3
+> node build/build.js
+
+Hash: 811a1826f96982d65b8d
+Version: webpack 3.12.0
+Time: 5734ms
+                                                  Asset       Size  Chunks             Chunk Names
+               static/js/vendor.eefaac73d06c156e050b.js     120 kB       0  [emitted]  vendor
+                  static/js/app.b22ce679862c47a75225.js    11.6 kB       1  [emitted]  app
+             static/js/manifest.2ae2e69a05c33dfc65f8.js  857 bytes       2  [emitted]  manifest
+    static/css/app.30790115300ab27614ce176899523b62.css  432 bytes       1  [emitted]  app
+static/css/app.30790115300ab27614ce176899523b62.css.map  828 bytes          [emitted]
+           static/js/vendor.eefaac73d06c156e050b.js.map     602 kB       0  [emitted]  vendor
+              static/js/app.b22ce679862c47a75225.js.map    22.2 kB       1  [emitted]  app
+         static/js/manifest.2ae2e69a05c33dfc65f8.js.map    4.97 kB       2  [emitted]  manifest
+                                             index.html  507 bytes          [emitted]
+
+  Build complete.
+
+  Tip: built files are meant to be served over an HTTP server.
+  Opening index.html over file:// won't work.
+
+
+D:\iview\demo\demo3>
+```
+
+![36](../img/vue_js_img/36.png)
+
+项目上线时，只需要将 dist 文件夹放到服务器中运行就行了。
