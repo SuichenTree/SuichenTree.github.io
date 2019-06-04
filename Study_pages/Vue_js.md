@@ -149,7 +149,7 @@ var vm=new Vue({
 ![5](../img/vue_js_img/5.png)
 
 
-### 2. 给标签插入html代码，并使其生效：
+### 2. v-html（给标签插入html代码，并使其生效）
 
 >使用 v-html 指令用于输出 html 代码
 ```html
@@ -167,7 +167,7 @@ new Vue({
 </script>
 ```
 
-### 3.属性绑定：v-bind指令
+### 3.绑定标签属性：v-bind指令
 
 v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等
 
@@ -1237,7 +1237,7 @@ new Vue({
 
 ---
 
-### 5.v-show
+### 6.v-show
 
 > v-show的用法与前面的v-if类似,根据条件展示元素
 
@@ -1601,7 +1601,7 @@ Vue.component('button-counter', {
 3. data属性必须是一个函数。
 
 
-### 3.Prop：
+### 3.父组件向子组件传递数据-Prop：
 
 Prop 是你可以在组件上注册的一些自定义特性。**当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个类似的data属性。**
 
