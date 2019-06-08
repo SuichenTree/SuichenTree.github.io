@@ -1765,6 +1765,9 @@ webpack是一款模块加载器兼打包工具,能把less/sass文件,json文件�
 npm install -g vue-cli   #最新版本的vue-cli，本身就内部封装了webpack。所有安装vue-cli,就安装了webpack
 ```
 
+<font color="red">使用命令 vue -V , 查看是否安装成功。</font>
+
+
 >2. 创建一个文件夹，使用cmd 命令进入到文件夹。创建vue项目
 
 ```
@@ -1838,7 +1841,7 @@ static：存放静态资源，例如：图片等
 baletrc: es6解析配置，用于解析最新的es6语法
 editorconfig：编辑器配置文件
 gitignore：git忽略配置，项目将不会进行提交有关git的文件
-index.html:单页面入口
+index.html:项目单页面入口
 package.json:项目配置文件，项目描述，项目版本号，项目依赖安装库等
 
 > 6.vue项目进行打包, `npm run build`。打包完成后，项目结构会出现dist文件夹。
@@ -1874,4 +1877,4 @@ D:\iview\demo\demo3>
 
 ![36](../img/vue_js_img/36.png)
 
-项目上线时，只需要将 dist 文件夹放到服务器中运行就行了。
+最后只需要将 dist 文件夹放到服务器中运行就行了。
