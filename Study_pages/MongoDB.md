@@ -397,3 +397,180 @@ db.user.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : 1}}}])
 **operation的参数列表**
 
 ![7](../img/MongoDB_img/7.png)
+
+---
+
+# 6.Node.js + MongoDB
+
+<font color="red">PS：创建一个文件夹，用于存放相关的文件，以下操作都在该文件夹中执行。</font>
+
+>① node.js 安装 MongoDB的驱动依赖文件
+
+```
+$ cnpm install mongodb     // cnpm 是使用的淘宝镜像
+```
+
+>② 创建demo.js 文件。连接MongoDB数据库。==若数据库存在就连接,不存在就创建==
+
+demo.js
+```js 
+var MongoClient = require('mongodb').MongoClient;    //获取MongoClient
+var url = "mongodb://localhost:27017/demoDB";       
+ 
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+  if (err) throw err;
+  console.log('数据库已创建或已连接');
+  db.close();                                       //关闭数据库
+});
+```
+
+>③ 创建集合（表）与删除集合
+
+```js
+//创建集合
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017/demoDB';
+MongoClient.connect(url, { useNewUrlParser: true }, function (err, db) {
+    if (err) throw err;
+    console.log('数据库已创建或已连接');
+
+    //创建集合（表）
+    var dbase = db.db("demoDB");
+    dbase.createCollection('user', function (err, res) {    //创建user 集合
+        if (err) throw err;
+        console.log("创建集合!");
+        db.close();
+    });
+});
+
+//删除集合
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("demoDB");
+    // 删除 user 集合
+    dbo.collection("user").drop(function(err, delOK) {  // 执行成功 delOK 返回 true，否则返回 false
+        if (err) throw err;
+        if (delOK) console.log("集合已删除");
+        db.close();
+    });
+});
+```
+
+>④ 对集合（表）的CRUD
+
+```js
+//插入一条数据 insertOne()
+var dbo = db.db("demoDB");
+var myobj = { name: "小明", age: 16 };
+dbo.collection("user").insertOne(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("文档插入成功");
+    db.close();
+});
+
+//插入多条数据 insertMany()
+var dbo = db.db("demoDB");
+var myobj =  [
+    { name: "小明", age: 16},
+    { name: "小华", age: 12},
+    { name: "小黑", age: 15}
+    ];
+dbo.collection("user").insertMany(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("插入的文档数量为: " + res.insertedCount);
+    db.close();
+});
+
+//删除一条数据 deleteOne()，把第一个查询出来的数据进行删除
+  var dbo = db.db("demoDB");
+  var whereStr = {name: "小明", age: 16};  // 被删除数据的where条件
+  dbo.collection("user").deleteOne(whereStr, function(err, obj) {
+      if (err) throw err;
+      console.log("文档删除成功");
+      db.close();
+  });
+
+//删除多条数据 deleteMany()
+var dbo = db.db("demoDB");
+var whereStr = {  age: 16 };  // 被删除数据的where条件
+dbo.collection("user").deleteMany(whereStr, function(err, obj) {
+    if (err) throw err;
+    console.log(obj.result.n + " 条文档被删除");
+    db.close();
+});
+
+//更新一条数据 updateOne(),把第一个查询出来的数据进行更新
+var dbo = db.db("demoDB");
+var whereStr = { age: 16};  // 查询条件
+var updateStr = {$set: { "address" : "earth" }};
+dbo.collection("user").updateOne(whereStr, updateStr, function(err, res) {
+    if (err) throw err;
+    console.log("文档更新成功");
+    db.close();
+});
+
+//更新多条数据 updateMany()
+var dbo = db.db("demoDB");
+var whereStr = {age: 16 };  // 查询条件
+var updateStr = {$set: { "address" : "earth" }};
+dbo.collection("user").updateMany(whereStr, updateStr, function(err, res) {
+    if (err) throw err;
+      console.log(res.result.nModified + " 条文档被更新");
+    db.close();
+});
+
+//查询数据 find()，把表中的数据全部查询出来
+var dbo = db.db("demoDB");
+dbo.collection("user"). find({}).toArray(function(err, result) { // 返回集合中所有数据
+    if (err) throw err;
+    console.log(result);
+    db.close();                 //关闭数据库连接
+});
+
+//查询指定条件的数据
+var dbo = db.db("demoDB");
+var whereStr = {"address" : "earth"};  // 查询条件
+dbo.collection("user").find(whereStr).toArray(function(err, result) {
+  if (err) throw err;
+  console.log(result);
+  db.close();
+});
+
+```
+
+>④ 对查询出来的数据按照规则排序
+
+使用 sort() 方法进行排序，该方法接受一个参数，规定是升序(1)还是降序(-1)。
+
+例如：
+{ type: 1 }  // 按 type 字段升序
+{ type: -1 } // 按 type 字段降序
+
+```js
+//按name字段进行升序排序
+
+var dbo = db.db("demoDB");
+var mysort = { "name": 1 };
+dbo.collection("user").find().sort(mysort).toArray(function(err, result) {    
+    if (err) throw err;
+    console.log(result);
+    db.close();
+});
+
+```
+
+>⑤ 分页
+
+设置指定的返回条数可以使用 limit() 方法，该方法只接受一个参数，指定了返回的条数。
+
+```js
+//返回两条数据
+var dbo = db.db("demoDB");
+dbo.collection("user").find().limit(2).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+});
+```

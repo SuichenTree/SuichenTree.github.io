@@ -262,13 +262,573 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <ul>
 <li><a href="#mongodb">MongoDB</a></li>
-<li><a href="#1">1.</a></li>
+<li><a href="#1mongodb%E7%9A%84%E4%BB%8B%E7%BB%8D">1.MongoDB&#x7684;&#x4ECB;&#x7ECD;</a></li>
+<li><a href="#2mongodb%E7%9A%84%E5%AE%89%E8%A3%85windows-%E4%B8%8B%E7%9A%84%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98">2.MongoDB&#x7684;&#x5B89;&#x88C5;&#xFF08;Windows &#x4E0B;&#x7684;&#xFF09;&#x4EE5;&#x53CA;&#x5B89;&#x88C5;&#x51FA;&#x73B0;&#x7684;&#x95EE;&#x9898;</a></li>
+<li><a href="#3mongodb%E4%B8%8Esql%E7%9A%84%E4%B8%8D%E5%90%8C">3.MongoDB&#x4E0E;SQL&#x7684;&#x4E0D;&#x540C;</a></li>
+<li><a href="#4mongodb-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">4.MongoDB &#x6570;&#x636E;&#x7C7B;&#x578B;</a></li>
+<li><a href="#5mongodb-%E7%9A%84%E5%90%84%E7%A7%8D%E5%91%BD%E4%BB%A4windows%E4%B8%8B%E4%BB%A5%E7%AE%A1%E7%90%86%E5%91%98%E8%BA%AB%E4%BB%BD%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%A1%8C">5.MongoDB &#x7684;&#x5404;&#x79CD;&#x547D;&#x4EE4;(windows&#x4E0B;&#xFF0C;&#x4EE5;&#x7BA1;&#x7406;&#x5458;&#x8EAB;&#x4EFD;&#x8FD0;&#x884C;&#x547D;&#x4EE4;&#x884C;)</a>
+<ul>
+<li><a href="#1%E5%BC%80%E5%90%AF%E5%92%8C%E5%85%B3%E9%97%AD%E6%9C%8D%E5%8A%A1">1.&#x5F00;&#x542F;&#x548C;&#x5173;&#x95ED;&#x670D;&#x52A1;</a></li>
+<li><a href="#2mongo-%E5%91%BD%E4%BB%A4%E8%BF%9B%E5%85%A5%E5%88%B0-mongodb%E7%9A%84%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86shell%E4%BB%8E%E8%80%8C%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93">2.mongo &#x547D;&#x4EE4;,&#x8FDB;&#x5165;&#x5230; MongoDB&#x7684;&#x540E;&#x53F0;&#x7BA1;&#x7406;shell&#xFF0C;&#x4ECE;&#x800C;&#x7BA1;&#x7406;&#x6570;&#x636E;&#x5E93;</a></li>
+<li><a href="#3%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%91%BD%E4%BB%A4">3.&#x6570;&#x636E;&#x5E93;&#x7684;&#x547D;&#x4EE4;</a></li>
+<li><a href="#4%E9%9B%86%E5%90%88%E8%A1%A8%E7%9A%84%E5%91%BD%E4%BB%A4">4.&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x7684;&#x547D;&#x4EE4;</a></li>
+<li><a href="#5%E6%96%87%E6%A1%A3%E8%AE%B0%E5%BD%95%E7%9A%84%E5%91%BD%E4%BB%A4">5.&#x6587;&#x6863;&#xFF08;&#x8BB0;&#x5F55;&#xFF09;&#x7684;&#x547D;&#x4EE4;</a></li>
+<li><a href="#6%E6%96%87%E6%A1%A3%E6%9F%A5%E8%AF%A2find%E7%9A%84and-where-or%E6%9D%A1%E4%BB%B6">6.&#x6587;&#x6863;&#x67E5;&#x8BE2;find&#x7684;&#xFF08;and ,where ,or&#xFF09;&#x6761;&#x4EF6;</a></li>
+<li><a href="#7%E6%9D%A1%E4%BB%B6%E6%93%8D%E4%BD%9C%E7%AC%A6">7.&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;(&gt;,&lt;,&gt;=,&lt;=)</a></li>
+<li><a href="#8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9D%A1%E4%BB%B6%E7%AC%A6-type">8.&#x6570;&#x636E;&#x7C7B;&#x578B;&#x6761;&#x4EF6;&#x7B26; $type</a></li>
+<li><a href="#9%E8%AF%BB%E5%8F%96%E4%B8%80%E5%AE%9A%E6%95%B0%E9%87%8F%E4%B9%8B%E5%86%85%E6%88%96%E4%B9%8B%E5%A4%96%E7%9A%84%E6%95%B0%E6%8D%AE-limit%E4%B8%8Eskip%E6%96%B9%E6%B3%95">9.&#x8BFB;&#x53D6;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x4E4B;&#x5185;&#x6216;&#x4E4B;&#x5916;&#x7684;&#x6570;&#x636E;---Limit&#x4E0E;Skip&#x65B9;&#x6CD5;</a></li>
+<li><a href="#10%E6%8E%92%E5%BA%8F-sort-%E6%96%B9%E6%B3%95">10.&#x6392;&#x5E8F;----sort() &#x65B9;&#x6CD5;</a></li>
+<li><a href="#11%E7%B4%A2%E5%BC%95-createindex-%E6%96%B9%E6%B3%95">11.&#x7D22;&#x5F15;----createIndex() &#x65B9;&#x6CD5;</a></li>
+<li><a href="#12%E8%81%9A%E5%90%88-aggregate-%E6%96%B9%E6%B3%95">12.&#x805A;&#x5408; --- aggregate() &#x65B9;&#x6CD5;</a></li>
+</ul>
+</li>
+<li><a href="#6nodejs-mongodb">6.Node.js + MongoDB</a></li>
 </ul>
 <h1 class="mume-header" id="mongodb">MongoDB</h1>
 
-<h1 class="mume-header" id="1">1.</h1>
+<p>MongoDB&#x7684;&#x5B98;&#x65B9;&#x7F51;&#x7AD9;&#x662F;&#xFF1A;<a href="http://www.mongodb.com/">http://www.mongodb.com/</a></p>
+<h1 class="mume-header" id="1mongodb%E7%9A%84%E4%BB%8B%E7%BB%8D">1.MongoDB&#x7684;&#x4ECB;&#x7ECD;</h1>
+
+<p><mark>MongoDB&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x975E;&#x5E38;&#x677E;&#x6563;&#xFF0C;&#x662F;&#x7C7B;&#x4F3C;json&#x7684;bson&#x683C;&#x5F0F;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5B58;&#x50A8;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;</mark></p>
+<p>Mongo&#x6700;&#x5927;&#x7684;&#x7279;&#x70B9;&#x662F;&#x5B83;&#x652F;&#x6301;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#x975E;&#x5E38;&#x5F3A;&#x5927;&#xFF0C;&#x5176;&#x8BED;&#x6CD5;&#x7C7B;&#x4F3C;&#x4E8E;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#xFF0C;&#x51E0;&#x4E4E;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x7C7B;&#x4F3C;&#x5173;&#x7CFB;&#x6570;&#x636E;&#x5E93;&#x5355;&#x8868;&#x67E5;&#x8BE2;&#x7684;&#x7EDD;&#x5927;&#x90E8;&#x5206;&#x529F;&#x80FD;&#xFF0C;&#x800C;&#x4E14;&#x8FD8;&#x652F;&#x6301;&#x5BF9;&#x6570;&#x636E;&#x5EFA;&#x7ACB;&#x7D22;&#x5F15;&#x3002;</p>
+<h1 class="mume-header" id="2mongodb%E7%9A%84%E5%AE%89%E8%A3%85windows-%E4%B8%8B%E7%9A%84%E4%BB%A5%E5%8F%8A%E5%AE%89%E8%A3%85%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98">2.MongoDB&#x7684;&#x5B89;&#x88C5;&#xFF08;Windows &#x4E0B;&#x7684;&#xFF09;&#x4EE5;&#x53CA;&#x5B89;&#x88C5;&#x51FA;&#x73B0;&#x7684;&#x95EE;&#x9898;</h1>
+
+<p><mark>&#x2460; MongoDB&#x7684;&#x5B89;&#x88C5;&#xFF0C;&#x767E;&#x5EA6;&#x641C;&#x7D22;&#x3002;&#x6CE8;&#x610F;&#x8981;&#x5728;windows &#x73AF;&#x5883;&#x53D8;&#x91CF;&#x4E2D;&#x914D;&#x7F6E;MongoDB</mark></p>
+<p>PS:MongoDB&#x5C06;&#x6570;&#x636E;&#x76EE;&#x5F55;&#x5B58;&#x50A8;&#x5728; db &#x76EE;&#x5F55;&#x4E0B;&#x3002;&#x4F46;&#x662F;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x76EE;&#x5F55;&#x4E0D;&#x4F1A;&#x4E3B;&#x52A8;&#x521B;&#x5EFA;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x5B89;&#x88C5;&#x5B8C;&#x6210;&#x540E;&#x9700;&#x8981;&#x5728;data&#x76EE;&#x5F55;&#x4E2D;&#x521B;&#x5EFA;&#x5B83;&#x3002;</p>
+<p><mark>&#x2461; &#x5B89;&#x88C5;&#x51FA;&#x73B0;&#x7684;&#x95EE;&#x9898;&#xFF08;Windows &#x4E0B;&#x7684;&#xFF09;</mark></p>
+<ol>
+<li>&#x82E5;&#x7528;&#x63A7;&#x5236;&#x53F0;&#x542F;&#x52A8;MongoDB&#x51FA;&#x73B0;&#xFF0C;<code>&#x53D1;&#x751F;&#x7CFB;&#x7EDF;&#x9519;&#x8BEF; 5 &#x62D2;&#x7EDD;&#x8BBF;&#x95EE;</code></li>
+</ol>
+<p><font color="red">&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;&#x4F7F;&#x7528;&#x7BA1;&#x7406;&#x5458;&#x7684;&#x65B9;&#x5F0F;&#x6253;&#x5F00;MongoDB</font></p>
+<ol start="2">
+<li>&#x82E5;&#x7528;&#x63A7;&#x5236;&#x53F0;&#x542F;&#x52A8;MongoDB&#x51FA;&#x73B0;&#xFF0C;<code>&#x670D;&#x52A1;&#x6CA1;&#x6709;&#x54CD;&#x5E94;&#x63A7;&#x5236;&#x529F;&#x80FD;</code></li>
+</ol>
+<p>&#x53C2;&#x8003;&#x94FE;&#x63A5;: <a href="https://blog.csdn.net/u013905744/article/details/52787226">&#x5C06;MongoDB&#x4F5C;&#x4E3A;windows&#x670D;&#x52A1;&#x6765;&#x5B89;&#x88C5;&#xFF0C;&#x51FA;&#x73B0;&#x201C;&#x670D;&#x52A1;&#x6CA1;&#x6709;&#x54CD;&#x5E94;&#x63A7;&#x5236;&#x529F;&#x80FD;&#x201D;&#x9519;&#x8BEF;</a></p>
+<font color="red">
+<p>&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF1A;<br>
+1.&#x9996;&#x5148;&#x914D;&#x7F6E;MongoDB&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x3002;<br>
+2.&#x5176;&#x6B21;&#xFF0C;&#x63A7;&#x5236;&#x53F0;&#x8FD0;&#x884C;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#xFF08;&#x547D;&#x4EE4;&#x4E2D;&#x7684;MongoDB&#x7684;&#x5B89;&#x88C5;&#x4F4D;&#x7F6E;&#x6765;&#x8FDB;&#x884C;&#x66F4;&#x6539;&#xFF09;</p>
+<p>mongod -install -serviceName MongoDB -serviceDisplayName MongoDB -logpath F:\MongoDB\log\MongoDB.Log -dbpath F:\MongoDB\data -directoryperdb</p>
+<p>3.&#x518D;&#x6B21;&#x6253;&#x5F00;MongoDB,&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x8F93;&#x5165;&#xFF1A;<code>http://localhost:27017</code><br>
+&#x82E5;&#x6210;&#x529F;&#x8FDB;&#x53BB;&#x8868;&#x793A;MongoDB&#x542F;&#x52A8;&#x6210;&#x529F;&#x3002;</p>
+</font>
+<h1 class="mume-header" id="3mongodb%E4%B8%8Esql%E7%9A%84%E4%B8%8D%E5%90%8C">3.MongoDB&#x4E0E;SQL&#x7684;&#x4E0D;&#x540C;</h1>
+
+<table>
+<thead>
+<tr>
+<th>SQL&#x6982;&#x5FF5;</th>
+<th>MongoDB&#x6982;&#x5FF5;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>database</td>
+<td>database</td>
+<td>&#x6570;&#x636E;&#x5E93;</td>
+</tr>
+<tr>
+<td>table</td>
+<td>collection</td>
+<td>&#x8868;/&#x96C6;&#x5408;&#xFF08;<font color="red">&#x5728;MongoDB&#x4E2D;&#x8868;&#x88AB;&#x79F0;&#x4E3A;&#x96C6;&#x5408;</font>&#xFF09;</td>
+</tr>
+<tr>
+<td>row</td>
+<td>document</td>
+<td>&#x8868;&#x4E2D;&#x7684;&#x4E00;&#x884C;&#xFF08;&#x8868;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x8BB0;&#x5F55;&#xFF09;/ &#x6587;&#x6863;</td>
+</tr>
+<tr>
+<td>column</td>
+<td>field</td>
+<td>&#x6570;&#x636E;&#x5B57;&#x6BB5;/&#x57DF;</td>
+</tr>
+<tr>
+<td>index</td>
+<td>index</td>
+<td>&#x7D22;&#x5F15;</td>
+</tr>
+<tr>
+<td>table joins</td>
+<td>XXX</td>
+<td>&#x8868;&#x8FDE;&#x63A5;,MongoDB&#x4E0D;&#x652F;&#x6301;</td>
+</tr>
+<tr>
+<td>primary key</td>
+<td>primary key</td>
+<td>&#x4E3B;&#x952E;,MongoDB&#x81EA;&#x52A8;&#x5C06;_id&#x5B57;&#x6BB5;&#x8BBE;&#x7F6E;&#x4E3A;&#x4E3B;&#x952E;</td>
+</tr>
+</tbody>
+</table>
+<p><mark>MongoDB&#x652F;&#x6301;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x975E;&#x5E38;&#x677E;&#x6563;&#xFF0C;&#x662F;&#x7C7B;&#x4F3C;json&#x7684;bson&#x683C;&#x5F0F;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x5B58;&#x50A8;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;</mark></p>
+<p><img src="../img/MongoDB_img/1.png" alt="1"></p>
+<h1 class="mume-header" id="4mongodb-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">4.MongoDB &#x6570;&#x636E;&#x7C7B;&#x578B;</h1>
+
+<p><img src="../img/MongoDB_img/2.png" alt="2"></p>
+<h1 class="mume-header" id="5mongodb-%E7%9A%84%E5%90%84%E7%A7%8D%E5%91%BD%E4%BB%A4windows%E4%B8%8B%E4%BB%A5%E7%AE%A1%E7%90%86%E5%91%98%E8%BA%AB%E4%BB%BD%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%A1%8C">5.MongoDB &#x7684;&#x5404;&#x79CD;&#x547D;&#x4EE4;(windows&#x4E0B;&#xFF0C;&#x4EE5;&#x7BA1;&#x7406;&#x5458;&#x8EAB;&#x4EFD;&#x8FD0;&#x884C;&#x547D;&#x4EE4;&#x884C;)</h1>
+
+<h2 class="mume-header" id="1%E5%BC%80%E5%90%AF%E5%92%8C%E5%85%B3%E9%97%AD%E6%9C%8D%E5%8A%A1">1.&#x5F00;&#x542F;&#x548C;&#x5173;&#x95ED;&#x670D;&#x52A1;</h2>
+
+<pre data-role="codeBlock" data-info class="language-"><code>&gt;net start MongoDB    # &#x542F;&#x52A8;MongoDB&#x670D;&#x52A1;
+&gt;net stop MongoDB      # &#x5173;&#x95ED;MongoDB&#x670D;&#x52A1;
+</code></pre><h2 class="mume-header" id="2mongo-%E5%91%BD%E4%BB%A4%E8%BF%9B%E5%85%A5%E5%88%B0-mongodb%E7%9A%84%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86shell%E4%BB%8E%E8%80%8C%E7%AE%A1%E7%90%86%E6%95%B0%E6%8D%AE%E5%BA%93">2.mongo &#x547D;&#x4EE4;,&#x8FDB;&#x5165;&#x5230; MongoDB&#x7684;&#x540E;&#x53F0;&#x7BA1;&#x7406;shell&#xFF0C;&#x4ECE;&#x800C;&#x7BA1;&#x7406;&#x6570;&#x636E;&#x5E93;</h2>
+
+<p>MongoDB Shell&#x662F;MongoDB&#x81EA;&#x5E26;&#x7684;&#x4EA4;&#x4E92;&#x5F0F;Javascript shell,&#x7528;&#x6765;&#x5BF9;MongoDB&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x548C;&#x7BA1;&#x7406;&#x7684;&#x4EA4;&#x4E92;&#x5F0F;&#x73AF;&#x5883;&#x3002;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt;mongo
+</code></pre><p><img src="../img/MongoDB_img/3.png" alt="3"></p>
+<h2 class="mume-header" id="3%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%91%BD%E4%BB%A4">3.&#x6570;&#x636E;&#x5E93;&#x7684;&#x547D;&#x4EE4;</h2>
+
+<font color="red">
+<p>PS:<br>
+1.MongoDB &#x4E2D;&#x9ED8;&#x8BA4;&#x7684;&#x6570;&#x636E;&#x5E93;&#x4E3A; test&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x6CA1;&#x6709;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x96C6;&#x5408;&#x5C06;&#x5B58;&#x653E;&#x5728; test &#x6570;&#x636E;&#x5E93;&#x4E2D;&#x3002;<br>
+2.&#x5728; MongoDB &#x4E2D;&#xFF0C;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x53EA;&#x6709;&#x5728;&#x5185;&#x5BB9;&#x63D2;&#x5165;&#x540E;&#x624D;&#x4F1A;&#x521B;&#x5EFA;&#x3002; &#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x521B;&#x5EFA;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x540E;&#x8981;&#x518D;&#x63D2;&#x5165;&#x4E00;&#x4E2A;&#x6587;&#x6863;(&#x8BB0;&#x5F55;)&#xFF0C;&#x96C6;&#x5408;(&#x8868;)&#x624D;&#x4F1A;&#x771F;&#x6B63;&#x521B;&#x5EFA;&#x3002;</p>
+</font>
+<blockquote>
+<ol>
+<li>use dbname : &#x5207;&#x6362;&#x5230;&#x6307;&#x5B9A;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x5426;&#x5219;&#x521B;&#x5EFA;&#x6570;&#x636E;&#x5E93;</li>
+<li>db  : &#x7528;&#x4E8E;&#x67E5;&#x770B;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;</li>
+<li>show dbs : &#x67E5;&#x770B;&#x6240;&#x6709;&#x6570;&#x636E;&#x5E93;</li>
+<li>db.dropDatabase() : &#x5220;&#x9664;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;,db&#x8868;&#x793A;&#x5F53;&#x524D;&#x6570;&#x636E;&#x5E93;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt; use demo1
+switched to db demo1
+&gt; db
+demo1
+
+&gt; show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB     
+test1   0.000GB  
+
+&gt; db.dropDatabase()
+{ &quot;ok&quot; : 1 }
+
+</code></pre><h2 class="mume-header" id="4%E9%9B%86%E5%90%88%E8%A1%A8%E7%9A%84%E5%91%BD%E4%BB%A4">4.&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x7684;&#x547D;&#x4EE4;</h2>
+
+<font color="red">
+PS:
+<p>&#x5728; MongoDB &#x4E2D;&#xFF0C;&#x4F60;&#x4E0D;&#x9700;&#x8981;&#x76F4;&#x63A5;&#x521B;&#x5EFA;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x3002;&#x5F53;&#x4F60;&#x63D2;&#x5165;&#x4E00;&#x4E9B;&#x6587;&#x6863;&#xFF08;&#x8BB0;&#x5F55;&#xFF09;&#x65F6;&#xFF0C;MongoDB &#x4F1A;&#x81EA;&#x52A8;&#x521B;&#x5EFA;&#x96C6;&#x5408;(&#x8868;)&#x3002;</p>
+</font>
+<blockquote>
+<ol>
+<li>db.createCollection(name, options)   // name&#x662F;&#x96C6;&#x5408;&#x540D;&#x79F0;&#xFF0C;options&#x662F;&#x53EF;&#x9009;&#x53C2;&#x6570;</li>
+</ol>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>options&#x53EF;&#x9009;&#x53C2;&#x6570;</th>
+<th>&#x7C7B;&#x578B;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>capped</td>
+<td>&#x5E03;&#x5C14;</td>
+<td>&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x82E5;&#x4E3A; true&#xFF0C;&#x5219;&#x521B;&#x5EFA;&#x6709;&#x7740;&#x56FA;&#x5B9A;&#x5927;&#x5C0F;&#x7684;&#x96C6;&#x5408;&#xFF0C;&#x5F53;&#x8FBE;&#x5230;&#x6700;&#x5927;&#x503C;&#x65F6;&#xFF0C;&#x5B83;&#x4F1A;&#x81EA;&#x52A8;&#x8986;&#x76D6;&#x6700;&#x65E9;&#x7684;&#x6587;&#x6863;&#x3002;&#x5F53;&#x8BE5;&#x503C;&#x4E3A; true &#x65F6;&#xFF0C;&#x5FC5;&#x987B;&#x6307;&#x5B9A; size &#x53C2;&#x6570;&#x3002;</td>
+</tr>
+<tr>
+<td>autoIndexId</td>
+<td>&#x5E03;&#x5C14;</td>
+<td>&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x5982;&#x4E3A; true&#xFF0C;&#x81EA;&#x52A8;&#x5728; _id &#x5B57;&#x6BB5;&#x521B;&#x5EFA;&#x7D22;&#x5F15;&#x3002;&#x9ED8;&#x8BA4;&#x4E3A; false&#x3002;</td>
+</tr>
+<tr>
+<td>size</td>
+<td>&#x6570;&#x503C;</td>
+<td>&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x4E3A;&#x96C6;&#x5408;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x6700;&#x5927;&#x503C;&#xFF08;&#x4EE5;&#x5B57;&#x8282;&#x8BA1;&#xFF09;&#x3002;&#x5982;&#x679C; capped &#x4E3A; true&#xFF0C;&#x4E5F;&#x9700;&#x8981;&#x6307;&#x5B9A;&#x8BE5;&#x5B57;&#x6BB5;&#x3002;</td>
+</tr>
+<tr>
+<td>max</td>
+<td>&#x6570;&#x503C;</td>
+<td>&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x6307;&#x5B9A;&#x56FA;&#x5B9A;&#x96C6;&#x5408;&#x4E2D;&#x5305;&#x542B;&#x6587;&#x6863;&#x7684;&#x6700;&#x5927;&#x6570;&#x91CF;&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ol start="2">
+<li>show collections &#x6216; show tables &#x547D;&#x4EE4;  : &#x67E5;&#x770B;&#x5DF2;&#x6709;&#x96C6;&#x5408;</li>
+<li>db.collectionName.drop()         : &#x5220;&#x9664;&#x6307;&#x5B9A;&#x96C6;&#x5408;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt; db.createCollection(&quot;goods&quot;)      //&#x521B;&#x5EFA;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;goods
+{ &quot;ok&quot; : 1 }
+
+&gt; db.createCollection(&quot;user&quot;, { capped : true, autoIndexId : true, size : 
+   6142800, max : 10000 } )
+{ &quot;ok&quot; : 1 }                        //&#x521B;&#x5EFA;user&#x8868;&#xFF0C;&#x5E76;&#x8BBE;&#x7F6E;&#x4E86;&#x53C2;&#x6570;
+
+&gt; show collections
+goods
+&gt; show tables
+goods
+
+&gt; db.goods.drop()     //&#x5220;&#x9664;goods &#x96C6;&#x5408;
+true
+&gt; show collections
+&gt;
+</code></pre><h2 class="mume-header" id="5%E6%96%87%E6%A1%A3%E8%AE%B0%E5%BD%95%E7%9A%84%E5%91%BD%E4%BB%A4">5.&#x6587;&#x6863;&#xFF08;&#x8BB0;&#x5F55;&#xFF09;&#x7684;&#x547D;&#x4EE4;</h2>
+
+<blockquote>
+<ol>
+<li>db.collectionNAME.insert(document)    : &#x4F7F;&#x7528; insert() &#x5411;&#x96C6;&#x5408;&#x4E2D;&#x63D2;&#x5165;&#x6587;&#x6863;</li>
+<li>db.collection.save( &lt; document &gt;,{ writeConcern: &lt; document &gt; })    : &#x4F7F;&#x7528; save() &#x65B9;&#x6CD5;&#x901A;&#x8FC7;&#x4F20;&#x5165;&#x7684;&#x6587;&#x6863;&#x6765;&#x66FF;&#x6362;&#x5DF2;&#x6709;&#x6587;&#x6863;</li>
+<li>db.collectionNAME.find()    : &#x67E5;&#x770B;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6570;&#x636E;</li>
+<li>document=({~ ~ ~})      :&#x5148;&#x628A;&#x4E00;&#x6761;&#x6570;&#x636E;&#x5305;&#x88C5;&#x4E3A;&#x6587;&#x6863;&#xFF0C;&#x5728;&#x7528;insert()&#x547D;&#x4EE4;&#x63D2;&#x5165;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt;5. &#x4F7F;&#x7528; update() &#x548C; save() &#x65B9;&#x6CD5;&#x6765;&#x66F4;&#x65B0;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6587;&#x6863;
+db.collection.update(
+   &lt;query&gt;,
+   &lt;update&gt;,
+   {
+     upsert: &lt;boolean&gt;,
+     multi: &lt;boolean&gt;,
+     writeConcern: &lt;document&gt;
+   }
+)
+
+&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;
+query : update&#x7684;&#x67E5;&#x8BE2;&#x6761;&#x4EF6;&#xFF0C;&#x7C7B;&#x4F3C;sql update&#x67E5;&#x8BE2;&#x5185;where&#x540E;&#x9762;&#x7684;&#x3002;
+update : update&#x7684;&#x5BF9;&#x8C61;&#x548C;&#x4E00;&#x4E9B;&#x66F4;&#x65B0;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#xFF08;&#x5982;$,$inc...&#xFF09;&#x7B49;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;sql update&#x67E5;&#x8BE2;&#x5185;set&#x540E;&#x9762;&#x7684;
+upsert : &#x53EF;&#x9009;&#xFF0C;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x610F;&#x601D;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;update&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x662F;&#x5426;&#x63D2;&#x5165;objNew,true&#x4E3A;&#x63D2;&#x5165;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;false&#xFF0C;&#x4E0D;&#x63D2;&#x5165;&#x3002;
+multi : &#x53EF;&#x9009;&#xFF0C;mongodb &#x9ED8;&#x8BA4;&#x662F;false,&#x53EA;&#x66F4;&#x65B0;&#x627E;&#x5230;&#x7684;&#x7B2C;&#x4E00;&#x6761;&#x8BB0;&#x5F55;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x4E3A;true,&#x5C31;&#x628A;&#x6309;&#x6761;&#x4EF6;&#x67E5;&#x51FA;&#x6765;&#x591A;&#x6761;&#x8BB0;&#x5F55;&#x5168;&#x90E8;&#x66F4;&#x65B0;&#x3002;
+writeConcern :&#x53EF;&#x9009;&#xFF0C;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x7684;&#x7EA7;&#x522B;&#x3002;
+</code></pre><pre data-role="codeBlock" data-info class="language-"><code>&gt;6. &#x79FB;&#x9664;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6570;&#x636E;
+db.collectionName.remove(
+    &lt; query &gt;,
+    { justOne: &lt; boolean &gt;,
+      writeConcern: &lt; document &gt; 
+    }) 
+
+&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;
+query :&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x5220;&#x9664;&#x7684;&#x6587;&#x6863;&#x7684;&#x6761;&#x4EF6;&#x3002;
+justOne : &#xFF08;&#x53EF;&#x9009;&#xFF09;&#x5982;&#x679C;&#x8BBE;&#x4E3A; true &#x6216; 1&#xFF0C;&#x5219;&#x53EA;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x8BBE;&#x7F6E;&#x8BE5;&#x53C2;&#x6570;&#xFF0C;&#x6216;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x503C; false&#xFF0C;&#x5219;&#x5220;&#x9664;&#x6240;&#x6709;&#x5339;&#x914D;&#x6761;&#x4EF6;&#x7684;&#x6587;&#x6863;&#x3002;
+writeConcern :&#xFF08;&#x53EF;&#x9009;&#xFF09;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x7684;&#x7EA7;&#x522B;&#x3002;
+
+</code></pre><blockquote>
+<ol start="7">
+<li>db.collectionName.remove({})      : //&#x5220;&#x9664;&#x5F53;&#x524D;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6587;&#x6863;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt;8.&#x67E5;&#x8BE2;&#x6587;&#x6863; 
+db.collectionName.find(query, projection)
+
+&#x53C2;&#x6570;&#x8BF4;&#x660E;&#xFF1A;
+query &#xFF1A;&#x53EF;&#x9009;&#xFF0C;&#x4F7F;&#x7528;&#x67E5;&#x8BE2;&#x64CD;&#x4F5C;&#x7B26;&#x6307;&#x5B9A;&#x67E5;&#x8BE2;&#x6761;&#x4EF6;
+projection &#xFF1A;&#x53EF;&#x9009;&#xFF0C;&#x4F7F;&#x7528;&#x6295;&#x5F71;&#x64CD;&#x4F5C;&#x7B26;&#x6307;&#x5B9A;&#x8FD4;&#x56DE;&#x7684;&#x952E;&#x3002;&#x67E5;&#x8BE2;&#x65F6;&#x8FD4;&#x56DE;&#x6587;&#x6863;&#x4E2D;&#x6240;&#x6709;&#x952E;&#x503C;&#xFF0C; &#x53EA;&#x9700;&#x7701;&#x7565;&#x8BE5;&#x53C2;&#x6570;&#x5373;&#x53EF;&#xFF08;&#x9ED8;&#x8BA4;&#x7701;&#x7565;&#xFF09;&#x3002;
+
+</code></pre><blockquote>
+<ol start="9">
+<li>db.collectionName.find().pretty()   : //&#x4EE5;&#x6613;&#x8BFB;&#x7684;&#x65B9;&#x5F0F;&#x67E5;&#x8BE2;&#x6587;&#x6863;</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="10">
+<li>db.collectionName.findOne()    : //&#x67E5;&#x8BE2;&#x6587;&#x6863;&#xFF0C;&#x53EA;&#x8FD4;&#x56DE;&#x7B2C;&#x4E00;&#x4E2A;&#x6587;&#x6863;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt; db.user.insert({id:001,name:&quot;xiaoming&quot;,age:12})   //&#x5411;user&#x96C6;&#x5408;&#x63D2;&#x5165;&#x4E00;&#x6761;&#x6587;&#x6863;&#xFF08;&#x8BB0;&#x5F55;&#xFF09;
+WriteResult({ &quot;nInserted&quot; : 1 })     
+&gt; db.user.save({id:002,name:&quot;xiaohong&quot;,age:15})
+WriteResult({ &quot;nInserted&quot; : 1 })
+
+&gt; db.user.find()
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf68336c46018670f0d01&quot;), &quot;id&quot; : 1, &quot;name&quot; : &quot;xiaoming&quot;, &quot;age&quot; : 12 }
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf74736c46018670f0d02&quot;), &quot;id&quot; : 2, &quot;name&quot; : &quot;xiaohong&quot;, &quot;age&quot; : 15 }
 
 
+&gt; document=({id:003,&quot;name&quot;:&quot;xiaoqiang&quot;,age:17})
+{ &quot;id&quot; : 3, &quot;name&quot; : &quot;xiaoqiang&quot;, &quot;age&quot; : 17 }
+&gt; db.user.insert(document)
+WriteResult({ &quot;nInserted&quot; : 1 })
+
+//&#x4FEE;&#x6539;&#x6587;&#x6863;&#x4E2D;&#x7684;&#x6570;&#x636E;
+&gt;db.user.update({&apos;name&apos;:&apos;xiaoming&apos;},{$set:{&apos;name&apos;:&apos;xiaobing&apos;}})    //&#x628A;name&#x5C5E;&#x6027;&#x66F4;&#x6539;
+WriteResult({ &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModified&quot; : 1 })
+&gt; db.user.find()
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf68336c46018670f0d01&quot;), &quot;id&quot; : 1, &quot;name&quot; : &quot;xiaobing&quot;, &quot;age&quot; : 12 }
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf74736c46018670f0d02&quot;), &quot;id&quot; : 2, &quot;name&quot; : &quot;xiaohong&quot;, &quot;age&quot; : 15 }
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf92d36c46018670f0d04&quot;), &quot;id&quot; : 3, &quot;name&quot; : &quot;xiaoqiang&quot;, &quot;age&quot; : 17 }
+
+//&#x5220;&#x9664;&#x6587;&#x6863;&#x7684;&#x6570;&#x636E;
+&gt; db.user.remove({&apos;name&apos;:&apos;xiaobing&apos;})     //&#x5220;&#x9664;name=xiaobing&#x7684;&#x6570;&#x636E;
+WriteResult({ &quot;nRemoved&quot; : 1 })
+&gt; db.user.find()
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf74736c46018670f0d02&quot;), &quot;id&quot; : 2, &quot;name&quot; : &quot;xiaohong&quot;, &quot;age&quot; : 15 }
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf92d36c46018670f0d04&quot;), &quot;id&quot; : 3, &quot;name&quot; : &quot;xiaoqiang&quot;, &quot;age&quot; : 17 }
+
+&gt;db.user.remove({})        //&#x5220;&#x9664;&#x6240;&#x6709;&#x7684;&#x6587;&#x6863;&#x6570;&#x636E;
+
+//&#x67E5;&#x8BE2;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6587;&#x6863;&#x6570;&#x636E;
+&gt; db.user.find()
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf74736c46018670f0d02&quot;), &quot;id&quot; : 2, &quot;name&quot; : &quot;xiaohong&quot;, &quot;age&quot; : 15 }
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf86c36c46018670f0d03&quot;), &quot;title&quot; : &quot;MongoDB &#x6559;&#x7A0B;&quot;, &quot;description&quot; : &quot;MongoDB &#x662F;&#x4E00;&#x4E2A; Nosql &#x6570;&#x636E;&#x5E93;&quot;, &quot;by&quot; : &quot;&#x83DC;&#x9E1F;&#x6559;&#x7A0B;&quot;, &quot;url&quot; : &quot;http://www.runoob.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot;, &quot;database&quot;, &quot;NoSQL&quot; ], &quot;likes&quot; : 100 }
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf92d36c46018670f0d04&quot;), &quot;id&quot; : 3, &quot;name&quot; : &quot;xiaoqiang&quot;, &quot;age&quot; : 17 }
+
+
+</code></pre><h2 class="mume-header" id="6%E6%96%87%E6%A1%A3%E6%9F%A5%E8%AF%A2find%E7%9A%84and-where-or%E6%9D%A1%E4%BB%B6">6.&#x6587;&#x6863;&#x67E5;&#x8BE2;find&#x7684;&#xFF08;and ,where ,or&#xFF09;&#x6761;&#x4EF6;</h2>
+
+<p>&#x2460; where &#x6761;&#x4EF6;&#xFF1A;</p>
+<p><img src="../img/MongoDB_img/4.png" alt="4"></p>
+<p>&#x2461; and &#x6761;&#x4EF6;&#xFF1A;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x4F20;&#x5165;&#x591A;&#x4E2A;&#x952E;&#x503C;&#x5BF9;</p>
+<blockquote>
+<p>db.collectionName.find( {key1:value1, key2:value2 })</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt; db.user.find({&quot;name&quot;:&quot;xiaoqiang&quot;, age:17})
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf92d36c46018670f0d04&quot;), &quot;id&quot; : 3, &quot;name&quot; : &quot;xiaoqiang&quot;, &quot;age&quot; : 17 }
+</code></pre><p>&#x2462; or &#x6761;&#x4EF6;,&#x4F7F;&#x7528;&#x4E86;&#x5173;&#x952E;&#x5B57; $or</p>
+<blockquote>
+<p>db.collectionName.find({ $or: [ {key1: value1}, {key2:value2} ] })</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt; db.user.find({ $or: [ {&quot;name&quot;: &quot;xiaoming&quot;}, {id:3} ] })
+{ &quot;_id&quot; : ObjectId(&quot;5cfcf92d36c46018670f0d04&quot;), &quot;id&quot; : 3, &quot;name&quot; : &quot;xiaoqiang&quot;, &quot;age&quot; : 17 }
+</code></pre><p>&#x2463;&#xFF1A;and &#x548C; or &#x8054;&#x5408;&#x4F7F;&#x7528;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt;db.user.find({age: { $gt:10}, $or: [{&quot;name&quot;: &quot;xiaoming&quot;},{id: 3}]})
+
+&#x7C7B;&#x4F3C;&#x4E8E;sql:
+where age&gt;50 AND (name = &apos;xiaoming&apos; OR id = 3)
+</code></pre><h2 class="mume-header" id="7%E6%9D%A1%E4%BB%B6%E6%93%8D%E4%BD%9C%E7%AC%A6">7.&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;(&gt;,&lt;,&gt;=,&lt;=)</h2>
+
+<p>&#x5728;MongoDB&#x4E2D;&#x6761;&#x4EF6;&#x64CD;&#x4F5C;&#x7B26;&#x6709;&#xFF1A;</p>
+<ol>
+<li>(&gt;) &#x5927;&#x4E8E; --- $gt</li>
+<li>(&lt;) &#x5C0F;&#x4E8E; --- $lt</li>
+<li>(&gt;=) &#x5927;&#x4E8E;&#x7B49;&#x4E8E; --- $gte</li>
+<li>(&lt;=) &#x5C0F;&#x4E8E;&#x7B49;&#x4E8E; --- $lte</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>//&#x5927;&#x4E8E;&gt;
+db.user.find({age : {$gt : 10}})    //Select * from user where age &gt; 10;
+
+//&#x5C0F;&#x4E8E;&lt;
+db.user.find({age : {$lt : 15}})    //Select * from user where age &lt; 15;
+
+//&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&gt;=
+db.user.find({age : {$gte : 10}})   //Select * from user where age &gt;=10;
+
+//&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E; 
+db.user.find({age : {$lte : 15}})   //Select * from user where age &lt;= 150;
+
+</code></pre><p>&#x793A;&#x4F8B;&#xFF1A;&#x540C;&#x65F6;&#x4F7F;&#x7528; (&lt;) &#x548C; (&gt;) &#x67E5;&#x8BE2;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>db.user.find({age : {$lt : 20, $gt : 10}})   //Select * from user where age &gt;10 AND age&lt;20;
+</code></pre><h2 class="mume-header" id="8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9D%A1%E4%BB%B6%E7%AC%A6-type">8.&#x6570;&#x636E;&#x7C7B;&#x578B;&#x6761;&#x4EF6;&#x7B26; $type</h2>
+
+<p>MongoDB &#x4E2D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF1A;</p>
+<p><img src="../img/MongoDB_img/5.png" alt="5"></p>
+<p>&#x4F7F;&#x7528;&#x793A;&#x4F8B;&#xFF1A;&#x627E;&#x51FA;name&#x4E3A;string&#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>db.user.find({&quot;name&quot; : {$type : 2}})    //2 &#x8868;&#x793A;&#x4E3A; string &#x7C7B;&#x578B;
+&#x6216;
+db.user.find({&quot;name&quot; : {$type : &apos;string&apos;}})   
+</code></pre><h2 class="mume-header" id="9%E8%AF%BB%E5%8F%96%E4%B8%80%E5%AE%9A%E6%95%B0%E9%87%8F%E4%B9%8B%E5%86%85%E6%88%96%E4%B9%8B%E5%A4%96%E7%9A%84%E6%95%B0%E6%8D%AE-limit%E4%B8%8Eskip%E6%96%B9%E6%B3%95">9.&#x8BFB;&#x53D6;&#x4E00;&#x5B9A;&#x6570;&#x91CF;&#x4E4B;&#x5185;&#x6216;&#x4E4B;&#x5916;&#x7684;&#x6570;&#x636E;---Limit&#x4E0E;Skip&#x65B9;&#x6CD5;</h2>
+
+<p><font color="red">&#x6CE8;:&#x82E5;&#x6CA1;&#x6709;&#x6307;&#x5B9A;limit()&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x5219;&#x663E;&#x793A;&#x96C6;&#x5408;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6570;&#x636E; </font></p>
+<p>&#x2460;&#xFF1A;limit() &#x65B9;&#x6CD5;---&#x8BFB;&#x53D6;&#x6307;&#x5B9A;&#x6570;&#x91CF;&#x7684;&#x6570;&#x636E;&#x8BB0;&#x5F55;</p>
+<blockquote>
+<p>db.colectionNAME.find().limit(number)</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&gt; db.user.find().limit(2)  //&#x67E5;&#x8BE2;&#x4E24;&#x6761;&#x6570;&#x636E;
+</code></pre><p>&#x2461;&#xFF1A;skip() &#x65B9;&#x6CD5;---&#x8DF3;&#x8FC7;&#x6307;&#x5B9A;&#x6570;&#x91CF;&#x7684;&#x6570;&#x636E;&#x8BB0;&#x5F55;</p>
+<p><font color="red">&#x6CE8;:skip()&#x65B9;&#x6CD5;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;&#x4E3A; 0 </font></p>
+<blockquote>
+<p>db.colectionNAME.find().limit(number).skip(number)</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>//&#x67E5;&#x8BE2;&#x7B2C;&#x4E00;&#x6761;&#xFF0C;&#x4E14;&#x8DF3;&#x8FC7;&#x7B2C;&#x4E00;&#x6761;&#x6570;&#x636E;&#x3002;&#x5219;&#x53EA;&#x4F1A;&#x663E;&#x793A;&#x7B2C;&#x4E8C;&#x6761;&#x6587;&#x6863;&#x6570;&#x636E;
+&gt;db.user.find().limit(1).skip(1)
+</code></pre><h2 class="mume-header" id="10%E6%8E%92%E5%BA%8F-sort-%E6%96%B9%E6%B3%95">10.&#x6392;&#x5E8F;----sort() &#x65B9;&#x6CD5;</h2>
+
+<p>&#x5728; MongoDB &#x4E2D; sort() &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x53C2;&#x6570;&#x6307;&#x5B9A;&#x6392;&#x5E8F;&#x7684;&#x5B57;&#x6BB5;&#xFF0C;&#x5176;&#x4E2D; 1 &#x4E3A;&#x5347;&#x5E8F;&#x6392;&#x5217;&#xFF0C;&#x800C; -1 &#x662F;&#x7528;&#x4E8E;&#x964D;&#x5E8F;&#x6392;&#x5217;&#x3002;</p>
+<blockquote>
+<p>db.colectionNAME.find().sort({KEY:1})</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>//&#x5728;user&#x96C6;&#x5408;&#x4E2D;&#x6309;&#x5B57;&#x6BB5; name &#x7684;&#x964D;&#x5E8F;&#x6392;&#x5217;
+&gt;db.user.find().sort({&quot;name&quot;:-1})
+</code></pre><h2 class="mume-header" id="11%E7%B4%A2%E5%BC%95-createindex-%E6%96%B9%E6%B3%95">11.&#x7D22;&#x5F15;----createIndex() &#x65B9;&#x6CD5;</h2>
+
+<p>&#x7D22;&#x5F15;&#x901A;&#x5E38;&#x80FD;&#x591F;&#x6781;&#x5927;&#x7684;&#x63D0;&#x9AD8;&#x67E5;&#x8BE2;&#x7684;&#x6548;&#x7387;&#xFF0C;&#x7D22;&#x5F15;&#x662F;&#x7279;&#x6B8A;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x7D22;&#x5F15;&#x5B58;&#x50A8;&#x5728;&#x4E00;&#x4E2A;&#x6613;&#x4E8E;&#x904D;&#x5386;&#x8BFB;&#x53D6;&#x7684;&#x6570;&#x636E;&#x96C6;&#x5408;&#x4E2D;&#xFF0C;&#x7D22;&#x5F15;&#x662F;&#x5BF9;&#x6570;&#x636E;&#x5E93;&#x8868;&#x4E2D;&#x4E00;&#x5217;&#x6216;&#x591A;&#x5217;&#x7684;&#x503C;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x7684;&#x4E00;&#x79CD;&#x7ED3;&#x6784;&#x3002;</p>
+<blockquote>
+<p>db.colectionNAME.createIndex(keys, options)<br>
+// Key &#x503C;&#x4E3A;&#x4F60;&#x8981;&#x521B;&#x5EFA;&#x7684;&#x7D22;&#x5F15;&#x5B57;&#x6BB5;&#xFF0C;options = 1 &#x4E3A;&#x6307;&#x5B9A;&#x6309;&#x5347;&#x5E8F;&#x521B;&#x5EFA;&#x7D22;&#x5F15;&#xFF0C; -1 &#x4E3A;&#x964D;&#x5E8F;&#x3002;</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>// &#x8BBE;&#x7F6E;&#x4F7F;&#x7528;&#x591A;&#x4E2A;&#x5B57;&#x6BB5;&#x521B;&#x5EFA;&#x7D22;&#x5F15;
+&gt;db.user.createIndex({id:1,&quot;name&quot;:-1})
+</code></pre><p><strong>createIndex() &#x8FD8;&#x53EF;&#x4EE5;&#x63A5;&#x6536;&#x53EF;&#x9009;&#x53C2;&#x6570;&#xFF0C;&#x53C2;&#x6570;&#x5217;&#x8868;&#xFF1A;</strong></p>
+<p><img src="../img/MongoDB_img/6.png" alt="6"></p>
+<pre data-role="codeBlock" data-info class="language-"><code>&#x793A;&#x4F8B;&#xFF1A;&#x5728;&#x540E;&#x53F0;&#x521B;&#x5EFA;&#x7D22;&#x5F15;
+db.user.createIndex({id: 1}, {background: true})   
+</code></pre><h2 class="mume-header" id="12%E8%81%9A%E5%90%88-aggregate-%E6%96%B9%E6%B3%95">12.&#x805A;&#x5408; --- aggregate() &#x65B9;&#x6CD5;</h2>
+
+<p>MongoDB&#x4E2D;&#x805A;&#x5408;(aggregate)&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x5904;&#x7406;&#x6570;&#x636E;(&#x8BF8;&#x5982;&#x7EDF;&#x8BA1;&#x5E73;&#x5747;&#x503C;,&#x6C42;&#x548C;&#x7B49;)&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x8BA1;&#x7B97;&#x540E;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x679C;&#x3002;</p>
+<blockquote>
+<p>db.colectionNAME.aggregate(operation)</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>&#x793A;&#x4F8B;&#xFF1A;&#x8BA1;&#x7B97;&#x6BCF;&#x4E2A;&#x4F5C;&#x8005;&#x6240;&#x5199;&#x7684;&#x6587;&#x7AE0;&#x6570;
+db.user.aggregate([{$group : {_id : &quot;$by_user&quot;, num_tutorial : {$sum : 1}}}])
+//  select by_user, count(*) from mycol group by by_user
+</code></pre><p><strong>operation&#x7684;&#x53C2;&#x6570;&#x5217;&#x8868;</strong></p>
+<p><img src="../img/MongoDB_img/7.png" alt="7"></p>
+<hr>
+<h1 class="mume-header" id="6nodejs-mongodb">6.Node.js + MongoDB</h1>
+
+<p><font color="red">PS&#xFF1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x76F8;&#x5173;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x4EE5;&#x4E0B;&#x64CD;&#x4F5C;&#x90FD;&#x5728;&#x8BE5;&#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x6267;&#x884C;&#x3002;</font></p>
+<blockquote>
+<p>&#x2460; node.js &#x5B89;&#x88C5; MongoDB&#x7684;&#x9A71;&#x52A8;&#x4F9D;&#x8D56;&#x6587;&#x4EF6;</p>
+</blockquote>
+<pre data-role="codeBlock" data-info class="language-"><code>$ cnpm install mongodb     // cnpm &#x662F;&#x4F7F;&#x7528;&#x7684;&#x6DD8;&#x5B9D;&#x955C;&#x50CF;
+</code></pre><blockquote>
+<p>&#x2461; &#x521B;&#x5EFA;demo.js &#x6587;&#x4EF6;&#x3002;&#x8FDE;&#x63A5;MongoDB&#x6570;&#x636E;&#x5E93;&#x3002;<mark>&#x82E5;&#x6570;&#x636E;&#x5E93;&#x5B58;&#x5728;&#x5C31;&#x8FDE;&#x63A5;,&#x4E0D;&#x5B58;&#x5728;&#x5C31;&#x521B;&#x5EFA;</mark></p>
+</blockquote>
+<p>demo.js</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> MongoClient <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mongodb&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MongoClient<span class="token punctuation">;</span>    <span class="token comment">//&#x83B7;&#x53D6;MongoClient</span>
+<span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token string">&quot;mongodb://localhost:27017/demoDB&quot;</span><span class="token punctuation">;</span>       
+ 
+MongoClient<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token punctuation">{</span> useNewUrlParser<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> db</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x6570;&#x636E;&#x5E93;&#x5DF2;&#x521B;&#x5EFA;&#x6216;&#x5DF2;&#x8FDE;&#x63A5;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                                       <span class="token comment">//&#x5173;&#x95ED;&#x6570;&#x636E;&#x5E93;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><blockquote>
+<p>&#x2462; &#x521B;&#x5EFA;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x4E0E;&#x5220;&#x9664;&#x96C6;&#x5408;</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x521B;&#x5EFA;&#x96C6;&#x5408;</span>
+<span class="token keyword">var</span> MongoClient <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mongodb&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MongoClient<span class="token punctuation">;</span>
+<span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token string">&apos;mongodb://localhost:27017/demoDB&apos;</span><span class="token punctuation">;</span>
+MongoClient<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token punctuation">{</span> useNewUrlParser<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> db</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x6570;&#x636E;&#x5E93;&#x5DF2;&#x521B;&#x5EFA;&#x6216;&#x5DF2;&#x8FDE;&#x63A5;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//&#x521B;&#x5EFA;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;</span>
+    <span class="token keyword">var</span> dbase <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    dbase<span class="token punctuation">.</span><span class="token function">createCollection</span><span class="token punctuation">(</span><span class="token string">&apos;user&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment">//&#x521B;&#x5EFA;user &#x96C6;&#x5408;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;&#x521B;&#x5EFA;&#x96C6;&#x5408;!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x5220;&#x9664;&#x96C6;&#x5408;</span>
+<span class="token keyword">var</span> MongoClient <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;mongodb&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span>MongoClient<span class="token punctuation">;</span>
+<span class="token keyword">var</span> url <span class="token operator">=</span> <span class="token string">&quot;mongodb://localhost:27017/&quot;</span><span class="token punctuation">;</span>
+MongoClient<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token punctuation">{</span> useNewUrlParser<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> db</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// &#x5220;&#x9664; user &#x96C6;&#x5408;</span>
+    dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">drop</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> delOK</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">// &#x6267;&#x884C;&#x6210;&#x529F; delOK &#x8FD4;&#x56DE; true&#xFF0C;&#x5426;&#x5219;&#x8FD4;&#x56DE; false</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>delOK<span class="token punctuation">)</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;&#x96C6;&#x5408;&#x5DF2;&#x5220;&#x9664;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><blockquote>
+<p>&#x2463; &#x5BF9;&#x96C6;&#x5408;&#xFF08;&#x8868;&#xFF09;&#x7684;CRUD</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x63D2;&#x5165;&#x4E00;&#x6761;&#x6570;&#x636E; insertOne()</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> myobj <span class="token operator">=</span> <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&quot;&#x5C0F;&#x660E;&quot;</span><span class="token punctuation">,</span> age<span class="token punctuation">:</span> <span class="token number">16</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">insertOne</span><span class="token punctuation">(</span>myobj<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;&#x6587;&#x6863;&#x63D2;&#x5165;&#x6210;&#x529F;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x63D2;&#x5165;&#x591A;&#x6761;&#x6570;&#x636E; insertMany()</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> myobj <span class="token operator">=</span>  <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&quot;&#x5C0F;&#x660E;&quot;</span><span class="token punctuation">,</span> age<span class="token punctuation">:</span> <span class="token number">16</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&quot;&#x5C0F;&#x534E;&quot;</span><span class="token punctuation">,</span> age<span class="token punctuation">:</span> <span class="token number">12</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&quot;&#x5C0F;&#x9ED1;&quot;</span><span class="token punctuation">,</span> age<span class="token punctuation">:</span> <span class="token number">15</span><span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">insertMany</span><span class="token punctuation">(</span>myobj<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;&#x63D2;&#x5165;&#x7684;&#x6587;&#x6863;&#x6570;&#x91CF;&#x4E3A;: &quot;</span> <span class="token operator">+</span> res<span class="token punctuation">.</span>insertedCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x5220;&#x9664;&#x4E00;&#x6761;&#x6570;&#x636E; deleteOne()&#xFF0C;&#x628A;&#x7B2C;&#x4E00;&#x4E2A;&#x67E5;&#x8BE2;&#x51FA;&#x6765;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5220;&#x9664;</span>
+  <span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> whereStr <span class="token operator">=</span> <span class="token punctuation">{</span>name<span class="token punctuation">:</span> <span class="token string">&quot;&#x5C0F;&#x660E;&quot;</span><span class="token punctuation">,</span> age<span class="token punctuation">:</span> <span class="token number">16</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// &#x88AB;&#x5220;&#x9664;&#x6570;&#x636E;&#x7684;where&#x6761;&#x4EF6;</span>
+  dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">deleteOne</span><span class="token punctuation">(</span>whereStr<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;&#x6587;&#x6863;&#x5220;&#x9664;&#x6210;&#x529F;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x5220;&#x9664;&#x591A;&#x6761;&#x6570;&#x636E; deleteMany()</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> whereStr <span class="token operator">=</span> <span class="token punctuation">{</span>  age<span class="token punctuation">:</span> <span class="token number">16</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// &#x88AB;&#x5220;&#x9664;&#x6570;&#x636E;&#x7684;where&#x6761;&#x4EF6;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">deleteMany</span><span class="token punctuation">(</span>whereStr<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>result<span class="token punctuation">.</span>n <span class="token operator">+</span> <span class="token string">&quot; &#x6761;&#x6587;&#x6863;&#x88AB;&#x5220;&#x9664;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x66F4;&#x65B0;&#x4E00;&#x6761;&#x6570;&#x636E; updateOne(),&#x628A;&#x7B2C;&#x4E00;&#x4E2A;&#x67E5;&#x8BE2;&#x51FA;&#x6765;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x66F4;&#x65B0;</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> whereStr <span class="token operator">=</span> <span class="token punctuation">{</span> age<span class="token punctuation">:</span> <span class="token number">16</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// &#x67E5;&#x8BE2;&#x6761;&#x4EF6;</span>
+<span class="token keyword">var</span> updateStr <span class="token operator">=</span> <span class="token punctuation">{</span>$<span class="token keyword">set</span><span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token string">&quot;address&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;earth&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateOne</span><span class="token punctuation">(</span>whereStr<span class="token punctuation">,</span> updateStr<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;&#x6587;&#x6863;&#x66F4;&#x65B0;&#x6210;&#x529F;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x66F4;&#x65B0;&#x591A;&#x6761;&#x6570;&#x636E; updateMany()</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> whereStr <span class="token operator">=</span> <span class="token punctuation">{</span>age<span class="token punctuation">:</span> <span class="token number">16</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// &#x67E5;&#x8BE2;&#x6761;&#x4EF6;</span>
+<span class="token keyword">var</span> updateStr <span class="token operator">=</span> <span class="token punctuation">{</span>$<span class="token keyword">set</span><span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token string">&quot;address&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;earth&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">updateMany</span><span class="token punctuation">(</span>whereStr<span class="token punctuation">,</span> updateStr<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>result<span class="token punctuation">.</span>nModified <span class="token operator">+</span> <span class="token string">&quot; &#x6761;&#x6587;&#x6863;&#x88AB;&#x66F4;&#x65B0;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x67E5;&#x8BE2;&#x6570;&#x636E; find()&#xFF0C;&#x628A;&#x8868;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x5168;&#x90E8;&#x67E5;&#x8BE2;&#x51FA;&#x6765;</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// &#x8FD4;&#x56DE;&#x96C6;&#x5408;&#x4E2D;&#x6240;&#x6709;&#x6570;&#x636E;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">//&#x5173;&#x95ED;&#x6570;&#x636E;&#x5E93;&#x8FDE;&#x63A5;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">//&#x67E5;&#x8BE2;&#x6307;&#x5B9A;&#x6761;&#x4EF6;&#x7684;&#x6570;&#x636E;</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> whereStr <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;address&quot;</span> <span class="token punctuation">:</span> <span class="token string">&quot;earth&quot;</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// &#x67E5;&#x8BE2;&#x6761;&#x4EF6;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span>whereStr<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</pre><blockquote>
+<p>&#x2463; &#x5BF9;&#x67E5;&#x8BE2;&#x51FA;&#x6765;&#x7684;&#x6570;&#x636E;&#x6309;&#x7167;&#x89C4;&#x5219;&#x6392;&#x5E8F;</p>
+</blockquote>
+<p>&#x4F7F;&#x7528; sort() &#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x89C4;&#x5B9A;&#x662F;&#x5347;&#x5E8F;(1)&#x8FD8;&#x662F;&#x964D;&#x5E8F;(-1)&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF1A;<br>
+{ type: 1 }  // &#x6309; type &#x5B57;&#x6BB5;&#x5347;&#x5E8F;<br>
+{ type: -1 } // &#x6309; type &#x5B57;&#x6BB5;&#x964D;&#x5E8F;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x6309;name&#x5B57;&#x6BB5;&#x8FDB;&#x884C;&#x5347;&#x5E8F;&#x6392;&#x5E8F;</span>
+
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> mysort <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">&quot;name&quot;</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>mysort<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</pre><blockquote>
+<p>&#x2464; &#x5206;&#x9875;<br>
+&#x8BBE;&#x7F6E;&#x6307;&#x5B9A;&#x7684;&#x8FD4;&#x56DE;&#x6761;&#x6570;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; limit() &#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x53EA;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x6307;&#x5B9A;&#x4E86;&#x8FD4;&#x56DE;&#x7684;&#x6761;&#x6570;&#x3002;</p>
+</blockquote>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x8FD4;&#x56DE;&#x4E24;&#x6761;&#x6570;&#x636E;</span>
+<span class="token keyword">var</span> dbo <span class="token operator">=</span> db<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">&quot;demoDB&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dbo<span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">&quot;user&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">limit</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err<span class="token punctuation">;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
       </div>
       
       
