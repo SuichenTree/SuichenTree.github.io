@@ -324,6 +324,7 @@ public class test {
 ```
 
 <h2>控制台打印结果：</h2>
+
 ```
 Hibernate: 
     select
