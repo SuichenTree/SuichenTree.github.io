@@ -21,6 +21,23 @@
     <link rel="stylesheet" href="../css/components/dotnav.css" />
     <script src="../js/components/slideshow.js"></script>
     
+    <!-- 通知组件需要的css.js -->
+    <link rel="stylesheet" href="../css/components/notify.css">
+    <script src="../js/components/notify.js"></script>
+
+    <script>
+             //通知组件的配置
+                function tongzhi(){
+                        UIkit.notify({
+                            message : "<p>在我看来天赋决定你学习知识的快慢，而努力+时间才决定你知识的广度与深度" +
+                                      "<p>CreateDATE：2017/11/10</p>",
+                            status  : 'info',
+                            timeout : 5000,
+                            pos     : 'top-right'
+                        });
+                }
+    </script>
+
     <style>
         .mb{
             margin-bottom: 10px;
@@ -119,7 +136,7 @@
                 
                 <div class="uk-contrast uk-text-center uk-animation-slide-right" style="display:inline-block;padding-top:20px;padding-left: 730px;">
                         <h1  style="display:inline-block">Study</h1>
-                        <h3  style="display:inline-block">- - - -createtime:2017/11/10</h3>
+                        <div class="uk-badge uk-badge-warning"  onclick="tongzhi()">提示</div>
                 </div>
             </nav>
                 
