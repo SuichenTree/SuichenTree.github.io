@@ -86,10 +86,10 @@
         <article class="uk-article">
             <h1 class="uk-article-title">About</h1>
             <hr class="uk-article-divider">
-            Create Time : 2017/11/9/ ~ NOW  |
-            Developer : SuiChenTree  |
-            github:SuiChenTree    |
-            Email:18271801652@163.com  |
+            <p>CreateTime : 2017/11/9/ ~ NOW</p>
+            <p>Developer : SuiChenTree</p>
+            <p>Github:SuiChenTree</p>
+            <p>Email:18271801652@163.com</p>
         </article>
     </div>
     </div>
@@ -114,10 +114,6 @@
                 <div class="uk-width-small-2-2 uk-width-large-8-10 uk-container-center">
                     <div id="aplayer"></div>
                 </div>
-                
-                <!--彩带效果取自 evan you-->
-                <canvas width="1920" height="910" style="position:absolute; top: 0px; left: 0px; z-index: 0; width: 100%; pointer-events: none;padding-left: 0px" ></canvas>
-                
             </div>
 
     </div>
@@ -217,52 +213,6 @@ const ap = new APlayer({
 });
 
 
-//彩带js
-document.addEventListener('touchmove', function (e) {
-        e.preventDefault()
-    })
-    var c = document.getElementsByTagName('canvas')[0],
-        x = c.getContext('2d'),
-        pr = window.devicePixelRatio || 1,
-        w = window.innerWidth,
-        h = window.innerHeight,
-        f = 90,
-        q,
-        m = Math,
-        r = 0,
-        u = m.PI*2,
-        v = m.cos,
-        z = m.random
-    c.width = w*pr
-    c.height = h*pr
-    x.scale(pr, pr)
-    x.globalAlpha = 0.6
-    function i(){
-        x.clearRect(0,0,w,h)
-        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-        while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
 
 </script>
 </body>
