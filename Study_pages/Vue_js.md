@@ -1,6 +1,6 @@
 [toc]
-# Vue.js - version : 2.5.16
 
+# Vue.js - version : 2.5.16
 
 ## 1. 简介 
 Vue 是一套用于构建用户界面的渐进式框架。
@@ -1278,7 +1278,7 @@ var vm=new Vue({
 
 ---
 
-## 7.计算属性 computed - 把繁琐的表达式从html页面抽出来。
+## 7.计算属性 computed --- 与methods属性类似
 
 ### 1.基础：
 
@@ -1292,8 +1292,7 @@ var vm=new Vue({
 <font color="red">这段代码的功能是把messgae的字符进行逆序输出.
 例如：message="Hello"，则打印输出"olleH"</font>
 
-==如果表达式存在过多逻辑，html页面就会变得臃肿不堪，难以维护。为了简单逻辑，我们可以使用计算属性。
-计算属性可以完成各种复杂的逻辑，包括运算、函数调用等，只要最终返回一个结果就可以。<font color="red">并使html页面看起来美观，简洁。</font>==
+==如果表达式存在过多逻辑，html页面就会变得臃肿不堪，难以维护。为了简单逻辑，我们可以使用计算属性。计算属性可以完成各种复杂的逻辑，包括运算、函数调用等，只要最终返回一个结果就可以。<font color="red">并使html页面看起来美观，简洁。</font>==
 
 
 例子：
@@ -1372,7 +1371,6 @@ computed: {
 }
 ```
 
-
 ### 3.settter
 
 ==当手动修改计算属性的值时，就会触发setter函数，执行函数的自定义操作。
@@ -1381,6 +1379,7 @@ computed: {
 PS: setter与getter，它们两个是相互独立的
 
 <font color="red">本例中计算属性的值为fullName</font>
+
 ```html
 <div id="demo">
         <p> {{ fullName }} </p>
@@ -1388,7 +1387,6 @@ PS: setter与getter，它们两个是相互独立的
         <input type="text" v-model="firstName">
         <input type="text" v-model="lastName">
 </div>
-
 <script>
 var vm = new Vue({
     el: '#demo',
@@ -1411,29 +1409,36 @@ var vm = new Vue({
                 this.lastName = names[names.length - 1]
                 return this.firstName + ' ' + this.lastName  //把得到的firstName与lastName值返回
             }
-        
         }
     }
-  
 })
 </script>
+
 ```
 
 ![17](../img/vue_js_img/17.png)
 
+### 4.computed 和 methods的区别
+
+<font color="red">可以使用 methods 来替代 computed，效果上两个都是一样的</font>
+
+但是：方法属性是当页面重新渲染时，方法会重新调用执行。而计算属性时只有当页面缓存改变时。才会重新执行。
+
 
 ---
 
-### 5.侦听器（侦听属性）：
 
-它用于观察Vue实例上的数据变动。对应一个对象，键是观察表达式，值是对应回调。值也可以是方法名，或者是对象，包含选项。
+## 8.watch(侦听属性)---响应数据的变化：
+
+通过 watch 来响应Vue实例上数据的变化。watch会实时监听数据变化并改变自身的值
+
+<font color="red">当watch监听的数据属性发生改变时。会触发watch区域的方法。</font>
 
 ```html
 <div id="app">
-                <p>{{ message }}</p>
-                <button v-on:click="reverseMessage">反转字符串</button>
+  <p>{{ message }}</p>
+  <button v-on:click="reverseMessage">反转字符串</button>
 </div>
-                
 <script>
 new Vue({
     el: '#app',
@@ -1448,7 +1453,6 @@ new Vue({
     watch:{
         message: function (newValue, oldValue) {
             console.log('this is watch...')
-            console.log('newValue is '+newValue,'oldValue  is '+oldValue)
         }
     }
 })
@@ -1457,39 +1461,31 @@ new Vue({
 
 ```js
 watch:{
-        message: function (newValue, oldValue) {
-            console.log('this is watch...')
-            console.log('newValue is '+newValue,'oldValue  is '+oldValue)
-        }
+  //message 是被侦听的属性值，当message值发生变化，便会执行这个函数。
+  message: function (newValue, oldValue) {
+      console.log('this is watch...')
+  }
 }
 ```
-> ==message 是被侦听的属性值，当它发生变化，便会执行函数。==
+
+==message是被侦听的属性值，当它发生变化，便会执行这个函数==
 
 ![18](../img/vue_js_img/18.png)
 ![19](../img/vue_js_img/19.png)
 
-
 ---
 
+## 9.组件：
 
-## 8.组件：
+### 1.组件基础
 
-### 1.全局组件与组件基础：
-
-
-==通过 Vue.component({...}) 全局注册的,就叫全局组件。==
-==组件是可复用的 Vue 实例对象,且带有一个名字。==
-
-> ①基础例子：
+> 组件是可复用的 Vue 实例。可以s封装需要多次重复使用的html代码。
 
 ```html
-<body>
-  <div id="components-demo">
-
-      <!--button-counter 标签是下面写好的组件-->
-    <button-counter></button-counter>
-  </div>
- 
+<div id="components-demo">
+    <!--button-counter 是组件-->
+  <button-counter></button-counter>
+</div>
 <script>
 // 定义一个名为 button-counter 的新组件
 Vue.component('button-counter', {
@@ -1498,95 +1494,81 @@ Vue.component('button-counter', {
       count: 0
     }
   },
-  //template是模板
+  //template是组件的html模板代码
   template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
 })
 
-//实例化该组件所在的标签（实例化组件所在的根实例）
+//组件必须在vue实例中才会生效
 var vm = new Vue({
   el:'#components-demo'
 })
 </script>
-</body>
 ```
 
 ![29](../img/vue_js_img/29.png)
 
 <font color="red">
-PS:
 
-1. 在这个例子中组件是 button-counter 标签.
-2. 在一个 new Vue 创建的 Vue 根实例中，组件可以作为自定义标签来使用
-3. 因为组件是可复用的 Vue 实例，所以它们与 new Vue 接收相同的选项，例如 data、computed、watch、methods 等。
-4. ==el是组件所在的根实例特有的选项。==
-5. ==所有组件必须写在根实例标签的里面才会生效。==
-6. js代码中全局组件必须写在Vue实例创建之前，才会渲染生效。
+1. el是组件所在的根实例特有的选项。
+2. 所有组件必须写在根实例标签的里面才会生效。
+3. 组件注册必须写在Vue实例创建之前，组件才会渲染生效。
+4. 组件的 data 必须是一个函数。
+
 </font>
 
-<br/>
+> ==PS:组件的 data 必须是一个函数==
 
-> ②：组件的 data 必须是一个函数：
+<font color="blue">组件的data属性必须是一个函数。只有这样当组件复用时。每个组件才能改变自己的data属性。若不是函数。则改变某一个组件的data属性值时。其他复用组件的data属性值都会改变。</font>，
 
-<font color="blue">组件的 data 选项必须是一个函数</font>，因此每个实例可以维护一份被返回对象的独立的拷贝：
 ```js
-Vue.component('button-counter', {
-  data: function () {
+data: function () {
+  return {
+    count: 0
+  }
+}
+```
+
+### 2.组件注册
+
+组件必须先注册后以便Vue能够识别。才能在页面中使用。注册分为全局注册和局部注册。
+1. 全局注册： 在所有的vue实例中可以使用该组件
+2. 局部注册： 局部组件只能在特定的vue实例中使用。
+
+#### 1.全局注册组件
+
+==通过 Vue.component('...',{...}) 全局注册的,就叫全局组件。==
+
+
+```js
+Vue.component('component-a', {
+  data: function () {  
     return {
-      count: 0
+      ....
     }
   },
-  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+  //template是组件的html模板代码
+  template: '...'
 })
 ```
 
-<br/>
+#### 2.局部注册组件
 
-> ③：组件的复用：
-
-```html
-<div id="components-demo">
-  <button-counter></button-counter>
-  <button-counter></button-counter>
-  <button-counter></button-counter>
-</div>
-```
-
-==注意当点击按钮时，每个组件都会各自独立维护它的 count。因为你每用一次组件，就会有一个它的新实例被创建。==
-
-![30](../img/vue_js_img/30.png)
-
-
-
-
-### 2.局部组件：
-
-==局部组件，直接在创建Vue实例里面注册。==
+==局部注册组件，通常在Vue实例里面注册。==
 
 例子：
 ```html
 <div id="app1">
-  <child-component></child-component>
+    <!--使用局部组件-->
+   <child-component></child-component>
 </div>
-
 <script>
-  new Vue({
-    el: "#app1",
-    components:{
-      "child-component":{
-        template:"<h1>我是局部组件</h1>"
-      }
-    }
-  });
-</script>
-```
-或者：
-```html
-<script>
+  //定义child组件
   var child={
     template:"<h1>我是局部组件</h1>"
   };
   new Vue({
     el: "#app1",
+    //在vue实例中局部注册child组件。组件取名为child-component
     components:{
       "child-component":child
     }
@@ -1594,22 +1576,21 @@ Vue.component('button-counter', {
 </script>
 ```
 
-<h3>局部组件需要注意：</h3>
+<h3 style="color:red">局部组件需要注意。vue实例中的属性名是components</h3>
 
-1. ==属性名为components，s千万别忘了;==
-2. 模板标签比较多的时候，可以把html代码抽出来，如上面一样。
-3. data属性必须是一个函数。
+---
 
+## 10.组件中的Prop属性---父组件向子组件传递数据：
 
-### 3.父组件向子组件传递数据-Prop：
+prop 是父组件用来传递数据给子组件的一个自定义属性。<font color="red">在组件中定义prop属性就相当在该组件的data中添加属性。</font>
 
-Prop 是你可以在组件上注册的一些自定义特性。**当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个类似的data属性。**
+**父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 "prop"**
 
 
 <font color="blue">注意: prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。</font>
 
 
-#### 1.Prop静态传递数据
+### 1.Prop静态传递数据
 
 ```html
 <div id="app1">
@@ -1617,13 +1598,11 @@ Prop 是你可以在组件上注册的一些自定义特性。**当一个值传�
   <blog-post title="Blogging with Vue"></blog-post>
   <blog-post title="Why Vue is so fun"></blog-post>
 </div>
-
 <script>
 Vue.component('blog-post', {
   props: ['title'],
   template: '<h3>{{ title }}</h3>'
 })
-
 new Vue({
   el:'#app1'
 })
@@ -1633,29 +1612,13 @@ new Vue({
 <font color="red">
 props: ['title'],相当于给这个组件添加一个title的data属性。
 
-title="Why Vue is so fun"：是给这个标签的title属性赋值。
+title="Why Vue is so fun"：是给这个标签的title赋值。
 </font>
-
-
-上面是全局组件的写法，下面是局部组件的写法：
-```html
-<script>
-new Vue({
-  el:'#app1',
-  components:{
-      "blog-post":{
-        props: ['title'],
-        template: '<h3>{{ title }}</h3>'
-      }
-  }
-})
-</script>
-```
 
 ![31](../img/vue_js_img/31.png)
 
 
-#### 2.Prop动态传递数据：
+### 2.Prop动态传递数据：
 
 用 v-bind 动态绑定 props 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件。
 
@@ -1663,7 +1626,6 @@ new Vue({
 <div id="app">
     <div>
       <input v-model="parentMsg">
-      <br>
       <child v-bind:message="parentMsg"></child>
     </div>
 </div>
@@ -1686,11 +1648,9 @@ new Vue({
 
 ![32](../img/vue_js_img/32.png)
 
+---
 
-#### 3.Prop验证：
-
-
-## 9.生命周期：
+## 11.生命周期
 
 <font color="red">在vue对象或组件的整个生命周期中，都有对应的函数来表示对象或组件的当前状态。每当组件或对象状态进行变化时，会触发这些函数。</font>
 
@@ -1701,7 +1661,6 @@ new Vue({
 </div>
 
 <script type="text/javascript">
-
     var vm = new Vue({
         el: '#vue_det',   
         data: {
@@ -1740,7 +1699,233 @@ new Vue({
 </script>
 ```
 
+---
 
+## 12.vue-router路由
+
+路由可以通过不同的 URL 访问不同的页面。类似于a标签。**使用Vue.js路由需要载入 vue-router库**
+
+vue-router库的安装：
+1. CDN方式: `https://unpkg.com/vue-router/dist/vue-router.js`
+2. NPM方式：`cnpm install vue-router`
+
+### 1.基础使用
+
+==步骤：1.创建组件。2，创建路由对象，并且配置路由规则(把路由路径和组件进行键值对匹配)。3，把路由对象加载到Vue实例中==
+
+```html
+<!--引入必要的js文件-->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+<div id="vue_det">
+    <router-link to="/login">登录路由</router-link>
+    <router-link to="/register">注册路由</router-link>
+    <!--显示当前路由路径匹配的组件页面-->
+    <router-view></router-view>
+</div>
+
+<script>
+// 1. 定义组件
+var loginView = { template: '<div>登录组件</div>' }
+var registerView = { template: '<div>注册组件</div>' }
+var rootView = { template:'<div>初始化组件</div>' }
+
+// 2.创建路由对象.并且配置路由规则routes
+//路由规则为键值对数据。分别是路由路径path,和匹配的组件component
+var routerObj = new VueRouter({
+  routes : [
+    { path: '/', component: rootView },
+    { path: '/login', component: loginView },
+    { path: '/register', component: registerView }
+  ]
+})
+
+// 3.把路由对象挂载道vue实例中
+// 从而让页面有路由功能
+var vm = new Vue({
+    el: '#vue_det',   
+    //把路由对象加载到Vue实例中
+    router:routerObj    
+})
+</script>
+```
+
+<font color="red">
+PS:
+
+`<router-view></router-view>`是显示当前路由路径下匹配的组件的标签
+</font>
+
+### 2.`<router-link>`导航标签
+
+1. to属性
+
+to属性的几种使用方式
+```js
+//login是目标路由路径
+<router-link to="/login">Login路由</router-link>
+//to属性可以绑定vue实例中的data值
+<router-link v-bind:to = "{path:'/login1'}">Login路由1</router-link>
+//to属性可以传递参数
+//请求变为：/login?id=1&name=qwe
+<router-link v-bind:to = "{path:'/route1', query: { id:'1',name:'qwe' }}">Login路由2</router-link>
+```
+
+2. replace属性
+
+使用replace属性。导航后不会留下 history 记录
+```js
+<router-link to="/login" replace>Login路由</router-link>
+```
+
+3. append属性
+
+ 设置append属性后，则在当前路径前添加基路径。
+
+ ```js
+//若当前页面路径为/a.点击下面的标签后。跳转的页面路径是 /b
+<router-link to="/b"></router-link>
+
+//若当前页面路径为/a.点击下面的标签后。跳转的页面路径是 /a/b
+<router-link to="/b" append></router-link>
+ ```
+
+4. tag属性
+
+使用tag属性，把标签改变为其他标签
+
+```js
+<router-link to="/login" tag="li">login</router-link>
+//会渲染为li标签
+<li>login</li>
+```
+
+---
+
+## 13.VueAjax --- axios
+
+Axios是一个HTTP库，可以用在浏览器和node.js中。Vue.js版本推荐使用axios来完成ajax请求。
+
+使用方式：
+1. CDN：`<script src="https://unpkg.com/axios/dist/axios.min.js"></script>`
+2. NPM：`$ npm install axios`
+
+### 1.GET请求
+
+```js
+new Vue({
+    el: '#app',
+    data () {
+    },
+    //mounted是当页面加载完成后执行
+    mounted () {
+    axios
+        .get('...')
+        .then(
+          function(response){ // 请求成功处理
+              console.log(response);
+          }
+        )
+        .catch(
+          function(error) { // 请求失败处理
+              console.log(error);
+          }
+        );
+    }
+})
+```
+
+==GET请求传递参数(两种)==
+
+```js
+// 直接在 URL 上添加参数 ID=12345
+axios.get('/user?ID=12345').then(...}).catch(...});
+
+// 也可以通过 params 设置参数：
+axios.get('/user',{params: { ID: 12345 } }).then(...}).catch(...});
+```
+
+### 2.POST请求
+
+```js
+new Vue({
+  el: '#app',
+  data () {
+  },
+  mounted () {
+    axios
+      .post('....')
+      .then(
+        function(response){ // 请求成功处理
+          console.log(response);
+        }
+      )
+      .catch(
+        function (error) { // 请求失败处理
+          console.log(error);
+        }
+      );
+  }
+})
+```
+
+==POST请求传递参数==
+
+```js
+axios.post('/user', {
+    firstName: 'Fred',        // 参数 firstName
+    lastName: 'Flintstone'    // 参数 lastName
+  })
+  ...
+  ;
+```
+
+### 3.多个请求并发执行
+
+```js
+function a() {
+  return axios.get('/user/12345');
+}
+
+function b() {
+  return axios.get('/user/12345/permissions');
+}
+
+axios.all([a(), b()])
+  .then(axios.spread(function (acct, perms) {
+    // acct,perms是两个请求返回的值
+  }));
+```
+
+### 4.请求后返回的响应数据结构
+
+```js
+{
+  // `data` 由服务器提供的响应
+  data: {},
+  // `status` 来自服务器响应的 HTTP 状态码
+  status: 200,
+  // `statusText` 来自服务器响应的 HTTP 状态信息
+  statusText: 'OK',
+  // `headers` 服务器响应的头
+  headers: {},
+  // `config` 是为请求提供的配置信息
+  config: {}
+}
+
+```
+==把请求返回的响应数据打印出来==
+```js
+axios.get('/login')
+  .then(function(response) {
+    console.log(response.data);
+    console.log(response.status);
+    console.log(response.statusText);
+    console.log(response.headers);
+    console.log(response.config);
+  });
+```
 
 ## ??.使用 vue-cli构建工具 创建vue项目
 
