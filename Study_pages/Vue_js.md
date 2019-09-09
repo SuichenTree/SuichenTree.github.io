@@ -1,10 +1,16 @@
-[toc]
+[TOC]
 
 # Vue.js - version : 2.5.16
+## 1. 简介
 
-## 1. 简介 
-Vue 是一套用于构建用户界面的渐进式框架。
+Vue 是一套用于构建用户界面的渐进式框架,遵循MVVM模式。
 Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。
+
+**什么是渐进式框架？**
+渐进式框架就是拥有一个最核心的功能。其余次要功能就想插件一样。想用就用。例如：vue.js就是最核心的。组件和路由等就为插件。
+
+**什么是MVVM？**
+MVVM是Model-View-ViewModel的简写。它本质上就是MVC 的改进版。它可以取出 Model 的数据同时帮忙处理 View 中由于需要展示内容而涉及的业务逻辑。
 
 ## 2. 引用：
 
@@ -24,6 +30,7 @@ Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方�
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 ```
 
+
 > ②:CDN:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -39,22 +46,13 @@ $ npm install vue
 ```
 ---
 
-## 3. 实例化Vue对象，对象中数据与方法：
+## 3.Vue实例
 
-<font color="red">PS:先引用vue的js文件.</font>
+<font color="red">PS:先引用vue的js文件.PS2:每个 Vue 应用都需要通过实例化 Vue 来实现。</font>
+
+=={{ }} 用于输出vue实例的值。==
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script src="./vue.js"></script>
- 
-</head>
-
 <body>
 <div id="vue_det">
     <h1>site : {{site}}</h1>    
@@ -65,10 +63,11 @@ $ npm install vue
 
 <script type="text/javascript">
     //创建vue的实例对象
+    //el是元素区域。data是数据区域，methods是方法区域
     var vm = new Vue({
-        el: '#vue_det',   //el的值表示与之绑定的标签id，例如：<div id="vue_det">
+        el: '#vue_det',
         data: {
-            site: "菜鸟教程",   //对于该实例对象对于的标签的数据绑定。
+            site: "菜鸟教程",
             url: "www.runoob.com"
         },
         methods:{
@@ -81,73 +80,58 @@ $ npm install vue
         }
     })
 </script>
-</body>
-</html>
 ```
 
-![0](../img/vue_js_img/0.png)
+①：el元素区域:它的值对应为样式标签的id值。
 
-①：每个vue的实例对象都有一个el属性,它的值为标签的id值。
-<font color="red">vue的实例对象通过el属性与html标签进行绑定。对该实例对象的改动就会改动对应的标签。该标签外部不受影响。</font>
+②：data 数据区域，实例中有二个数据属性分别为：site、url。
 
-②：<font color="red">data 用于定义属性</font>，实例中有三个属性分别为：site、url。
+③：methods方法区域，通过 return 来返回函数值。
 
-③：<font color="red">methods用于定义方法（函数），通过 return 来返回函数值。</font>
+==④：值得注意的是只有当vue实例被创建时 data 中存在的属性才是响应式的，实时更新的。若实例创建后，再次添加属性。之后的属性不再是响应式。==
 
-==④：{{ }} 用于输出对象属性和函数返回值。==
+⑤：可以通过前缀$,调用vue实例中的属性。
 
-<font color="blue">⑤：当一个 Vue 实例对象被创建时，它会向 视图中加入了其 data 属性中的值。当这些属性的值发生改变时，视图将也会产生相应的变化。</font>
+```js
+var vm = new Vue({
+    el: '#vue_det',
+    data: data
+})
+document.write(vm.$data) 
+document.write(vm.$el)
+```
 
-⑥：值得注意的是只有当vue实例被创建时 data 中存在的属性才是响应式的，实时更新的。
-
-
-## 5.基础起步：
+## 4.数据绑定
 
 <font color="red">数据绑定最常见的形式就是使用 {{...}}（双大括号）的文本插值。</font>
 =={{ }} 用于输出对象属性和函数返回值。==
 
-### 1. 给标签插入文本值：
+### 1. 给标签绑定文本值：
+
+=={{ }}还支持javascript表达式：==
 
 ```html
 <div id="app">
    {{ message }}
+   {{5+5}}
+   {{ ok ? 'YES' : 'NO' }}
+   {{ message.split('').reverse().join('') }}
 </div>
-    
 <script>
 new Vue({
   el: '#app',
   data: {
-    message: '菜鸟教程'    //该值与div标签内的message进行数据绑定。
+    message: '菜鸟教程',
+    ok:true,
+    message:'SUI'
   }
 })
 </script>
 ```
 
-=={{ }}支持javascript表达式：==
-
-```html
-<div id="app">
-    {{5+5}}<br>
-    {{ ok ? 'YES' : 'NO' }}<br>
-    {{ message.split('').reverse().join('') }}
-
-</div>
-
-<script>
-var vm=new Vue({
-    el:'#app',
-    data:{
-        ok:true,
-        message:'SUI'
-    }
-});
-</script>
-```
-
 ![5](../img/vue_js_img/5.png)
 
-
-### 2. v-html（给标签插入html代码，并使其生效）
+### 2. v-html---给标签插入html代码
 
 >使用 v-html 指令用于输出 html 代码
 ```html
@@ -169,7 +153,7 @@ new Vue({
 
 v-bind 主要用于属性绑定，比方你的class属性，style属性，value属性，href属性等等
 
-> v-bind 缩写
+#### 0. v-bind 缩写
 
 ```html
 <!-- 完整语法 -->
@@ -179,7 +163,7 @@ v-bind 主要用于属性绑定，比方你的class属性，style属性，value�
 <a :href="url">...</a>
 ```
 
-#### 0. v-bind:href,绑定herf属性
+#### 1. v-bind:href,绑定herf属性
 
 ```html
 <div id="vue_det">
@@ -187,7 +171,6 @@ v-bind 主要用于属性绑定，比方你的class属性，style属性，value�
 </div>
 
 <script type="text/javascript">
-
     var vm = new Vue({
         el: '#vue_det',   
         data: {
@@ -197,28 +180,21 @@ v-bind 主要用于属性绑定，比方你的class属性，style属性，value�
 </script>
 ```
 
-#### 1. v-bind:class 绑定class属性,以动态地切换class
+#### 2. v-bind:class 绑定class属性
+
+>v-bind:class="{'样式名':ture/false}"
 
 ==方式①：==
 
 ```html
-<script src="./vue.js"></script>
-    <style>
-        .box{
-            border:1px dashed #f0f;
-        }
-
+<style>
       .textColor{
           color:blue;
       }
-      .textSize{
-          font-size:30px;
-      }
 </style>
-</head>
 
 <body>
-  <ul class="box" v-bind:class="{'textColor':isColor, 'textSize':isSize}">
+  <ul class="box" v-bind:class="{'textColor':isColor}">
     <li>Vue</li>
     <li>Angular</li>
     <li>React</li>
@@ -227,30 +203,23 @@ v-bind 主要用于属性绑定，比方你的class属性，style属性，value�
 
 <script>
 var vm= new Vue({
-    el:'.box',    //vue实例对象与class=box的标签进行绑定
+    el:'.box',    
     data:{
-        isColor:true,     //当为true时，ul标签会添加textColor样式
-        isSize:true
+        isColor:true,     //当为true时，ul标签会渲染textColor样式
     }
 })
 </script>
 ```
-
 ![1.png](../img/vue_js_img/1.png)
 
+**当 isColor变化时，class列表将相应的更新.**
 
-**当 isColor 和 isSize 变化时，class列表将相应的更新.**
-
-==方式②：传一个数据对象给v-bind:class==
-
+==方式②:传一个数据对象给v-bind:class==
 
 ```html
 <style>
       .textColor{
           color:red;
-      }
-      .textSize{
-          font-size:30px;
       }
 </style>
 
@@ -265,14 +234,11 @@ var vm= new Vue({
     el:‘.box‘,
     data:{
         classObject:{
-            'textColor':true,
-            'textSize':false  
+            'textColor':true
         }
     }
 })
 </script>
-
-
 ```
 
 ![2.png](../img/vue_js_img/2.png)
@@ -286,29 +252,23 @@ var vm= new Vue({
       .textColor{
           color:green;
       }
-      .textSize{
-          font-size:30px;
-      }
-    </style>
-</head>
-
-<body>
-    <ul class="box" v-bind:class="[classA, classB]">
-        <li>Vue</li>    
-        <li>Angular</li>
-        <li>React</li>
-    </ul>
     
-    <script>
-    var vm= new Vue({
-        el:'.box',
-        data:{
-          classA:'textColor',   //默认加载该样式，为true
-          classB:'textSize'
-        }
-    })
-    </script>
-</body>
+</style>
+
+<ul class="box" v-bind:class="[classA]">
+    <li>Vue</li>    
+    <li>Angular</li>
+    <li>React</li>
+</ul>
+
+<script>
+var vm= new Vue({
+    el:'.box',
+    data:{
+      classA:'textColor'   //默认加载该样式，为true
+    }
+})
+</script>
 ```
 
 ![3.png](../img/vue_js_img/3.png)
@@ -322,7 +282,6 @@ var vm= new Vue({
         <li>学习Node</li>
         <li>学习React</li>
 </ul>
-    
 <script>
     var vm= new Vue({
         el:'.box',
@@ -336,107 +295,39 @@ var vm= new Vue({
 ```
 **首先判断isA的boolean值，如果为true，则渲染classA；如果为false，则渲染classB。**
 
-或者
-```html
-<ul class="box"  v-bind:class="[classB,isA?classA:classB]">
-        <!--这里怎么选，都会出现classB的样式-->
-        <li>学习Vue</li>
-        <li>学习Node</li>
-        <li>学习React</li>
-</ul>
-
-....
-```
-
-
-
-
-
-<h2><font color="red">PS:</font></h2>
-
->对于多个class，可以这么写：
-```html
-<div v-bind:class="[classA, { classB: isB, classC: isC }]">
-```
-
 ---
 
-#### 2.v-bind:style绑定style属性,CSS属性名必须用驼峰命名法:
+#### 3.v-bind:style绑定style属性,CSS属性(必须用驼峰命名法):
 
-<h3><font color="red">CSS属性名必须用驼峰命名法</font></h3>
+<font color="red">CSS属性名必须用驼峰命名法</font>
 
 ==方式①：==
 
 ```html
 <div id="box" v-bind:style="{color:activeColor, fontSize:size}">
      哈哈哈哈哈哈
-    </div>
+</div>
     
-    <script>
-    var vm= new Vue({
-        el:'#box',
-        data:{
-          activeColor:'pink',
-          size:'20px'
-        }
-    })
+<script>
+var vm= new Vue({
+    el:'#box',
+    data:{
+      activeColor:'pink',
+      size:'20px'
+    }
+})
 </script>
 ```
 ==color:activeColor, fontSize:size，这里用驼峰命名法书写。==
 
 ![4.png](../img/vue_js_img/4.png)
 
-
-==方式②：绑定一个数据对象==
-
-```html
-<div id="box" v-bind:style="styleObject">
-     哈哈哈哈哈哈
-</div>
-    
-    <script>
-    var vm= new Vue({
-        el:'#box',
-        data:{
-            styleObject:{
-                color:'red',
-                fontSize:'30px'
-            }
-        }
-    })
-</script>
-```
-
-==方式③：绑定多个数据对象，写成数组的形式==
-
-```html
-<div id="box" v-bind:style="[styleObjectA, styleObjectB]">
-     哈哈哈哈哈哈
-</div>
-    
-<script>
-    var vm= new Vue({
-        el:'#box',
-        data:{
-            styleObjectA:{
-                fontSize:'36px',
-               
-            },
-            styleObjectB:{
-                color:'blue'
-            }
-        }
-    })
-</script>
-```
-
 ---
 
-#### 3.v-bind:src绑定src属性:
+#### 4.v-bind:src绑定src属性:
 
 ```html
 <img class="box" v-bind:src="url" >
-
 <script>
     var vm= new Vue({
         el:'.box',
@@ -447,15 +338,14 @@ var vm= new Vue({
 </script>
 ```
 
-#### 4.v-bind:value 绑定表单的value值:
+#### 5.v-bind:value 绑定表单的value值:
 
 ```html
 <div id="vue_det">
     <input type="text" v-bind:value="val">  <!--绑定表单的value值-->
 </div>
 
-<script type="text/javascript">
-
+<script>
     var vm = new Vue({
         el: '#vue_det',   
         data: {
@@ -465,47 +355,32 @@ var vm= new Vue({
 </script>
 ```
 
+## 5.指令：
 
-## 6.指令：
+指令是带有 v- 前缀的特殊属性。当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。
 
-指令是带有 v- 前缀的特殊属性。
-指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM。
-
-
-==1.参数==： 在指令名称之后以冒号表示。
-```html
-<a v-bind:href="url">...</a>
-```
-<font color="red">上面的href就是参数，通过v-bind指令把href的值与表达式url的值绑定。</font>
-
-
-### 1.指令缩写：
+### 1.v-bind和v-on指令缩写：
 
 1. v-bind 缩写
 
 ```html
 <!-- 完整语法 -->
 <a v-bind:href="url">...</a>
-
 <!-- 缩写 -->
 <a :href="url">...</a>
 ```
-
 2. v-on 缩写
 
 ```html
 <!-- 完整语法 -->
 <a v-on:click="doSomething">...</a>
-
 <!-- 缩写 -->
 <a @click="doSomething">...</a>
 ```
 
-==: 与 @ 对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
+==: 与 @ 都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
 
-
-
-### 1.条件语句：
+### 2.条件语句：
 
 #### 1.v-if 指令：
 
@@ -513,7 +388,6 @@ var vm= new Vue({
 <div id="app">
     <p v-if="seen">现在你看到我了</p>
 </div>
-        
 <script>
     new Vue({
         el: '#app',
@@ -523,23 +397,14 @@ var vm= new Vue({
     })
 </script>
 ```
-
 ![6](../img/vue_js_img/6.png)
 
-==v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入 p 元素。==
-
+==v-if 指令将根据表达式 seen 的值(true 或 false )来决定是否插入p元素。==
 
 #### 2.v-else 指令：
 
 ```html
 <div id="app">
-    <div v-if="Math.random() > 0.5">
-        Sorry
-    </div>
-    <div v-else>
-        Not sorry
-    </div>
-
     <div v-if="isboolean">
             you
     </div>
@@ -547,7 +412,6 @@ var vm= new Vue({
             and me
     </div>
 </div>
-    
 <script>
 new Vue({
     el: '#app',
@@ -557,11 +421,6 @@ new Vue({
 })
 </script>
 ```
-
-==随机生成一个数字，判断是否大于0.5，然后输出对应信息.==
-
-![7](../img/vue_js_img/7.png)
-
 
 #### 3.v-else-if 指令：
 
@@ -630,42 +489,20 @@ var vm=new Vue({
 
 ![20](../img/vue_js_img/20.png)
 
-
-> <font color="red">那么在上面的代码中点击切换按钮，将不会清除用户已经输入的内容。因为两个div使用了相同的元素，不会被替换掉——仅仅是替换了它的 placeholder。</font>
-
-
-==Vue 提供了一种方式来表达“这两个元素是完全独立的，不要复用它们”。只需添加一个具有唯一值的 key 属性即可：每次切换时，输入框都将被重新渲染==
-
-```html
-<div v-if="loginType==='username'">
-    <label>Username</label>
-    <input placeholder="Enter your username" key="username-input">
-</div>
-<div v-else>
-    <label>Email</label>
-    <input placeholder="Enter your email address" key="email-input">
-</div>
-
-```
-
-
 ---
 
 
-### 3.循环语句：
-
-#### 1.v-for 指令:
+### 3.v-for指令---循环语句：
 
 ==v-for指令需要以 todo in todos 形式的写法,
-todos是数组,todo是数组中元素迭代的别名。==
-
+todos是数组,todo是数组中单个元素的别名。==
 
 **可以用 of 替代 in 作为分隔符:**
 ```html
 <div v-for="todo in todos"></div>
 ```
 
->方式①：v-for 迭代数组
+#### 1. v-for 迭代数组
 
 ```html
 <div id="app-4">
@@ -675,7 +512,6 @@ todos是数组,todo是数组中元素迭代的别名。==
         </li>
     </ol>
 </div>
-    
 <script>
 var app4 = new Vue({
   el: '#app-4',
@@ -688,17 +524,12 @@ var app4 = new Vue({
   }
 })
 </script>
-
 ```
-
 ![9](../img/vue_js_img/9.png)
 
-
-> 方式②：v-for 迭代对象:
-==v-for 可以通过一个对象的属性来迭代数据。==
+#### 2. v-for 迭代对象:
 
 ```html
-
 <div id="app">
   <ul>
     <li v-for="value in object">
@@ -706,7 +537,6 @@ var app4 = new Vue({
     </li>
   </ul>
 </div>
- 
 <script>
 new Vue({
   el: '#app',
@@ -723,46 +553,16 @@ new Vue({
 
 ![10](../img/vue_js_img/10.png)
 
-
-<h2><font color="red">或者把对象的属性名也迭代出来:</font></h2>
-
-```html
-<div id="app">
-  <ul>
-    <li v-for="(value, key) in object">
-    {{ key }} : {{ value }}
-    </li>
-  </ul>
-</div>
- 
-<script>
-new Vue({
-  el: '#app',
-  data: {
-    object: {
-      name: '菜鸟教程',
-      url: 'http://www.runoob.com',
-      slogan: '学的不仅是技术，更是梦想！'
-    }
-  }
-})
-</script>
-```
-
-![11](../img/vue_js_img/11.png)
-
-
-<h2><font color="red">或者把索引也迭代出来:</font></h2>
+<font color="red">或者把属性名和索引也迭代出来:</font></h2>
 
 ```html
 <div id="app">
   <ul>
-    <li v-for="(value, key,index) in object">
+    <li v-for="(value,key,index) in object">
      {{ index }}. {{ key }} : {{ value }}
     </li>
   </ul>
 </div>
- 
 <script>
 new Vue({
   el: '#app',
@@ -776,22 +576,18 @@ new Vue({
 })
 </script>
 ```
-
 ![12](../img/vue_js_img/12.png)
 
-
-
-> 方式③：v-for 迭代整数:
+#### 3. v-for 迭代整数:
 
 ```html
 <div id="app">
 <ul>
-    <li v-for="n in 10">
+    <li v-for="n in 10"> 
     {{ n }}
     </li>
 </ul>
 </div>
-
 <script>
 new Vue({
 el: '#app'
@@ -799,11 +595,11 @@ el: '#app'
 </script>
 ```
 
-
 ![13](../img/vue_js_img/13.png)
 
+---
 
-### 4.表单 双向数据绑定 v-model ：
+### 4.v-model表单双向数据绑定：
 
 ==input 输入框中可以使用 v-model 指令来实现表单输入和应用状态之间的双向绑定：==
 
@@ -830,9 +626,7 @@ new Vue({
 </script>
 ```
 
-
 ![15](../img/vue_js_img/15.png)
-
 
 #### 2.复选框：
 
@@ -842,10 +636,7 @@ new Vue({
 <div id="app">
   <p>单个复选框：</p>
   <input type="checkbox" id="checkbox" v-model="checked">
-  <label for="checkbox">{{ checked }}</label>
-  
 </div>
- 
 <script>
 new Vue({
   el: '#app',
@@ -854,23 +645,18 @@ new Vue({
   }
 })
 </script>
-
 ```
 
 ==多个复选框，绑定到同一个数组：==
 ```html
 <div id="app">
   <p>多个复选框：</p>
-  <input type="checkbox" id="runoob" value="Runoob" v-model="checkedNames">
-  <label for="runoob">Runoob</label>
-  <input type="checkbox" id="google" value="Google" v-model="checkedNames">
-  <label for="google">Google</label>
-  <input type="checkbox" id="taobao" value="Taobao" v-model="checkedNames">
-  <label for="taobao">taobao</label>
+  <input type="checkbox"  v-model="checkedNames">
+  <input type="checkbox"  v-model="checkedNames">
+  <input type="checkbox"  v-model="checkedNames">
   <br>
   <span>选择的值为: {{ checkedNames }}</span>
 </div>
- 
 <script>
 new Vue({
   el: '#app',
@@ -883,15 +669,14 @@ new Vue({
 
 ![24](../img/vue_js_img/24.png)
 
-
 #### 3.单选按钮：
 
 ```html
 <div id="example-4">
-  <input type="radio" id="one" value="One" v-model="picked">
+  <input type="radio" value="One" v-model="picked">
   <label for="one">One</label>
   <br>
-  <input type="radio" id="two" value="Two" v-model="picked">
+  <input type="radio" value="Two" v-model="picked">
   <label for="two">Two</label>
   <br>
   <span>Picked: {{ picked }}</span>
@@ -909,7 +694,6 @@ new Vue({
 
 ![25](../img/vue_js_img/25.png)
 
-
 #### 4.下拉框：
 
 ==单选时：==
@@ -924,7 +708,6 @@ new Vue({
   </select>
   <span>Selected: {{ selected }}</span>
 </div>
- 
 <script>
 new Vue({
   el: '#example-5',
@@ -937,22 +720,18 @@ new Vue({
 
 ![26](../img/vue_js_img/26.png)
 
-
 ==多选时 (绑定到一个数组)：==
 <font color="red">多选时，用Ctrl+鼠标左键 选中选项。</font>
 
-
 ```html
 <div id="example-6">
-  <select v-model="selected" multiple style="width: 50px;">
+  <select v-model="selected">
     <option>A</option>
     <option>B</option>
     <option>C</option>
   </select>
-  <br>
   <span>Selected: {{ selected }}</span>
 </div>
- 
 <script>
 new Vue({
   el: '#example-6',
@@ -962,9 +741,7 @@ new Vue({
 })
 </script>
 ```
-
 ![27](../img/vue_js_img/27.png)
-
 
 #### 5.用v-for对下拉框选项进行修饰：
 
@@ -976,17 +753,15 @@ new Vue({
     {{ option.text }}
   </option>
   </select>
-
-    <span>Selected: {{ selected }}</span>
+  <span>Selected: {{ selected }}</span>
 </div>
- 
 <script>
 new Vue({
   el: '#example-6',
   data: {
     selected: '',  //默认选A选项
     options: [
-      { text: 'One', value: 'A' },    //A选项对于的文本值
+      { text: 'One', value: 'A' },    //A选项对于的文本值是one
       { text: 'Two', value: 'B' },
       { text: 'Three', value: 'C' }
     ]
@@ -994,9 +769,7 @@ new Vue({
 })
 </script>
 ```
-
 ![28](../img/vue_js_img/28.png)
-
 
 #### 6.用v-bind对表单进行值绑定：
 
@@ -1004,8 +777,7 @@ new Vue({
 
 ```html
 <input type="radio" v-model="pick" v-bind:value="a">
-
-// 当选中时
+// 当选中时,单选按钮传递的值是a
 //vm.pick === vm.a
 ```
 
@@ -1015,8 +787,7 @@ new Vue({
 <select v-model="selected">
   <option v-bind:value="{ number: 123 }">123</option>
 </select>
-
-// 当选中时
+// 当选中时,下拉框传递的值是{number:123}
 typeof vm.selected // => 'object'
 vm.selected.number // => 123
 ```
@@ -1025,8 +796,7 @@ vm.selected.number // => 123
 
 ```html
 <input type="checkbox" v-model="toggle" true-value="yes" false-value="no">
-
-// 当选中时
+// 当选中时，传递的值是yes
 vm.toggle === 'yes'
 // 当没有选中时
 vm.toggle === 'no'
@@ -1034,50 +804,44 @@ vm.toggle === 'no'
 
 #### 7.修饰符：
 
-①：.lazy
+① .lazy
 
 在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但添加一个修饰符 lazy ，从而转变为在 change 事件中同步：
 ```html
 <!-- 在 "change" 而不是 "input" 事件中更新 -->
 <input v-model.lazy="msg" >
 ```
-
-②：.number
+② .number
 
 如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值：
 ```html
 <input v-model.number="age" type="number">
 ```
-这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。
 
-③：.trim
+③ .trim
 
 如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入：
 ```html
 <input v-model.trim="msg">
 ```
-
-
 ---
-
 
 ### 5.事件监听 v-on:
 
 
 #### 1.点击事件：
 
-==使用 v-on 监听 DOM 事件，可以对用户的输入进行响应,触发时运行一些 JavaScript 代码。==
+==使用 v-on 监听 DOM 事件，可以对用户的输入进行响应,触发一些JavaScript代码。==
 
-<font color="red">方式①：直接把 JS 代码写在 v-on 指令中</font>
+> <font color="red">方式①：直接把 JS 代码写在 v-on 指令中</font>
+
 **例子1：计数器**
 
 ```html
-<body>
 <div id="example-1">
     <button v-on:click="counter += 1">Add +1</button>
     <p>The button above has been clicked {{ counter }} times.</p>
 </div>
-
 <script>
 var example1 = new Vue({
   el: '#example-1',
@@ -1086,13 +850,11 @@ var example1 = new Vue({
   }
 })
 </script>
-</body>
 ```
-
 ![22](../img/vue_js_img/22.png)
 
+> <font color="red">方式②：把被调用方法名写在v-on指令中，在methods对象中定义具体方法</font>
 
-<font color="red">方式②：把被调用方法名写在 v-on 指令中，在 methods对象中定义具体方法</font>
 **例子2：在用户点击按钮后对字符串进行反转操作：**
 
 ```html
@@ -1100,41 +862,30 @@ var example1 = new Vue({
         <p>{{ message }}</p>
         <button v-on:click="reverseMessage">反转字符串</button>
 </div>
-        
 <script>
 var app = new Vue({
     el: '#app',
     data: {
         message: 'Runoob!'   
     },
-    methods: {   //method是实例的方法对象，内部写各个具体方法。
-
+    methods: {   //method是实例的方法区域，内部写各个方法。
             reverseMessage: function () {   //reverseMessage是方法名
             this.message = this.message.split('').reverse().join('')
         }
     }
 })
-
-
-// 也可以用 JavaScript 直接调用方法
-app.reverseMessage() 
 </script>
-
-
-
 ```
 
 ![16](../img/vue_js_img/16.png)
 
+> <font color="red">方式③：在 v-on 指令中也可以用 JS 语句中调用方法：</font>
 
-
-<font color="red">方式③：除了直接绑定到一个方法，在 v-on 指令中也可以用 JS 语句中调用方法：</font>
 ```html
 <div id="example-3">
     <button v-on:click="say('hi')">Say hi</button>
     <button v-on:click="say('what')">Say what</button>
 </div>
-
 <script>
 new Vue({
   el: '#example-3',
@@ -1148,24 +899,9 @@ new Vue({
 ```
 ![23](../img/vue_js_img/23.png)
 
+#### 2.v-on指令的事件修饰符：
 
-> v-on 缩写
-
-```html
-<!-- 完整语法 -->
-<a v-on:click="doSomething">...</a>
-
-<!-- 缩写 -->
-<a @click="doSomething">...</a>
-```
-
-==':'与 '@ '对于特性名来说都是合法字符,支持 Vue.js 的浏览器都能被正确地解析。==
-
-
-#### 2.事件修饰符：
-
-**修饰符:是由点开头的指令后缀来表示的。**
-例如：
+修饰符示例：
 ```
 .stop
 .prevent
@@ -1174,7 +910,6 @@ new Vue({
 .once
 .passive
 ```
-
 
 ```html
 <!-- 阻止单击事件继续传播 -->
@@ -1198,21 +933,17 @@ new Vue({
 <div v-on:click.self="doThat">...</div>
 ```
 
-
-#### 3.按键修饰符：
+#### 3.v-on指令监听键盘的修饰符：
 
 ==Vue 允许为 v-on 在监听键盘事件时添加按键修饰符：==
 
 ```html
 <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
 <input v-on:keyup.13="submit">
-
-
 <!-- Vue 为最常用的按键提供了别名-->
 <input v-on:keyup.enter="submit">
 <!-- 缩写语法 -->
 <input @keyup.enter="submit">
-
 <!--
 全部的按键别名：
 .enter
@@ -1228,51 +959,30 @@ new Vue({
 .alt
 .shift
 .meta
-
 -->
-
 ```
-
 ---
 
 ### 6.v-show
 
-> v-show的用法与前面的v-if类似,根据条件展示元素
+> v-show根据条件展示元素
 
 例子：点击一个按钮时，切换一个元素的显示或隐藏状态。
 ```html
 <div id="app">
-    　<p v-show="ok">v-show可以控制元素的显隐状态，点击下面的按钮可看到效果。</p>
-    　<button v-on:click='Toggle()'>Toggle</button>
+    　<p v-show="ok">v-show可以控制元素的显隐状态，点击下面的按钮可看到效果</p>
     　<p>ok：{{ok}}</p>
 </div>
-
 <script>
 var vm=new Vue({
 　　el:'#app',
     data:{
 　　　ok:true
-　　},
-　　methods:{
-　　　Toggle:function(){
-　　　　this.ok=!this.ok;
-　　　}
 　　}
 })
 </script>
 ```
-
-![21](../img/vue_js_img/21.png)
-
-
-<font color="red" size="5px">PS:v-show与v-if的区别：</font>
-1. v-if 为false时，是以注释的形式存在在源代码中。
-2. v-if 为true时，才会被渲染。
-3. v-show 不管初始条件是什么，元素总是会被渲染，当为false时，只是执行了style="display:none",隐藏了。
-4. **如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。**
-
-
-
+**如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。**
 
 ---
 
