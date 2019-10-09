@@ -120,7 +120,92 @@ public class test3 {
 
 ![1](./in_img/1.png)
 
-## 2.创建微信小程序码,并在其中添加自定义数据。
+---
+
+## 2.轻量级工具包emoji-java处理emoji表情字符
+
+轻量级工具包emoji-java的github地址:https://github.com/vdurmont/emoji-java
+
+1. 导入依赖
+
+```
+<dependency>
+  <groupId>com.vdurmont</groupId>
+  <artifactId>emoji-java</artifactId>
+  <version>5.1.1</version>
+</dependency>
+```
+
+2. 把emoji表情转换成对应别名字符
+
+>EmojiParser.parseToAliases(str);  //将字符串中的emoji表情转换为特定的字符。不影响非emoji表情字符。
+
+```java
+public static void main(String[] args) throws Exception {
+		    String str="sui😄chenTree";
+	        System.out.println("转换前："+str);
+	        System.out.println("转换后："+EmojiParser.parseToAliases(str));
+}
+```
+
+运行结果：
+```
+转换前：sui😄chenTree
+转换后：sui:smile:chenTree
+```
+
+3. 把emoji表情转换成对应html格式字符
+
+>EmojiParser.parseToHtmlDecimal(str)； 直接转换
+EmojiParser.parseToHtmlHexadecimal(str); 直接转换（十六进制）
+
+```java
+public static void main(String[] args) throws Exception {
+		    String str="sui😄chenTree";
+	        System.out.println("转换前："+str);
+	        System.out.println("把emoji表情转换为html字符：");
+	        System.out.println(EmojiParser.parseToHtmlDecimal(str));
+	        System.out.println("把emoji表情转换为html字符(16进制)：");
+	        System.out.println(EmojiParser.parseToHtmlHexadecimal(str));
+	
+}
+```
+
+运行结果：
+```
+转换前：sui😄chenTree
+把emoji表情转换为html字符：
+sui&#128516;chenTree
+把emoji表情转换为html字符(16进制)：
+sui&#x1f604;chenTree
+```
+
+4. 把转换后的emoji表情还原
+
+>EmojiParser.parseToUnicode(str); //把字符串还原为Unicode编码格式
+
+```java
+public static void main(String[] args) throws Exception {
+		    String str="sui😄chenTree";
+		    System.out.println("转换：");
+	        String s = EmojiParser.parseToHtmlDecimal(str);
+	        System.out.println(s);
+	        System.out.println("还原：");
+	        System.out.println(EmojiParser.parseToUnicode(s));
+}
+```
+
+运行结果
+```
+转换：
+sui&#128516;chenTree
+还原：
+sui😄chenTree
+```
+
+---
+
+## 3.创建微信小程序码,并在其中添加自定义数据。
 
 PS：创建的微信小程序码图片的文件名是“用户的userId+时间撮”。(例如：100_20190919111825.png)
 
@@ -144,9 +229,9 @@ public class filetest {
 public static String getAccessToken(){
 	System.out.println("getAccessToken方法----------开始获取accesstoken");
 	//小程序的appid
-	String appid="wxc3cf8b246ab675bf";
+	String appid="xxxxxxxxxxxxxxxx";
 	//小程序的secret
-	String secret="dd27742df6c858a4d5b2613ccbe3c78c";
+	String secret="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 	try{
 		URL url = new URL("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appid+"&secret="+secret);
 		HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -294,9 +379,9 @@ App({
 })
 ```
 
+---
 
-
-## 3.创建微信公众号的二维码，并添加自定义信息
+## 4.创建微信公众号的二维码，并添加自定义信息
 
 <font color="red">PS:若要读取微信公众号二维码中的信息。需要在微信公众平台开通服务器配置。</font>
 
@@ -313,9 +398,9 @@ public class UrlUtil {
 	public static String getAccessToken(){
 		System.out.println("getAccessToken方法----------开始获取accesstoken");
 		//微信公众号的appid
-		String appid="wx3eacafdd063cf79b";
+		String appid="xxxxxxxxxxxxxxxxxxx";
 		//微信公众号的secret
-		String secret="7f2f63c36562ac4c72d73bb7f99ce862";
+		String secret="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 		try{
 			URL url = new URL("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appid+"&secret="+secret);
 	        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -427,5 +512,6 @@ public class UrlUtil {
 }
 
 ```
-微信公众号的二维码图片
+
 ![4](../java/in_img/4.png)
+
