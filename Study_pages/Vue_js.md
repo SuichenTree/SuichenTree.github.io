@@ -1635,7 +1635,7 @@ axios.get('/login')
   });
 ```
 
-## ??.使用 vue-cli构建工具 创建vue项目
+## 14.使用 vue-cli构建工具 创建vue项目
 
 <h3>什么是vue-cli？</h3>
 
@@ -1771,3 +1771,8 @@ D:\iview\demo\demo3>
 ![36](../img/vue_js_img/36.png)
 
 最后只需要将 dist 文件夹放到服务器中运行就行了。
+
+
+
+
+

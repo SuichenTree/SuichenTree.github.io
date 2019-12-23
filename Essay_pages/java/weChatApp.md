@@ -515,3 +515,458 @@ public class UrlUtil {
 
 ![4](../java/in_img/4.png)
 
+---
+
+## 5.微信文本内容审核接口（禁止在小程序中发布违法违规内容） 
+
+[微信官方文档-文本审核内容](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/sec-check/security.msgSecCheck.html)
+
+
+1.先根据小程序的appid,secret 获取小程序的accesstoken
+2.再把accesstoken当作参数，调用文本内容审核接口
+
+```java
+
+    /**
+	 * 获取小程序的accesstoken
+	 */
+	public String getAccessToken(){
+		System.out.println("getAccessToken方法----------开始获取accesstoken");
+		//小程序的appid
+		String appid="xxxxxxxxxx";
+		//小程序的secret
+		String secret="xxxxxxxxxxxxxxxxxxxxx";
+		
+		try{
+			URL url = new URL("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appid+"&secret="+secret);
+	        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+	        httpURLConnection.setRequestMethod("GET");// get提交模式
+	        httpURLConnection.connect();    
+			BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+			String line;
+			StringBuffer buffer = new StringBuffer();
+			while ((line = reader.readLine()) != null) {
+				buffer.append(line);
+			}
+			reader.close();
+			httpURLConnection.disconnect();
+			System.out.println("调用微信接口返回的数据: "+buffer.toString());
+			
+			JSONObject jsonObject=new JSONObject(buffer.toString());
+			String accessToken=jsonObject.getString("access_token");
+			System.out.println("getAccessToken方法----------成功获取accesstoken");
+			return accessToken;
+			
+		}catch(Exception exception){
+			System.out.println("获取accesstoken方法异常");
+			return null;
+		}
+	}
+	
+	/**
+	 * 文本内容审核方法
+	 * @param str
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	public static void checkText(String str) throws Exception{
+		System.out.println("文本内容审核方法checkText, 参数 str="+str);
+		//获取accessToken
+		String accessToken = getAccessToken();
+		
+		// 获得Http客户端
+		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+		// 创建Post请求
+		HttpPost hPost=new HttpPost("https://api.weixin.qq.com/wxa/msg_sec_check?access_token="+accessToken);
+		hPost.setHeader("Content-Type", "application/json;charset=utf8");
+		//请求参数
+		JSONObject jsonObject=new JSONObject();
+		jsonObject.put("content", str);
+		//将其转换为entit字符串
+		StringEntity entity = new StringEntity(jsonObject.toString(), "UTF-8");
+		hPost.setEntity(entity);
+		
+		// 由客户端执行(发送)Post请求
+		CloseableHttpResponse res= httpClient.execute(hPost);
+		// 从响应模型中获取响应实体
+		HttpEntity responseEntity = res.getEntity();
+ 
+		if (responseEntity != null) {
+			String resStr = EntityUtils.toString(responseEntity);
+			System.out.println("文本审核api响应内容为:" + resStr);
+			//将响应内容转换为json
+			JSONObject jsonObject2=new JSONObject(resStr);
+			if(jsonObject2.get("errcode").equals(0)){
+				//0表示文本正常
+				System.out.println("内容正常");
+			}else{
+				System.out.println("内容含有有害信息");
+			}
+		}
+		
+	}
+
+
+```
+
+
+## 6.企业付款到零钱（可用于小程序中的提现功能）
+
+[微信官方文档-企业付款到零钱](https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_1)
+
+```java
+
+package com.chiltoon.cms.api.front;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chiltoon.cms.api.ApiResponse;
+import com.chiltoon.cms.api.Constants;
+import com.chiltoon.cms.api.ResponseCode;
+import com.chiltoon.cms.entity.assist.CmsConfigContentCharge;
+import com.chiltoon.cms.entity.exam.MpUserEdu;
+import com.chiltoon.cms.manager.assist.CmsConfigContentChargeMng;
+import com.chiltoon.cms.manager.exam.MpUserEduMng;
+import com.chiltoon.common.pay.weixin.WXPayUtil;
+import com.chiltoon.common.util.Num62;
+import com.chiltoon.common.util.PayUtil;
+import com.chiltoon.common.web.ClientCustomSSL;
+import com.chiltoon.common.web.RequestUtils;
+import com.chiltoon.common.web.ResponseUtils;
+import com.chiltoon.core.entity.CmsUser;
+import com.chiltoon.core.manager.CmsUserMng;
+import com.chiltoon.shu.entity.UserCashOut;
+import com.chiltoon.shu.manager.UserCashOutMng;
+
+@Controller
+public class ShuCashOutApiAct {
+	
+	@Autowired
+	private UserCashOutMng userCashOutMng;
+	@Autowired
+	private CmsUserMng cmsUserMng;
+	@Autowired
+	private CmsConfigContentChargeMng configContentChargeMng;
+	@Autowired
+	private MpUserEduMng mpUserEduMng;
+	
+	private static final String TRANSFERS_PAY = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers"; // 企业付款
+    private static final String TRANSFERS_PAY_QUERY = "https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo"; // 企业付款查询
+	
+	
+	/**
+	 * 企业付款到用户零钱
+	 * @param request
+	 * @param response
+	 * @param openId
+	 * @throws Exception 
+	 */
+	@RequestMapping("xxxxx")
+	public void weixinPayToUser(HttpServletRequest request, HttpServletResponse response,String openId) throws Exception{
+		System.out.println("xxxxx,企业付款接口。参数：openId = "+openId);
+		JSONObject jsonObject=new JSONObject();
+		CmsUser user=null;
+		String body = null;
+		String message = null;
+		String code = null;
+		
+		if(StringUtils.isNotEmpty(openId)){
+			System.out.println("参数齐全");
+			//查询用户
+			user = cmsUserMng.findByWxtoken(openId);
+			if (user == null) {
+				user = cmsUserMng.findByWxopen(openId);
+			}
+			if(user!=null){
+				//先查询该用户的教育金数额
+				MpUserEdu mpUserEdu = mpUserEduMng.findByUserId(user.getId());
+				Double payAmount = mpUserEdu.getEducationAmount();
+				System.out.println("该用户真实的openId和当前的教育金金额, openId = "+openId+", payAmount ="+payAmount+", 现在开始提现。");
+				
+				if(payAmount!=null&&payAmount>0){
+					System.out.println("该用户教育金金额>0,可以提现。");
+					//pkc证书在项目中的地址
+					String pkc_file_path = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/apiclient_cert.p12";
+					//获取项目中的pkc证书
+					File pkcFile = new File(pkc_file_path);
+					//随机创建商户订单号
+					String orderNumber = System.currentTimeMillis() + RandomStringUtils.random(5, Num62.N10_CHARS);
+					//从数据库中获取基本信息(如appid等)
+					CmsConfigContentCharge config = configContentChargeMng.getDefault();
+					//存储请求信息
+					Map<String, String> paramMap = new HashMap<String, String>();
+					// 公众账号appid[必填]
+					paramMap.put("mch_appid","xxxxx");
+					// 微信支付分配的商户号 [必填]
+					paramMap.put("mchid", config.getWeixinAccount());
+					// 随机字符串，不长于32位。 [必填]
+					paramMap.put("nonce_str",RandomStringUtils.random(16, Num62.N62_CHARS));
+					// 商户订单号,需保持唯一性[必填]
+					paramMap.put("partner_trade_no",orderNumber);
+					// 商户appid下，某用户的openid[必填]
+					paramMap.put("openid",openId);
+					// 校验用户姓名选项
+					paramMap.put("check_name", "NO_CHECK");
+					// 企业付款金额，金额必须为整数 单位为分 [必填]
+					paramMap.put("amount", changeY2F(payAmount));
+					System.out.println("该用户的提现金额是:"+payAmount+"元");
+					// 企业付款描述信息 [必填]
+					paramMap.put("desc", "xxxxxx");
+					// 调用接口的机器Ip地址[必填]
+					paramMap.put("spbill_create_ip","xxxxxx");
+					
+					if (StringUtils.isNotBlank(config.getTransferApiPassword())) {
+						// 根据微信签名规则，生成签名
+						paramMap.put("sign", createSign(paramMap, config.getTransferApiPassword()));
+					}
+					//将map对象转换为xml格式
+					String xmlWeChat = WXPayUtil.mapToXml(paramMap);
+					System.out.println("将参数转换为xml, xmlWeChat = "+xmlWeChat);
+					//返回的结果
+					String resXml ="";
+					try {
+						resXml = ClientCustomSSL.getInSsl(TRANSFERS_PAY, pkcFile, config.getWeixinAccount(),xmlWeChat,"application/xml");
+					} catch (Exception e1) {
+						System.out.println("企业付款到零钱异常");
+						e1.printStackTrace();
+					}
+					System.out.println("遍历微信企业付款的回调结果(xml格式) resXml = "+resXml);
+					//把xml转换为map格式
+					Map<String,String> returnMap =PayUtil.parseXMLToMap(resXml);
+					System.out.println("遍历微信企业付款的回调结果(map格式) returnMap = "+returnMap.toString());
+					//遍历map集合
+					Iterator<String> it = returnMap.keySet().iterator();  //map.keySet()得到的是set集合，可以使用迭代器遍历
+					while(it.hasNext()){
+						String key = it.next();
+						System.out.println("key值："+key+" value值："+returnMap.get(key));
+					}
+					
+					if (returnMap.get("return_code").equals("SUCCESS")) {
+						System.out.println("企业付款到用户零钱的接口调用成功-----------");
+						if(returnMap.get("result_code").equals("SUCCESS")){
+							// 提现成功,清除用户的教育金金额
+							System.out.println("userId = "+user.getId()+" 的用户提现成功.现在清空该用户的教育金金额。");
+							mpUserEdu.setEducationAmount(0.0);
+							mpUserEduMng.update(mpUserEdu);
+							
+							System.out.println("这次提现的商户订单号： partner_trade_no ="+returnMap.get("partner_trade_no"));
+							System.out.println("这次提现的微信付款单号: payment_no ="+returnMap.get("payment_no"));
+							System.out.println("这次提现的付款成功时间：payment_time ="+returnMap.get("payment_time"));
+							
+							//在用户提现表中创建一条记录
+							UserCashOut uCashOut = new UserCashOut();
+							uCashOut.setCashOutAmount(payAmount);
+							Timestamp payment_time = Timestamp.valueOf(returnMap.get("payment_time")); //将字符串转为Timestamp类型
+							uCashOut.setCreateTime(payment_time);
+							uCashOut.setOrderNumber(returnMap.get("partner_trade_no"));
+							uCashOut.setWeixinOrderNumber(returnMap.get("payment_no"));
+							uCashOut.setUserId(user.getId());
+							UserCashOut save = userCashOutMng.save(uCashOut);
+							//返回信息给前台
+							jsonObject.put("结果代码result_code", returnMap.get("result_code"));
+							jsonObject.put("商户订单号partner_trade_no", returnMap.get("partner_trade_no"));
+							jsonObject.put("微信付款单号payment_no", returnMap.get("payment_no"));
+							jsonObject.put("付款成功时间payment_time", returnMap.get("payment_time"));
+							jsonObject.put("txInfo","提现成功");
+							jsonObject.put("tx_IsSuccess","1");
+							body=jsonObject.toString();
+							message = Constants.API_MESSAGE_SUCCESS;
+							code = ResponseCode.API_CODE_CALL_SUCCESS;
+						}else{
+							System.out.println("由于某些原因导致提现失败--------");
+							System.out.println("错误代码 err_code = "+returnMap.get("returnMap"));
+							System.out.println("错误代码描述 err_code_des = "+returnMap.get("err_code_des"));
+							//返回信息给前台
+							jsonObject.put("结果代码result_code", returnMap.get("result_code"));
+							jsonObject.put("错误代码err_code", returnMap.get("returnMap"));
+							jsonObject.put("错误代码描述err_code_des", returnMap.get("err_code_des"));
+							jsonObject.put("txInfo", "接口调用成功，但是由于某些原因导致提现失败");
+							jsonObject.put("tx_IsSuccess", "0");
+							body=jsonObject.toString();
+							message = Constants.API_MESSAGE_SUCCESS;
+							code = ResponseCode.API_CODE_CALL_SUCCESS;
+						}
+					}else{
+						System.out.println("企业付款到用户零钱的接口调用失败-----------");
+						jsonObject.put("txInfo", "企业付款到用户零钱的接口调用失败");
+						jsonObject.put("tx_IsSuccess", "0");
+						body=jsonObject.toString();
+						message = Constants.API_MESSAGE_SUCCESS;
+						code = ResponseCode.API_CODE_CALL_SUCCESS;
+					}
+				}else{
+					System.out.println("该用户没有教育金金额或者教育金金额=0");
+					jsonObject.put("txInfo", "该用户没有教育金金额或者教育金金额=0");
+					jsonObject.put("tx_IsSuccess", "-1");
+					body=jsonObject.toString();
+					message = Constants.API_MESSAGE_SUCCESS;
+					code = ResponseCode.API_CODE_CALL_SUCCESS;
+				}
+			}else{
+				System.out.println("用户不存在");
+				jsonObject.put("txInfo", "用户不存在");
+				jsonObject.put("tx_IsSuccess", "0");
+				body=jsonObject.toString();
+				message = Constants.API_MESSAGE_USER_NOT_FOUND;
+				code = ResponseCode.API_CODE_USER_NOT_FOUND;
+			}
+		}else{
+			System.out.println("参数缺失");
+			jsonObject.put("txInfo", "参数缺失");
+			jsonObject.put("tx_IsSuccess", "0");
+			body=jsonObject.toString();
+			message = Constants.API_MESSAGE_PARAM_REQUIRED;
+			code = ResponseCode.API_CODE_PARAM_REQUIRED;
+		}
+		ApiResponse apiResponse = new ApiResponse(request, body, message, code);
+		ResponseUtils.renderApiJson(response, request, apiResponse);
+	}
+	
+	/**
+	 * (暂未写完，尚未使用)查询企业付款的订单信息
+	 * @param weixinPayOrderNumber 微信企业付款的单号
+	 * @throws Exception 
+	 */
+	@RequestMapping("xxxxxx")
+	public void weixinPayQuery(String weixinPayOrderNumber,HttpServletRequest request, HttpServletResponse response) throws Exception{
+		//从数据库中获取基本信息(如appid等)
+		CmsConfigContentCharge config = configContentChargeMng.getDefault();
+		//存储请求信息
+		Map<String, String> paramMap = new HashMap<String, String>();
+		// 公众账号appid[必填]
+		paramMap.put("appid","xxxxxxxxx");
+		// 微信支付分配的商户号 [必填]
+		paramMap.put("mch_id", config.getWeixinAccount());
+		// 随机字符串，不长于32位。 [必填]
+		paramMap.put("nonce_str",RandomStringUtils.random(16, Num62.N62_CHARS));
+		// 商户订单号,需保持唯一性[必填]
+		paramMap.put("partner_trade_no",weixinPayOrderNumber);
+		// 根据微信签名规则，生成签名
+		paramMap.put("sign", createSign(paramMap, config.getTransferApiPassword()));
+		//把参数转换为xml格式
+		String xmlWeChat2 = WXPayUtil.mapToXml(paramMap);
+		System.out.println("将参数转换为xml, xmlWeChat2 = "+xmlWeChat2);
+        //请求微信接口
+		String resXml = "";
+		try {
+			//pkc证书在项目中的地址
+			String pkc_file_path = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/apiclient_cert.p12";
+			//获取项目中的pkc证书
+			File pkcFile = new File(pkc_file_path);
+			resXml = ClientCustomSSL.getInSsl(TRANSFERS_PAY_QUERY, pkcFile, config.getWeixinAccount(),xmlWeChat2,"application/xml");
+		} catch (Exception e1) {
+			System.out.println("企业付款到零钱异常");
+			e1.printStackTrace();
+		}
+		
+		//打印请求接口返回的信息
+		System.out.println("请求接口返回的信息 resxml = "+resXml);
+		//将xml信息转换为map
+		Map<String,String> returnMap =PayUtil.parseXMLToMap(resXml);
+		System.out.println("遍历微信企业付款的回调结果(map格式) returnMap = "+returnMap.toString());
+		//遍历map集合
+		Iterator<String> it = returnMap.keySet().iterator();  //map.keySet()得到的是set集合，可以使用迭代器遍历
+		while(it.hasNext()){
+			String key = it.next();
+			System.out.println("key值："+key+" value值："+returnMap.get(key));
+		}
+		
+		if(returnMap.get("return_code").equals("SUCCESS")){
+			System.out.println("企业微信付款查询接口调用成功");
+			if(returnMap.get("result_code").equals("SUCCESS")){
+				System.out.println("企业付款查询业务结果成功");
+				System.out.println("商户单号 partner_trade_no ="+returnMap.get("partner_trade_no"));
+				System.out.println("商户号的 appid ="+returnMap.get("appid"));
+				System.out.println("商户号 mch_id ="+returnMap.get("mch_id"));
+				System.out.println("付款单号 detail_id ="+returnMap.get("detail_id"));
+				//转账状态 status = SUCCESS:转账成功,FAILED:转账失败,PROCESSING:处理中
+				System.out.println("转账状态 status ="+returnMap.get("status"));
+				System.out.println("收款用户 openid ="+returnMap.get("openid"));
+				System.out.println("付款金额 payment_amount  ="+returnMap.get("payment_amount"));
+				System.out.println("商户号的 appid ="+returnMap.get("appid"));
+				System.out.println("商户号 mch_id ="+returnMap.get("mch_id"));
+			}else{
+				System.out.println("某些原因导致企业付款查询业务结果失败");
+			}
+		}else{
+			System.out.println("企业微信付款查询接口调用失败");
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * 元转换为分
+	 * @param amount
+	 */
+	public static String changeY2F(Double amount){    
+	        String currency =  amount.toString();  
+	        int index = currency.indexOf(".");    
+	        int length = currency.length();    
+	        Long amLong = 0l;    
+	        if(index == -1){    
+	            amLong = Long.valueOf(currency+"00");    
+	        }else if(length - index >= 3){    
+	            amLong = Long.valueOf((currency.substring(0, index+3)).replace(".", ""));    
+	        }else if(length - index == 2){    
+	            amLong = Long.valueOf((currency.substring(0, index+2)).replace(".", "")+0);    
+	        }else{    
+	            amLong = Long.valueOf((currency.substring(0, index+1)).replace(".", "")+"00");    
+	        }    
+	        return amLong.toString();    
+	}
+
+	/**
+	* 创建微信支付签名sign
+	* @param characterEncoding
+	* @param param
+	* @param key
+	* @return
+	*/
+	@SuppressWarnings("unchecked")
+	public static String createSign(Map<String, String> param,String key){
+		//签名步骤一：按字典排序参数
+		List list=new ArrayList(param.keySet());
+		Object[] ary =list.toArray();
+		Arrays.sort(ary);
+		list=Arrays.asList(ary);
+		String str="";
+		for(int i=0;i<list.size();i++){
+			str+=list.get(i)+"="+param.get(list.get(i)+"")+"&";
+		}
+		//签名步骤二：加上key
+		str+="key="+key;
+		System.out.println("签名MD5之前："+str);
+		//步骤三：加密并大写
+		str=PayUtil.MD5Encode(str,"utf-8").toUpperCase();
+		return str;
+	}
+	
+}
+
+
+
+```
+
+
