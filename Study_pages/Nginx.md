@@ -2,7 +2,7 @@
 
 # Nginx
 
-<font color="red">基于当前nginx 1.16.0 版本所述。</font>
+<font color="red">基于当前nginx 1.16.0 版本所述。修改日期-20191223</font>
 
 Nginx是一款轻量级的Web 服务器,==反向代理服务器==,电子邮件（IMAP/POP3）代理服务器
 
@@ -58,7 +58,7 @@ nginx支持的负载均衡调度算法方式如下：
 ![11](../img/Nginx_img/11.png)
 
 
-## 2.Nginx 的安装与启动
+## 2.Nginx 的安装与启动(windows环境下)
 
 Nginx 的优点:
 
@@ -134,6 +134,86 @@ nginx -s quit    #优雅的关机
 
 ![6](../img/Nginx_img/6.png)
 
+---
+
+## 2-5.Nginx 的安装与启动(Centos环境下)
+
+**Centos环境安装nginx有两种方式：yum安装和源代码安装。下面主要描述源代码安装**
+
+>源代码安装：
+
+1. 安装nginx前，需要安装其他依赖库包
+
+```
+1. 安装 gcc 环境
+    $ sudo yum -y install gcc gcc-c++ # nginx编译时依赖gcc环境
+
+2. 安装 pcre
+    $ sudo yum -y install pcre pcre-devel # 让nginx支持重写功能
+
+3.安装 zlib
+    # zlib库提供了很多压缩和解压缩的方式，nginx使用zlib对http包内容进行gzip压缩
+    $ sudo yum -y install zlib zlib-devel 
+
+4. 安装 openssl
+    # 安全套接字层密码库，用于通信加密
+    $ sudo yum -y install openssl openssl-devel
+
+```
+
+2. 开始安装nginx
+
+```
+1. 从官网上下载源码包nginx-1.16.1.tar.gz,一般放在/usr/lcoal目录中解压
+
+2. 解压
+$ tar -zxvf  nginx-1.16.1.tar.gz 
+
+3. 解压缩后，进入nginx-1.16.1目录进行源码编译安装。
+$ cd nginx-1.11.5
+$ ./configure --prefix=/usr/local/nginx 
+# 将源码配置到usr/local/nginx目录下，并检查安装所需要的环境或依赖库是否齐全
+
+## --prefix=/usr/local/nginx  是nginx编译安装的目录（推荐），安装完后会在此目录下生成相关文件
+
+4. 源码编译并安装nginx
+$ make 
+# 编译
+$ make install 
+# 安装
+```
+
+==一般都会在/usr/lcoal目录中出现nginx目录，这个就是nginx安装后产生的文件夹==
+
+
+3. 操作命令
+
+```
+启动服务
+$ /usr/local/nginx/sbin/nginx
+
+##nginx默认的端口是80，如果占用了80，那么就会出现端口已用错误
+
+重新加载服务
+$ /usr/local/nginx/sbin/nginx -s reload
+
+停止服务
+$ /usr/local/nginx/sbin/nginx -s stop
+
+查看nginx服务进程
+$ ps -ef | grep nginx # 查看服务进程
+```
+
+4. 修改nginx的启动端口
+
+```
+1.nginx的配置文件的绝对路径/usr/local/nginx/conf/nginx.conf
+2.使用vim编辑器修改该配置文件。 
+3.修改80端口为8090。
+4.重新启动nginx服务
+5.在浏览器中输入ip:8090访问
+```
+---
 
 ## 3.Nginx的基本运行命令
 
@@ -387,3 +467,36 @@ location / {                           # /表示匹配访问根目录
             index  index.html index.htm;        #在不指定访问具体资源时，默认展示的资源文件列表
         }
 ```
+
+
+## 5.Nginx 部署静态页面
+
+1. 创建blog目录，并在其中编写html文件
+
+2. 将blog目录nginx主目录下
+
+3. 修改配置文件
+修改nginx的配置文件
+
+```
+ server {
+        listen      8090;    //访问端口
+        server_name  localhost; //ip
+
+        charset utf-8;  
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   blog;    //静态页面所在的文件目录
+            index  index.html index.htm;  //首页
+        }
+
+        .......
+        .......
+        .......
+ }
+```
+
+4. 开启nginx,访问页面
+访问： ip:8090/blog/index.html

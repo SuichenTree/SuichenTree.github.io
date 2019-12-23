@@ -35,6 +35,10 @@ $ git init
 ```
 PS: `git add`命令可添加多个文件
 
+`git add .` 提交所有修改文件。
+
+<font color="red">当提交完后，若想把本地版本库最近的修改推送到网上的github远程版本库中，则需要git push origin master把本地库的内容推送到远程库</font>
+
 <h5>工作区,版本库和暂存区</h5>
 
 1. 工作区：就是当前git仓库所在的目录。
