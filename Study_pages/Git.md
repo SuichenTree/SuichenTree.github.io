@@ -1,6 +1,6 @@
 [TOC]
 
-# Git(windows版本)
+# 1.Git(windows版本)
 
 Git是一个开源的分布式版本控制系统.
 
@@ -161,5 +161,172 @@ ps：首先创建一个新的空目录
 
 ```
 $ git clone git@github.com:你github上的某个仓库的全称.git
+```
+
+---
+
+# 2.Git(Centos版本)
+
+## 1.安装git
+
+>方式一：yum命令安装：
+
+`sudo yum install -y git`
+
+>方式二：源码安装
+
+1. 首先安装下依赖包（可使用rpm -qa | grep wget命令查看是否有安装包）
+
+```
+sudo yum install -y wget
+sudo yum install -y gcc-c++
+sudo yum install -y zlib-devel perl-ExtUtils-MakeMaker
+```
+
+2. 通过官网链接下载git源码包
+
+`wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.0.tar.gz`
+
+
+3. 解压，配置，安装
+
+```
+tar -zxvf git-2.9.0.tar.gz
+cd git-2.9.0
+./configure --prefix=/usr/local  
+make
+sudo make install
+```
+
+==./configure后面的–prefix=/usr/local，指定安装路径为usr/local==
+
+4. 查看安装好的git版本
+
+`git --version`
+
+
+## 2.配置git用户信息
+
+==首先创建一目录，下面所有操作在目录中执行。==
+
+```
+## 配置用户信息
+
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"
+```
+
+## 3.创建公钥私钥
+
+```
+1. 输入命令：
+ssh-keygen -t rsa -C "youremail@example.com"
+
+2. 属于文件名，用于保存密钥（不输入文件名，使用默认文件名（推荐），那么就会生成 id_rsa 和 id_rsa.pub 两个秘钥文件）
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+
+3. 提示你输入两次密码（该密码是你push文件的时候要输入的密码，而不是github管理者的密码。
+不输入密码，直接按回车。那么push的时候就不需要输入密码，直接提交到github上了）
+
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again:
+
+4.之后密钥就会创建好,一般在/root/.ssh/id_rsa目录中
+
+```
+
+## 4.关联github
+
+进入到密钥目录中，将生成的id_rsa.pub的内容存储到github中
+
+
+## 常用命令
+
+```
+
+安装git后
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+
+$ ssh-keygen -t rsa -C "youremail@example.com" 创建ssh key，用于和github通信
+(秘钥存储于C:\Users\27634\.ssh，把公钥id_rsa.pub存储于github)
+
+创建版本库
+$ pwd 命令用于显示当前目录(没啥用)
+$ git init 把这个目录变成Git可以管理的仓库(后续新建提交和ssh克隆需要)	
+
+操作版本库
+$ git add 文件名 添加文件(新增或者更改都需要先add)
+$ git commit -m "说明" 提交到本地版本库
+
+$ git status 查看仓库状态
+$ git diff 文件名 查看修改的地方
+
+版本回退(从一个commit恢复)
+$ git log 查看版本历史
+$ git reset --hard HEAD^ 回退到上个版本
+$ git reset --hard 1094a 回退到特定版本号(commit以后回退)
+$ git reflog 记录每一次命令
+
+$ git checkout -- file 直接丢弃工作区的修改(add以前回退)
+$ git reset HEAD <file> 添加到了暂存区时，想丢弃修改(add以后回退)
+
+删除文件
+$ git rm file(已经add/commit,在目录中删除)
+
+$ git checkout -- file 删错了回退
+
+远程仓库
+$ git remote add origin git@server-name:path/repo-name.git 关联远程库
+$ git push -u origin master 第一次的push
+$ git push origin master 常用的push，本地分支会在服务器上新建分支
+$ git pull 需要有关联的分支，第一次下拉最好新建一个空文件夹
+$ git branch --set-upstream-to=origin/远程分支 本地分支 关联分支
+
+$ git clone git@server-name:path/repo-name.git 克隆(不需要另建文件夹)
+
+分支
+$ git branch -a 查看所有分支
+$ git branch -vv 查看分支关联
+$ git branch dev 创建分支
+$ git checkout dev 切换分支
+$ git merge dev 合并某分支到当前分支
+$ git merge --no-ff -m "msg" dev 普通模式合并，合并后的历史有分支
+$ git branch -d dev 删除分支
+$ git checkout -b dev 创建并切换分支
+
+
+合并分支,无法merge
+$ git stash save 名字 暂存工作状态
+$ git pull origin dev 拉下来 
+$ git stash list 查看已经暂存的状态
+$ git stash pop stash@{0} 将暂存状态merge到当前分支
+还有冲突时,手动修改文件,然后add/commit
+$ git log --graph 分支合并图
+
+bug分支issue
+$ git stash 暂存工作状态
+$ git stash list 查看暂存工作状态
+$ git stash pop 恢复暂存状态并删除状态
+
+开发分支feature
+$ git branch -D <name> 强制删除未合并的分支
+
+rebase
+$ git rebase 本地未push的分叉提交历史整理成直线
+
+标签
+$ git tag 标签名 打在最新提交的commit上
+$ git tag 查询所有标签
+$ git tag 标签名 f52c633 给特定的commit打标签
+$ git tag -a 标签名 -m "msg" commit的id 给标签设置说明
+$ git show 标签名 查询标签内容
+$ git tag -d 标签名 删除标签
+$ git push origin 标签名 推送某个标签到远程
+$ git push origin --tags 推送所有标签
+$ git push origin :refs/tags/<tagname> 可以删除一个远程标签。
+
 ```
 

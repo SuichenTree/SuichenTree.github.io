@@ -264,7 +264,7 @@ pre[data-line] .line-highlight[data-end]:after {
     <body for="html-export">
       <div class="mume markdown-preview  ">
       <ul>
-<li><a href="#gitwindows%E7%89%88%E6%9C%AC">Git(windows&#x7248;&#x672C;)</a>
+<li><a href="#1gitwindows%E7%89%88%E6%9C%AC">1.Git(windows&#x7248;&#x672C;)</a>
 <ul>
 <li><a href="#1git%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE">1.Git&#x5B89;&#x88C5;&#x4E0E;&#x914D;&#x7F6E;</a></li>
 <li><a href="#2%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">2.&#x5E38;&#x7528;&#x547D;&#x4EE4;</a></li>
@@ -277,8 +277,17 @@ pre[data-line] .line-highlight[data-end]:after {
 </li>
 </ul>
 </li>
+<li><a href="#2gitcentos%E7%89%88%E6%9C%AC">2.Git(Centos&#x7248;&#x672C;)</a>
+<ul>
+<li><a href="#1%E5%AE%89%E8%A3%85git">1.&#x5B89;&#x88C5;git</a></li>
+<li><a href="#2%E9%85%8D%E7%BD%AEgit%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF">2.&#x914D;&#x7F6E;git&#x7528;&#x6237;&#x4FE1;&#x606F;</a></li>
+<li><a href="#3%E5%88%9B%E5%BB%BA%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5">3.&#x521B;&#x5EFA;&#x516C;&#x94A5;&#x79C1;&#x94A5;</a></li>
+<li><a href="#4%E5%85%B3%E8%81%94github">4.&#x5173;&#x8054;github</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">&#x5E38;&#x7528;&#x547D;&#x4EE4;</a></li>
 </ul>
-<h1 class="mume-header" id="gitwindows%E7%89%88%E6%9C%AC">Git(windows&#x7248;&#x672C;)</h1>
+</li>
+</ul>
+<h1 class="mume-header" id="1gitwindows%E7%89%88%E6%9C%AC">1.Git(windows&#x7248;&#x672C;)</h1>
 
 <p>Git&#x662F;&#x4E00;&#x4E2A;&#x5F00;&#x6E90;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x7248;&#x672C;&#x63A7;&#x5236;&#x7CFB;&#x7EDF;.</p>
 <h2 class="mume-header" id="1git%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE">1.Git&#x5B89;&#x88C5;&#x4E0E;&#x914D;&#x7F6E;</h2>
@@ -396,6 +405,153 @@ $ git push origin master        # &#x4E4B;&#x540E;&#x628A;&#x672C;&#x5730;&#x5E9
 
 <p>ps&#xFF1A;&#x9996;&#x5148;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7A7A;&#x76EE;&#x5F55;</p>
 <pre data-role="codeBlock" data-info class="language-"><code>$ git clone git@github.com:&#x4F60;github&#x4E0A;&#x7684;&#x67D0;&#x4E2A;&#x4ED3;&#x5E93;&#x7684;&#x5168;&#x79F0;.git
+</code></pre><hr>
+<h1 class="mume-header" id="2gitcentos%E7%89%88%E6%9C%AC">2.Git(Centos&#x7248;&#x672C;)</h1>
+
+<h2 class="mume-header" id="1%E5%AE%89%E8%A3%85git">1.&#x5B89;&#x88C5;git</h2>
+
+<blockquote>
+<p>&#x65B9;&#x5F0F;&#x4E00;&#xFF1A;yum&#x547D;&#x4EE4;&#x5B89;&#x88C5;&#xFF1A;</p>
+</blockquote>
+<p><code>sudo yum install -y git</code></p>
+<blockquote>
+<p>&#x65B9;&#x5F0F;&#x4E8C;&#xFF1A;&#x6E90;&#x7801;&#x5B89;&#x88C5;</p>
+</blockquote>
+<ol>
+<li>&#x9996;&#x5148;&#x5B89;&#x88C5;&#x4E0B;&#x4F9D;&#x8D56;&#x5305;&#xFF08;&#x53EF;&#x4F7F;&#x7528;rpm -qa | grep wget&#x547D;&#x4EE4;&#x67E5;&#x770B;&#x662F;&#x5426;&#x6709;&#x5B89;&#x88C5;&#x5305;&#xFF09;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>sudo yum install -y wget
+sudo yum install -y gcc-c++
+sudo yum install -y zlib-devel perl-ExtUtils-MakeMaker
+</code></pre><ol start="2">
+<li>&#x901A;&#x8FC7;&#x5B98;&#x7F51;&#x94FE;&#x63A5;&#x4E0B;&#x8F7D;git&#x6E90;&#x7801;&#x5305;</li>
+</ol>
+<p><code>wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.0.tar.gz</code></p>
+<ol start="3">
+<li>&#x89E3;&#x538B;&#xFF0C;&#x914D;&#x7F6E;&#xFF0C;&#x5B89;&#x88C5;</li>
+</ol>
+<pre data-role="codeBlock" data-info class="language-"><code>tar -zxvf git-2.9.0.tar.gz
+cd git-2.9.0
+./configure --prefix=/usr/local  
+make
+sudo make install
+</code></pre><p><mark>./configure&#x540E;&#x9762;&#x7684;&#x2013;prefix=/usr/local&#xFF0C;&#x6307;&#x5B9A;&#x5B89;&#x88C5;&#x8DEF;&#x5F84;&#x4E3A;usr/local</mark></p>
+<ol start="4">
+<li>&#x67E5;&#x770B;&#x5B89;&#x88C5;&#x597D;&#x7684;git&#x7248;&#x672C;</li>
+</ol>
+<p><code>git --version</code></p>
+<h2 class="mume-header" id="2%E9%85%8D%E7%BD%AEgit%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF">2.&#x914D;&#x7F6E;git&#x7528;&#x6237;&#x4FE1;&#x606F;</h2>
+
+<p><mark>&#x9996;&#x5148;&#x521B;&#x5EFA;&#x4E00;&#x76EE;&#x5F55;&#xFF0C;&#x4E0B;&#x9762;&#x6240;&#x6709;&#x64CD;&#x4F5C;&#x5728;&#x76EE;&#x5F55;&#x4E2D;&#x6267;&#x884C;&#x3002;</mark></p>
+<pre data-role="codeBlock" data-info class="language-"><code>## &#x914D;&#x7F6E;&#x7528;&#x6237;&#x4FE1;&#x606F;
+
+git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;email@example.com&quot;
+</code></pre><h2 class="mume-header" id="3%E5%88%9B%E5%BB%BA%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5">3.&#x521B;&#x5EFA;&#x516C;&#x94A5;&#x79C1;&#x94A5;</h2>
+
+<pre data-role="codeBlock" data-info class="language-"><code>1. &#x8F93;&#x5165;&#x547D;&#x4EE4;&#xFF1A;
+ssh-keygen -t rsa -C &quot;youremail@example.com&quot;
+
+2. &#x5C5E;&#x4E8E;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x7528;&#x4E8E;&#x4FDD;&#x5B58;&#x5BC6;&#x94A5;&#xFF08;&#x4E0D;&#x8F93;&#x5165;&#x6587;&#x4EF6;&#x540D;&#xFF0C;&#x4F7F;&#x7528;&#x9ED8;&#x8BA4;&#x6587;&#x4EF6;&#x540D;&#xFF08;&#x63A8;&#x8350;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4F1A;&#x751F;&#x6210; id_rsa &#x548C; id_rsa.pub &#x4E24;&#x4E2A;&#x79D8;&#x94A5;&#x6587;&#x4EF6;&#xFF09;
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+
+3. &#x63D0;&#x793A;&#x4F60;&#x8F93;&#x5165;&#x4E24;&#x6B21;&#x5BC6;&#x7801;&#xFF08;&#x8BE5;&#x5BC6;&#x7801;&#x662F;&#x4F60;push&#x6587;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#x8981;&#x8F93;&#x5165;&#x7684;&#x5BC6;&#x7801;&#xFF0C;&#x800C;&#x4E0D;&#x662F;github&#x7BA1;&#x7406;&#x8005;&#x7684;&#x5BC6;&#x7801;&#x3002;
+&#x4E0D;&#x8F93;&#x5165;&#x5BC6;&#x7801;&#xFF0C;&#x76F4;&#x63A5;&#x6309;&#x56DE;&#x8F66;&#x3002;&#x90A3;&#x4E48;push&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x8F93;&#x5165;&#x5BC6;&#x7801;&#xFF0C;&#x76F4;&#x63A5;&#x63D0;&#x4EA4;&#x5230;github&#x4E0A;&#x4E86;&#xFF09;
+
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again:
+
+4.&#x4E4B;&#x540E;&#x5BC6;&#x94A5;&#x5C31;&#x4F1A;&#x521B;&#x5EFA;&#x597D;,&#x4E00;&#x822C;&#x5728;/root/.ssh/id_rsa&#x76EE;&#x5F55;&#x4E2D;
+
+</code></pre><h2 class="mume-header" id="4%E5%85%B3%E8%81%94github">4.&#x5173;&#x8054;github</h2>
+
+<p>&#x8FDB;&#x5165;&#x5230;&#x5BC6;&#x94A5;&#x76EE;&#x5F55;&#x4E2D;&#xFF0C;&#x5C06;&#x751F;&#x6210;&#x7684;id_rsa.pub&#x7684;&#x5185;&#x5BB9;&#x5B58;&#x50A8;&#x5230;github&#x4E2D;</p>
+<h2 class="mume-header" id="%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4">&#x5E38;&#x7528;&#x547D;&#x4EE4;</h2>
+
+<pre data-role="codeBlock" data-info class="language-"><code>&#x5B89;&#x88C5;git&#x540E;
+$ git config --global user.name &quot;Your Name&quot;
+$ git config --global user.email &quot;email@example.com&quot;
+
+$ ssh-keygen -t rsa -C &quot;youremail@example.com&quot; &#x521B;&#x5EFA;ssh key&#xFF0C;&#x7528;&#x4E8E;&#x548C;github&#x901A;&#x4FE1;
+(&#x79D8;&#x94A5;&#x5B58;&#x50A8;&#x4E8E;C:\Users\27634\.ssh&#xFF0C;&#x628A;&#x516C;&#x94A5;id_rsa.pub&#x5B58;&#x50A8;&#x4E8E;github)
+
+&#x521B;&#x5EFA;&#x7248;&#x672C;&#x5E93;
+$ pwd &#x547D;&#x4EE4;&#x7528;&#x4E8E;&#x663E;&#x793A;&#x5F53;&#x524D;&#x76EE;&#x5F55;(&#x6CA1;&#x5565;&#x7528;)
+$ git init &#x628A;&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x53D8;&#x6210;Git&#x53EF;&#x4EE5;&#x7BA1;&#x7406;&#x7684;&#x4ED3;&#x5E93;(&#x540E;&#x7EED;&#x65B0;&#x5EFA;&#x63D0;&#x4EA4;&#x548C;ssh&#x514B;&#x9686;&#x9700;&#x8981;)	
+
+&#x64CD;&#x4F5C;&#x7248;&#x672C;&#x5E93;
+$ git add &#x6587;&#x4EF6;&#x540D; &#x6DFB;&#x52A0;&#x6587;&#x4EF6;(&#x65B0;&#x589E;&#x6216;&#x8005;&#x66F4;&#x6539;&#x90FD;&#x9700;&#x8981;&#x5148;add)
+$ git commit -m &quot;&#x8BF4;&#x660E;&quot; &#x63D0;&#x4EA4;&#x5230;&#x672C;&#x5730;&#x7248;&#x672C;&#x5E93;
+
+$ git status &#x67E5;&#x770B;&#x4ED3;&#x5E93;&#x72B6;&#x6001;
+$ git diff &#x6587;&#x4EF6;&#x540D; &#x67E5;&#x770B;&#x4FEE;&#x6539;&#x7684;&#x5730;&#x65B9;
+
+&#x7248;&#x672C;&#x56DE;&#x9000;(&#x4ECE;&#x4E00;&#x4E2A;commit&#x6062;&#x590D;)
+$ git log &#x67E5;&#x770B;&#x7248;&#x672C;&#x5386;&#x53F2;
+$ git reset --hard HEAD^ &#x56DE;&#x9000;&#x5230;&#x4E0A;&#x4E2A;&#x7248;&#x672C;
+$ git reset --hard 1094a &#x56DE;&#x9000;&#x5230;&#x7279;&#x5B9A;&#x7248;&#x672C;&#x53F7;(commit&#x4EE5;&#x540E;&#x56DE;&#x9000;)
+$ git reflog &#x8BB0;&#x5F55;&#x6BCF;&#x4E00;&#x6B21;&#x547D;&#x4EE4;
+
+$ git checkout -- file &#x76F4;&#x63A5;&#x4E22;&#x5F03;&#x5DE5;&#x4F5C;&#x533A;&#x7684;&#x4FEE;&#x6539;(add&#x4EE5;&#x524D;&#x56DE;&#x9000;)
+$ git reset HEAD &lt;file&gt; &#x6DFB;&#x52A0;&#x5230;&#x4E86;&#x6682;&#x5B58;&#x533A;&#x65F6;&#xFF0C;&#x60F3;&#x4E22;&#x5F03;&#x4FEE;&#x6539;(add&#x4EE5;&#x540E;&#x56DE;&#x9000;)
+
+&#x5220;&#x9664;&#x6587;&#x4EF6;
+$ git rm file(&#x5DF2;&#x7ECF;add/commit,&#x5728;&#x76EE;&#x5F55;&#x4E2D;&#x5220;&#x9664;)
+
+$ git checkout -- file &#x5220;&#x9519;&#x4E86;&#x56DE;&#x9000;
+
+&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;
+$ git remote add origin git@server-name:path/repo-name.git &#x5173;&#x8054;&#x8FDC;&#x7A0B;&#x5E93;
+$ git push -u origin master &#x7B2C;&#x4E00;&#x6B21;&#x7684;push
+$ git push origin master &#x5E38;&#x7528;&#x7684;push&#xFF0C;&#x672C;&#x5730;&#x5206;&#x652F;&#x4F1A;&#x5728;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x65B0;&#x5EFA;&#x5206;&#x652F;
+$ git pull &#x9700;&#x8981;&#x6709;&#x5173;&#x8054;&#x7684;&#x5206;&#x652F;&#xFF0C;&#x7B2C;&#x4E00;&#x6B21;&#x4E0B;&#x62C9;&#x6700;&#x597D;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x7A7A;&#x6587;&#x4EF6;&#x5939;
+$ git branch --set-upstream-to=origin/&#x8FDC;&#x7A0B;&#x5206;&#x652F; &#x672C;&#x5730;&#x5206;&#x652F; &#x5173;&#x8054;&#x5206;&#x652F;
+
+$ git clone git@server-name:path/repo-name.git &#x514B;&#x9686;(&#x4E0D;&#x9700;&#x8981;&#x53E6;&#x5EFA;&#x6587;&#x4EF6;&#x5939;)
+
+&#x5206;&#x652F;
+$ git branch -a &#x67E5;&#x770B;&#x6240;&#x6709;&#x5206;&#x652F;
+$ git branch -vv &#x67E5;&#x770B;&#x5206;&#x652F;&#x5173;&#x8054;
+$ git branch dev &#x521B;&#x5EFA;&#x5206;&#x652F;
+$ git checkout dev &#x5207;&#x6362;&#x5206;&#x652F;
+$ git merge dev &#x5408;&#x5E76;&#x67D0;&#x5206;&#x652F;&#x5230;&#x5F53;&#x524D;&#x5206;&#x652F;
+$ git merge --no-ff -m &quot;msg&quot; dev &#x666E;&#x901A;&#x6A21;&#x5F0F;&#x5408;&#x5E76;&#xFF0C;&#x5408;&#x5E76;&#x540E;&#x7684;&#x5386;&#x53F2;&#x6709;&#x5206;&#x652F;
+$ git branch -d dev &#x5220;&#x9664;&#x5206;&#x652F;
+$ git checkout -b dev &#x521B;&#x5EFA;&#x5E76;&#x5207;&#x6362;&#x5206;&#x652F;
+
+
+&#x5408;&#x5E76;&#x5206;&#x652F;,&#x65E0;&#x6CD5;merge
+$ git stash save &#x540D;&#x5B57; &#x6682;&#x5B58;&#x5DE5;&#x4F5C;&#x72B6;&#x6001;
+$ git pull origin dev &#x62C9;&#x4E0B;&#x6765; 
+$ git stash list &#x67E5;&#x770B;&#x5DF2;&#x7ECF;&#x6682;&#x5B58;&#x7684;&#x72B6;&#x6001;
+$ git stash pop stash@{0} &#x5C06;&#x6682;&#x5B58;&#x72B6;&#x6001;merge&#x5230;&#x5F53;&#x524D;&#x5206;&#x652F;
+&#x8FD8;&#x6709;&#x51B2;&#x7A81;&#x65F6;,&#x624B;&#x52A8;&#x4FEE;&#x6539;&#x6587;&#x4EF6;,&#x7136;&#x540E;add/commit
+$ git log --graph &#x5206;&#x652F;&#x5408;&#x5E76;&#x56FE;
+
+bug&#x5206;&#x652F;issue
+$ git stash &#x6682;&#x5B58;&#x5DE5;&#x4F5C;&#x72B6;&#x6001;
+$ git stash list &#x67E5;&#x770B;&#x6682;&#x5B58;&#x5DE5;&#x4F5C;&#x72B6;&#x6001;
+$ git stash pop &#x6062;&#x590D;&#x6682;&#x5B58;&#x72B6;&#x6001;&#x5E76;&#x5220;&#x9664;&#x72B6;&#x6001;
+
+&#x5F00;&#x53D1;&#x5206;&#x652F;feature
+$ git branch -D &lt;name&gt; &#x5F3A;&#x5236;&#x5220;&#x9664;&#x672A;&#x5408;&#x5E76;&#x7684;&#x5206;&#x652F;
+
+rebase
+$ git rebase &#x672C;&#x5730;&#x672A;push&#x7684;&#x5206;&#x53C9;&#x63D0;&#x4EA4;&#x5386;&#x53F2;&#x6574;&#x7406;&#x6210;&#x76F4;&#x7EBF;
+
+&#x6807;&#x7B7E;
+$ git tag &#x6807;&#x7B7E;&#x540D; &#x6253;&#x5728;&#x6700;&#x65B0;&#x63D0;&#x4EA4;&#x7684;commit&#x4E0A;
+$ git tag &#x67E5;&#x8BE2;&#x6240;&#x6709;&#x6807;&#x7B7E;
+$ git tag &#x6807;&#x7B7E;&#x540D; f52c633 &#x7ED9;&#x7279;&#x5B9A;&#x7684;commit&#x6253;&#x6807;&#x7B7E;
+$ git tag -a &#x6807;&#x7B7E;&#x540D; -m &quot;msg&quot; commit&#x7684;id &#x7ED9;&#x6807;&#x7B7E;&#x8BBE;&#x7F6E;&#x8BF4;&#x660E;
+$ git show &#x6807;&#x7B7E;&#x540D; &#x67E5;&#x8BE2;&#x6807;&#x7B7E;&#x5185;&#x5BB9;
+$ git tag -d &#x6807;&#x7B7E;&#x540D; &#x5220;&#x9664;&#x6807;&#x7B7E;
+$ git push origin &#x6807;&#x7B7E;&#x540D; &#x63A8;&#x9001;&#x67D0;&#x4E2A;&#x6807;&#x7B7E;&#x5230;&#x8FDC;&#x7A0B;
+$ git push origin --tags &#x63A8;&#x9001;&#x6240;&#x6709;&#x6807;&#x7B7E;
+$ git push origin :refs/tags/&lt;tagname&gt; &#x53EF;&#x4EE5;&#x5220;&#x9664;&#x4E00;&#x4E2A;&#x8FDC;&#x7A0B;&#x6807;&#x7B7E;&#x3002;
+
 </code></pre>
       </div>
       
