@@ -20,6 +20,31 @@ v8.11.1
 
 ```
 
+4. 更换为cnpm,下载更快
+
+```
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+cnpm -v
+```
+
+5. 如何卸载node.js
+
+Windows版本：
+```
+1.在控制面板-程序-程序和功能中卸载
+
+2.文件夹中进行进一步的删除
+C:\Program Files (x86)\Nodejs
+C:\Program Files\Nodejs
+C:\Users\Administrator\AppData\Roaming\npm
+C:\Users\Administrator\AppData\Roaming\npm-cache
+
+3.检查环境变量中Path中有没有,有的话 进行删除
+4. 最后 重启一下 结束
+
+```
+
+
 ---
 
 ## 2.NPM
