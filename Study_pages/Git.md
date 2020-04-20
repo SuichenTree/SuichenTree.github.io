@@ -18,7 +18,11 @@ $ git config --global user.email "email@example.com"
 
 ```
 1. 创建版本库
+<<<<<<< HEAD
 $ git init    
+=======
+$ git init
+>>>>>>> new
 
 ```
 <font color="red">

@@ -1409,6 +1409,7 @@ new Vue({
 
 ---
 
+<<<<<<< HEAD
 ## 12.vue-router路由
 
 路由可以通过不同的 URL 访问不同的页面。类似于a标签。**使用Vue.js路由需要载入 vue-router库**
@@ -1636,6 +1637,11 @@ axios.get('/login')
 ```
 
 ## 14.使用 vue-cli构建工具 创建vue项目
+=======
+---
+
+## 12.使用 vue-cli构建工具 创建vue项目
+>>>>>>> new
 
 <h3>什么是vue-cli？</h3>
 
