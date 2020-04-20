@@ -1,5 +1,5 @@
 # SuichenTree.github.io
-个人学习知识平台
+个人学习知识平台,记录学到的知识！
 
 # 2018 4-7 之前使用 Bootstrap 编写页面。
 # 2018 4-7 使用Ulkit替换Boostrap 编写页面。
