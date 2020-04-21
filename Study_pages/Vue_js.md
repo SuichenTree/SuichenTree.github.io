@@ -1636,12 +1636,8 @@ axios.get('/login')
   });
 ```
 
-## 14.使用 vue-cli构建工具 创建vue项目
-=======
----
+## 14.使用 vue-cli构建工具 创建vue项目--当前教程内容为vue-cli2.0版本
 
-## 12.使用 vue-cli构建工具 创建vue项目
->>>>>>> new
 
 <h3>什么是vue-cli？</h3>
 
