@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:///c:\Users\Administrator\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.5.2\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      <link rel="stylesheet" href="file:///c:\Users\Administrator\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.5.3\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
       
       
 
@@ -266,10 +266,14 @@ pre[data-line] .line-highlight[data-end]:after {
       <ul>
 <li><a href="#vue-router">Vue Router</a>
 <ul>
-<li><a href="#0vue-router%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85">0.vue-router&#x5E93;&#x7684;&#x5B89;&#x88C5;&#xFF1A;</a></li>
-<li><a href="#1%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">1.&#x57FA;&#x7840;&#x4F7F;&#x7528;</a></li>
-<li><a href="#2router-link%E5%AF%BC%E8%88%AA%E6%A0%87%E7%AD%BE">2.<code>&lt;router-link&gt;</code>&#x5BFC;&#x822A;&#x6807;&#x7B7E;</a></li>
-<li><a href="#3%E8%B7%AF%E7%94%B1%E5%AE%9E%E7%8E%B0%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8Frouter-link%E5%92%8Cjs">3.&#x8DEF;&#x7531;&#x5B9E;&#x73B0;&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x7684;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF08;router-link&#x548C;JS&#xFF09;</a></li>
+<li><a href="#1vue-router%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85">1.vue-router&#x5E93;&#x7684;&#x5B89;&#x88C5;&#xFF1A;</a></li>
+<li><a href="#2%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">2.&#x57FA;&#x7840;&#x4F7F;&#x7528;</a></li>
+<li><a href="#3router-link%E5%AF%BC%E8%88%AA%E6%A0%87%E7%AD%BE">3.<code>&lt;router-link&gt;</code>&#x5BFC;&#x822A;&#x6807;&#x7B7E;</a></li>
+<li><a href="#4%E8%B7%AF%E7%94%B1%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8Frouter-link%E5%92%8Cjs%E5%B9%B6%E8%BF%9B%E8%A1%8C%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%80%BC">4.&#x8DEF;&#x7531;&#x7684;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF08;router-link&#x548C;JS&#xFF09;&#xFF0C;&#x5E76;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#x4F20;&#x503C;</a>
+<ul>
+<li><a href="#1-%E9%80%9A%E8%BF%87router-link%E5%AE%9E%E7%8E%B0">1. &#x901A;&#x8FC7;<code>&lt;router-link&gt;</code>&#x5B9E;&#x73B0;</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -277,7 +281,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>Vue Router &#x662F; Vue.js &#x5B98;&#x65B9;&#x7684;&#x8DEF;&#x7531;&#x7BA1;&#x7406;&#x5668;&#x3002;</p>
 <p>&#x8DEF;&#x7531;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0D;&#x540C;&#x7684; URL &#x8BBF;&#x95EE;&#x4E0D;&#x540C;&#x7684;&#x9875;&#x9762;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;a&#x6807;&#x7B7E;&#x3002;<strong>&#x4F7F;&#x7528;Vue.js&#x8DEF;&#x7531;&#x9700;&#x8981;&#x8F7D;&#x5165; vue-router&#x5E93;</strong></p>
-<h2 class="mume-header" id="0vue-router%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85">0.vue-router&#x5E93;&#x7684;&#x5B89;&#x88C5;&#xFF1A;</h2>
+<h2 class="mume-header" id="1vue-router%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85">1.vue-router&#x5E93;&#x7684;&#x5B89;&#x88C5;&#xFF1A;</h2>
 
 <ol>
 <li>CDN&#x65B9;&#x5F0F;: <code>https://unpkg.com/vue-router/dist/vue-router.js</code></li>
@@ -290,7 +294,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <span class="token keyword">import</span> VueRouter <span class="token keyword">from</span> <span class="token string">&apos;vue-router&apos;</span>
 Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>VueRouter<span class="token punctuation">)</span>
 
-</pre><h2 class="mume-header" id="1%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">1.&#x57FA;&#x7840;&#x4F7F;&#x7528;</h2>
+</pre><h2 class="mume-header" id="2%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8">2.&#x57FA;&#x7840;&#x4F7F;&#x7528;</h2>
 
 <p><mark>&#x6B65;&#x9AA4;&#xFF1A;1.&#x521B;&#x5EFA;&#x7EC4;&#x4EF6;&#x3002;2&#xFF0C;&#x521B;&#x5EFA;&#x8DEF;&#x7531;&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x4E14;&#x914D;&#x7F6E;&#x8DEF;&#x7531;&#x89C4;&#x5219;(&#x628A;&#x8DEF;&#x7531;&#x8DEF;&#x5F84;&#x548C;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x952E;&#x503C;&#x5BF9;&#x5339;&#x914D;)&#x3002;3&#xFF0C;&#x628A;&#x8DEF;&#x7531;&#x5BF9;&#x8C61;&#x52A0;&#x8F7D;&#x5230;Vue&#x5B9E;&#x4F8B;&#x4E2D;</mark></p>
 <pre data-role="codeBlock" data-info="html" class="language-html"><span class="token comment">&lt;!--&#x5F15;&#x5165;&#x5FC5;&#x8981;&#x7684;js&#x6587;&#x4EF6;--&gt;</span>
@@ -332,7 +336,7 @@ Vue<span class="token punctuation">.</span><span class="token function">use</spa
 PS:
 </font><p><font color="red"><code>&lt;router-view&gt;&lt;/router-view&gt;</code>&#x662F;&#x663E;&#x793A;&#x5F53;&#x524D;&#x8DEF;&#x7531;&#x8DEF;&#x5F84;&#x4E0B;&#x5339;&#x914D;&#x7684;&#x7EC4;&#x4EF6;&#x7684;&#x6807;&#x7B7E;<br>
 </font></p>
-<h2 class="mume-header" id="2router-link%E5%AF%BC%E8%88%AA%E6%A0%87%E7%AD%BE">2.<code>&lt;router-link&gt;</code>&#x5BFC;&#x822A;&#x6807;&#x7B7E;</h2>
+<h2 class="mume-header" id="3router-link%E5%AF%BC%E8%88%AA%E6%A0%87%E7%AD%BE">3.<code>&lt;router-link&gt;</code>&#x5BFC;&#x822A;&#x6807;&#x7B7E;</h2>
 
 <ol>
 <li>to&#x5C5E;&#x6027;</li>
@@ -366,28 +370,21 @@ PS:
 <pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token operator">&lt;</span>router<span class="token operator">-</span>link to<span class="token operator">=</span><span class="token string">&quot;/login&quot;</span> tag<span class="token operator">=</span><span class="token string">&quot;li&quot;</span><span class="token operator">&gt;</span>login<span class="token operator">&lt;</span><span class="token operator">/</span>router<span class="token operator">-</span>link<span class="token operator">&gt;</span>
 <span class="token comment">//&#x4F1A;&#x6E32;&#x67D3;&#x4E3A;li&#x6807;&#x7B7E;</span>
 <span class="token operator">&lt;</span>li<span class="token operator">&gt;</span>login<span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
-</pre><h2 class="mume-header" id="3%E8%B7%AF%E7%94%B1%E5%AE%9E%E7%8E%B0%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8Frouter-link%E5%92%8Cjs">3.&#x8DEF;&#x7531;&#x5B9E;&#x73B0;&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x7684;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF08;router-link&#x548C;JS&#xFF09;</h2>
+</pre><h2 class="mume-header" id="4%E8%B7%AF%E7%94%B1%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8Frouter-link%E5%92%8Cjs%E5%B9%B6%E8%BF%9B%E8%A1%8C%E8%B7%AF%E7%94%B1%E4%BC%A0%E5%80%BC">4.&#x8DEF;&#x7531;&#x7684;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#xFF08;router-link&#x548C;JS&#xFF09;&#xFF0C;&#x5E76;&#x8FDB;&#x884C;&#x8DEF;&#x7531;&#x4F20;&#x503C;</h2>
 
-<blockquote>
+<p><mark>&#x7279;&#x522B;&#x6CE8;&#x610F;&#xFF1A;path&#x5339;&#x914D;&#x8DEF;&#x7531;&#x4F20;&#x53C2;&#x53EA;&#x80FD;&#x7528;query&#x53BB;&#x63A5;&#x6536;&#x53C2;&#x6570;&#xFF0C;name&#x6765;&#x5339;&#x914D;&#x8DEF;&#x7531;&#x53EA;&#x80FD;&#x7528;params&#x53BB;&#x63A5;&#x6536;&#x53C2;&#x6570;</mark></p>
+<h3 class="mume-header" id="1-%E9%80%9A%E8%BF%87router-link%E5%AE%9E%E7%8E%B0">1. &#x901A;&#x8FC7;<code>&lt;router-link&gt;</code>&#x5B9E;&#x73B0;</h3>
+
 <ol>
-<li>&#x901A;&#x8FC7;<code>&lt;router-link&gt;</code>&#x5B9E;&#x73B0;</li>
+<li>&#x7B80;&#x5355;&#x5199;&#x6CD5;</li>
 </ol>
-</blockquote>
-<p><code>&lt;router-link&gt;</code>&#x7EC4;&#x4EF6;&#x7528;&#x4E8E;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x5BFC;&#x822A;&#x94FE;&#x63A5;&#xFF0C;&#x5207;&#x6362;&#x4E0D;&#x540C; HTML &#x5185;&#x5BB9;.</p>
-<pre data-role="codeBlock" data-info class="language-"><code>##&#x7B80;&#x5355;&#x5199;&#x6CD5;
-&lt;router-link to=&quot;demo2&quot;&gt;demo2&lt;/router-link&gt;
+<pre data-role="codeBlock" data-info class="language-"><code>&lt;router-link to=&quot;demo2&quot;&gt;demo2&lt;/router-link&gt;
 
-#######################################
-
-##v-bind&#x5199;&#x6CD5;
+// v-bind&#x5199;&#x6CD5;
 &lt;router-link :to=&quot;demo2&quot;&gt;demo2&lt;/router-link&gt;
 
-
-#######################################
-
-##&#x4F20;&#x53C2;&#x5199;&#x6CD5;
-&lt;router-link :to=&quot;{ name: &apos;demo2&apos;, params: { userId: 123 }}&quot;&gt;demo2&lt;/router-link&gt;
-
+</code></pre><p>2.&#x4F20;&#x53C2;&#x5199;&#x6CD5;.&#x901A;&#x8FC7;name&#x6765;&#x5339;&#x914D;&#x8DEF;&#x7531;&#x5E76;&#x4F20;&#x503C;.&#x9700;&#x8981;&#x914D;&#x7F6E; router.js</p>
+<pre data-role="codeBlock" data-info class="language-"><code>&lt;router-link :to=&quot;{ name: &apos;demo2&apos;, params: { userId: 123 }}&quot;&gt;demo2&lt;/router-link&gt;
 
 &#x4F20;&#x53C2;&#x5199;&#x6CD5;&#x9700;&#x8981;&#x5148;&#x5728; router.js &#x4E2D;&#x5BF9; demo2 &#x7684;&#x8DEF;&#x7531;&#x8DEF;&#x5F84;&#x8FDB;&#x884C;&#x914D;&#x7F6E;
 {
@@ -397,25 +394,23 @@ PS:
 }
 &#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x540E;,&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x7684;&#x7ED3;&#x679C;&#x5C31;&#x4E3A; /demo2/123
 
-&#x5982;&#x4F55;&#x5728;&#x65B0;&#x9875;&#x9762;&#x83B7;&#x53D6;&#x53C2;&#x6570;&#xFF1A;
-&#x9700;&#x8981;&#x5728; mounted &#x94A9;&#x5B50;&#x4E2D;&#x4F7F;&#x7528; this.$route.params.xx &#x83B7;&#x53D6;&#x4F20;&#x8FC7;&#x6765;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
+</code></pre><p>&#x5982;&#x4F55;&#x63A5;&#x53D7;&#x53C2;&#x6570;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>&#x9700;&#x8981;&#x5728;&#x65B0;&#x9875;&#x9762;&#x4E2D;&#x4F7F;&#x7528; mounted &#x94A9;&#x5B50;&#x51FD;&#x6570;&#x3002;&#x7528; this.$route.params.xx &#x83B7;&#x53D6;&#x4F20;&#x8FC7;&#x6765;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
 mounted () {
     alert(this.$route.params.userId)
 }
 
-#########################################################
+</code></pre><p>3.&#x4F20;&#x53C2;&#x5199;&#x6CD5;.&#x901A;&#x8FC7;path&#x6765;&#x5339;&#x914D;&#x8DEF;&#x7531;&#x5E76;&#x4F20;&#x503C;.&#x4E0D;&#x9700;&#x8981;&#x914D;&#x7F6E; router.js</p>
+<pre data-role="codeBlock" data-info class="language-"><code>&lt;router-link :to=&quot;{ path: &apos;/demo2&apos;, query: { userId: 123 }}&quot;&gt;demo2&lt;/router-link&gt;
 
-##&#x4F20;&#x5165;&#x5730;&#x5740;&#x952E;&#x503C;&#x5BF9;&#x5199;&#x6CD5;
-&lt;router-link :to=&quot;{ path: &apos;demo2&apos;, query: { plan: &apos;private&apos; }}&quot;&gt;demo2&lt;/router-link&gt;
-&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x7684;&#x7ED3;&#x679C;&#x4E3A; /demo2?plan=private
+&#x9875;&#x9762;&#x8DF3;&#x8F6C;&#x7684;&#x7ED3;&#x679C;&#x4E3A; /demo2?userId=123
 
 &#xFF08;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x4E0D;&#x7528;&#x5728; router.js &#x91CC;&#x914D;&#x7F6E;&#x8DEF;&#x5F84;&#xFF09;
 
-&#x5728;&#x65B0;&#x9875;&#x9762;&#x4E2D;&#x83B7;&#x53D6;&#x5230;&#x4F20;&#x8FC7;&#x6765;&#x7684;&#x5730;&#x5740;&#x952E;&#x503C;&#x5BF9;plan&#xFF0C;&#x53EF;&#x4EE5;&#x5728; mounted &#x94A9;&#x5B50;&#x4E2D;&#x4F7F;&#x7528; this.$route.plan.xx. &#x83B7;&#x53D6;&#x4F20;&#x8FC7;&#x6765;&#x7684;&#x5730;&#x5740;&#x952E;&#x503C;&#x5BF9;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
-mounted () {
+</code></pre><p>&#x5982;&#x4F55;&#x5728;&#x65B0;&#x9875;&#x9762;&#x63A5;&#x53D7;&#x53C2;&#x6570;</p>
+<pre data-role="codeBlock" data-info class="language-"><code>mounted () {
   alert(this.$route.query.plan)
 }
-
 
 </code></pre><blockquote>
 <p>2.&#x901A;&#x8FC7; JS &#x5B9E;&#x73B0;</p>
@@ -427,7 +422,7 @@ script &#x90E8;&#x5206;&#xFF1A;
 &#xFF08;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x662F; router&#xFF0C;&#x4E0A;&#x9762;&#x662F; route&#xFF09;
 
 
-##&#x7B80;&#x5355;&#x5199;&#x6CD5;
+## 1&#x7B80;&#x5355;&#x5199;&#x6CD5;
 methods:{
   toURL(){
     this.$router.push({ path: &apos;/demo2&apos; })
@@ -436,21 +431,28 @@ methods:{
 
 #################################
 
-##&#x4F20;&#x53C2;&#x7684;&#x5199;&#x6CD5;
+## 2name&#x6765;&#x914D;&#x7F6E;&#x8DEF;&#x7531;&#x5E76;&#x4F20;&#x53C2;
 methods:{
   toURL(){
     this.$router.push({ name: &apos;demo2&apos;, params: { userId: 123 }})
   }
 }
 
+&#x7531;&#x4E8E;&#x4E0A;&#x9762;&#x662F;name&#x6765;&#x914D;&#x7F6E;&#x8DEF;&#x7531;&#x3002;&#x6240;&#x6709;&#x9700;&#x8981;&#x901A;&#x8FC7;params&#x6765;&#x63A5;&#x53D7;&#x53C2;&#x6570;
+console.log(this.$route.params.userId)
+
 #################################
 
-##&#x4F20;&#x5165;&#x5730;&#x5740;&#x952E;&#x503C;&#x5BF9;
+## 3path&#x6765;&#x914D;&#x7F6E;&#x8DEF;&#x7531;&#x5E76;&#x4F20;&#x53C2;
 methods:{
   toURL(){
-    this.$router.push({ name: &apos;demo2&apos;, params: { userId: 123 }, query: { plan: &apos;private&apos; } })
+    this.$router.push({ path: &apos;/demo2&apos;, query: { plan: &apos;private&apos; } })
   }
 }
+
+&#x7531;&#x4E8E;&#x4E0A;&#x9762;&#x662F;path&#x6765;&#x914D;&#x7F6E;&#x8DEF;&#x7531;&#x3002;&#x6240;&#x6709;&#x9700;&#x8981;&#x901A;&#x8FC7;query&#x6765;&#x63A5;&#x53D7;&#x53C2;&#x6570;
+console.log(this.$route.query.plan)
+
 
 
 </code></pre>

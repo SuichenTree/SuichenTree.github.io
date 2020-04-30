@@ -6,7 +6,7 @@ Vue Router 是 Vue.js 官方的路由管理器。
 
 路由可以通过不同的 URL 访问不同的页面。类似于a标签。**使用Vue.js路由需要载入 vue-router库**
 
-## 0.vue-router库的安装：
+## 1.vue-router库的安装：
 
 1. CDN方式: `https://unpkg.com/vue-router/dist/vue-router.js`
 2. NPM方式：`npm install vue-router`
@@ -24,7 +24,7 @@ Vue.use(VueRouter)
 ```
 
 
-## 1.基础使用
+## 2.基础使用
 
 ==步骤：1.创建组件。2，创建路由对象，并且配置路由规则(把路由路径和组件进行键值对匹配)。3，把路由对象加载到Vue实例中==
 
@@ -72,7 +72,7 @@ PS:
 `<router-view></router-view>`是显示当前路由路径下匹配的组件的标签
 </font>
 
-## 2.`<router-link>`导航标签
+## 3.`<router-link>`导航标签
 
 1. to属性
 
@@ -116,27 +116,27 @@ to属性的几种使用方式
 <li>login</li>
 ```
 
-## 3.路由实现页面跳转的两种方式（router-link和JS）
+## 4.路由的两种方式（router-link和JS），并进行路由传值
 
-> 1. 通过`<router-link>`实现
+==特别注意：path匹配路由传参只能用query去接收参数，name来匹配路由只能用params去接收参数==
 
-`<router-link>`组件用于设置一个导航链接，切换不同 HTML 内容.
+
+### 1. 通过`<router-link>`实现
+
+1. 简单写法
 
 ```
-##简单写法
 <router-link to="demo2">demo2</router-link>
 
-#######################################
-
-##v-bind写法
+// v-bind写法
 <router-link :to="demo2">demo2</router-link>
 
+```
 
-#######################################
+2.传参写法.通过name来匹配路由并传值.需要配置 router.js
 
-##传参写法
+```
 <router-link :to="{ name: 'demo2', params: { userId: 123 }}">demo2</router-link>
-
 
 传参写法需要先在 router.js 中对 demo2 的路由路径进行配置
 {
@@ -146,25 +146,35 @@ to属性的几种使用方式
 }
 配置完成后,页面跳转的结果就为 /demo2/123
 
-如何在新页面获取参数：
-需要在 mounted 钩子中使用 this.$route.params.xx 获取传过来的参数，如下：
+```
+
+如何接受参数：
+
+```
+
+需要在新页面中使用 mounted 钩子函数。用 this.$route.params.xx 获取传过来的参数，如下：
 mounted () {
     alert(this.$route.params.userId)
 }
 
-#########################################################
+```
 
-##传入地址键值对写法
-<router-link :to="{ path: 'demo2', query: { plan: 'private' }}">demo2</router-link>
-页面跳转的结果为 /demo2?plan=private
+3.传参写法.通过path来匹配路由并传值.不需要配置 router.js
+
+```
+
+<router-link :to="{ path: '/demo2', query: { userId: 123 }}">demo2</router-link>
+
+页面跳转的结果为 /demo2?userId=123
 
 （注意这里不用在 router.js 里配置路径）
 
-在新页面中获取到传过来的地址键值对plan，可以在 mounted 钩子中使用 this.$route.plan.xx. 获取传过来的地址键值对，如下：
+```
+如何在新页面接受参数
+```
 mounted () {
   alert(this.$route.query.plan)
 }
-
 
 ```
 
@@ -179,7 +189,7 @@ script 部分：
 （注意这里是 router，上面是 route）
 
 
-##简单写法
+## 1简单写法
 methods:{
   toURL(){
     this.$router.push({ path: '/demo2' })
@@ -188,21 +198,28 @@ methods:{
 
 #################################
 
-##传参的写法
+## 2name来配置路由并传参
 methods:{
   toURL(){
     this.$router.push({ name: 'demo2', params: { userId: 123 }})
   }
 }
 
+由于上面是name来配置路由。所有需要通过params来接受参数
+console.log(this.$route.params.userId)
+
 #################################
 
-##传入地址键值对
+## 3path来配置路由并传参
 methods:{
   toURL(){
-    this.$router.push({ name: 'demo2', params: { userId: 123 }, query: { plan: 'private' } })
+    this.$router.push({ path: '/demo2', query: { plan: 'private' } })
   }
 }
+
+由于上面是path来配置路由。所有需要通过query来接受参数
+console.log(this.$route.query.plan)
+
 
 
 ```
