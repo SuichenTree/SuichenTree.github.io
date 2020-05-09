@@ -274,6 +274,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li><a href="#1-%E9%80%9A%E8%BF%87router-link%E5%AE%9E%E7%8E%B0">1. &#x901A;&#x8FC7;<code>&lt;router-link&gt;</code>&#x5B9E;&#x73B0;</a></li>
 </ul>
 </li>
+<li><a href="#5vue-router%E9%80%9A%E8%BF%87%E8%AE%BF%E9%97%AE%E7%9B%B8%E5%90%8C%E8%B7%AF%E7%94%B1%E6%9D%A5%E8%BF%9B%E8%A1%8C%E5%BD%93%E5%89%8D%E7%BB%84%E4%BB%B6%E5%88%B7%E6%96%B0">5.vue + router&#x901A;&#x8FC7;&#x8BBF;&#x95EE;&#x76F8;&#x540C;&#x8DEF;&#x7531;&#x6765;&#x8FDB;&#x884C;&#x5F53;&#x524D;&#x7EC4;&#x4EF6;&#x5237;&#x65B0;</a></li>
 </ul>
 </li>
 </ul>
@@ -455,7 +456,87 @@ console.log(this.$route.query.plan)
 
 
 
-</code></pre>
+</code></pre><h2 class="mume-header" id="5vue-router%E9%80%9A%E8%BF%87%E8%AE%BF%E9%97%AE%E7%9B%B8%E5%90%8C%E8%B7%AF%E7%94%B1%E6%9D%A5%E8%BF%9B%E8%A1%8C%E5%BD%93%E5%89%8D%E7%BB%84%E4%BB%B6%E5%88%B7%E6%96%B0">5.vue + router&#x901A;&#x8FC7;&#x8BBF;&#x95EE;&#x76F8;&#x540C;&#x8DEF;&#x7531;&#x6765;&#x8FDB;&#x884C;&#x5F53;&#x524D;&#x7EC4;&#x4EF6;&#x5237;&#x65B0;</h2>
+
+<p><mark>&#x6BCF;&#x6B21;&#x70B9;&#x51FB;&#x76F8;&#x540C;&#x7684;&#x8DEF;&#x7531;&#x5730;&#x5740;&#x90FD;&#x53BB;&#x6E32;&#x67D3;&#x7EC4;&#x4EF6;&#x9875;&#x9762;</mark></p>
+<blockquote>
+<ol>
+<li>&#x521B;&#x5EFA;&#x7A7A;&#x7EC4;&#x4EF6;Empty.vue&#xFF0C;&#x4F5C;&#x4E3A;&#x4E2D;&#x8F6C;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info="html" class="language-html">//Empty.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+        <span class="token comment">&lt;!--&#x7A7A;&#x7EC4;&#x4EF6;&#xFF0C;&#x8BE5;&#x7EC4;&#x4EF6;&#x7684;&#x4F5C;&#x7528;&#x662F;&#x5145;&#x5F53;&#x8DF3;&#x677F;&#x3002;&#x6765;&#x5B9E;&#x73B0;&#x7EC4;&#x4EF6;&#x5237;&#x65B0;&#x95EE;&#x9898;&#x3002;--&gt;</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function">created</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">//&#x63A5;&#x53D7;&#x53C2;&#x6570;</span>
+      <span class="token keyword">let</span> url <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>query<span class="token punctuation">;</span>
+      <span class="token keyword">let</span> str <span class="token operator">=</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">;</span>
+      <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token keyword">in</span> url<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        str <span class="token operator">+=</span> url<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>query<span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;path&quot;</span><span class="token punctuation">,</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;str&quot;</span><span class="token punctuation">,</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        path<span class="token punctuation">:</span> str<span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>  
+<span class="token punctuation">}</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+</pre><blockquote>
+<ol start="2">
+<li>&#x5C06;&#x7A7A;&#x7EC4;&#x4EF6;&#x4E0E;&#x8DEF;&#x7531;&#x7ED1;&#x5B9A;</li>
+</ol>
+</blockquote>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"> <span class="token punctuation">{</span>
+    path<span class="token punctuation">:</span> <span class="token string">&apos;/home&apos;</span><span class="token punctuation">,</span>
+    name<span class="token punctuation">:</span><span class="token string">&quot;&#x4E3B;&#x9875;&#x9762;&quot;</span><span class="token punctuation">,</span>
+    component<span class="token punctuation">:</span> home<span class="token punctuation">,</span>
+    redirect<span class="token punctuation">:</span> <span class="token string">&quot;/home/dashboard&quot;</span><span class="token punctuation">,</span> <span class="token comment">//&#x9ED8;&#x8BA4;&#x52A0;&#x8F7D;&#x7684;&#x8DEF;&#x7531;</span>
+    children<span class="token punctuation">:</span><span class="token punctuation">[</span>
+      <span class="token punctuation">{</span>
+        name<span class="token punctuation">:</span><span class="token string">&quot;&#x7A7A;&#x7EC4;&#x4EF6;&quot;</span><span class="token punctuation">,</span>
+        path<span class="token punctuation">:</span><span class="token string">&quot;/empty&quot;</span><span class="token punctuation">,</span>
+        <span class="token function-variable function">component</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">import</span><span class="token punctuation">(</span><span class="token string">&apos;@/components/admin/Empty.vue&apos;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+</pre><blockquote>
+<ol start="3">
+<li>&#x5728;&#x5F53;&#x524D;&#x7EC4;&#x4EF6;&#x4E2D;&#x8C03;&#x7528;&#x65B9;&#x6CD5;</li>
+</ol>
+</blockquote>
+<ol>
+<li>&#x65B9;&#x6CD5;2<br>
+&#x5F53;&#x4F5C;&#x53C2;&#x6570;&#x7684;&#x8DEF;&#x7531;&#x662F;&#x6CA1;&#x6709;&#x53C2;&#x6570;&#x7684;<br>
+&#x4F8B;&#x5982;&#xFF1A;/exam/list</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"> <span class="token comment">//&#x901A;&#x8FC7;&#x7A7A;&#x7EC4;&#x4EF6;&#x4E2D;&#x8F6C;&#xFF0C;&#x6765;&#x5B9E;&#x73B0;&#x5F53;&#x524D;&#x7EC4;&#x4EF6;&#x5237;&#x65B0;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>path<span class="token punctuation">:</span> <span class="token string">&apos;/empty&apos;</span><span class="token punctuation">,</span>query<span class="token punctuation">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>path<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token comment">//--------</span>
+  <span class="token comment">//this.$route.path = &quot;/exam/list&quot; </span>
+</pre><ol>
+<li>&#x65B9;&#x6CD5;2<br>
+&#x5F53;&#x4F5C;&#x53C2;&#x6570;&#x7684;&#x8DEF;&#x7531;&#x662F;&#x6709;&#x53C2;&#x6570;&#x7684;<br>
+&#x4F8B;&#x5982;&#xFF1A;/exam/list?examId=1</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"> <span class="token comment">//&#x901A;&#x8FC7;&#x7A7A;&#x7EC4;&#x4EF6;&#x4E2D;&#x8F6C;&#xFF0C;&#x6765;&#x5B9E;&#x73B0;&#x5F53;&#x524D;&#x7EC4;&#x4EF6;&#x5237;&#x65B0;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>path<span class="token punctuation">:</span> <span class="token string">&apos;/empty&apos;</span><span class="token punctuation">,</span>query<span class="token punctuation">:</span><span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span>currentRoute<span class="token punctuation">.</span>fullPath<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token comment">//--------</span>
+  <span class="token comment">//this.$router.currentRoute.fullPath = &quot;/exam/list?examId=1&quot; </span>
+</pre><font color="red">
+&#x901A;&#x8FC7;&#x8C03;&#x7528;&#x65B9;&#x6CD5;&#xFF0C;&#x8FDB;&#x5165;&#x4E2D;&#x8F6C;&#x8DEF;&#x7531;&#xFF0C;&#x518D;&#x901A;&#x8FC7;&#x53C2;&#x6570;&#x4F20;&#x7684;&#x503C;&#xFF0C;&#x8FD4;&#x56DE;&#x5230;&#x4E4B;&#x524D;&#x7684;&#x8DEF;&#x7531;&#x4E2D;&#x53BB;&#x3002;
+</font>
       </div>
       
       

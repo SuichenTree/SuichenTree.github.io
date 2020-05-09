@@ -223,3 +223,93 @@ console.log(this.$route.query.plan)
 
 
 ```
+
+
+## 5.vue + router通过访问相同路由来进行当前组件刷新
+
+==每次点击相同的路由地址都去渲染组件页面==
+
+> 1. 创建空组件Empty.vue，作为中转
+
+```html
+//Empty.vue
+<template>
+    <div>
+        <!--空组件，该组件的作用是充当跳板。来实现组件刷新问题。-->
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+      return {
+      }
+    },
+    created() {
+      //接受参数
+      let url = this.$route.query;
+      let str = '';
+      for(let i in url) {
+        str += url[i];
+      }
+      const path = this.$route.query;
+      console.log("path",path);
+      console.log("str",str);
+      this.$router.push({
+        path: str,
+      });
+    }  
+}
+</script>
+
+```
+
+
+> 2. 将空组件与路由绑定
+
+```js
+ {
+    path: '/home',
+    name:"主页面",
+    component: home,
+    redirect: "/home/dashboard", //默认加载的路由
+    children:[
+      {
+        name:"空组件",
+        path:"/empty",
+        component: () => import('@/components/admin/Empty.vue')
+      }
+ }
+```
+
+
+
+> 3. 在当前组件中调用方法
+
+ 1. 方法2
+ 当作参数的路由是没有参数的
+ 例如：/exam/list
+
+```js
+ //通过空组件中转，来实现当前组件刷新
+  this.$router.push({path: '/empty',query:this.$route.path})
+  //--------
+  //this.$route.path = "/exam/list" 
+```
+
+ 1. 方法2
+ 当作参数的路由是有参数的
+ 例如：/exam/list?examId=1
+ 
+
+```js
+ //通过空组件中转，来实现当前组件刷新
+  this.$router.push({path: '/empty',query:this.$router.currentRoute.fullPath})
+  //--------
+  //this.$router.currentRoute.fullPath = "/exam/list?examId=1" 
+```
+
+
+<font color="red">
+通过调用方法，进入中转路由，再通过参数传的值，返回到之前的路由中去。
+</font>
